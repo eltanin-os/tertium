@@ -4,7 +4,7 @@
 #include "alloc.h"
 
 void
-c_std_free_(void *p)
+c_std_free(void *p)
 {
 	pubrealloc(p, 0, " in c_std_free():");
 }
