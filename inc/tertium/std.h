@@ -59,6 +59,9 @@ enum {
 #define ERRBUFSIZ 512
 #define c_ioq_INIT(a, b, c) {(b), (c), (a) }
 
+/* std macros */
+#define c_std_free(a) { c_std_free_((a)); a = c_std_alloc(0, 1); }
+
 typedef struct Membuf Membuf;
 
 struct Membuf {
@@ -164,7 +167,7 @@ void * c_mem_set(void *, usize, int);
 void * c_std_alloc(usize, usize);
 void * c_std_calloc(usize, usize);
 void   c_std_exit(int);
-void   c_std_free(void *);
+void   c_std_free_(void *);
 void * c_std_realloc(void *, usize, usize);
 void   c_std_sort(void *, usize, usize, int (*)(void *, void *));
 vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
