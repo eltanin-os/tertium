@@ -52,6 +52,9 @@ enum {
 };
 
 /* ioq macros */
+#define FD0 0
+#define FD1 1
+#define FD2 2
 #define IOQBUFSIZ 8192
 #define ERRBUFSIZ 512
 #define c_ioq_INIT(a, b, c) {(b), (c), (a) }
@@ -71,15 +74,15 @@ typedef struct Fmt Fmt;
 
 struct Fmt {
 	Membuf  *mb;
-	int    (*fn)(Fmt *);
+	va_list  args;
 	size   (*op)(int, void *, usize);
+	int    (*fn)(Fmt *);
+	int      nfmt;
+	int      prec;
+	int      r;
+	int      width;
+	ushort   flags;
 	void    *farg;
-	int     nfmt;
-	va_list args;
-	int     r;
-	int     width;
-	int     prec;
-	ulong   flags;
 };
 
 typedef struct Stat Stat;
@@ -117,6 +120,11 @@ void   c_arr_init(Membuf *, char *, usize);
 usize  c_arr_len(Membuf *, usize);
 int    c_arr_trunc(Membuf *, usize, usize);
 size   c_arr_vfmt(Membuf *, char *, va_list);
+
+/* dir routines */
+int c_dir_open(Dir *, char *, int);
+int c_dir_read(Dir *, Dirent *);
+int c_dir_close(Dir *);
 
 /* dyn routines */
 void * c_dyn_alloc(Membuf *, usize, usize);
