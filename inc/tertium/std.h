@@ -121,11 +121,6 @@ usize  c_arr_len(Membuf *, usize);
 int    c_arr_trunc(Membuf *, usize, usize);
 size   c_arr_vfmt(Membuf *, char *, va_list);
 
-/* dir routines */
-int c_dir_open(Dir *, char *, int);
-int c_dir_read(Dir *, Dirent *);
-int c_dir_close(Dir *);
-
 /* dyn routines */
 void * c_dyn_alloc(Membuf *, usize, usize);
 int    c_dyn_cat(Membuf *, void *, usize, usize);
