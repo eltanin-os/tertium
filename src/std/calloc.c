@@ -8,7 +8,7 @@ c_std_calloc(usize m, usize n)
 {
 	void *p;
 
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, m, n))
 		return nil;
 
 	if ((p = pubrealloc(nil, m*n, " in c_std_calloc():")))

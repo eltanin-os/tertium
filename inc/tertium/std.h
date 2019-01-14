@@ -22,6 +22,9 @@ for (argc--, argv++;\
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define NELEM(a)  (sizeof((a))/sizeof((a)[0]))
 
+#define OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
+#define OFLW_UA(a, b)    ((b) > (a)-1)
+
 #define getprogname( ) argv0
 #define setprogname(x) argv0 = (x)
 

@@ -6,7 +6,7 @@
 void *
 c_std_alloc(usize m, usize n)
 {
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, n, m))
 		return nil;
 
 	return pubrealloc(nil, m*n, " in c_std_alloc():");
