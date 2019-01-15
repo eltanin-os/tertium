@@ -4,7 +4,7 @@
 int
 c_arr_trunc(Membuf *p, usize m, usize n)
 {
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, m, n))
 		return -1;
 
 	if (m > c_arr_len(p, n))

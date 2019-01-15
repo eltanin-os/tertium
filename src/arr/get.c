@@ -6,7 +6,7 @@ c_arr_get(Membuf *p, usize m, usize n)
 {
 	usize t;
 
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, m, n))
 		return nil;
 
 	t = m*n;

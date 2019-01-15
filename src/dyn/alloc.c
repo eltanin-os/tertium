@@ -6,7 +6,7 @@ c_dyn_alloc(Membuf *p, usize m, usize n)
 {
 	usize a, t;
 
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, m, n))
 		return nil;
 
 	t = m*n;
@@ -16,8 +16,8 @@ c_dyn_alloc(Membuf *p, usize m, usize n)
 		a *= 2;
 		if (!(p->p = c_std_realloc(p->p, a, sizeof(uchar))))
 			return nil;
+		p->a = a;
 	}
-	p->a = a;
 
 	return (p->p+t);
 }

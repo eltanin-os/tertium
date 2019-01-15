@@ -6,7 +6,7 @@ c_arr_cat(Membuf *p, void *v, usize m, usize n)
 {
 	usize t;
 
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, m, n))
 		return -1;
 
 	t = m*n;
