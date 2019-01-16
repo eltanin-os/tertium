@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_mem_equal(void *v1, void *v2, usize n)
+c_mem_equal(void *v1, usize n, void *v2)
 {
 	uint r;
 	uchar *s1, *s2;

@@ -25,7 +25,7 @@ mrg(uchar *p, uchar *v, usize n, int (*f)(void *, void *), int l, int m, int r)
 	k = m;
 
 	for (; i < r; i++)
-		c_mem_cpy(p+n*i, v+n*(F(j,m,k,r,f,v,n)?j++:k++), n);
+		c_mem_cpy(p+n*i, n, v+n*(F(j,m,k,r,f,v,n)?j++:k++));
 }
 
 static void
@@ -57,14 +57,14 @@ msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 	for (; i < m; i *= 2) {
 		for (j = 0; j < m; j += i * 2)
 			mrg(p, v, n, f, j, MIN(j+i, m), MIN(j+i*2, m));
-		c_mem_cpy(v, p, t);
+		c_mem_cpy(v, t, p);
 	}
 }
 
 void
 c_std_sort(void *v, usize m, usize n, int (*f)(void *, void *))
 {
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, n, m))
 		return;
 
 	if (m < 32) {

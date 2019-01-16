@@ -15,7 +15,7 @@ c_mem_mem(void *h, usize hl, void *n, usize nl)
 	i = hl - nl + 1;
 
 	for (; i; i--, s++)
-		if (!c_mem_cmp(s, n, nl))
+		if (!c_mem_cmp(s, nl, n))
 			return s;
 
 	return nil;

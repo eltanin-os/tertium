@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void *
-c_mem_cpy(void *d, void *s, usize n)
+c_mem_cpy(void *d, usize n, void *s)
 {
 	uchar *s1, *s2;
 

@@ -7,7 +7,7 @@ extract(Ioq *p, char *b, usize n)
 	if (n > p->mb->n)
 		n = p->mb->n;
 
-	c_mem_cpy(b, p->mb->p + p->mb->a, n);
+	c_mem_cpy(b, n, p->mb->p + p->mb->a);
 	p->mb->n -= n;
 	p->mb->a += n;
 

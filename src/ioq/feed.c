@@ -16,7 +16,7 @@ c_ioq_feed(Ioq *p)
 	p->mb->a -= r;
 
 	if (p->mb->a)
-		c_mem_cpy(p->mb->p + p->mb->a, p->mb->p, r);
+		c_mem_cpy(p->mb->p + p->mb->a, r, p->mb->p);
 
 	return r;
 }

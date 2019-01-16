@@ -14,7 +14,7 @@ c_arr_cat(Membuf *p, void *v, usize m, usize n)
 	if (t > c_arr_avail(p))
 		return -1;
 
-	c_mem_cpy(p->p + p->n, v, t);
+	c_mem_cpy(p->p + p->n, t, v);
 	p->n += t;
 	p->p[p->n] = '\0';
 

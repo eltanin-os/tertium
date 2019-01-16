@@ -152,11 +152,11 @@ void   c_ioq_seek(Ioq *, usize);
 size   c_ioq_vfmt(Ioq *, char *, va_list);
 
 /* mem routines */
-void * c_mem_ccpy(void *, void *, usize, int);
+void * c_mem_ccpy(void *, usize, void *, int);
 void * c_mem_chr(void *, usize, int);
-int    c_mem_cmp(void *, void *, usize);
-void * c_mem_cpy(void *, void *, usize);
-int    c_mem_equal(void *, void *, usize);
+int    c_mem_cmp(void *, usize, void *);
+void * c_mem_cpy(void *, usize, void *);
+int    c_mem_equal(void *, usize, void *);
 void * c_mem_mem(void *, usize, void *, usize);
 void * c_mem_rchr(void *, usize, int);
 void * c_mem_set(void *, usize, int);

@@ -14,7 +14,7 @@ c_sys_getenv(char *s)
 
 	p = environ;
 	for (; *p; p++)
-		if (!(c_mem_cmp(*p, s, n)) && (*p[n] == '='))
+		if (!(c_mem_cmp(*p, n, s)) && (*p[n] == '='))
 			return *p+n+1;
 
 	return nil;

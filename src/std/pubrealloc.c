@@ -204,7 +204,7 @@ extendpgdir(usize idx)
 	if ((n = MMAP(nl)) == MAP_FAILED)
 		return 0;
 
-	c_mem_cpy(n, pagedir, ol);
+	c_mem_cpy(n, ol, pagedir);
 	minfo = nl / sizeof(*pagedir);
 
 	o = pagedir;
@@ -518,9 +518,9 @@ irealloc(void *p, usize n)
 		if (!n || !o)
 			;
 		else if (o < n)
-			c_mem_cpy(np, p, o);
+			c_mem_cpy(np, o, p);
 		else
-			c_mem_cpy(np, p, n);
+			c_mem_cpy(np, n, p);
 		ifree(p);
 	}
 
