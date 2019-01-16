@@ -65,6 +65,12 @@ enum {
 /* std macros */
 #define c_std_free(a) { c_std_free_((a)); a = c_std_alloc(0, 1); }
 
+/* tai macros */
+#define TAI_PACK 8
+
+/* taia macros */
+#define TAIA_PACK 16
+
 typedef struct Membuf Membuf;
 
 struct Membuf {
@@ -88,15 +94,22 @@ struct Fmt {
 	void    *farg;
 };
 
+typedef struct Time Time;
+
+struct Time {
+	long tv_sec;
+	long tv_nsec;
+};
+
 typedef struct Stat Stat;
 
 struct Stat {
 	vlong  st_size;
 	ulong  st_blksize;
 	ulong  st_blocks;
-	long   st_atime;
-	long   st_ctime;
-	long   st_mtime;
+	Time   st_atim;
+	Time   st_ctim;
+	Time   st_mtim;
 	short  st_gid;
 	short  st_nlink;
 	short  st_uid;
@@ -112,6 +125,20 @@ struct Ioq {
 	Membuf *mb;
 	size  (*op)(int, void *, usize);
 	int     fd;
+};
+
+typedef struct Tai Tai;
+
+struct Tai {
+	u64int x;
+};
+
+typedef struct Taia Taia;
+
+struct Taia {
+	Tai   sec;
+	ulong atto;
+	ulong nano;
 };
 
 /* arr routines */
@@ -182,6 +209,7 @@ int    c_sys_fchdir(int);
 int    c_sys_fstat(Stat *, int);
 char * c_sys_getenv(char *);
 short  c_sys_getgid(void);
+int    c_sys_gettime(int, Time *);
 short  c_sys_getuid(void);
 int    c_sys_lstat(Stat *, char *);
 void * c_sys_mmap(void *, usize, int, int, int, int);
@@ -192,6 +220,27 @@ vlong  c_sys_seek(int, vlong, int);
 int    c_sys_stat(Stat *, char *);
 int    c_sys_unlink(char *);
 size   c_sys_write(int, void *, usize);
+
+/* tai routines */
+void   c_tai_add(Tai *, Tai *, Tai *);
+double c_tai_approx(Tai *);
+int    c_tai_less(Tai *, Tai *);
+void   c_tai_pack(char *, Tai *);
+void   c_tai_now(Tai *);
+void   c_tai_sub(Tai *, Tai *, Tai *);
+void   c_tai_unpack(char *, Tai *);
+
+/* tna routines */
+void   c_tna_add(Taia *, Taia *, Taia *);
+double c_tna_approx(Taia *);
+double c_tna_frac(Taia *);
+void   c_tna_half(Taia *, Taia *);
+int    c_tna_less(Taia *, Taia *);
+void   c_tna_now(Taia *);
+void   c_tna_pack(char *, Taia *);
+void   c_tna_sub(Taia *, Taia *, Taia *);
+void   c_tna_tai(Taia *, Tai *);
+void   c_tna_unpack(char *, Taia *);
 
 extern Ioq *ioq0;
 extern Ioq *ioq1;

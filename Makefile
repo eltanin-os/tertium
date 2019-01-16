@@ -73,6 +73,7 @@ LIBCSRC=\
 	src/sys/getenv.c\
 	src/sys/lstat.c\
 	src/sys/getgid.c\
+	src/sys/gettime.c\
 	src/sys/getuid.c\
 	src/sys/mmap.c\
 	src/sys/munmap.c\
@@ -81,7 +82,24 @@ LIBCSRC=\
 	src/sys/seek.c\
 	src/sys/stat.c\
 	src/sys/unlink.c\
-	src/sys/write.c
+	src/sys/write.c\
+	src/tai/add.c\
+	src/tai/approx.c\
+	src/tai/less.c\
+	src/tai/now.c\
+	src/tai/pack.c\
+	src/tai/sub.c\
+	src/tai/unpack.c\
+	src/tna/add.c\
+	src/tna/approx.c\
+	src/tna/frac.c\
+	src/tna/half.c\
+	src/tna/less.c\
+	src/tna/now.c\
+	src/tna/pack.c\
+	src/tna/sub.c\
+	src/tna/tai.c\
+	src/tna/unpack.c
 
 ASMSRC=\
 	oss/$(OSNAME)/$(OBJTYPE)/syscall.s

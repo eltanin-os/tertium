@@ -10,9 +10,12 @@ c_sys_fstat(Stat *p, int f)
 	p->st_size = st.st_size;
 	p->st_blksize = st.st_blksize;
 	p->st_blocks = st.st_blocks;
-	p->st_atime = st.st_atim.tv_sec;
-	p->st_ctime = st.st_ctim.tv_sec;
-	p->st_mtime = st.st_mtim.tv_sec;
+	p->st_atim.tv_sec = st.st_atim.tv_sec;
+	p->st_atim.tv_nsec = st.st_atim.tv_nsec;
+	p->st_ctim.tv_sec = st.st_ctim.tv_sec;
+	p->st_ctim.tv_nsec = st.st_ctim.tv_nsec;
+	p->st_mtim.tv_sec = st.st_mtim.tv_sec;
+	p->st_mtim.tv_nsec = st.st_mtim.tv_nsec;
 	p->st_gid = st.st_gid;
 	p->st_nlink = st.st_nlink;
 	p->st_uid = st.st_uid;

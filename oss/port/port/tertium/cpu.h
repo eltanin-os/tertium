@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 #define c_sys_call syscall
@@ -51,6 +52,7 @@
 #define nil ((void *)0)
 
 typedef struct stat __fb_stat;
+typedef struct timespec __fb_time;
 
 typedef unsigned short     ushort;
 typedef unsigned char      uchar;
