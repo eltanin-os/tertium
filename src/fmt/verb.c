@@ -6,6 +6,8 @@
 #define getbase(a) \
 ((a)=='p'||(a)=='x'||(a)=='X')?16:((a)=='o')?8:((a)=='b')?2:10;
 
+static int __Vchar(Fmt *);
+static int __Verr(Fmt *);
 static int __Vflag(Fmt *);
 static int __Vint(Fmt *);
 static int __Vperc(Fmt *);
@@ -23,16 +25,18 @@ struct fmtverb VFmts[] = {
 	{ ' ', __Vflag },
 	{ 'X', __Vint  },
 	{ 'b', __Vint  },
+	{ 'c', __Vchar },
 	{ 'd', __Vint  },
 	{ 'h', __Vflag },
 	{ 'l', __Vflag },
 	{ 'o', __Vint  },
 	{ 'p', __Vint  },
 	{ 'u', __Vflag },
+	{ 'r', __Verr  },
 	{ 's', __Vstr  },
 	{ 'x', __Vint  },
 	{ 'z', __Vflag },
-	{ 0 },
+	{   0, nil     },
 };
 
 static int
@@ -91,6 +95,25 @@ fmtcat(Fmt *p, char *s, usize n)
 	if ((p->flags & FmtLeft) && fmtpad(p, n) < 0)
 		return -1;
 	return 0;
+}
+
+static int
+__Vchar(Fmt *p)
+{
+	char buf[8];
+	int x;
+	x = va_arg(p->args, int);
+	c_mem_cpy(buf, sizeof(x), &x);
+	buf[sizeof(x)] = '\0';
+	return fmtcat(p, buf, 0);
+}
+
+static int
+__Verr(Fmt *p)
+{
+	char buf[ERRBUFSIZ];
+	c_sys_errstr(buf, sizeof(buf));
+	return fmtcat(p, buf, 0);
 }
 
 static int
