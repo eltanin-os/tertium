@@ -202,7 +202,7 @@ void   c_sys_abort(void);
 int    c_sys_chdir(char *);
 int    c_sys_close(int);
 long   c_sys_conf(int);
-int    c_sys_dup(int);
+int    c_sys_dup(int, int);
 int    c_sys_errstr(char *, usize);
 void   c_sys_exit(int);
 int    c_sys_fchdir(int);
