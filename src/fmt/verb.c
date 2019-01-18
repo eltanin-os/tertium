@@ -173,13 +173,13 @@ __Vint(Fmt *p)
 	i = sizeof(buf)-1;
 	j = 0;
 	if (!l) buf[i] = '0';
-	for (; l; i--, j++) {
+	for (; l; j++) {
 		d = (l % b);
 		if ((p->flags & FmtComma) && j % 4 == 3) {
-			buf[i--] = ',';
+			buf[--i] = ',';
 			j++;
 		}
-		buf[i] = (d < 10) ? d + '0' : u + d - 10;
+		buf[--i] = (d < 10) ? d + '0' : u + d - 10;
 		l /= b;
 	}
 	if ((p->flags & FmtZero) && !(p->flags & (FmtLeft|FmtPrec))) {
