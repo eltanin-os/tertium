@@ -96,10 +96,12 @@ numflag:
 size
 c_fmt_fmt(Fmt *p, char *fmt)
 {
-	int n;
+	usize  nfmt;
+	int    n;
 	uchar *s;
 
 	s = (uchar *)fmt;
+	nfmt = p->nfmt;
 
 	for (; *s; s++) {
 		if (*s == '%') {
@@ -114,7 +116,8 @@ c_fmt_fmt(Fmt *p, char *fmt)
 				return -1;
 
 		c_arr_cat(p->mb, s, 1, sizeof(char));
+		p->nfmt++;
 	}
 
-	return 0;
+	return p->nfmt - nfmt;
 }

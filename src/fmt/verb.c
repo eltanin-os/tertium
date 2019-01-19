@@ -55,14 +55,15 @@ trycat(Fmt *p, char *s, usize m, usize n)
 			if ((p->fn)(p) < 0)
 				return -1;
 
-		w = 0;
+		w = t;
 		if (t > c_arr_avail(p->mb))
 			w = t - c_arr_avail(p->mb);
 
-		t -= w;
-		c_arr_cat(p->mb, s, t, sizeof(uchar));
-		s += t;
-		if (!(t = w))
+		c_arr_cat(p->mb, s, w, sizeof(uchar));
+		t       -= w;
+		s       += w;
+		p->nfmt += w;
+		if (!t)
 			return 0;
 	}
 }
