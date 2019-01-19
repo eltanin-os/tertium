@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
+size
 c_ioq_nput(Ioq *p, char *s, usize n)
 {
 	if (n > c_arr_avail(p->mb))
@@ -13,5 +13,6 @@ c_ioq_nput(Ioq *p, char *s, usize n)
 
 	c_mem_cpy(p->mb->p + p->mb->n, n, s);
 	p->mb->n += n;
-	return 0;
+
+	return n;
 }
