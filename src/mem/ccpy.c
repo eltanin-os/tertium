@@ -9,7 +9,7 @@ c_mem_ccpy(void *d, usize n, void *s, int c)
 	s1 = d;
 	s2 = s;
 
-	if (s1 > s2) {
+	if (s > d) {
 		for (; n; n--)
 			if ((*s1++ = *s2++) == c)
 				return s1;

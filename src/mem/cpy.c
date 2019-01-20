@@ -9,10 +9,10 @@ c_mem_cpy(void *d, usize n, void *s)
 	s1 = d;
 	s2 = s;
 
-	if (s1 == s2)
+	if (s == d)
 		return d;
 
-	if (s1 > s2) {
+	if (s > d) {
 		for (; n; n--)
 			*s1++ = *s2++;
 	} else {

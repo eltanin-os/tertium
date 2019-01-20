@@ -171,7 +171,7 @@ __Vint(Fmt *p)
 	}
 	b = getbase(p->r);
 	u = (p->r == 'X') ? 'A' : 'a';
-	i = sizeof(buf)-1;
+	i = sizeof(buf);
 	j = 0;
 	if (!l) buf[i] = '0';
 	for (; l; j++) {
