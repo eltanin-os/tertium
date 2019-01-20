@@ -19,7 +19,7 @@ c_fmt_install(int c, int (*f)(Fmt *))
 		}
 	}
 
-	if (c_arr_cat(&Fmts, "\0", sizeof(*p)) < 0)
+	if (c_arr_cat(&Fmts, "\0", sizeof("\0")) < 0)
 		return -1;
 
 	p = c_arr_get(&Fmts, i, sizeof(*p));

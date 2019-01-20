@@ -143,7 +143,9 @@ struct Taia {
 
 /* arr routines */
 usize  c_arr_avail(Membuf *);
+usize  c_arr_bytes(Membuf *);
 int    c_arr_cat(Membuf *, void *, usize);
+int    c_arr_ncat(Membuf *, void *, usize, usize);
 size   c_arr_fmt(Membuf *, char *, ...);
 void * c_arr_get(Membuf *, usize, usize);
 void   c_arr_init(Membuf *, char *, usize);
@@ -154,6 +156,7 @@ size   c_arr_vfmt(Membuf *, char *, va_list);
 /* dyn routines */
 void * c_dyn_alloc(Membuf *, usize, usize);
 int    c_dyn_cat(Membuf *, void *, usize);
+int    c_dyn_ncat(Membuf *, void *, usize, usize);
 size   c_dyn_fmt(Membuf *, char *, ...);
 size   c_dyn_vfmt(Membuf *, char *, va_list);
 
