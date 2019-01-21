@@ -202,6 +202,7 @@ vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 
 /* sys routines */
 void   c_sys_abort(void);
+size   c_sys_allrw(size (*)(int, void *, usize), int, void *, usize);
 int    c_sys_chdir(char *);
 int    c_sys_close(int);
 long   c_sys_conf(int);

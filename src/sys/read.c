@@ -4,22 +4,11 @@
 size
 c_sys_read(int f, void *p, usize n)
 {
-	size   r, t;
-	uchar *s;
+	size r;
 
-	s = p;
-	t = 0;
+	do {
+		r = c_sys_call(__NR_read, f, p, n);
+	} while ((r < 0) && (r == EINTR));
 
-	while (n) {
-		if ((r = c_sys_call(__NR_read, f, s, n)) < 0) {
-			if (r == EINTR)
-				continue;
-			break;
-		}
-		t += r;
-		s += r;
-		n -= r;
-	}
-
-	return t;
+	return r;
 }

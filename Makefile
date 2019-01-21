@@ -65,6 +65,7 @@ LIBCSRC=\
 	src/std/sort.c\
 	src/std/strtovl.c\
 	src/sys/abort.c\
+	src/sys/allrw.c\
 	src/sys/chdir.c\
 	src/sys/close.c\
 	src/sys/conf.c\
