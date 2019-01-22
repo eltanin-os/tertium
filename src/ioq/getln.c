@@ -4,23 +4,25 @@
 int
 c_ioq_getln(Ioq *p, Membuf *b)
 {
-	size r, n;
-	char *s;
+	size  r, n;
+	char *s, *nl;
 
-	for (;;) {
+	nl = nil;
+
+	while (!nl) {
 		if ((r = c_ioq_feed(p)) <= 0)
 			return r;
 
-		s = c_ioq_peek(p);
-		n = ((char *)c_mem_chr(s, r, '\n')-s)+1;
+		s  = c_ioq_peek(p);
+		if (!(nl = c_mem_chr(s, r, '\n')))
+			n = r;
+		else
+			n = (nl-s)+1;
 
-		if (c_arr_cat(b, s, MIN(n, r)) < 0)
+		if (c_arr_cat(b, s, n) < 0)
 			return -1;
 
 		c_ioq_seek(p, n);
-
-		if (n-1 < r)
-			break;
 	}
 
 	return 1;

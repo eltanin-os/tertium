@@ -44,21 +44,16 @@ trycat(Fmt *p, char *s, usize m, usize n)
 {
 	usize t, w;
 
-	if (n && m > (usize)-1/n)
+	if (OFLW_UM(usize, n, m))
 		return -1;
 
 	t = m*n;
-	w = 0;
 
 	for (;;) {
 		if (t > c_arr_avail(p->mb))
 			if ((p->fn)(p) < 0)
 				return -1;
-
-		w = t;
-		if (t > c_arr_avail(p->mb))
-			w = t - c_arr_avail(p->mb);
-
+		w = MIN(t, c_arr_avail(p->mb));
 		c_arr_cat(p->mb, s, w);
 		t       -= w;
 		s       += w;

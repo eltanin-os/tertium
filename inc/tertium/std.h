@@ -90,7 +90,7 @@ struct Fmt {
 	int      prec;
 	int      r;
 	int      width;
-	ushort   flags;
+	ulong    flags;
 	void    *farg;
 };
 

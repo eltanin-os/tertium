@@ -4,12 +4,17 @@
 size
 c_ioq_nput(Ioq *p, char *s, usize n)
 {
+	size r;
+
 	if (n > c_arr_avail(p->mb))
 		c_ioq_flush(p);
 
-	while (n > c_arr_avail(p->mb))
-		if (!(n -= (p->op)(p->fd, s, MIN(n, IOQBUFSIZ))))
-			return 0;
+	while (n > c_arr_avail(p->mb)) {
+		if ((r = (p->op)(p->fd, s, IOQBUFSIZ)) < 0)
+			return r;
+		n -= r;
+		s += r;
+	}
 
 	c_mem_cpy(p->mb->p + p->mb->n, n, s);
 	p->mb->n += n;
