@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_arr_fmt(Membuf *p, char *fmt, ...)
+c_arr_fmt(CArr *p, char *fmt, ...)
 {
 	va_list ap;
 	size n;

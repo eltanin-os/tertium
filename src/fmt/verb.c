@@ -6,15 +6,15 @@
 #define getbase(a) \
 ((a)=='p'||(a)=='x'||(a)=='X')?16:((a)=='o')?8:((a)=='b')?2:10;
 
-static int __Vchar(Fmt *);
-static int __Verr(Fmt *);
-static int __Vflag(Fmt *);
-static int __Vint(Fmt *);
-static int __Vperc(Fmt *);
-static int __Vstr(Fmt *);
+static int __Vchar(CFmt *);
+static int __Verr(CFmt *);
+static int __Vflag(CFmt *);
+static int __Vint(CFmt *);
+static int __Vperc(CFmt *);
+static int __Vstr(CFmt *);
 
 static uchar buf[64*sizeof(struct fmtverb)];
-Membuf Fmts = c_arr_INIT(buf);
+CArr Fmts = c_arr_INIT(buf);
 
 struct fmtverb VFmts[] = {
 	{ ',', __Vflag },
@@ -40,11 +40,11 @@ struct fmtverb VFmts[] = {
 };
 
 static int
-trycat(Fmt *p, char *s, usize m, usize n)
+trycat(CFmt *p, char *s, usize m, usize n)
 {
 	usize t, w;
 
-	if (OFLW_UM(usize, n, m))
+	if (C_OFLW_UM(usize, n, m))
 		return -1;
 
 	t = m*n;
@@ -53,7 +53,7 @@ trycat(Fmt *p, char *s, usize m, usize n)
 		if (t > c_arr_avail(p->mb))
 			if ((p->fn)(p) < 0)
 				return -1;
-		w = MIN(t, c_arr_avail(p->mb));
+		w = C_MIN(t, c_arr_avail(p->mb));
 		c_arr_cat(p->mb, s, w);
 		t       -= w;
 		s       += w;
@@ -64,7 +64,7 @@ trycat(Fmt *p, char *s, usize m, usize n)
 }
 
 static int
-fmtpad(Fmt *p, usize n)
+fmtpad(CFmt *p, usize n)
 {
 	int w;
 	w = p->width - n;
@@ -76,25 +76,25 @@ fmtpad(Fmt *p, usize n)
 }
 
 static int
-fmtcat(Fmt *p, char *s, usize n)
+fmtcat(CFmt *p, char *s, usize n)
 {
 	if (!s)
 		s = "<nil>";
 	if (!n)
-		n = (char *)c_mem_chr(s, USIZE_MAX, 0)-s;
-	if (!(p->flags & FmtLeft) && fmtpad(p, n) < 0)
+		n = (char *)c_mem_chr(s, C_USIZEMAX, 0)-s;
+	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
-	if ((p->flags & FmtPrec) && n > p->prec)
+	if ((p->flags & C_FMTPREC) && n > p->prec)
 		n = p->prec;
 	if (trycat(p, s, n, sizeof(uchar)) < 0)
 		return -1;
-	if ((p->flags & FmtLeft) && fmtpad(p, n) < 0)
+	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
 	return 0;
 }
 
 static int
-__Vchar(Fmt *p)
+__Vchar(CFmt *p)
 {
 	char buf[8];
 	int x;
@@ -105,56 +105,56 @@ __Vchar(Fmt *p)
 }
 
 static int
-__Verr(Fmt *p)
+__Verr(CFmt *p)
 {
-	char buf[ERRBUFSIZ];
+	char buf[C_ERRSIZ];
 	c_sys_errstr(buf, sizeof(buf));
 	return fmtcat(p, buf, 0);
 }
 
 static int
-__Vflag(Fmt *p)
+__Vflag(CFmt *p)
 {
 	switch(p->r){
 	case ',':
-		p->flags |= FmtComma;
+		p->flags |= C_FMTCOMMA;
 		break;
 	case '-':
-		p->flags |= FmtLeft;
+		p->flags |= C_FMTLEFT;
 		break;
 	case '+':
-		p->flags |= FmtSign;
+		p->flags |= C_FMTSIGN;
 		break;
 	case '#':
-		p->flags |= FmtSharp;
+		p->flags |= C_FMTSHARP;
 		break;
 	case ' ':
-		p->flags |= FmtSpace;
+		p->flags |= C_FMTSPACE;
 		break;
 	case 'u':
-		p->flags |= FmtUnsigned;
+		p->flags |= C_FMTUNSIGNED;
 		break;
 	case 'h':
-		if(p->flags & FmtShort)
-			p->flags |= FmtByte;
-		p->flags |= FmtShort;
+		if(p->flags & C_FMTSHORT)
+			p->flags |= C_FMTBYTE;
+		p->flags |= C_FMTSHORT;
 		break;
 	case 'l':
-		if(p->flags & FmtLong)
-			p->flags |= FmtVLong;
-		p->flags |= FmtLong;
+		if(p->flags & C_FMTLONG)
+			p->flags |= C_FMTVLONG;
+		p->flags |= C_FMTLONG;
 		break;
 	case 'z':
-		p->flags |= FmtLong;
+		p->flags |= C_FMTLONG;
 		if(sizeof(uintptr) == sizeof(uvlong))
-			p->flags |= FmtVLong;
+			p->flags |= C_FMTVLONG;
 		break;
 	}
 	return 1;
 }
 
 static int
-__Vint(Fmt *p)
+__Vint(CFmt *p)
 {
 	uvlong l;
 	int b, d, i, j, u, n;
@@ -171,20 +171,20 @@ __Vint(Fmt *p)
 	if (!l) buf[i] = '0';
 	for (; l; j++) {
 		d = (l % b);
-		if ((p->flags & FmtComma) && j % 4 == 3) {
+		if ((p->flags & C_FMTCOMMA) && j % 4 == 3) {
 			buf[--i] = ',';
 			j++;
 		}
 		buf[--i] = (d < 10) ? d + '0' : u + d - 10;
 		l /= b;
 	}
-	if ((p->flags & FmtZero) && !(p->flags & (FmtLeft|FmtPrec))) {
+	if ((p->flags & C_FMTZERO) && !(p->flags & (C_FMTLEFT|C_FMTPREC))) {
 		p->width -= sizeof(buf)-i;
 		for (; p->width > 0; p->width--)
 			buf[--i] = '0';
 		p->width = 0;
 	}
-	if (p->flags & FmtSharp) {
+	if (p->flags & C_FMTSHARP) {
 		if (b == 16)
 			buf[--i] = u+23; /* 'x' */
 		if (b == 16 || b == 8)
@@ -192,22 +192,22 @@ __Vint(Fmt *p)
 	}
 	if (n)
 		buf[--i] = '-';
-	else if (p->flags & FmtSign)
+	else if (p->flags & C_FMTSIGN)
 		buf[--i] = '+';
-	else if (p->flags & FmtSpace)
+	else if (p->flags & C_FMTSPACE)
 		buf[--i] = ' ';
 	return fmtcat(p, buf+i, sizeof(buf)-i);
 }
 
 static int
-__Vperc(Fmt *p)
+__Vperc(CFmt *p)
 {
 	p->prec = 1;
 	return fmtcat(p, "%", 1);;
 }
 
 static int
-__Vstr(Fmt *p)
+__Vstr(CFmt *p)
 {
 	char *s;
 	s = va_arg(p->args, char *);

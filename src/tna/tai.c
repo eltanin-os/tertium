@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tna_tai(Taia *ta, Tai *t)
+c_tna_tai(CTaia *ta, CTai *t)
 {
 	*t = ta->sec;
 }

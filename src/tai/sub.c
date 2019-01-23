@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tai_sub(Tai *t, Tai *u, Tai *v)
+c_tai_sub(CTai *t, CTai *u, CTai *v)
 {
 	t->x = u->x - v->x;
 }

@@ -2,14 +2,14 @@
 #include <tertium/std.h>
 
 int
-c_ioq_putfile(Ioq *p, char *s)
+c_ioq_putfile(CIoq *p, char *s)
 {
-	Stat st;
+	CStat st;
 	int r, fd;
 
 	r = 0;
 
-	if ((fd = c_sys_open(s, O_RDONLY, 0)) < 0)
+	if ((fd = c_sys_open(s, C_OREAD, 0)) < 0)
 		return -1;
 
 	if (c_sys_fstat(&st, fd) < 0)

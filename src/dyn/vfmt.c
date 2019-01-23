@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 static int
-growbuffer(Fmt *p)
+growbuffer(CFmt *p)
 {
 	p->mb->a *= 2;
 	if (!(p->mb->p = c_std_realloc(p->mb->p, p->mb->a, sizeof(uchar))))
@@ -12,9 +12,9 @@ growbuffer(Fmt *p)
 }
 
 size
-c_dyn_vfmt(Membuf *p, char *fmt, va_list args)
+c_dyn_vfmt(CArr *p, char *fmt, va_list args)
 {
-	Fmt f;
+	CFmt f;
 	size n;
 
 	if (p->p == nil) {

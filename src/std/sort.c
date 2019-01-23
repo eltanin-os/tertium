@@ -56,7 +56,7 @@ msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 
 	for (; i < m; i *= 2) {
 		for (j = 0; j < m; j += i * 2)
-			mrg(p, v, n, f, j, MIN(j+i, m), MIN(j+i*2, m));
+			mrg(p, v, n, f, j, C_MIN(j+i, m), C_MIN(j+i*2, m));
 		c_mem_cpy(v, t, p);
 	}
 }
@@ -64,7 +64,7 @@ msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 void
 c_std_sort(void *v, usize m, usize n, int (*f)(void *, void *))
 {
-	if (OFLW_UM(usize, n, m))
+	if (C_OFLW_UM(usize, n, m))
 		return;
 
 	if (m < 32) {

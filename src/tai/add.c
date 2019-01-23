@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tai_add(Tai *t, Tai *u, Tai *v)
+c_tai_add(CTai *t, CTai *u, CTai *v)
 {
 	t->x = u->x + v->x;
 }

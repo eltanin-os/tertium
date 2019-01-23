@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_sys_gettime(int id, Time *t)
+c_sys_gettime(int id, CTime *t)
 {
 	__fb_time tp;
 	if (c_sys_call(__NR_clock_gettime, id, &tp) < 0)

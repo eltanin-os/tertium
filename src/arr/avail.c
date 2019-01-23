@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 usize
-c_arr_avail(Membuf *p)
+c_arr_avail(CArr *p)
 {
 	return (p->a - p->n);
 }

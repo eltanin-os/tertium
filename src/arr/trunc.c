@@ -2,9 +2,9 @@
 #include <tertium/std.h>
 
 int
-c_arr_trunc(Membuf *p, usize m, usize n)
+c_arr_trunc(CArr *p, usize m, usize n)
 {
-	if (OFLW_UM(usize, m, n))
+	if (C_OFLW_UM(usize, m, n))
 		return -1;
 
 	if (m > c_arr_len(p, n))

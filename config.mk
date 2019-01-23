@@ -10,9 +10,7 @@ LDFLAGS  =
 
 # OSes:
 # port (system libc)
-# linux
 OSNAME  = port
 # Arch:
 # port (system libc)
-# x86_64
 OBJTYPE = port

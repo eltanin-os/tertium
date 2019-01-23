@@ -1,4 +1,6 @@
-#define ARGBEGIN \
+#include <tertium/os.h>
+
+#define C_ARGBEGIN \
 for (argc--, argv++;\
      *argv && (*argv)[0] == '-' && (*argv)[1]; argc--, argv++) {\
 	char _argc, _brk;\
@@ -9,26 +11,21 @@ for (argc--, argv++;\
 	for (_brk = 0, argv[0]++; (*argv)[0] && !_brk; argv[0]++) {\
 		_argc = (*argv)[0];\
 		switch (_argc)
-#define ARGF() \
+#define C_ARGF() \
 (((*argv)[1] == '\0' && !argv[1]) ? (char *)0 :\
 (_brk = 1, ((*argv)[1] != '\0') ? (&(*argv)[1]) : (argc--, argv++, *argv)))
-#define EARGF(x) \
-(((*argv)[1] == '\0' && !argv[1]) ? ((x), abort(), (char *)0) :\
+#define C_EARGF(x) \
+(((*argv)[1] == '\0' && !argv[1]) ? ((x), c_sys_abort(), (char *)0) :\
 (_brk = 1, ((*argv)[1] != '\0') ? (&(*argv)[1]) : (argc--, argv++, *argv)))
-#define ARGC() _argc
-#define ARGEND } }
+#define C_ARGC() _argc
+#define C_ARGEND } }
 
-#define MIN(a, b) (((a) > (b)) ? (b) : (a))
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define NELEM(a)  (sizeof((a))/sizeof((a)[0]))
+#define C_MIN(a, b) (((a) > (b)) ? (b) : (a))
+#define C_MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define C_NELEM(a)  (sizeof((a))/sizeof((a)[0]))
 
-#define OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
-#define OFLW_UA(a, b)    ((b) > (a)-1)
-
-#define getprogname( ) argv0
-#define setprogname(x) argv0 = (x)
-
-#define offsetof(a, b) (ulong)(&(((a *)0)->b))
+#define C_OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
+#define C_OFLW_UA(a, b)    ((b) > (a)-1)
 
 /* arr macros */
 #define c_arr_INIT(a) { sizeof((a)), 0, (a) }
@@ -38,54 +35,57 @@ for (argc--, argv++;\
 
 /* fmt macros */
 enum {
-	FmtWidth    = 1 << 0,
-	FmtLeft     = 1 << 1,
-	FmtPrec     = 1 << 2,
-	FmtSharp    = 1 << 3,
-	FmtSpace    = 1 << 4,
-	FmtSign     = 1 << 5,
-	FmtZero     = 1 << 6,
-	FmtUnsigned = 1 << 7,
-	FmtShort    = 1 << 8,
-	FmtLong     = 1 << 9,
-	FmtVLong    = 1 << 10,
-	FmtComma    = 1 << 11,
-	FmtByte     = 1 << 12,
-	FmtFlag     = 1 << 13,
+	C_FMTWIDTH    = 1 << 0,
+	C_FMTLEFT     = 1 << 1,
+	C_FMTPREC     = 1 << 2,
+	C_FMTSHARP    = 1 << 3,
+	C_FMTSPACE    = 1 << 4,
+	C_FMTSIGN     = 1 << 5,
+	C_FMTZERO     = 1 << 6,
+	C_FMTUNSIGNED = 1 << 7,
+	C_FMTSHORT    = 1 << 8,
+	C_FMTLONG     = 1 << 9,
+	C_FMTVLONG    = 1 << 10,
+	C_FMTCOMMA    = 1 << 11,
+	C_FMTBYTE     = 1 << 12,
+	C_FMTFLAG     = 1 << 13,
 };
 
 /* ioq macros */
-#define FD0 0
-#define FD1 1
-#define FD2 2
-#define IOQBUFSIZ 8192
-#define ERRBUFSIZ 512
+#define C_FD0 0
+#define C_FD1 1
+#define C_FD2 2
+#define C_BIOSIZ 8192
+#define C_ERRSIZ 512
 #define c_ioq_INIT(a, b, c) {(b), (c), (a) }
 
 /* std macros */
 #define c_std_free(a) { c_std_free_((a)); a = c_std_alloc(0, 1); }
+#define c_std_getprogname( ) argv0
+#define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
+#define c_std_setprogname(x) argv0 = (x)
 
 /* tai macros */
-#define TAI_PACK 8
+#define C_TAI_PACK 8
 
-/* taia macros */
-#define TAIA_PACK 16
+/* tna macros */
+#define C_TAIA_PACK 16
 
-typedef struct Membuf Membuf;
+typedef struct CArr CArr;
 
-struct Membuf {
+struct CArr {
 	usize  a;
 	usize  n;
 	uchar *p;
 };
 
-typedef struct Fmt Fmt;
+typedef struct CFmt CFmt;
 
-struct Fmt {
-	Membuf  *mb;
+struct CFmt {
+	CArr    *mb;
 	va_list  args;
 	size   (*op)(int, void *, usize);
-	int    (*fn)(Fmt *);
+	int    (*fn)(CFmt *);
 	usize    nfmt;
 	int      prec;
 	int      r;
@@ -94,22 +94,22 @@ struct Fmt {
 	void    *farg;
 };
 
-typedef struct Time Time;
+typedef struct CTime CTime;
 
-struct Time {
+struct CTime {
 	long tv_sec;
 	long tv_nsec;
 };
 
-typedef struct Stat Stat;
+typedef struct CStat CStat;
 
-struct Stat {
+struct CStat {
 	vlong  st_size;
 	ulong  st_blksize;
 	ulong  st_blocks;
-	Time   st_atim;
-	Time   st_ctim;
-	Time   st_mtim;
+	CTime  st_atim;
+	CTime  st_ctim;
+	CTime  st_mtim;
 	short  st_gid;
 	short  st_nlink;
 	short  st_uid;
@@ -119,67 +119,67 @@ struct Stat {
 	ushort st_rdev;
 };
 
-typedef struct Ioq Ioq;
+typedef struct CIoq CIoq;
 
-struct Ioq {
-	Membuf *mb;
+struct CIoq {
+	CArr *mb;
 	size  (*op)(int, void *, usize);
 	int     fd;
 };
 
-typedef struct Tai Tai;
+typedef struct CTai CTai;
 
-struct Tai {
+struct CTai {
 	u64int x;
 };
 
-typedef struct Taia Taia;
+typedef struct CTaia CTaia;
 
-struct Taia {
-	Tai   sec;
+struct CTaia {
+	CTai  sec;
 	ulong atto;
 	ulong nano;
 };
 
 /* arr routines */
-usize  c_arr_avail(Membuf *);
-usize  c_arr_bytes(Membuf *);
-int    c_arr_cat(Membuf *, void *, usize);
-int    c_arr_ncat(Membuf *, void *, usize, usize);
-size   c_arr_fmt(Membuf *, char *, ...);
-void * c_arr_get(Membuf *, usize, usize);
-void   c_arr_init(Membuf *, char *, usize);
-usize  c_arr_len(Membuf *, usize);
-int    c_arr_trunc(Membuf *, usize, usize);
-size   c_arr_vfmt(Membuf *, char *, va_list);
+usize  c_arr_avail(CArr *);
+usize  c_arr_bytes(CArr *);
+int    c_arr_cat(CArr *, void *, usize);
+int    c_arr_ncat(CArr *, void *, usize, usize);
+size   c_arr_fmt(CArr *, char *, ...);
+void * c_arr_get(CArr *, usize, usize);
+void   c_arr_init(CArr *, char *, usize);
+usize  c_arr_len(CArr *, usize);
+int    c_arr_trunc(CArr *, usize, usize);
+size   c_arr_vfmt(CArr *, char *, va_list);
 
 /* dyn routines */
-void * c_dyn_alloc(Membuf *, usize, usize);
-int    c_dyn_cat(Membuf *, void *, usize);
-int    c_dyn_ncat(Membuf *, void *, usize, usize);
-size   c_dyn_fmt(Membuf *, char *, ...);
-size   c_dyn_vfmt(Membuf *, char *, va_list);
+void * c_dyn_alloc(CArr *, usize, usize);
+int    c_dyn_cat(CArr *, void *, usize);
+int    c_dyn_ncat(CArr *, void *, usize, usize);
+size   c_dyn_fmt(CArr *, char *, ...);
+size   c_dyn_vfmt(CArr *, char *, va_list);
 
 /* fmt routines */
-int  c_fmt_fdflush(Fmt *);
-void c_fmt_fdinit(Fmt *, int, Membuf *, size (*)(int, void *, usize));
-size c_fmt_fmt(Fmt *, char *);
-int  c_fmt_install(int, int (*)(Fmt *));
+int  c_fmt_fdflush(CFmt *);
+void c_fmt_fdinit(CFmt *, int, CArr *, size (*)(int, void *, usize));
+size c_fmt_fmt(CFmt *, char *);
+int  c_fmt_install(int, int (*)(CFmt *));
 
 /* ioq routines */
-size   c_ioq_feed(Ioq *);
-int    c_ioq_flush(Ioq *);
-size   c_ioq_fmt(Ioq *, char *, ...);
-size   c_ioq_get(Ioq *, char *, usize);
-int    c_ioq_getln(Ioq *, Membuf *);
-void   c_ioq_init(Ioq *, int, Membuf *, size (*)(int, void *, usize));
-size   c_ioq_nput(Ioq *, char *, usize);
-void * c_ioq_peek(Ioq *);
-size   c_ioq_put(Ioq *, char *);
-int    c_ioq_putfd(Ioq *, int, usize);
-int    c_ioq_putfile(Ioq *, char *);
-void   c_ioq_seek(Ioq *, usize);
-size   c_ioq_vfmt(Ioq *, char *, va_list);
+size   c_ioq_feed(CIoq *);
+int    c_ioq_flush(CIoq *);
+size   c_ioq_fmt(CIoq *, char *, ...);
+size   c_ioq_get(CIoq *, char *, usize);
+int    c_ioq_getln(CIoq *, CArr *);
+void   c_ioq_init(CIoq *, int, CArr *, size (*)(int, void *, usize));
+size   c_ioq_nput(CIoq *, char *, usize);
+void * c_ioq_peek(CIoq *);
+size   c_ioq_put(CIoq *, char *);
+int    c_ioq_putfd(CIoq *, int, usize);
+int    c_ioq_putfile(CIoq *, char *);
+void   c_ioq_seek(CIoq *, usize);
+size   c_ioq_vfmt(CIoq *, char *, va_list);
 
 /* mem routines */
 void * c_mem_ccpy(void *, usize, void *, int);
@@ -210,44 +210,44 @@ int    c_sys_dup(int, int);
 int    c_sys_errstr(char *, usize);
 void   c_sys_exit(int);
 int    c_sys_fchdir(int);
-int    c_sys_fstat(Stat *, int);
+int    c_sys_fstat(CStat *, int);
 char * c_sys_getenv(char *);
 short  c_sys_getgid(void);
-int    c_sys_gettime(int, Time *);
+int    c_sys_gettime(int, CTime *);
 short  c_sys_getuid(void);
-int    c_sys_lstat(Stat *, char *);
+int    c_sys_lstat(CStat *, char *);
 void * c_sys_mmap(void *, usize, int, int, int, int);
 int    c_sys_munmap(void *, usize);
 int    c_sys_open(char *, int, int);
 size   c_sys_read(int, void *, usize);
 vlong  c_sys_seek(int, vlong, int);
-int    c_sys_stat(Stat *, char *);
+int    c_sys_stat(CStat *, char *);
 int    c_sys_unlink(char *);
 size   c_sys_write(int, void *, usize);
 
 /* tai routines */
-void   c_tai_add(Tai *, Tai *, Tai *);
-double c_tai_approx(Tai *);
-int    c_tai_less(Tai *, Tai *);
-void   c_tai_pack(char *, Tai *);
-void   c_tai_now(Tai *);
-void   c_tai_sub(Tai *, Tai *, Tai *);
-void   c_tai_unpack(char *, Tai *);
+void   c_tai_add(CTai *, CTai *, CTai *);
+double c_tai_approx(CTai *);
+int    c_tai_less(CTai *, CTai *);
+void   c_tai_pack(char *, CTai *);
+void   c_tai_now(CTai *);
+void   c_tai_sub(CTai *, CTai *, CTai *);
+void   c_tai_unpack(char *, CTai *);
 
 /* tna routines */
-void   c_tna_add(Taia *, Taia *, Taia *);
-double c_tna_approx(Taia *);
-double c_tna_frac(Taia *);
-void   c_tna_half(Taia *, Taia *);
-int    c_tna_less(Taia *, Taia *);
-void   c_tna_now(Taia *);
-void   c_tna_pack(char *, Taia *);
-void   c_tna_sub(Taia *, Taia *, Taia *);
-void   c_tna_tai(Taia *, Tai *);
-void   c_tna_unpack(char *, Taia *);
+void   c_tna_add(CTaia *, CTaia *, CTaia *);
+double c_tna_approx(CTaia *);
+double c_tna_frac(CTaia *);
+void   c_tna_half(CTaia *, CTaia *);
+int    c_tna_less(CTaia *, CTaia *);
+void   c_tna_now(CTaia *);
+void   c_tna_pack(char *, CTaia *);
+void   c_tna_sub(CTaia *, CTaia *, CTaia *);
+void   c_tna_tai(CTaia *, CTai *);
+void   c_tna_unpack(char *, CTaia *);
 
-extern Ioq *ioq0;
-extern Ioq *ioq1;
-extern Ioq *ioq2;
+extern CIoq *ioq0;
+extern CIoq *ioq1;
+extern CIoq *ioq2;
 extern char *argv0;
 extern char **environ;

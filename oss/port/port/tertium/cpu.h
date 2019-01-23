@@ -7,52 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-/* nix/std environment */
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <sys/syscall.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
-
-#define c_sys_call syscall
-
-#undef st_atime
-#undef st_mtime
-#undef st_ctime
-#undef offsetof
-
-#define USIZE_MAX SIZE_MAX
-#undef  SIZE_MAX
-#define SIZE_MAX  SSIZE_MAX
-
-#ifndef ARG_MAX
-#define ARG_MAX 4096
-#endif
-
-#ifndef CHILD_MAX
-#define CHILD_MAX 25
-#endif
-
-#ifndef OPEN_MAX
-#define OPEN_MAX 20
-#endif
-
-#ifndef PAGESIZE
-#define PAGESIZE getpagesize();
-#endif
-
-#ifndef SYMLOOP_MAX
-#define SYMLOOP_MAX 8
-#endif
-
 #define nil ((void *)0)
-
-typedef struct stat __fb_stat;
-typedef struct timespec __fb_time;
 
 typedef unsigned short     ushort;
 typedef unsigned char      uchar;

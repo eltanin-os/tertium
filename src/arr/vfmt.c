@@ -2,15 +2,15 @@
 #include <tertium/std.h>
 
 static int
-nomem(Fmt *p)
+nomem(CFmt *p)
 {
 	return -1;
 }
 
 size
-c_arr_vfmt(Membuf *p, char *fmt, va_list args)
+c_arr_vfmt(CArr *p, char *fmt, va_list args)
 {
-	Fmt f;
+	CFmt f;
 	size n;
 
 	c_fmt_fdinit(&f, 0, p, nil);

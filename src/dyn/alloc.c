@@ -2,11 +2,11 @@
 #include <tertium/std.h>
 
 void *
-c_dyn_alloc(Membuf *p, usize m, usize n)
+c_dyn_alloc(CArr *p, usize m, usize n)
 {
 	usize a, t;
 
-	if (OFLW_UM(usize, m, n))
+	if (C_OFLW_UM(usize, m, n))
 		return nil;
 
 	t = m*n;

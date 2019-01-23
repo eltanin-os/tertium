@@ -2,10 +2,10 @@
 #include <tertium/std.h>
 
 int
-c_ioq_putfd(Ioq *p, int fd, usize n)
+c_ioq_putfd(CIoq *p, int fd, usize n)
 {
 	size r;
-	char buf[IOQBUFSIZ];
+	char buf[C_BIOSIZ];
 	void *mp;
 
 	if (!n)

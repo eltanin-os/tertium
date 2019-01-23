@@ -1,7 +1,7 @@
 struct fmtverb {
 	int c;
-	int (*f)(Fmt *);
+	int (*f)(CFmt *);
 };
 
-extern Membuf Fmts;
+extern CArr Fmts;
 extern struct fmtverb VFmts[];

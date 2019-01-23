@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 usize
-c_arr_len(Membuf *p, usize n)
+c_arr_len(CArr *p, usize n)
 {
 	return (p->n / n);
 }

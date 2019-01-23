@@ -4,7 +4,7 @@
 #include "verb.h"
 
 static int
-fmtfmt(Fmt *f, uchar *s)
+fmtfmt(CFmt *f, uchar *s)
 {
 	struct fmtverb *p;
 	usize n;
@@ -37,7 +37,7 @@ fmtfmt(Fmt *f, uchar *s)
 }
 
 static int
-fmtflag(Fmt *f, uchar *s)
+fmtflag(CFmt *f, uchar *s)
 {
 	int i, r, nfmt;
 
@@ -50,11 +50,11 @@ fmtflag(Fmt *f, uchar *s)
 
 		switch (f->r) {
 		case '.':
-			f->flags = FmtWidth|FmtPrec;
+			f->flags = C_FMTWIDTH|C_FMTPREC;
 			continue;
 		case '0':
-			if (!(f->flags & FmtWidth)) {
-				f->flags |= FmtZero;
+			if (!(f->flags & C_FMTWIDTH)) {
+				f->flags |= C_FMTZERO;
 				continue;
 			}
 			/* FALLTHROUGH */
@@ -65,23 +65,23 @@ fmtflag(Fmt *f, uchar *s)
 				i = i * 10 + *s - '0';
 			s--; nfmt--;
 numflag:
-			if (f->flags & FmtWidth) {
-				f->flags |= FmtPrec;
+			if (f->flags & C_FMTWIDTH) {
+				f->flags |= C_FMTPREC;
 				f->prec = i;
 			} else {
-				f->flags |= FmtWidth;
+				f->flags |= C_FMTWIDTH;
 				f->width = i;
 			}
 			continue;
 		case '*':
 			if ((i = va_arg(f->args, int)) < 0) {
-				if (f->flags & FmtPrec) {
-					f->flags &= ~FmtPrec;
+				if (f->flags & C_FMTPREC) {
+					f->flags &= ~C_FMTPREC;
 					f->prec = 0;
 					continue;
 				}
 				i = -i;
-				f->flags |= FmtLeft;
+				f->flags |= C_FMTLEFT;
 			}
 			goto numflag;
 		}
@@ -94,7 +94,7 @@ numflag:
 }
 
 size
-c_fmt_fmt(Fmt *p, char *fmt)
+c_fmt_fmt(CFmt *p, char *fmt)
 {
 	usize  nfmt;
 	int    n;

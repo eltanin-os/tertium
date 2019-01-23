@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_ioq_getln(Ioq *p, Membuf *b)
+c_ioq_getln(CIoq *p, CArr *b)
 {
 	size  r, n;
 	char *s, *nl;

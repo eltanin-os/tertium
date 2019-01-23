@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_sys_lstat(Stat *p, char *s)
+c_sys_lstat(CStat *p, char *s)
 {
 	__fb_stat st;
 	if (c_sys_call(__NR_lstat, s, &st) < 0)

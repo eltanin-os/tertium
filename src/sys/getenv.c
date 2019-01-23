@@ -10,7 +10,7 @@ c_sys_getenv(char *s)
 	if (!s || !environ)
 		return nil;
 
-	n = (char *)c_mem_chr(s, USIZE_MAX, 0)-s;
+	n = (char *)c_mem_chr(s, C_USIZEMAX, 0)-s;
 
 	p = environ;
 	for (; *p; p++)

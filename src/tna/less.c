@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_tna_less(Taia *t, Taia *u)
+c_tna_less(CTaia *t, CTaia *u)
 {
 	if (t->sec.x < u->sec.x ||
 	    t->nano  < u->nano)

@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_tai_less(Tai *t, Tai *u)
+c_tai_less(CTai *t, CTai *u)
 {
 	return t->x < u->x;
 }

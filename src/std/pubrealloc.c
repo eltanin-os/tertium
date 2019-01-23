@@ -103,17 +103,17 @@ segbrk(uintptr p)
 static void
 wrtmsg(char *p1, char *p2, char *p3, char *p4)
 {
-	c_sys_write(1, p1, (char *)c_mem_chr(p1, USIZE_MAX, 0)-p1);
-	c_sys_write(1, p2, (char *)c_mem_chr(p2, USIZE_MAX, 0)-p2);
-	c_sys_write(1, p3, (char *)c_mem_chr(p3, USIZE_MAX, 0)-p3);
-	c_sys_write(1, p4, (char *)c_mem_chr(p4, USIZE_MAX, 0)-p4);
+	c_sys_write(1, p1, (char *)c_mem_chr(p1, C_USIZEMAX, 0)-p1);
+	c_sys_write(1, p2, (char *)c_mem_chr(p2, C_USIZEMAX, 0)-p2);
+	c_sys_write(1, p3, (char *)c_mem_chr(p3, C_USIZEMAX, 0)-p3);
+	c_sys_write(1, p4, (char *)c_mem_chr(p4, C_USIZEMAX, 0)-p4);
 }
 
 static void
 wrterr(char *p)
 {
 	die++;
-	wrtmsg(getprogname(), earg, " error: ", p);
+	wrtmsg(c_std_getprogname(), earg, " error: ", p);
 	c_sys_abort();
 }
 
@@ -340,7 +340,7 @@ allocchunks(int bits)
 	if (!(pp = allocpages(mpagesize)))
 		return 0;
 
-	l = (long)offsetof(struct pginfo, bits[0]);
+	l = (long)c_std_offsetof(struct pginfo, bits[0]);
 	l += (long)sizeof(bp->bits[0])*(((mpagesize>>bits)+MBITS-1)/MBITS);
 
 	if ((1<<bits) <= l+l) {

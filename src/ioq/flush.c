@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_ioq_flush(Ioq *p)
+c_ioq_flush(CIoq *p)
 {
 	(p->op)(p->fd, p->mb->p, p->mb->n);
 	p->mb->n = 0;

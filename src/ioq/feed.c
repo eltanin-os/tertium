@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_ioq_feed(Ioq *p)
+c_ioq_feed(CIoq *p)
 {
 	size r;
 

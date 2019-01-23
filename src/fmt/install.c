@@ -4,7 +4,7 @@
 #include "verb.h"
 
 int
-c_fmt_install(int c, int (*f)(Fmt *))
+c_fmt_install(int c, int (*f)(CFmt *))
 {
 	struct fmtverb *p;
 	int i;

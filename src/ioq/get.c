@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 static usize
-extract(Ioq *p, char *b, usize n)
+extract(CIoq *p, char *b, usize n)
 {
 	if (n > p->mb->n)
 		n = p->mb->n;
@@ -15,7 +15,7 @@ extract(Ioq *p, char *b, usize n)
 }
 
 size
-c_ioq_get(Ioq *p, char *b, usize n)
+c_ioq_get(CIoq *p, char *b, usize n)
 {
 	size r;
 

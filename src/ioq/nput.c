@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_ioq_nput(Ioq *p, char *s, usize n)
+c_ioq_nput(CIoq *p, char *s, usize n)
 {
 	size r;
 
@@ -10,7 +10,7 @@ c_ioq_nput(Ioq *p, char *s, usize n)
 		c_ioq_flush(p);
 
 	while (n > c_arr_avail(p->mb)) {
-		if ((r = (p->op)(p->fd, s, IOQBUFSIZ)) < 0)
+		if ((r = (p->op)(p->fd, s, C_BIOSIZ)) < 0)
 			return r;
 		n -= r;
 		s += r;

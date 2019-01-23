@@ -6,7 +6,7 @@
 void *
 c_std_realloc(void *p, usize m, usize n)
 {
-	if (OFLW_UM(usize, m, n))
+	if (C_OFLW_UM(usize, m, n))
 		return nil;
 
 	return pubrealloc(p, m*n, " in c_std_realloc():");
