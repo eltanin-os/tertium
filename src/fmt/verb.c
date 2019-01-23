@@ -71,7 +71,6 @@ fmtpad(CFmt *p, usize n)
 	for (; w > 0; w--)
 		if (trycat(p, " ", 1, sizeof(uchar)) < 0)
 			return -1;
-	p->width = 0;
 	return 0;
 }
 
@@ -82,10 +81,10 @@ fmtcat(CFmt *p, char *s, usize n)
 		s = "<nil>";
 	if (!n)
 		n = (char *)c_mem_chr(s, C_USIZEMAX, 0)-s;
-	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
-		return -1;
 	if ((p->flags & C_FMTPREC) && n > p->prec)
 		n = p->prec;
+	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
+		return -1;
 	if (trycat(p, s, n, sizeof(uchar)) < 0)
 		return -1;
 	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
