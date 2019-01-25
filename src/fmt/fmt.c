@@ -41,6 +41,10 @@ fmtflag(CFmt *f, uchar *s)
 {
 	int i, r, nfmt;
 
+	f->flags = 0;
+	f->width = 0;
+	f->prec  = 0;
+
 	nfmt = 0;
 
 	for (;;) {
