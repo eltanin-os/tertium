@@ -31,6 +31,13 @@ LIBCSRC=\
 	src/fmt/fmt.c\
 	src/fmt/install.c\
 	src/fmt/verb.c\
+	src/hsh/all.c\
+	src/hsh/crc32b.c\
+	src/hsh/crc32p.c\
+	src/hsh/edf.c\
+	src/hsh/fletcher16.c\
+	src/hsh/putfd.c\
+	src/hsh/putfile.c\
 	src/ioq/feed.c\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\

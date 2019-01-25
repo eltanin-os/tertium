@@ -71,6 +71,7 @@ enum {
 /* tna macros */
 #define C_TAIA_PACK 16
 
+/* arr types */
 typedef struct CArr CArr;
 
 struct CArr {
@@ -79,6 +80,7 @@ struct CArr {
 	uchar *p;
 };
 
+/* fmt types */
 typedef struct CFmt CFmt;
 
 struct CFmt {
@@ -94,14 +96,38 @@ struct CFmt {
 	void    *farg;
 };
 
+/* hsh types */
+typedef struct CH32md CH32md;
+typedef struct CH32st CH32st;
+
+struct CH32md {
+	int (*init)(CH32st *);
+	int (*update)(CH32st *, char *, usize);
+	int (*end)(CH32st *);
+};
+
+struct CH32st {
+	u32int a;
+	u32int b;
+};
+
+/* ioq types */
+typedef struct CIoq CIoq;
+
+struct CIoq {
+	CArr  *mb;
+	size (*op)(int, void *, usize);
+	int    fd;
+};
+
+/* sys types */
 typedef struct CTime CTime;
+typedef struct CStat CStat;
 
 struct CTime {
 	long tv_sec;
 	long tv_nsec;
 };
-
-typedef struct CStat CStat;
 
 struct CStat {
 	vlong  st_size;
@@ -119,20 +145,14 @@ struct CStat {
 	ushort st_rdev;
 };
 
-typedef struct CIoq CIoq;
-
-struct CIoq {
-	CArr *mb;
-	size  (*op)(int, void *, usize);
-	int     fd;
-};
-
+/* tai types */
 typedef struct CTai CTai;
 
 struct CTai {
 	u64int x;
 };
 
+/* tna types */
 typedef struct CTaia CTaia;
 
 struct CTaia {
@@ -165,6 +185,11 @@ int  c_fmt_fdflush(CFmt *);
 void c_fmt_fdinit(CFmt *, int, CArr *, size (*)(int, void *, usize));
 size c_fmt_fmt(CFmt *, char *);
 int  c_fmt_install(int, int (*)(CFmt *));
+
+/* hsh routines */
+u32int c_hsh_all(CH32md *, char *, usize);
+u32int c_hsh_putfile(CH32md *, char *);
+u32int c_hsh_putfd(CH32md *, int, usize);
 
 /* ioq routines */
 size   c_ioq_feed(CIoq *);
@@ -246,8 +271,17 @@ void   c_tna_sub(CTaia *, CTaia *, CTaia *);
 void   c_tna_tai(CTaia *, CTai *);
 void   c_tna_unpack(char *, CTaia *);
 
+/* hsh variables */
+extern CH32md *c_hsh_crc32b;
+extern CH32md *c_hsh_crc32p;
+extern CH32md *c_hsh_edf;
+extern CH32md *c_hsh_fletcher16;
+
+/* ioq variables */
 extern CIoq *ioq0;
 extern CIoq *ioq1;
 extern CIoq *ioq2;
+
+/* std variables */
 extern char *argv0;
 extern char **environ;
