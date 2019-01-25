@@ -8,6 +8,9 @@ c_ioq_putfd(CIoq *p, int fd, usize n)
 	char buf[C_BIOSIZ];
 	void *mp;
 
+	if (!fd)
+		goto fallback;
+
 	if (!n)
 		return 0;
 
