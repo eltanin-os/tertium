@@ -7,11 +7,12 @@ int
 c_fmt_install(int c, int (*f)(CFmt *))
 {
 	struct fmtverb *p;
+	struct fmtverb  nf;
 	int i;
 
 	i = 0;
 
-	for (; i <= c_arr_len(&Fmts, sizeof(*p)); i++) {
+	for (; i < c_arr_len(&Fmts, sizeof(*p)); i++) {
 		p = c_arr_get(&Fmts, i, sizeof(*p));
 		if (p->c == c) {
 			p->f = f;
@@ -19,12 +20,11 @@ c_fmt_install(int c, int (*f)(CFmt *))
 		}
 	}
 
-	if (c_arr_cat(&Fmts, "\0", sizeof("\0")) < 0)
-		return -1;
+	nf.c = c;
+	nf.f = f;
 
-	p = c_arr_get(&Fmts, i, sizeof(*p));
-	p->c = c;
-	p->f = f;
+	if (c_arr_cat(&Fmts, &nf, sizeof(nf)) < 0)
+		return -1;
 
 	return 0;
 }
