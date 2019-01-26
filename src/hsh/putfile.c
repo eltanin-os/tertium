@@ -14,8 +14,7 @@ c_hsh_putfile(CH32md *p, char *s)
 	if (c_sys_fstat(&st, fd) < 0)
 		goto fail;
 
-	if ((r = c_hsh_putfd(p, fd, st.st_size)) < 0)
-		goto fail;
+	r = c_hsh_putfd(p, fd, st.st_size);
 
 	goto done;
 fail:

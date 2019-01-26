@@ -24,6 +24,9 @@ for (argc--, argv++;\
 #define C_MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define C_NELEM(a)  (sizeof((a))/sizeof((a)[0]))
 
+#define C_ISDOT(a)  ((a)[0]=='.' && ((a)[1]==0 || ((a)[1]=='.' && (a)[2]==0)))
+#define C_ISDASH(a) ((a)[0]=='-' && (a)[1]=='\0')
+
 #define C_OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
 #define C_OFLW_UA(a, b)    ((b) > (a)-1)
 

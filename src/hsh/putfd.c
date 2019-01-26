@@ -30,7 +30,7 @@ fallback:
 		p->update(&hs, buf, r);
 
 	if (r < 0)
-		return -1;
+		return 0;
 done:
 	p->end(&hs);
 	return hs.a;
