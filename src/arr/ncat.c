@@ -20,4 +20,3 @@ c_arr_ncat(CArr *p, void *v, usize m, usize n)
 
 	return 0;
 }
-

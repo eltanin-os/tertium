@@ -116,7 +116,7 @@ ASMSRC=\
 	oss/$(OSNAME)/$(OBJTYPE)/syscall.s
 
 # LIB PATH
-LIBC= lib/libc.a
+LIBC= lib/libtertium.a
 
 # LIB OBJS
 LIBCOBJ= $(LIBCSRC:.c=.o) $(ASMSRC:.s=.o)
