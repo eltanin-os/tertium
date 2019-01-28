@@ -4,5 +4,5 @@
 usize
 c_arr_len(CArr *p, usize n)
 {
-	return (p->n / n);
+	return (n ? (p->n / n) : 0);
 }

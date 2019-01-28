@@ -165,7 +165,7 @@ __Vint(CFmt *p)
 	}
 	b = getbase(p->r);
 	u = (p->r == 'X') ? 'A' : 'a';
-	i = sizeof(buf);
+	i = sizeof(buf)-1;
 	j = 0;
 	if (!l) buf[i] = '0';
 	for (; l; j++) {
