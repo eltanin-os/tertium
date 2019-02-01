@@ -167,9 +167,10 @@ struct CTaia {
 /* arr routines */
 usize  c_arr_avail(CArr *);
 usize  c_arr_bytes(CArr *);
-int    c_arr_cat(CArr *, void *, usize);
-int    c_arr_ncat(CArr *, void *, usize, usize);
+size   c_arr_cat(CArr *, void *, usize, usize);
+size   c_arr_cats(CArr *, char *);
 size   c_arr_fmt(CArr *, char *, ...);
+void * c_arr_bget(CArr *, usize);
 void * c_arr_get(CArr *, usize, usize);
 void   c_arr_init(CArr *, char *, usize);
 usize  c_arr_len(CArr *, usize);
@@ -178,8 +179,8 @@ size   c_arr_vfmt(CArr *, char *, va_list);
 
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);
-int    c_dyn_cat(CArr *, void *, usize);
-int    c_dyn_ncat(CArr *, void *, usize, usize);
+size   c_dyn_cat(CArr *, void *, usize, usize);
+size   c_dyn_cats(CArr *, char *);
 size   c_dyn_fmt(CArr *, char *, ...);
 size   c_dyn_vfmt(CArr *, char *, va_list);
 

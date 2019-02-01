@@ -54,7 +54,7 @@ trycat(CFmt *p, char *s, usize m, usize n)
 			if ((p->fn)(p) < 0)
 				return -1;
 		w = C_MIN(t, c_arr_avail(p->mb));
-		c_arr_cat(p->mb, s, w);
+		c_arr_cat(p->mb, s, w, sizeof(uchar));
 		t       -= w;
 		s       += w;
 		p->nfmt += w;
