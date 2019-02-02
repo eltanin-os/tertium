@@ -9,13 +9,13 @@ c_hsh_putfd(CH32md *p, int fd, usize n)
 	char   buf[C_BIOSIZ];
 	void  *mp;
 
-	if (!fd)
-		goto fallback;
-
 	if (!n)
 		return 0;
 
 	p->init(&hs);
+
+	if (!fd)
+		goto fallback;
 
 	if ((mp = c_sys_mmap(0, n, PROT_READ, MAP_SHARED, fd, 0)) == (void *)-1)
 		goto fallback;

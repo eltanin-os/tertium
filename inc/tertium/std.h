@@ -1,5 +1,6 @@
 #include <tertium/os.h>
 
+/* arg macros */
 #define C_ARGBEGIN \
 for (argc--, argv++;\
      *argv && (*argv)[0] == '-' && (*argv)[1]; argc--, argv++) {\
@@ -19,16 +20,6 @@ for (argc--, argv++;\
 (_brk = 1, ((*argv)[1] != '\0') ? (&(*argv)[1]) : (argc--, argv++, *argv)))
 #define C_ARGC() _argc
 #define C_ARGEND } }
-
-#define C_MIN(a, b) (((a) > (b)) ? (b) : (a))
-#define C_MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define C_NELEM(a)  (sizeof((a))/sizeof((a)[0]))
-
-#define C_ISDOT(a)  ((a)[0]=='.' && ((a)[1]==0 || ((a)[1]=='.' && (a)[2]==0)))
-#define C_ISDASH(a) ((a)[0]=='-' && (a)[1]=='\0')
-
-#define C_OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
-#define C_OFLW_UA(a, b)    ((b) > (a)-1)
 
 /* arr macros */
 #define c_arr_INIT(a) { sizeof((a)), 0, (a) }
@@ -53,6 +44,17 @@ enum {
 	C_FMTBYTE     = 1 << 12,
 	C_FMTFLAG     = 1 << 13,
 };
+
+/* general macros */
+#define C_MIN(a, b) (((a) > (b)) ? (b) : (a))
+#define C_MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define C_NELEM(a)  (sizeof((a))/sizeof((a)[0]))
+
+#define C_ISDOT(a)  ((a)[0]=='.' && ((a)[1]==0 || ((a)[1]=='.' && (a)[2]==0)))
+#define C_ISDASH(a) ((a)[0]=='-' && (a)[1]=='\0')
+
+#define C_OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
+#define C_OFLW_UA(a, b)    ((b) > (a)-1)
 
 /* ioq macros */
 #define C_FD0 0
