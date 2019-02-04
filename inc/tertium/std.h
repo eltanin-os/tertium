@@ -76,6 +76,9 @@ enum {
 /* tna macros */
 #define C_TAIA_PACK 16
 
+/* sys macros */
+#define c_sys_call(...) c_sys_call_(__VA_ARGS__, nil)
+
 /* arr types */
 typedef struct CArr CArr;
 
@@ -234,6 +237,7 @@ vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 /* sys routines */
 void   c_sys_abort(void);
 size   c_sys_allrw(size (*)(int, void *, usize), int, void *, usize);
+vlong  c_sys_call_(vlong, ...);
 int    c_sys_chdir(char *);
 int    c_sys_close(int);
 long   c_sys_conf(int);
@@ -244,6 +248,7 @@ int    c_sys_fchdir(int);
 int    c_sys_fstat(CStat *, int);
 char * c_sys_getenv(char *);
 short  c_sys_getgid(void);
+char * c_sys_getsyserr(void);
 int    c_sys_gettime(int, CTime *);
 short  c_sys_getuid(void);
 int    c_sys_lstat(CStat *, char *);
@@ -253,6 +258,7 @@ int    c_sys_open(char *, int, int);
 size   c_sys_read(int, void *, usize);
 vlong  c_sys_seek(int, vlong, int);
 int    c_sys_stat(CStat *, char *);
+char * c_sys_strerror(int, char *, usize);
 int    c_sys_unlink(char *);
 size   c_sys_write(int, void *, usize);
 

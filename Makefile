@@ -73,6 +73,7 @@ LIBCSRC=\
 	src/std/strtovl.c\
 	src/sys/abort.c\
 	src/sys/allrw.c\
+	src/sys/call.c\
 	src/sys/chdir.c\
 	src/sys/close.c\
 	src/sys/conf.c\
@@ -84,6 +85,7 @@ LIBCSRC=\
 	src/sys/getenv.c\
 	src/sys/lstat.c\
 	src/sys/getgid.c\
+	src/sys/getsyserr.c\
 	src/sys/gettime.c\
 	src/sys/getuid.c\
 	src/sys/mmap.c\
@@ -92,6 +94,7 @@ LIBCSRC=\
 	src/sys/read.c\
 	src/sys/seek.c\
 	src/sys/stat.c\
+	src/sys/strerror.c\
 	src/sys/unlink.c\
 	src/sys/write.c\
 	src/tai/add.c\
