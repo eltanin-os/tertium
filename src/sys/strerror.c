@@ -92,10 +92,12 @@ c_sys_strerror(int e, char *s, usize n)
 {
 	int i;
 
-	*s = '\0';
+	*s = 0;
 
-	i = e ? 0 : C_INTMAX;
-	for (; i < C_NELEM(errlist); i++)
+	if (!e)
+		return nil;
+
+	for (i = 0; i < C_NELEM(errlist); i++)
 		if (errno == errlist[i].e) {
 			c_mem_cpy(s, C_MIN(n, errlist[i].n), errlist[i].s);
 			break;

@@ -23,7 +23,7 @@ c_dyn_cats(CArr *p, char *s)
 	}
 
 	p->n += r;
-	p->p[p->n] = '\0';
+	p->p[p->n] = 0;
 
 	return r;
 }

@@ -20,8 +20,7 @@ c_fmt_install(int c, int (*f)(CFmt *))
 		}
 	}
 
-	nf.c = c;
-	nf.f = f;
+	nf = (struct fmtverb){ c, f };
 
 	if (c_arr_cat(&Fmts, &nf, 1, sizeof(nf)) < 0)
 		return -1;

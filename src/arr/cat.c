@@ -16,7 +16,7 @@ c_arr_cat(CArr *p, void *v, usize m, usize n)
 
 	c_mem_cpy(p->p + p->n, t, v);
 	p->n += t;
-	p->p[p->n] = '\0';
+	p->p[p->n] = 0;
 
 	return t;
 }
