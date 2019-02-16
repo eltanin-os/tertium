@@ -18,5 +18,8 @@ c_arr_cats(CArr *p, char *s)
 			break;
 	}
 
+	p->n += r;
+	p->p[p->n] = 0;
+
 	return r;
 }
