@@ -3,8 +3,8 @@
 
 #include "alloc.h"
 
-void
+void *
 c_std_free_(void *p)
 {
-	pubrealloc(p, 0, " in c_std_free():");
+	return pubrealloc(p, 0, " in c_std_free():");
 }

@@ -25,6 +25,7 @@ LIBCSRC=\
 	src/dyn/cat.c\
 	src/dyn/cats.c\
 	src/dyn/fmt.c\
+	src/dyn/free.c\
 	src/dyn/vfmt.c\
 	src/fmt/fdflush.c\
 	src/fmt/fdinit.c\
