@@ -65,6 +65,7 @@ LIBCSRC=\
 	src/mem/set.c\
 	src/std/argv0.c\
 	src/std/alloc.c\
+	src/std/bsearch.c\
 	src/std/calloc.c\
 	src/std/exit.c\
 	src/std/free.c\
