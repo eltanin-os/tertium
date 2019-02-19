@@ -4,23 +4,16 @@
 size
 c_dyn_cat(CArr *p, void *v, usize m, usize n)
 {
-	usize t;
+	void *dst;
 
-	if (C_OFLW_UM(usize, m, n))
+	if (!c_dyn_alloc(p, m, n))
 		return -1;
 
-	t = m*n;
-	p->a = c_arr_avail(p) ? p->a : t;
-
-	while (t > c_arr_avail(p)) {
-		p->a *= 2;
-		if (!(p->p = c_std_realloc(p->p, p->a, sizeof(uchar))))
-			return -1;
-	}
-
-	c_mem_cpy(p->p + p->n, t, v);
-	p->n += t;
+	m  *= n;
+	dst = p->p + p->n;
+	c_mem_cpy(dst, m, v);
+	p->n += m;
 	p->p[p->n] = 0;
 
-	return t;
+	return m;
 }

@@ -4,20 +4,20 @@
 void *
 c_dyn_alloc(CArr *p, usize m, usize n)
 {
-	usize a, t;
+	usize a;
 
 	if (C_OFLW_UM(usize, m, n))
 		return nil;
 
-	t = m*n;
-	a = c_arr_avail(p) ? p->a : t;
+	m *= n;
+	a  = c_arr_avail(p) ? p->a : m >> 1;
 
-	for (; t > c_arr_avail(p);) {
+	while (m > c_arr_avail(p)) {
 		a *= 2;
 		if (!(p->p = c_std_realloc(p->p, a, sizeof(uchar))))
 			return nil;
 		p->a = a;
 	}
 
-	return (p->p+t);
+	return (p->p+a);
 }

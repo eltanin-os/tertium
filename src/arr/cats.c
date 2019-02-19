@@ -14,11 +14,11 @@ c_arr_cats(CArr *p, char *s)
 	for (;;) {
 		if (++r > c_arr_avail(p))
 			return -1;
-		if (!(*src++ = *dst++))
+		if (!(*dst++ = *src++))
 			break;
 	}
 
-	p->n += r;
+	p->n += --r;
 	p->p[p->n] = 0;
 
 	return r;

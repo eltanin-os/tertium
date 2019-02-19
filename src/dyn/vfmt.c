@@ -17,11 +17,8 @@ c_dyn_vfmt(CArr *p, char *fmt, va_list args)
 	CFmt f;
 	size n;
 
-	if (p->p == nil) {
-		p->a = 64;
-		if (!(p->p = c_std_alloc(p->a, sizeof(uchar))))
-			return -1;
-	}
+	if (!p->a && !c_dyn_alloc(p, 64, sizeof(uchar)))
+		return -1;
 
 	c_fmt_fdinit(&f, 0, p, nil);
 	f.farg = nil;

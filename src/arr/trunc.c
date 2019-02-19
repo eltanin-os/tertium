@@ -7,10 +7,12 @@ c_arr_trunc(CArr *p, usize m, usize n)
 	if (C_OFLW_UM(usize, m, n))
 		return -1;
 
-	if (m > c_arr_len(p, n))
+	m *= n;
+
+	if (m > c_arr_bytes(p))
 		return 0;
 
-	p->n = m*n;
+	p->n = m;
 
 	return 0;
 }
