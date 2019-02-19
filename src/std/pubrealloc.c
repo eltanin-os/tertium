@@ -103,10 +103,10 @@ segbrk(uintptr p)
 static void
 wrtmsg(char *p1, char *p2, char *p3, char *p4)
 {
-	c_sys_write(1, p1, (char *)c_mem_chr(p1, C_USIZEMAX, 0)-p1);
-	c_sys_write(1, p2, (char *)c_mem_chr(p2, C_USIZEMAX, 0)-p2);
-	c_sys_write(1, p3, (char *)c_mem_chr(p3, C_USIZEMAX, 0)-p3);
-	c_sys_write(1, p4, (char *)c_mem_chr(p4, C_USIZEMAX, 0)-p4);
+	c_sys_write(2, p1, (char *)c_mem_chr(p1, C_USIZEMAX, 0)-p1);
+	c_sys_write(2, p2, (char *)c_mem_chr(p2, C_USIZEMAX, 0)-p2);
+	c_sys_write(2, p3, (char *)c_mem_chr(p3, C_USIZEMAX, 0)-p3);
+	c_sys_write(2, p4, (char *)c_mem_chr(p4, C_USIZEMAX, 0)-p4);
 }
 
 static void
@@ -398,7 +398,7 @@ allocbytes(usize n)
 
 	j = 1;
 	i = n-1;
-	for (; i; i >>= 1)
+	while (i >>= 1)
 		j++;
 
 	if (!pagedir[j] && !allocchunks(j))
@@ -515,12 +515,8 @@ irealloc(void *p, usize n)
 	}
 
 	if ((np = imalloc(n))) {
-		if (!n || !o)
-			;
-		else if (o < n)
-			c_mem_cpy(np, o, p);
-		else
-			c_mem_cpy(np, n, p);
+		if (n && o)
+			c_mem_cpy(np, C_MIN(n, o), p);
 		ifree(p);
 	}
 

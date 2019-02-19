@@ -17,8 +17,7 @@ c_sys_call_(vlong num, ...)
 
 	va_start(ap, num);
 	for (i = 0; i < 8; i++)
-		if (!(args[i] = (void *)va_arg(ap, uintptr *)))
-			break;
+		args[i] = va_arg(ap, uintptr *);
 	va_end(ap);
 
 	if ((r = __asm_syscall(num, ARGS(args))) < 0)
