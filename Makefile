@@ -12,6 +12,7 @@ HDR=\
 # LIB SOURCE
 LIBCSRC=\
 	src/arr/avail.c\
+	src/arr/bget.c\
 	src/arr/bytes.c\
 	src/arr/cat.c\
 	src/arr/cats.c\
