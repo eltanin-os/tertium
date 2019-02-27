@@ -1,0 +1,23 @@
+.Dd February 27, 2019
+.Dt C_ARR_INIT 3
+.Os
+.Sh NAME
+.Nm c_arr_init
+.Nd Initialize an array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_arr_init "CArr *p" "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_arr_init
+function initializes the internal buffer of the array
+.Fa p
+to the buffer
+.Fa s
+of
+.Fa n
+bytes in size.

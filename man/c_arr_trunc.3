@@ -1,0 +1,27 @@
+.Dd February 27, 2019
+.Dt C_ARR_TRUNC 3
+.Os
+.Sh NAME
+.Nm c_arr_trunc
+.Nd truncate an array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_arr_trunc "CArr *p" "usize m" "usize n"
+.Sh DESCRIPTION
+The function reduces the number of initialized objects, each
+.Fa n
+bytes in size, to
+.Fa m
+in the array
+.Fa p .
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er EOVERFLOW
+Value too large to be stored in data type.
+.El

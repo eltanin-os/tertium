@@ -1,0 +1,34 @@
+.Dd February 27, 2019
+.Dt C_ARR_VFMT 3
+.Os
+.Sh NAME
+.Nm c_arr_vfmt
+.Nd concatenate formatted strings in an array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_arr_vfmt "CArr *p" "char *fmt" "va_list args"
+.Sh DESCRIPTION
+The
+.Fn c_arr_vfmt
+function appends a formatted string, as described in the format
+.Fa fmt ,
+in the array
+.Fa p .
+.Sh RETURN VALUES
+On success, the
+.Fn c_arr_vfmt
+function returns the number of copied bytes;
+Otherwise, the value \-1 is returned and
+.Va errno
+is set to indicate the error.
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er ENOMEM
+Not enough space.
+.El
+.Sh SEE ALSO
+.Xr c_arr_fmt 3

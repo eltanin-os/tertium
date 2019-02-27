@@ -1,0 +1,36 @@
+.Dd February 24, 2019
+.Dt c_arr_bget 3
+.Os
+.Sh NAME
+.Nm c_arr_bget
+.Nd get data of an array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void *
+.Fn c_arr_bget "CArr *p" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_arr_bget
+function returns a pointer to the byte in position
+.Fa n
+of the array
+.Fa p .
+.Sh RETURN VALUES
+On success, the
+.Fn c_arr_bget
+function returns a pointer to the requested byte;
+Otherwise, nil is returned and
+.Va errno
+is set to indicate the error.
+.Sh ERRORS
+.Fn c_arr_bget
+will fail if:
+.Bl -tag -width Er
+.It Bq Er ENOMEM
+Not enough space.
+.El
+.Sh SEE ALSO
+.Xr c_arr_get 3

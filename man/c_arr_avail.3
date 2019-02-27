@@ -1,0 +1,25 @@
+.Dd February 19, 2019
+.Dt C_ARR_AVAIL 3
+.Os
+.Sh NAME
+.Nm c_arr_avail
+.Nd calculate available memory in an array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft usize
+.Fn c_arr_avail "CArr *p"
+.Sh DESCRIPTION
+The
+.Fn c_arr_avail
+function calculates the available memory in the array
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_arr_avail
+function returns the number of uninitialized bytes in the given array.
+.Sh SEE ALSO
+.Xr c_arr_bytes 3 ,
+.Xr c_arr_len 3

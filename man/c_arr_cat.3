@@ -1,0 +1,38 @@
+.Dd February 26, 2019
+.Dt C_ARR_CAT 3
+.Os
+.Sh NAME
+.Nm c_arr_cat
+.Nd concatenate objects in an array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_arr_cat "CArr *p" "void *v" "usize m" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_arr_cat
+function appends
+.Fa m
+objects, each
+.Fa n
+bytes in size, to the array
+.Fa p .
+.Sh RETURN VALUES
+On success, the
+.Fn c_arr_cat
+function returns the number of copied bytes;
+Otherwise, \-1 is returned and
+.Va errno
+is set to indicate the error.
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er ENOMEM
+Not enough space.
+.It Bq Er EOVERFLOW
+Value too large to be stored in data type.
+.El
+.Sh SEE ALSO
+.Xr c_arr_cats 3

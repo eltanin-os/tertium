@@ -1,0 +1,27 @@
+.Dd February 27, 2019
+.Dt C_ARR_LEN 3
+.Os
+.Sh NAME
+.Nm c_arr_len
+.Nd calculate initialized objects in an array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft usize
+.Fn c_arr_len "CArr *p" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_arr_len
+function calculates the number of initialized objects, each of
+.Fa n
+bytes in size, in the array
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_arr_len
+function returns the number of initialized objects in the given array.
+.Sh SEE ALSO
+.Xr c_arr_avail 3 ,
+.Xr c_arr_bytes 3
