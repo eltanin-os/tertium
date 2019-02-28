@@ -115,12 +115,7 @@ c_fmt_fmt(CFmt *p, char *fmt)
 			continue;
 		}
 
-		if (c_arr_avail(p->mb) <= 1)
-			if ((p->fn)(p) < 0)
-				return -1;
-
-		c_arr_cat(p->mb, s, 1, sizeof(uchar));
-		p->nfmt++;
+		trycat(p, (char *)s, 1, sizeof(uchar));
 	}
 
 	return p->nfmt - nfmt;

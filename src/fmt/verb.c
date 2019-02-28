@@ -39,28 +39,46 @@ struct fmtverb VFmts[] = {
 	{   0, nil     },
 };
 
-static int
+static size
+nobuffer(CFmt *p, char *s, usize n)
+{
+	return c_sys_allrw(p->op, (uintptr)p->farg, s, C_MIN(n, C_BIOSIZ));
+}
+
+static size
+buffered(CFmt *p, char *s, usize n)
+{
+	size r;
+
+	if (n > c_arr_avail(p->mb) && p->fn(p) < 0)
+		return -1;
+
+	c_arr_cat(p->mb, s, (r = C_MIN(n, c_arr_avail(p->mb))), sizeof(uchar));
+
+	return r;
+}
+
+int
 trycat(CFmt *p, char *s, usize m, usize n)
 {
-	usize t, w;
+	size (*f)(CFmt *, char *, usize);
+	size r;
 
 	if (C_OFLW_UM(usize, n, m))
 		return -1;
 
-	t = m*n;
+	m *= n;
 
-	for (;;) {
-		if (t > c_arr_avail(p->mb))
-			if ((p->fn)(p) < 0)
-				return -1;
-		w = C_MIN(t, c_arr_avail(p->mb));
-		c_arr_cat(p->mb, s, w, sizeof(uchar));
-		t       -= w;
-		s       += w;
-		p->nfmt += w;
-		if (!t)
-			return 0;
+	f = p->mb->a ? buffered : nobuffer;
+	while (m) {
+		if ((r = f(p, s, m)) < 0)
+			return -1;
+		m -= r;
+		s += r;
+		p->nfmt += r;
 	}
+
+	return 0;
 }
 
 static int
