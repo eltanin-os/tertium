@@ -8,6 +8,9 @@ c_hsh_putfile(CH32md *p, char *s)
 	int    fd;
 	u32int r;
 
+	if (!c_mem_cmp(s, sizeof("<stdin>")-1, "<stdin>"))
+		return c_hsh_putfd(p, C_FD0, 0);
+
 	if ((fd = c_sys_open(s, C_OREAD, 0)) < 0)
 		return 0;
 
