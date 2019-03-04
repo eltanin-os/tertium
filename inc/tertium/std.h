@@ -182,6 +182,12 @@ usize  c_arr_len(CArr *, usize);
 int    c_arr_trunc(CArr *, usize, usize);
 size   c_arr_vfmt(CArr *, char *, va_list);
 
+/* dst routines */
+void c_dst_qinit(CArr *, char *, usize);
+int  c_dst_qpop(CArr *, CArr *, usize, usize);
+int  c_dst_qpops(CArr *, CArr *);
+int  c_dst_qpush(CArr *, void *, usize, usize);
+
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);
 size   c_dyn_cat(CArr *, void *, usize, usize);
