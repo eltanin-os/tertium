@@ -8,7 +8,7 @@ c_dst_qpops(CArr *p, CArr *b)
 	usize  n;
 	uchar *s;
 
-	if (!c_arr_bytes(p))
+	if (c_arr_bytes(p) == sizeof(o) * 2)
 		return 0;
 
 	o = (void *)(uintptr)(p->p + sizeof(o) * 0);
