@@ -22,7 +22,7 @@ c_dst_qpop(CArr *p, CArr *b, usize m, usize n)
 	if (c_arr_bytes(p) == POSOIDX)
 		return 0;
 
-	m = (m > c_arr_bytes(p) - POSIDX) ? c_arr_bytes(p) - POSOIDX : m;
+	m = (m > c_arr_bytes(p) - POSOIDX) ? c_arr_bytes(p) - POSOIDX : m;
 
 	if (c_arr_cat(b, p->p + *o, m, sizeof(uchar)) < 0)
 		return -1;
