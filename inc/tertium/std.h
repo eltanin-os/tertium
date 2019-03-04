@@ -196,6 +196,16 @@ size   c_dyn_fmt(CArr *, char *, ...);
 void   c_dyn_free(CArr *);
 size   c_dyn_vfmt(CArr *, char *, va_list);
 
+/* err routines */
+void c_err_die(int, char *, ...);
+void c_err_diex(int, char *, ...);
+void c_err_vdie(int, char *, va_list);
+void c_err_vdiex(int, char *, va_list);
+int  c_err_vwarn(char *, va_list);
+int  c_err_vwarnx(char *, va_list);
+int  c_err_warn(char *, ...);
+int  c_err_warnx(char *, ...);
+
 /* fmt routines */
 int  c_fmt_fdflush(CFmt *);
 void c_fmt_fdinit(CFmt *, int, CArr *, size (*)(int, void *, usize));

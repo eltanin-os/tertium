@@ -32,6 +32,14 @@ LIBCSRC=\
 	src/dyn/fmt.c\
 	src/dyn/free.c\
 	src/dyn/vfmt.c\
+	src/err/die.c\
+	src/err/diex.c\
+	src/err/vdie.c\
+	src/err/vdiex.c\
+	src/err/vwarn.c\
+	src/err/vwarnx.c\
+	src/err/warn.c\
+	src/err/warnx.c\
 	src/fmt/fdflush.c\
 	src/fmt/fdinit.c\
 	src/fmt/fmt.c\
