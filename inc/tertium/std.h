@@ -212,6 +212,10 @@ void c_fmt_fdinit(CFmt *, int, CArr *, size (*)(int, void *, usize));
 size c_fmt_fmt(CFmt *, char *);
 int  c_fmt_install(int, int (*)(CFmt *));
 
+/* gen routines */
+char * c_gen_basename(char *);
+char * c_gen_dirname(char *);
+
 /* hsh routines */
 u32int c_hsh_all(CH32md *, char *, usize);
 u32int c_hsh_putfile(CH32md *, char *);

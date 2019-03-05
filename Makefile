@@ -45,6 +45,8 @@ LIBCSRC=\
 	src/fmt/fmt.c\
 	src/fmt/install.c\
 	src/fmt/verb.c\
+	src/gen/basename.c\
+	src/gen/dirname.c\
 	src/hsh/all.c\
 	src/hsh/crc32b.c\
 	src/hsh/crc32p.c\
