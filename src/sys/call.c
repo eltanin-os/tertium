@@ -20,8 +20,11 @@ c_sys_call_(vlong num, ...)
 		args[i] = va_arg(ap, uintptr *);
 	va_end(ap);
 
-	if ((r = __asm_syscall(num, ARGS(args))) < 0)
+	if ((r = __asm_syscall(num, ARGS(args))) < 0) {
+		i = errno;
 		c_sys_errstr(nil, 0);
+		errno = i;
+	}
 
 	return r;
 }
