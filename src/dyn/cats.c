@@ -7,13 +7,13 @@ c_dyn_cats(CArr *p, char *s)
 	size   r;
 	uchar *dst, *src;
 
-	r    = 0;
-	src  = (uchar *)s;
+	r   = 0;
+	src = (uchar *)s;
 
 	if (!p->a && !c_dyn_alloc(p, 64, sizeof(uchar)))
 		return -1;
 
-	dst  = p->p + p->n;
+	dst = p->p + p->n;
 
 	for (;;) {
 		while (++r > c_arr_avail(p))
