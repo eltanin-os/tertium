@@ -103,6 +103,9 @@
 #endif
 
 /* limits macros */
+#define C_NAMEMAX 255
+#define C_PATHMAX 1024
+
 #define C_ARGMAX       4096
 #define C_CHILDMAX     25
 #define C_HOSTNAMEMAX  255
