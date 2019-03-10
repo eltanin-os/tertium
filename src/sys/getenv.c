@@ -5,17 +5,16 @@ char *
 c_sys_getenv(char *s)
 {
 	usize n;
-	char **p;
+	int   i;
 
 	if (!s || !environ)
 		return nil;
 
 	n = (char *)c_mem_chr(s, C_USIZEMAX, 0)-s;
 
-	p = environ;
-	for (; *p; p++)
-		if (!(c_mem_cmp(*p, n, s)) && (*p[n] == '='))
-			return *p+n+1;
+	for (i = 0; environ[i]; i++)
+		if (!(c_mem_cmp(environ[i], n, s)) && (environ[i][n] == '='))
+			return environ[i]+n+1;
 
 	return nil;
 }
