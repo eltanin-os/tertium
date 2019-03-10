@@ -4,6 +4,9 @@
 size
 c_dyn_cat(CArr *p, void *v, usize m, usize n)
 {
+	if (!m)
+		return 0;
+
 	if (!c_dyn_alloc(p, m, n))
 		return -1;
 
