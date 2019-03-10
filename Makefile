@@ -40,6 +40,9 @@ LIBCSRC=\
 	src/err/vwarnx.c\
 	src/err/warn.c\
 	src/err/warnx.c\
+	src/exc/run.c\
+	src/exc/runenv.c\
+	src/exc/setenv.c\
 	src/fmt/fdflush.c\
 	src/fmt/fdinit.c\
 	src/fmt/fmt.c\
@@ -96,6 +99,7 @@ LIBCSRC=\
 	src/sys/conf.c\
 	src/sys/dup.c\
 	src/sys/errstr.c\
+	src/sys/exec.c\
 	src/sys/exit.c\
 	src/sys/fchdir.c\
 	src/sys/fstat.c\

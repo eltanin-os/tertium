@@ -206,6 +206,11 @@ int  c_err_vwarnx(char *, va_list);
 int  c_err_warn(char *, ...);
 int  c_err_warnx(char *, ...);
 
+/* exc routines */
+int c_exc_run(char *, char **);
+int c_exc_runenv(char *, char **, char **);
+int c_exc_setenv(char *, char *);
+
 /* fmt routines */
 int  c_fmt_fdflush(CFmt *);
 void c_fmt_fdinit(CFmt *, int, CArr *, size (*)(int, void *, usize));
@@ -265,6 +270,7 @@ int    c_sys_close(int);
 long   c_sys_conf(int);
 int    c_sys_dup(int, int);
 int    c_sys_errstr(char *, usize);
+int    c_sys_exec(char *, char **, char **);
 void   c_sys_exit(int);
 int    c_sys_fchdir(int);
 int    c_sys_fstat(CStat *, int);
