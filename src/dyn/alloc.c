@@ -10,7 +10,7 @@ c_dyn_alloc(CArr *p, usize m, usize n)
 		return nil;
 
 	m *= n;
-	a  = c_arr_avail(p) ? p->a : m >> 1;
+	a  = p->a ? p->a : m >> 1;
 
 	while (m > c_arr_avail(p)) {
 		a *= 2;
