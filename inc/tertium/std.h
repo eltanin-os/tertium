@@ -288,6 +288,7 @@ vlong  c_sys_seek(int, vlong, int);
 int    c_sys_stat(CStat *, char *);
 char * c_sys_strerror(int, char *, usize);
 int    c_sys_unlink(char *);
+void   c_sys_werrstr(char *, ...);
 size   c_sys_write(int, void *, usize);
 
 /* tai routines */

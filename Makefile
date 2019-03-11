@@ -117,6 +117,7 @@ LIBCSRC=\
 	src/sys/stat.c\
 	src/sys/strerror.c\
 	src/sys/unlink.c\
+	src/sys/werrstr.c\
 	src/sys/write.c\
 	src/tai/add.c\
 	src/tai/approx.c\
