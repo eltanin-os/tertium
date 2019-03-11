@@ -251,7 +251,7 @@ ifree(void *p)
 
 	idx = ptr2idx(p);
 
-	/* too high or too low */
+	/* too low or too high */
 	if (idx < mpageshift || idx > lastidx)
 		return;
 
@@ -506,23 +506,16 @@ irealloc(void *p, usize n)
 
 	idx = ptr2idx(p);
 
-	if (idx < mpageshift) {
-		c_sys_werrstr("junk pointer, too low to make sense");
+	/* too low or too high */
+	if (idx < mpageshift || idx > lastidx )
 		return nil;
-	}
-
-	if (idx > lastidx) {
-		c_sys_werrstr("junk pointer, too high to make sense");
-		return nil;
-	}
 
 	mp = &pagedir[idx];
 
 	if (*mp == MFIRST) {
-		if ((usize)(uintptr)p & mpagemask) {
-			c_sys_werrstr("modified (page-) pointer");
+		/* modified (page-) pointer */
+		if ((usize)(uintptr)p & mpagemask)
 			return nil;
-		}
 		for (o = mpagesize; *++mp == MFOLLOW; o += mpagesize)
 			;
 		if (!ISOPT(OREALLOC) && n <= o && n > (o - mpagesize)) {
@@ -531,17 +524,15 @@ irealloc(void *p, usize n)
 			return p;
 		}
 	} else if (*mp >= MMAGIC) {
-		if ((usize)(uintptr)p & ((*mp)->size-1)) {
-			c_sys_werrstr("modified (chunk-) pointer");
+		/* modified (chunk-) pointer */
+		if ((usize)(uintptr)p & ((*mp)->size-1))
 			return nil;
-		}
 
 		i = ((usize)(uintptr)p & mpagemask) >> (*mp)->shift;
 
-		if ((*mp)->bits[i/MBITS] & (1UL << (i % MBITS))) {
-			c_sys_werrstr("chunk is already free");
+		/* chunk is already free */
+		if ((*mp)->bits[i/MBITS] & (1UL << (i % MBITS)))
 			return nil;
-		}
 
 		o = (*mp)->size;
 
@@ -552,7 +543,7 @@ irealloc(void *p, usize n)
 			return p;
 		}
 	} else {
-		c_sys_werrstr("pointer to wrong page");
+		/* pointer to wrong place */
 		return nil;
 	}
 
@@ -629,26 +620,21 @@ pubrealloc(void *p, usize n)
 
 	r = nil;
 
-	if (mact) {
-		c_sys_werrstr("recursive call");
-		goto done;
-	}
+	if (mact)
+		goto invalid;
 
 	mact++;
 
 	if (!mstt) {
-		if (p) {
-			c_sys_werrstr("pubrealloc has never been called");
-			goto done;
-		}
+		if (p)
+			goto invalid;
 		minit();
 		mstt++;
 	}
 
-	if (p == alloc0) {
-		c_sys_werrstr("trying to use zero pointer");
-		goto done;
-	}
+	if (p == alloc0)
+		goto invalid;
+
 	if (!n) {
 		if (p)
 			ifree(p);
@@ -657,7 +643,13 @@ pubrealloc(void *p, usize n)
 		r = p ? irealloc(p, n) : imalloc(n);
 	}
 
-done:
+	if (!r)
+		errno = C_ENOMEM;
+
+	mact--;
+	return r;
+invalid:
+	errno = C_EINVAL;
 	mact--;
 	return r;
 }
