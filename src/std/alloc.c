@@ -9,5 +9,5 @@ c_std_alloc(usize m, usize n)
 	if (C_OFLW_UM(usize, n, m))
 		return nil;
 
-	return pubrealloc(nil, m*n, " in c_std_alloc():");
+	return pubrealloc(nil, m*n);
 }

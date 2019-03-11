@@ -1,1 +1,1 @@
-void * pubrealloc(void *, usize, char *);
+void * pubrealloc(void *, usize);
