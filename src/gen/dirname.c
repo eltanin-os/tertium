@@ -9,7 +9,7 @@ c_gen_dirname(char *s)
 	if (!s || !*s)
 		return ".";
 
-	n = (char *)c_mem_chr(s, C_USIZEMAX, 0)-s;
+	n = c_str_len(s);
 	n--;
 
 	for (; s[n] == '/'; n--)

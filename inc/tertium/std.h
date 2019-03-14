@@ -68,7 +68,7 @@ enum {
 #define c_std_free(a) a = c_std_free_((a))
 #define c_std_getprogname( ) argv0
 #define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
-#define c_std_setprogname(x) argv0 = (x)
+#define c_std_setprogname(a) argv0 = (a)
 
 /* tai macros */
 #define C_TAI_PACK 8
@@ -242,7 +242,6 @@ void   c_ioq_seek(CIoq *, usize);
 size   c_ioq_vfmt(CIoq *, char *, va_list);
 
 /* mem routines */
-void * c_mem_cchr(void *, usize, int, int);
 void * c_mem_ccpy(void *, usize, void *, int);
 void * c_mem_chr(void *, usize, int);
 int    c_mem_cmp(void *, usize, void *);
@@ -261,6 +260,13 @@ void * c_std_free_(void *);
 void * c_std_realloc(void *, usize, usize);
 void   c_std_sort(void *, usize, usize, int (*)(void *, void *));
 vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
+
+/* str routines */
+char * c_str_chr(char *, usize, int);
+int    c_str_cmp(char *, usize, char *);
+char * c_str_cpy(char *, usize, char *);
+usize  c_str_len(char *);
+char * c_str_str(char *, char *);
 
 /* sys routines */
 void   c_sys_abort(void);

@@ -73,7 +73,6 @@ LIBCSRC=\
 	src/ioq/stdin.c\
 	src/ioq/stdout.c\
 	src/ioq/vfmt.c\
-	src/mem/cchr.c\
 	src/mem/ccpy.c\
 	src/mem/chr.c\
 	src/mem/cmp.c\
@@ -92,6 +91,11 @@ LIBCSRC=\
 	src/std/realloc.c\
 	src/std/sort.c\
 	src/std/strtovl.c\
+	src/str/chr.c\
+	src/str/cmp.c\
+	src/str/cpy.c\
+	src/str/len.c\
+	src/str/str.c\
 	src/sys/abort.c\
 	src/sys/allrw.c\
 	src/sys/call.c\
