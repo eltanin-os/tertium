@@ -12,5 +12,5 @@ c_mem_cmp(void *v1, usize n, void *v2)
 	for (; n && *s1 == *s2; n--, s1++, s2++)
 		;
 
-	return n ? s1 - s2 : 0;
+	return n ? *s1 - *s2 : 0;
 }
