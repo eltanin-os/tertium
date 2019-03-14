@@ -7,7 +7,6 @@ int
 c_exc_runenv(char *prog, char **argv, char **envp)
 {
 	CArr   e, f;
-	usize  n;
 	char **pv;
 	char  *path, *s;
 	char   buf[C_PATHMAX];
@@ -22,8 +21,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 			if (c_dyn_cat(&e, &*pv, 1, sizeof(*pv)) < 0)
 				return -1;
 
-	n = (char *)c_mem_chr(prog, C_USIZEMAX, 0)-prog;
-	if ((path = c_mem_chr(prog, n, '/')))
+	if ((path = c_mem_cchr(prog, C_USIZEMAX, '/', 0)))
 		return c_sys_exec(prog, argv, (char **)c_arr_bget(&e, 0));
 
 	if (!(path = c_sys_getenv("PATH")))
@@ -33,8 +31,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	c_arr_init(&f, buf, sizeof(buf));
 
 	for (;;) {
-		n = (char *)c_mem_chr(s, C_USIZEMAX, 0)-s;
-		if ((s = c_mem_chr(s, n, ':')))
+		if ((s = c_mem_cchr(s, C_USIZEMAX, ':', 0)))
 			*s++ = 0;
 		if (c_arr_cats(&f, (!*path || *path == ':') ? "." : path) < 0)
 			return -1;

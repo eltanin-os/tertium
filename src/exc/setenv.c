@@ -12,6 +12,9 @@ c_exc_setenv(char *s, char *v)
 	if (!s || !*s)
 		return 0;
 
+	if ((p = c_mem_cchr(s, C_USIZEMAX, '=', 0)))
+		*p = 0;
+
 	c_mem_set(&e, sizeof(e), 0);
 
 	if (c_dyn_cats(&e, s) < 0)

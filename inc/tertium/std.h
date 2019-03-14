@@ -242,6 +242,7 @@ void   c_ioq_seek(CIoq *, usize);
 size   c_ioq_vfmt(CIoq *, char *, va_list);
 
 /* mem routines */
+void * c_mem_cchr(void *, usize, int, int);
 void * c_mem_ccpy(void *, usize, void *, int);
 void * c_mem_chr(void *, usize, int);
 int    c_mem_cmp(void *, usize, void *);

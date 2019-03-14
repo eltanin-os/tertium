@@ -73,6 +73,7 @@ LIBCSRC=\
 	src/ioq/stdin.c\
 	src/ioq/stdout.c\
 	src/ioq/vfmt.c\
+	src/mem/cchr.c\
 	src/mem/ccpy.c\
 	src/mem/chr.c\
 	src/mem/cmp.c\
