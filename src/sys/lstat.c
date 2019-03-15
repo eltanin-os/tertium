@@ -5,8 +5,10 @@ int
 c_sys_lstat(CStat *p, char *s)
 {
 	__fb_stat st;
+
 	if (c_sys_call(__NR_lstat, s, &st) < 0)
 		return -1;
+
 	p->st_size = st.st_size;
 	p->st_blksize = st.st_blksize;
 	p->st_blocks = st.st_blocks;
@@ -23,5 +25,6 @@ c_sys_lstat(CStat *p, char *s)
 	p->st_ino = st.st_ino;
 	p->st_mode = st.st_mode;
 	p->st_rdev = st.st_rdev;
+
 	return 0;
 }
