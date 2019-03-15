@@ -96,6 +96,7 @@
 #define C_ETXTBSY ETXTBSY
 #define C_EWOULDBLOCK EWOULDBLOCK
 #define C_EXDEV EXDEV
+#define C_ECSTM 0x66D7C8BA
 
 /* use sysconf as fallback, as the posix minimum is a bad option ("1") */
 #ifndef PAGESIZE
