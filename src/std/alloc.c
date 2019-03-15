@@ -6,8 +6,10 @@
 void *
 c_std_alloc(usize m, usize n)
 {
-	if (C_OFLW_UM(usize, n, m))
+	if (C_OFLW_UM(usize, n, m)) {
+		errno = C_EOVERFLOW;
 		return nil;
+	}
 
 	return pubrealloc(nil, m*n);
 }

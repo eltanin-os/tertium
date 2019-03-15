@@ -5,7 +5,7 @@
 ((a)>='a')?(a)-'a'+10:((a)>='A')?(a)-'A'+10:((a)<='9')?(a)-'0':-1
 
 #define rangeflow(a, b, c, d) \
-((a) > (b) || ((a) == (b) && (c) > (d)))?-1:1
+((a) > (b) || ((a) == (b) && (c) > (d)))?1:0
 
 vlong
 c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
@@ -62,14 +62,20 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 		v = (v * b) + c;
 	}
 
-	if (a < 0) {
-		if (r)
-			*r = -1;
-		v = 0;
+	if (e) {
+		*e = v ? (char *)s: p;
+		if (**e) {
+			if (r)
+				*r = -1;
+			errno = (*e == p) ? C_ECANCELED : C_ENOTSUP;
+		}
 	}
 
-	if (e)
-		*e = a ? (char *)s - 1 : p;
+	if (a) {
+		if (r)
+			*r = -1;
+		errno = C_ERANGE;
+	}
 
 	return n ? -v : v;
 }

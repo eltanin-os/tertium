@@ -17,7 +17,7 @@ c_dyn_cats(CArr *p, char *s)
 
 	for (;;) {
 		while (++r > c_arr_avail(p))
-			if (!c_dyn_alloc(p, p->a*2, sizeof(uchar)))
+			if (!c_dyn_alloc(p, r, sizeof(uchar)))
 				return -1;
 		if (!(*dst++ = *src++))
 			break;

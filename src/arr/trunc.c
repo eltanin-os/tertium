@@ -4,8 +4,10 @@
 int
 c_arr_trunc(CArr *p, usize m, usize n)
 {
-	if (C_OFLW_UM(usize, m, n))
+	if (C_OFLW_UM(usize, m, n)) {
+		errno = C_EOVERFLOW;
 		return -1;
+	}
 
 	m *= n;
 

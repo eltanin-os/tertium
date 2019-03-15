@@ -12,8 +12,10 @@ c_arr_cats(CArr *p, char *s)
 	src = (uchar *)s;
 
 	for (;;) {
-		if (++r > c_arr_avail(p))
+		if (++r > c_arr_avail(p)) {
+			errno = C_ENOMEM;
 			return -1;
+		}
 		if (!(*dst++ = *src++))
 			break;
 	}

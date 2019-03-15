@@ -125,7 +125,12 @@ static int
 __Verr(CFmt *p)
 {
 	char buf[C_ERRSIZ];
-	c_sys_errstr(buf, sizeof(buf));
+
+	if (errno == C_ECSTM)
+		c_sys_errstr(buf, sizeof(buf));
+	else
+		c_sys_strerror(errno, buf, sizeof(buf));
+
 	return fmtcat(p, buf, 0);
 }
 

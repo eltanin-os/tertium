@@ -4,6 +4,7 @@
 static int
 nomem(CFmt *p)
 {
+	errno = C_ENOMEM;
 	return -1;
 }
 

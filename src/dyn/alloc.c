@@ -6,8 +6,10 @@ c_dyn_alloc(CArr *p, usize m, usize n)
 {
 	usize a;
 
-	if (C_OFLW_UM(usize, m, n))
+	if (C_OFLW_UM(usize, m, n)) {
+		errno = C_EOVERFLOW;
 		return nil;
+	}
 
 	m *= n;
 	a  = p->a ? p->a : m >> 1;
