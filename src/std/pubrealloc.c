@@ -218,7 +218,8 @@ freebytes(void *p, usize idx, struct pginfo *info)
 	mp = pagedir + info->shift;
 
 	if (info->free == 1) {
-		while (*mp && (*mp)->next->page < info->page)
+		mp = pagedir + info->shift;
+		while (*mp && (*mp)->next && (*mp)->next->page < info->page)
 			mp = &(*mp)->next;
 		info->next = *mp;
 		*mp = info;
