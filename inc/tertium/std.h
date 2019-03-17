@@ -88,6 +88,15 @@ struct CArr {
 	uchar *p;
 };
 
+/* dst types */
+typedef struct CQueue CQueue;
+
+struct CQueue {
+	CArr  *mb;
+	usize  os;
+	usize  oe;
+};
+
 /* fmt types */
 typedef struct CFmt CFmt;
 
@@ -183,10 +192,10 @@ int    c_arr_trunc(CArr *, usize, usize);
 size   c_arr_vfmt(CArr *, char *, va_list);
 
 /* dst routines */
-void c_dst_qinit(CArr *, char *, usize);
-int  c_dst_qpop(CArr *, CArr *, usize, usize);
-int  c_dst_qpops(CArr *, CArr *);
-int  c_dst_qpush(CArr *, void *, usize, usize);
+void c_dst_qinit(CQueue *, CArr *);
+int  c_dst_qpop(CQueue *, CArr *, usize, usize);
+int  c_dst_qpops(CQueue *, CArr *);
+int  c_dst_qpush(CQueue *, void *, usize, usize);
 
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);

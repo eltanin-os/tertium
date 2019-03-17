@@ -2,9 +2,8 @@
 #include <tertium/std.h>
 
 int
-c_dst_qpush(CArr *p, void *v, usize m, usize n)
+c_dst_qpush(CQueue *p, void *v, usize m, usize n)
 {
-	usize *o;
 	usize  ws;
 
 	if (C_OFLW_UM(usize, m, n))
@@ -12,23 +11,21 @@ c_dst_qpush(CArr *p, void *v, usize m, usize n)
 
 	m *= n;
 
-	if (m > c_arr_avail(p))
+	if (m > c_arr_avail(p->mb))
 		return -1;
 
-	o = (void *)(uintptr)(p->p + sizeof(o) * 1);
-
-	if (*o + m > p->a) {
-		ws = p->a - *o;
-		if (m + ws > c_arr_avail(p))
+	if (p->oe + m > p->mb->a) {
+		ws = p->mb->a - p->oe;
+		if (m + ws > c_arr_avail(p->mb))
 			return -1;
-		p->n += ws;
-		*o = sizeof(o) * 2;
+		p->mb->n += ws;
+		p->oe = 0;
 	}
 
-	c_mem_cpy(p->p + *o, m, v);
-	p->n += m;
-	*o   += m+1;
-	p->p[*o-1] = 0;
+	c_mem_cpy(c_arr_bget(p->mb, p->oe), m, v);
+	p->mb->n += m;
+	p->oe += m+1;
+	p->mb->p[p->oe-1] = 0;
 
 	return 0;
 }

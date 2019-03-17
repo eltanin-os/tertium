@@ -1,34 +1,24 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define POSOIDX (sizeof(o) * 2)
-
 int
-c_dst_qpop(CArr *p, CArr *b, usize m, usize n)
+c_dst_qpop(CQueue *p, CArr *b, usize m, usize n)
 {
-	usize *o;
-
 	if (C_OFLW_UM(usize, m, n))
 		return -1;
 
 	m *= n;
-	o  = (void *)(uintptr)(p->p + sizeof(o) * 0);
 
-	if (*o + m > p->a) {
-		p->n -= p->a - *o;
-		*o    = POSOIDX;
-	}
-
-	if (c_arr_bytes(p) == POSOIDX)
+	if (!c_arr_bytes(p->mb))
 		return 0;
 
-	m = (m > c_arr_bytes(p) - POSOIDX) ? c_arr_bytes(p) - POSOIDX : m;
+	m = (m > c_arr_bytes(p->mb)) ? c_arr_bytes(p->mb) : m;
 
-	if (c_arr_cat(b, p->p + *o, m, sizeof(uchar)) < 0)
+	if (c_arr_cat(b, c_arr_bget(p->mb, p->os), m, sizeof(uchar)) < 0)
 		return -1;
 
-	p->n -= m;
-	*o   += m+1;
+	p->mb->n -= m;
+	p->os += m+1;
 
 	return 0;
 }
