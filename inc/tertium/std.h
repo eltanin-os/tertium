@@ -89,7 +89,14 @@ struct CArr {
 };
 
 /* dst types */
+typedef struct CNode  CNode;
 typedef struct CQueue CQueue;
+
+struct CNode {
+	CNode *next;
+	CNode *prev;
+	void  *p;
+};
 
 struct CQueue {
 	CArr  *mb;
@@ -192,10 +199,14 @@ int    c_arr_trunc(CArr *, usize, usize);
 size   c_arr_vfmt(CArr *, char *, va_list);
 
 /* dst routines */
-void c_dst_qinit(CQueue *, CArr *);
-int  c_dst_qpop(CQueue *, CArr *, usize, usize);
-int  c_dst_qpops(CQueue *, CArr *);
-int  c_dst_qpush(CQueue *, void *, usize, usize);
+void    c_dst_lfree(CNode *);
+CNode * c_dst_lnew(void *, usize, usize);
+CNode * c_dst_lpop(CNode **);
+int     c_dst_lpush(CNode **, CNode *);
+void    c_dst_qinit(CQueue *, CArr *);
+int     c_dst_qpop(CQueue *, CArr *, usize, usize);
+int     c_dst_qpops(CQueue *, CArr *);
+int     c_dst_qpush(CQueue *, void *, usize, usize);
 
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);

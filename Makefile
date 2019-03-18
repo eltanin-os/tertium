@@ -22,6 +22,10 @@ LIBCSRC=\
 	src/arr/len.c\
 	src/arr/trunc.c\
 	src/arr/vfmt.c\
+	src/dst/lfree.c\
+	src/dst/lnew.c\
+	src/dst/lpop.c\
+	src/dst/lpush.c\
 	src/dst/qinit.c\
 	src/dst/qpop.c\
 	src/dst/qpops.c\
