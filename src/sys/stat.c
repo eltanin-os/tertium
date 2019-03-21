@@ -6,7 +6,7 @@ c_sys_stat(CStat *p, char *s)
 {
 	__fb_stat st;
 
-	if (c_sys_call(__NR_stat, s, p) < 0)
+	if (c_sys_call(__NR_stat, s, &st) < 0)
 		return -1;
 
 	p->st_size = st.st_size;
