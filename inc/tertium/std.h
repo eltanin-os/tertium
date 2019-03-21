@@ -27,6 +27,16 @@ for (argc--, argv++;\
 /* chr macros */
 #define c_chr_isspace(a) ((a) == ' ' || (uint)(a) - '\t' < 5)
 
+/* dir macros */
+enum {
+	C_FSLOG = 1 << 0,
+	C_FSPHY = 1 << 1,
+	C_FSNOI = 1 << 2,
+	C_FSDOT = 1 << 3,
+};
+
+#define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSPHY) && !(b)))
+
 /* fmt macros */
 enum {
 	C_FMTWIDTH    = 1 << 0,
@@ -87,6 +97,7 @@ struct CArr {
 	usize  n;
 	uchar *p;
 };
+
 
 /* dst types */
 typedef struct CNode  CNode;
@@ -169,6 +180,26 @@ struct CStat {
 	ushort st_rdev;
 };
 
+/* dir types */
+typedef struct CDir CDir;
+
+struct CDir {
+	struct {
+		usize os;
+		usize oe;
+		int   fd;
+		char  buf[2048];
+	} __dir;
+	CStat info;
+	usize dlen;
+	usize nlen;
+	usize plen;
+	uint  opts;
+	char *dir;
+	char *name;
+	char  path[C_PATHMAX];
+};
+
 /* tai types */
 typedef struct CTai CTai;
 
@@ -197,6 +228,12 @@ void   c_arr_init(CArr *, char *, usize);
 usize  c_arr_len(CArr *, usize);
 int    c_arr_trunc(CArr *, usize, usize);
 size   c_arr_vfmt(CArr *, char *, va_list);
+
+/* dir routines */
+int c_dir_close(CDir *);
+int c_dir_hist(CStat *, CNode **);
+int c_dir_open(CDir *, char *, uint);
+int c_dir_read(CDir *, int);
 
 /* dst routines */
 void    c_dst_lfree(CNode *);

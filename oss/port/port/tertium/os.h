@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <errno.h>
+#include <dirent.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
@@ -145,5 +146,27 @@
 #define C_OCEXEC O_CLOEXEC
 #define C_OEXCL  O_EXCL
 
-typedef struct stat __fb_stat;
+/* stat macros */
+#define C_IFMT  S_IFMT
+#define C_IFIFO S_IFIFO
+#define C_IFCHR S_IFCHR
+#define C_IFDIR S_IFDIR
+#define C_IFBLK S_IFBLK
+#define C_IFREG S_IFREG
+#define C_IFLNK S_IFLNK
+#define C_IFSCK S_IFSOCK
+
+#define C_ISDIR(a)  S_ISDIR(a)
+#define C_ISCHR(a)  S_ISCHR(a)
+#define C_ISBLK(a)  S_ISBLK(a)
+#define C_ISREG(a)  S_ISREG(a)
+#define C_ISFIFO(a) S_ISFIFO(a)
+#define C_ISSCK(a)  S_ISSOCK(a)
+
+#define C_ACCESSPERMS (S_IRWXU|S_IRWXG|S_IRWXO)
+#define C_ALLPERMS    (S_ISUID|S_ISGID|S_ISTXT|S_IRWXU|S_IRWXG|S_IRWXO)
+#define C_DEFFILEMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
+
+typedef struct dirent   __fb_dirent;
+typedef struct stat     __fb_stat;
 typedef struct timespec __fb_time;
