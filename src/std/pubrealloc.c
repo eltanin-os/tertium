@@ -134,6 +134,8 @@ freepages(void *p, usize idx, struct pginfo *info)
 	px->end  = t;
 	px->size = l;
 
+	pt = nil;
+
 	if (!freelist.next) {
 		px->next = freelist.next;
 		px->prev = &freelist;
