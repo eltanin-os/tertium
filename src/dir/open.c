@@ -12,6 +12,7 @@ c_dir_open(CDir *dir, char *path, uint opts)
 
 	dir->dir  = path;
 	dir->dlen = c_str_len(path);
+	dir->opts = opts;
 
 	if (c_sys_fstat(&st, dir->__dir.fd) < 0)
 		return -1;
