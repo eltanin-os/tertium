@@ -31,11 +31,12 @@ for (argc--, argv++;\
 enum {
 	C_FSLOG = 1 << 0,
 	C_FSPHY = 1 << 1,
-	C_FSNOI = 1 << 2,
-	C_FSDOT = 1 << 3,
+	C_FSCOM = 1 << 3,
+	C_FSNOI = 1 << 4,
+	C_FSDOT = 1 << 5,
 };
 
-#define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSPHY) && !(b)))
+#define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSCOM) && !(b)))
 
 /* fmt macros */
 enum {
