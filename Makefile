@@ -30,6 +30,7 @@ LIBCSRC=\
 	src/dst/lnew.c\
 	src/dst/lpop.c\
 	src/dst/lpush.c\
+	src/dst/lsort.c\
 	src/dst/qinit.c\
 	src/dst/qpop.c\
 	src/dst/qpops.c\
