@@ -322,7 +322,6 @@ vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 /* str routines */
 char * c_str_chr(char *, usize, int);
 int    c_str_cmp(char *, usize, char *);
-char * c_str_cpy(char *, usize, char *);
 usize  c_str_len(char *);
 char * c_str_str(char *, char *);
 

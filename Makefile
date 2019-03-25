@@ -101,7 +101,6 @@ LIBCSRC=\
 	src/std/strtovl.c\
 	src/str/chr.c\
 	src/str/cmp.c\
-	src/str/cpy.c\
 	src/str/len.c\
 	src/str/str.c\
 	src/sys/abort.c\
