@@ -191,14 +191,16 @@ struct CDir {
 		int   fd;
 		char  buf[2048];
 	} __dir;
-	CStat info;
-	usize dlen;
-	usize nlen;
-	usize plen;
-	uint  opts;
-	char *dir;
-	char *name;
-	char  path[C_PATHMAX];
+	CStat  info;
+	usize  dlen;
+	usize  nlen;
+	usize  plen;
+	int    depth;
+	uint   opts;
+	ushort dev;
+	char  *dir;
+	char  *name;
+	char   path[C_PATHMAX];
 };
 
 /* tai types */
@@ -234,7 +236,7 @@ size   c_arr_vfmt(CArr *, char *, va_list);
 int c_dir_close(CDir *);
 int c_dir_hist(CStat *, CNode **);
 int c_dir_open(CDir *, char *, uint);
-int c_dir_read(CDir *, int);
+int c_dir_read(CDir *);
 
 /* dst routines */
 void    c_dst_lfree(CNode *);

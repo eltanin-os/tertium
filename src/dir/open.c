@@ -6,7 +6,6 @@ c_dir_open(CDir *dir, char *path, uint opts)
 {
 	CStat st;
 
-	c_mem_set(dir, sizeof(*dir), 0);
 	if ((dir->__dir.fd = c_sys_open(path, C_OREAD|C_OCEXEC, 0)) < 0)
 		return -1;
 
@@ -16,6 +15,8 @@ c_dir_open(CDir *dir, char *path, uint opts)
 
 	if (c_sys_fstat(&st, dir->__dir.fd) < 0)
 		return -1;
+
+	dir->dev = st.st_dev;
 
 	if (!C_ISDIR(st.st_mode))
 		return -1;

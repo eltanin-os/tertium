@@ -11,11 +11,12 @@
 ((a) == 12) ? C_IFSCK : 0
 
 int
-c_dir_read(CDir *dir, int rt)
+c_dir_read(CDir *dir)
 {
-	CArr arr;
 	__fb_dirent *d;
-	size r;
+	CArr  arr;
+	CStat st;
+	size  r;
 	int (*stf)(CStat *, char *);
 
 	if (dir->__dir.os >= dir->__dir.oe) {
@@ -27,6 +28,7 @@ c_dir_read(CDir *dir, int rt)
 		dir->__dir.oe = r;
 		dir->__dir.os = 0;
 	}
+
 	for (;;) {
 		d = (void *)(dir->__dir.buf + dir->__dir.os);
 		dir->__dir.os  += d->d_reclen;
@@ -46,10 +48,17 @@ c_dir_read(CDir *dir, int rt)
 
 	if (dir->opts & C_FSNOI) {
 		c_mem_set(&dir->info, sizeof(dir->info), 0);
+		dir->info.st_dev  = dir->dev;
 		dir->info.st_ino  = d->d_ino;
 		dir->info.st_mode = T(d->d_type);
+		if (C_ISLNK(d->d_type) && C_FSFLW(dir->opts, dir->depth)) {
+			if (c_sys_stat(&st, dir->path) < 0)
+				return -1;
+			dir->info.st_ino  = st.st_ino;
+			dir->info.st_mode = st.st_mode;
+		}
 	} else {
-		stf = C_FSFLW(dir->opts, rt) ? c_sys_stat : c_sys_lstat;
+		stf = C_FSFLW(dir->opts, dir->depth) ? c_sys_stat : c_sys_lstat;
 		if (stf(&dir->info, dir->path) < 0)
 			return -1;
 	}
