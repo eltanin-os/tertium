@@ -68,6 +68,8 @@ enum {
 #define C_OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
 #define C_OFLW_UA(a, b)    ((b) > (a)-1)
 
+#define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
+
 /* ioq macros */
 #define C_FD0 0
 #define C_FD1 1
