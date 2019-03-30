@@ -8,6 +8,5 @@ c_err_vdiex(int r, char *fmt, va_list args)
 	if (fmt)
 		c_ioq_vfmt(ioq2, fmt, args);
 	c_ioq_put(ioq2, "\n");
-	c_ioq_flush(ioq2);
 	c_std_exit(r);
 }
