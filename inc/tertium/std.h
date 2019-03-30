@@ -34,6 +34,7 @@ enum {
 	C_FSCOM = 1 << 3,
 	C_FSNOI = 1 << 4,
 	C_FSDOT = 1 << 5,
+	C_FSXDV = 1 << 6,
 };
 
 #define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSCOM) && !(b)))

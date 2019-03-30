@@ -28,7 +28,7 @@ c_dir_read(CDir *dir)
 		dir->__dir.oe = r;
 		dir->__dir.os = 0;
 	}
-
+search:
 	for (;;) {
 		d = (void *)(dir->__dir.buf + dir->__dir.os);
 		dir->__dir.os  += d->d_reclen;
@@ -54,6 +54,7 @@ c_dir_read(CDir *dir)
 		if (C_ISLNK(d->d_type) && C_FSFLW(dir->opts, dir->depth)) {
 			if (c_sys_stat(&st, dir->path) < 0)
 				return -1;
+			dir->info.st_dev  = st.st_dev;
 			dir->info.st_ino  = st.st_ino;
 			dir->info.st_mode = st.st_mode;
 		}
@@ -62,6 +63,10 @@ c_dir_read(CDir *dir)
 		if (stf(&dir->info, dir->path) < 0)
 			return -1;
 	}
+
+	if ((dir->opts & C_FSXDV) &&
+	    dir->dev != dir->info.st_dev)
+		goto search;
 
 	return 1;
 }
