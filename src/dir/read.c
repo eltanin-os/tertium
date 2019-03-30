@@ -18,7 +18,7 @@ c_dir_read(CDir *dir)
 	CStat st;
 	size  r;
 	int (*stf)(CStat *, char *);
-
+search:
 	if (dir->__dir.os >= dir->__dir.oe) {
 		if ((r = c_sys_call(__NR_getdents64, dir->__dir.fd,
 		    dir->__dir.buf, sizeof(dir->__dir.buf))) < 0)
@@ -28,15 +28,12 @@ c_dir_read(CDir *dir)
 		dir->__dir.oe = r;
 		dir->__dir.os = 0;
 	}
-search:
-	for (;;) {
-		d = (void *)(dir->__dir.buf + dir->__dir.os);
-		dir->__dir.os  += d->d_reclen;
-		if (C_ISDOT(d->d_name) &&
-		    (~dir->opts & C_FSDOT))
-			continue;
-		break;
-	}
+
+	d = (void *)(dir->__dir.buf + dir->__dir.os);
+	dir->__dir.os += d->d_reclen;
+	if (C_ISDOT(d->d_name) &&
+	    (~dir->opts & C_FSDOT))
+		goto search;
 
 	c_arr_init(&arr, dir->path, sizeof(dir->path));
 	if (c_arr_fmt(&arr, "%s/%s", dir->dir, d->d_name) < 0)
