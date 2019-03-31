@@ -182,9 +182,10 @@ __Vint(CFmt *p)
 	int b, d, i, j, u, n;
 	char buf[64];
 	n = 0;
-	if ((vlong)(l = va_arg(p->args, vlong)) < 0) {
+	l = va_arg(p->args, uvlong);
+	if (!(p->flags & C_FMTUNSIGNED) && (vlong)l < 0) {
 		n++;
-		l = -l;
+		l = -(vlong)l;
 	}
 	b = getbase(p->r);
 	u = (p->r == 'X') ? 'A' : 'a';
