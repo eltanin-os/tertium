@@ -190,7 +190,7 @@ __Vint(CFmt *p)
 	u = (p->r == 'X') ? 'A' : 'a';
 	i = sizeof(buf)-1;
 	j = 0;
-	if (!l) buf[i] = '0';
+	if (!l) buf[--i] = '0';
 	for (; l; j++) {
 		d = (l % b);
 		if ((p->flags & C_FMTCOMMA) && j % 4 == 3) {
@@ -218,7 +218,7 @@ __Vint(CFmt *p)
 		buf[--i] = '+';
 	else if (p->flags & C_FMTSPACE)
 		buf[--i] = ' ';
-	return fmtcat(p, buf+i, sizeof(buf)-i);
+	return fmtcat(p, buf+i, sizeof(buf)-(i+1));
 }
 
 static int
