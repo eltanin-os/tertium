@@ -30,12 +30,12 @@ c_dst_lsort(CNode **np, int (*f)(void *, void *))
 			}
 			qs = k;
 			for (;;) {
-				if (!(i = ps + (qs && q)))
+				if (!(i = !!ps + (qs && q)))
 					break;
 				i = i-1 ? ((*f)(p->p, q->p) <= 0) : ps;
 				if (i) {
 					e = p;
-					p = p->next;
+					p = (p->next == h) ? nil : p->next;
 					ps--;
 				} else {
 					e = q;
