@@ -18,6 +18,7 @@ c_dir_read(CDir *dir)
 	CStat st;
 	size  r;
 	int (*stf)(CStat *, char *);
+	char *sep;
 search:
 	if (dir->__dir.os >= dir->__dir.oe) {
 		if ((r = c_sys_call(__NR_getdents64, dir->__dir.fd,
@@ -36,7 +37,8 @@ search:
 		goto search;
 
 	c_arr_init(&arr, dir->path, sizeof(dir->path));
-	if (c_arr_fmt(&arr, "%s/%s", dir->dir, d->d_name) < 0)
+	sep = dir->dir[dir->dlen-1] == '/' ? "" : "/";
+	if (c_arr_fmt(&arr, "%s%s%s", dir->dir, sep, d->d_name) < 0)
 		return -1;
 
 	dir->name = dir->path + dir->dlen + 1;
