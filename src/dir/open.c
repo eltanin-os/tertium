@@ -4,8 +4,6 @@
 int
 c_dir_open(CDir *dir, char *path, uint opts)
 {
-	CStat st;
-
 	if ((dir->__dir.fd = c_sys_open(path, C_OREAD|C_OCEXEC, 0)) < 0)
 		return -1;
 
@@ -13,13 +11,15 @@ c_dir_open(CDir *dir, char *path, uint opts)
 	dir->dlen = c_str_len(path);
 	dir->opts = opts;
 
-	if (c_sys_fstat(&st, dir->__dir.fd) < 0)
+	if (c_sys_fstat(&dir->info, dir->__dir.fd) < 0)
 		return -1;
 
-	dir->dev = st.st_dev;
+	dir->dev = dir->info.st_dev;
 
-	if (!C_ISDIR(st.st_mode))
+	if (!C_ISDIR(dir->info.st_mode)) {
+		errno = C_ENOTDIR;
 		return -1;
+	}
 
 	return 0;
 }
