@@ -31,10 +31,10 @@ for (argc--, argv++;\
 enum {
 	C_FSLOG = 1 << 0,
 	C_FSPHY = 1 << 1,
-	C_FSCOM = 1 << 3,
-	C_FSNOI = 1 << 4,
-	C_FSDOT = 1 << 5,
-	C_FSXDV = 1 << 6,
+	C_FSCOM = 1 << 2,
+	C_FSNOI = 1 << 3,
+	C_FSDOT = 1 << 4,
+	C_FSXDV = 1 << 5,
 };
 
 #define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSCOM) && !(b)))
@@ -195,13 +195,10 @@ struct CDir {
 		char  buf[2048];
 	} __dir;
 	CStat  info;
-	usize  dlen;
-	usize  nlen;
-	usize  plen;
-	int    depth;
 	uint   opts;
+	short  nlen;
+	short  plen;
 	ushort dev;
-	char  *dir;
 	char  *name;
 	char   path[C_PATHMAX];
 };

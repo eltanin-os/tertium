@@ -18,7 +18,6 @@ c_dir_read(CDir *dir)
 	CStat st;
 	size  r;
 	int (*stf)(CStat *, char *);
-	char *sep;
 search:
 	if (dir->__dir.os >= dir->__dir.oe) {
 		if ((r = c_sys_call(__NR_getdents64, dir->__dir.fd,
@@ -37,11 +36,12 @@ search:
 		goto search;
 
 	c_arr_init(&arr, dir->path, sizeof(dir->path));
-	sep = dir->dir[dir->dlen-1] == '/' ? "" : "/";
-	if (c_arr_fmt(&arr, "%s%s%s", dir->dir, sep, d->d_name) < 0)
+	r = dir->plen - dir->nlen;
+	arr.n = r;
+	if (c_arr_cats(&arr, d->d_name) < 0)
 		return -1;
 
-	dir->name = dir->path + dir->dlen + 1;
+	dir->name = dir->path + r;
 	dir->nlen = c_str_len(dir->name);
 	dir->plen = c_arr_bytes(&arr);
 
@@ -50,7 +50,7 @@ search:
 		dir->info.st_dev  = dir->dev;
 		dir->info.st_ino  = d->d_ino;
 		dir->info.st_mode = T(d->d_type);
-		if (C_ISLNK(d->d_type) && C_FSFLW(dir->opts, dir->depth)) {
+		if (C_ISLNK(d->d_type) && (dir->opts & C_FSLOG)) {
 			if (c_sys_stat(&st, dir->path) < 0)
 				return -1;
 			dir->info.st_dev  = st.st_dev;
@@ -58,13 +58,14 @@ search:
 			dir->info.st_mode = st.st_mode;
 		}
 	} else {
-		stf = C_FSFLW(dir->opts, dir->depth) ? c_sys_stat : c_sys_lstat;
-		if (stf(&dir->info, dir->path) < 0)
+		stf = (dir->opts & C_FSLOG) ? c_sys_stat : c_sys_lstat;
+		if (stf(&dir->info, dir->path) < 0) {
+			c_err_warn("stf %s", dir->path);
 			return -1;
+		}
 	}
 
-	if ((dir->opts & C_FSXDV) &&
-	    dir->dev != dir->info.st_dev)
+	if ((dir->opts & C_FSXDV) && dir->dev != dir->info.st_dev)
 		goto search;
 
 	return 1;
