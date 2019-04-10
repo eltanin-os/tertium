@@ -7,7 +7,7 @@ struct hist {
 };
 
 int
-c_dir_hist(CStat *st, CNode **hist)
+c_dir_hist(CNode **hist, CStat *st)
 {
 	struct hist *hp;
 	struct hist  h;

@@ -234,7 +234,7 @@ size   c_arr_vfmt(CArr *, char *, va_list);
 
 /* dir routines */
 int c_dir_close(CDir *);
-int c_dir_hist(CStat *, CNode **);
+int c_dir_hist(CNode **, CStat *);
 int c_dir_open(CDir *, char *, uint);
 int c_dir_read(CDir *);
 
