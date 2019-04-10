@@ -4,8 +4,8 @@
 int
 c_dir_open(CDir *dir, char *path, uint opts)
 {
-	CArr  arr;
-	char *s;
+	CArr arr;
+
 	if ((dir->__dir.fd = c_sys_open(path, C_OREAD|C_OCEXEC, 0)) < 0)
 		return -1;
 
@@ -14,6 +14,7 @@ c_dir_open(CDir *dir, char *path, uint opts)
 		return -1;
 	if (path[c_arr_bytes(&arr)-1] != '/')
 		c_arr_cats(&arr, "/");
+
 	dir->nlen = 0;
 	dir->plen = c_arr_bytes(&arr);
 	dir->opts = opts;
