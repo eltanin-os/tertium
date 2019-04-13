@@ -76,7 +76,7 @@ enum {
 #define C_FD2 2
 #define C_BIOSIZ 8192
 #define C_ERRSIZ 512
-#define c_ioq_INIT(a, b, c) {(b), (c), (a) }
+#define c_ioq_INIT(a, b, c) { (b), (c), (a) }
 
 /* std macros */
 #define c_std_free(a) a = c_std_free_((a))
@@ -325,8 +325,8 @@ vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 /* str routines */
 char * c_str_chr(char *, usize, int);
 int    c_str_cmp(char *, usize, char *);
-usize  c_str_len(char *);
-char * c_str_str(char *, char *);
+usize  c_str_len(char *, usize);
+char * c_str_str(char *, usize, char *);
 
 /* sys routines */
 void   c_sys_abort(void);

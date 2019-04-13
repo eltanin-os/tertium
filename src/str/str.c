@@ -2,7 +2,10 @@
 #include <tertium/std.h>
 
 char *
-c_str_str(char *h, char *n)
+c_str_str(char *h, usize n, char *needle)
 {
-	return c_mem_mem(h, c_str_len(h), n, c_str_len(n));
+	usize hl;
+	hl = c_str_len(h, C_USIZEMAX);
+	n  = C_MIN(n, hl);
+	return c_mem_mem(h, n, needle, c_str_len(needle, C_USIZEMAX));
 }

@@ -42,7 +42,7 @@ search:
 		return -1;
 
 	dir->name = dir->path + r;
-	dir->nlen = c_str_len(dir->name);
+	dir->nlen = c_str_len(dir->name, C_USIZEMAX);
 	dir->plen = c_arr_bytes(&arr);
 
 	if (dir->opts & C_FSNOI) {

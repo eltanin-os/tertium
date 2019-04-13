@@ -10,7 +10,7 @@ c_sys_getenv(char *s)
 	if (!s || !environ)
 		return nil;
 
-	n = c_str_len(s);
+	n = c_str_len(s, C_USIZEMAX);
 
 	for (i = 0; environ[i]; i++)
 		if (!(c_mem_cmp(environ[i], n, s)) && (environ[i][n] == '='))
