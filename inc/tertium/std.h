@@ -114,9 +114,8 @@ struct CNode {
 };
 
 struct CQueue {
-	CArr  *mb;
-	usize  os;
-	usize  oe;
+	CArr  mb;
+	usize h;
 };
 
 /* fmt types */
@@ -244,7 +243,7 @@ CNode * c_dst_lnew(void *, usize, usize);
 CNode * c_dst_lpop(CNode **);
 int     c_dst_lpush(CNode **, CNode *);
 void    c_dst_lsort(CNode **, int (*)(void *, void *));
-void    c_dst_qinit(CQueue *, CArr *);
+void    c_dst_qinit(CQueue *, char *, usize);
 int     c_dst_qpop(CQueue *, CArr *, usize, usize);
 int     c_dst_qpops(CQueue *, CArr *);
 int     c_dst_qpush(CQueue *, void *, usize, usize);

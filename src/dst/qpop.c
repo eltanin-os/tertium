@@ -4,21 +4,43 @@
 int
 c_dst_qpop(CQueue *p, CArr *b, usize m, usize n)
 {
-	if (C_OFLW_UM(usize, m, n))
+	usize len;
+
+	if (C_OFLW_UM(usize, m, n)) {
+		errno = C_EOVERFLOW;
 		return -1;
+	}
 
 	m *= n;
 
-	if (!c_arr_bytes(p->mb))
+	if (!(len = c_arr_bytes(&p->mb)))
 		return 0;
 
-	m = (m > c_arr_bytes(p->mb)) ? c_arr_bytes(p->mb) : m;
+	m   = C_MIN(len, m);
+	len = p->h + m;
 
-	if (c_arr_cat(b, c_arr_bget(p->mb, p->os), m, sizeof(uchar)) < 0)
+	if (len > p->mb.a) {
+		m   = len - p->mb.a;
+		len = len - m;
+	} else {
+		len = 0;
+	}
+
+	if (len + m > c_arr_avail(b)) {
+		errno = C_ENOMEM;
 		return -1;
+	}
 
-	p->mb->n -= m;
-	p->os += m+1;
+	c_arr_cat(b, c_arr_bget(&p->mb, p->h), m, sizeof(uchar));
+	c_arr_cat(b, c_arr_bget(&p->mb, 0), len, sizeof(uchar));
+
+	if (m >= c_arr_bytes(&p->mb)) {
+		c_arr_trunc(&p->mb, 0, sizeof(uchar));
+		p->h = 0;
+	} else {
+		p->mb.n -= m;
+		p->h += m+1;
+	}
 
 	return 0;
 }

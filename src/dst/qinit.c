@@ -2,8 +2,8 @@
 #include <tertium/std.h>
 
 void
-c_dst_qinit(CQueue *p, CArr *b)
+c_dst_qinit(CQueue *p, char *s, usize n)
 {
-	p->mb = b;
-	p->os = p->oe = 0;
+	c_arr_init(&p->mb, s, n);
+	p->h = 0;
 }

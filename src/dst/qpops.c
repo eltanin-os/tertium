@@ -4,11 +4,12 @@
 int
 c_dst_qpops(CQueue *p, CArr *b)
 {
-	usize n;
+	usize len, max;
 
-	if (!c_arr_bytes(p->mb))
-		return 0;
+	max = p->mb.a - p->h;
 
-	n = c_str_len(c_arr_bget(p->mb, p->os), C_USIZEMAX);
-	return c_dst_qpop(p, b, n, sizeof(uchar));
+	if ((len = c_str_len(c_arr_bget(&p->mb, p->h), max)) == max)
+		len += c_str_len(c_arr_bget(&p->mb, 0), p->mb.a);
+
+	return c_dst_qpop(p, b, len, sizeof(uchar));
 }
