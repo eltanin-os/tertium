@@ -4,6 +4,6 @@
 int
 c_dir_close(CDir *dir)
 {
-	c_sys_close(dir->__dir.fd);
+	c_sys_close(dir->fd);
 	return 0;
 }

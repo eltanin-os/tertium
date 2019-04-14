@@ -4,32 +4,21 @@
 int
 c_dir_open(CDir *dir, char *path, uint opts)
 {
-	CArr arr;
-	size r;
+	CStat st;
 
-	if ((dir->__dir.fd = c_sys_open(path, C_OREAD|C_OCEXEC, 0)) < 0)
+	if ((dir->fd = c_sys_open(path, C_OREAD|C_OCEXEC, 0)) < 0)
 		return -1;
 
-	c_arr_init(&arr, dir->path, sizeof(dir->path));
-
-	if ((r = c_arr_cats(&arr, path)) < 0)
-		return -1;
-
-	if (path[r-1] != '/') {
-		c_arr_cats(&arr, "/");
-		r++;
-	}
-
-	dir->nlen = 0;
-	dir->plen = r;
+	dir->path = path;
+	dir->len  = c_str_len(path, C_USIZEMAX);
 	dir->opts = opts;
 
-	if (c_sys_fstat(&dir->info, dir->__dir.fd) < 0)
+	if (c_sys_fstat(&st, dir->fd) < 0)
 		return -1;
 
-	dir->dev = dir->info.st_dev;
+	dir->dev = st.st_dev;
 
-	if (!C_ISDIR(dir->info.st_mode)) {
+	if (!C_ISDIR(st.st_mode)) {
 		errno = C_ENOTDIR;
 		return -1;
 	}

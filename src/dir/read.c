@@ -11,61 +11,60 @@
 ((a) == 12) ? C_IFSCK : 0
 
 int
-c_dir_read(CDir *dir)
+c_dir_read(CDent *dent, CDir *dir)
 {
 	__fb_dirent *d;
 	CArr  arr;
 	CStat st;
 	size  r;
 	int (*stf)(CStat *, char *);
+	char *sep;
 search:
-	if (dir->__dir.os >= dir->__dir.oe) {
-		if ((r = c_sys_call(__NR_getdents64, dir->__dir.fd,
-		    dir->__dir.buf, sizeof(dir->__dir.buf))) < 0)
+	if (dir->n >= dir->a) {
+		if ((r = c_sys_call(__NR_getdents64, dir->fd,
+		    dir->buf, sizeof(dir->buf))) < 0)
 			return -1;
 		if (!r)
 			return 0;
-		dir->__dir.oe = r;
-		dir->__dir.os = 0;
+		dir->a = r;
+		dir->n = 0;
 	}
 
-	d = (void *)(dir->__dir.buf + dir->__dir.os);
-	dir->__dir.os += d->d_reclen;
-	if (C_ISDOT(d->d_name) &&
-	    (~dir->opts & C_FSDOT))
+	d = (void *)(dir->buf + dir->n);
+	dir->n += d->d_reclen;
+	if (C_ISDOT(d->d_name) && (~dir->opts & C_FSDOT))
 		goto search;
 
-	c_arr_init(&arr, dir->path, sizeof(dir->path));
-	r = dir->plen - dir->nlen;
-	arr.n = r;
-	if (c_arr_cats(&arr, d->d_name) < 0)
+	c_arr_init(&arr, dent->path, sizeof(dent->path));
+	sep = dir->path[dir->len-1] == '/' ? "" : "/";
+	if ((r = c_arr_fmt(&arr, "%s%s%s", dir->path, sep, d->d_name)) < 0)
 		return -1;
 
-	dir->name = dir->path + r;
-	dir->nlen = c_str_len(dir->name, C_USIZEMAX);
-	dir->plen = c_arr_bytes(&arr);
+	dent->nlen = c_str_len(d->d_name, C_USIZEMAX);
+	dent->plen = r;
+	dent->name = dir->path + dent->nlen;
 
 	if (dir->opts & C_FSNOI) {
-		c_mem_set(&dir->info, sizeof(dir->info), 0);
-		dir->info.st_dev  = dir->dev;
-		dir->info.st_ino  = d->d_ino;
-		dir->info.st_mode = T(d->d_type);
+		c_mem_set(&dent->info, sizeof(dent->info), 0);
+		dent->info.st_dev  = dir->dev;
+		dent->info.st_ino  = d->d_ino;
+		dent->info.st_mode = T(d->d_type);
 		if (C_ISLNK(d->d_type) && (dir->opts & C_FSLOG)) {
-			if (c_sys_stat(&st, dir->path) < 0)
+			if (c_sys_stat(&st, dent->path) < 0)
 				return -1;
-			dir->info.st_dev  = st.st_dev;
-			dir->info.st_ino  = st.st_ino;
-			dir->info.st_mode = st.st_mode;
+			dent->info.st_dev  = st.st_dev;
+			dent->info.st_ino  = st.st_ino;
+			dent->info.st_mode = st.st_mode;
 		}
 	} else {
 		stf = (dir->opts & C_FSLOG) ? c_sys_stat : c_sys_lstat;
-		if (stf(&dir->info, dir->path) < 0) {
-			c_err_warn("stf %s", dir->path);
+		if (stf(&dent->info, dent->path) < 0) {
+			c_err_warn("stf %s", dent->path);
 			return -1;
 		}
 	}
 
-	if ((dir->opts & C_FSXDV) && dir->dev != dir->info.st_dev)
+	if ((dir->opts & C_FSXDV) && dir->dev != dent->info.st_dev)
 		goto search;
 
 	return 1;

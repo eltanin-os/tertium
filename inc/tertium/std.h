@@ -184,22 +184,26 @@ struct CStat {
 };
 
 /* dir types */
-typedef struct CDir CDir;
+typedef struct CDent CDent;
+typedef struct CDir  CDir;
 
-struct CDir {
-	struct {
-		usize os;
-		usize oe;
-		int   fd;
-		char  buf[2048];
-	} __dir;
+struct CDent {
 	CStat  info;
-	ulong  dev;
-	uint   opts;
 	short  nlen;
 	short  plen;
 	char  *name;
 	char   path[C_PATHMAX];
+};
+
+struct CDir {
+	ulong dev;
+	int   fd;
+	uint  opts;
+	short a;
+	short len;
+	short n;
+	char *path;
+	char  buf[2048];
 };
 
 /* tai types */
@@ -235,7 +239,7 @@ size   c_arr_vfmt(CArr *, char *, va_list);
 int c_dir_close(CDir *);
 int c_dir_hist(CNode **, CStat *);
 int c_dir_open(CDir *, char *, uint);
-int c_dir_read(CDir *);
+int c_dir_read(CDent *, CDir *);
 
 /* dst routines */
 void    c_dst_lfree(CNode *, void (*)(void *));
