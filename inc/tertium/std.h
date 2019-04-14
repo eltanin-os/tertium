@@ -168,19 +168,19 @@ struct CTime {
 };
 
 struct CStat {
-	vlong  st_size;
-	ulong  st_blksize;
-	ulong  st_blocks;
 	CTime  st_atim;
 	CTime  st_ctim;
 	CTime  st_mtim;
-	short  st_gid;
-	short  st_nlink;
-	short  st_uid;
-	ushort st_dev;
-	ushort st_ino;
+	ulong  st_blksize;
+	ulong  st_blocks;
+	ulong  st_dev;
+	ulong  st_ino;
+	ulong  st_rdev;
+	vlong  st_size;
+	int    st_gid;
+	int    st_nlink;
+	int    st_uid;
 	ushort st_mode;
-	ushort st_rdev;
 };
 
 /* dir types */
@@ -194,10 +194,10 @@ struct CDir {
 		char  buf[2048];
 	} __dir;
 	CStat  info;
+	ulong  dev;
 	uint   opts;
 	short  nlen;
 	short  plen;
-	ushort dev;
 	char  *name;
 	char   path[C_PATHMAX];
 };
