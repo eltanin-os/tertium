@@ -189,21 +189,21 @@ typedef struct CDir  CDir;
 
 struct CDent {
 	CStat  info;
-	short  nlen;
-	short  plen;
+	ushort nlen;
+	ushort plen;
 	char  *name;
 	char   path[C_PATHMAX];
 };
 
 struct CDir {
-	ulong dev;
-	int   fd;
-	uint  opts;
-	short a;
-	short len;
-	short n;
-	char *path;
-	char  buf[2048];
+	ulong  dev;
+	int    fd;
+	uint   opts;
+	short  a;
+	short  n;
+	ushort len;
+	char   buf[2048];
+	char   path[C_PATHMAX];
 };
 
 /* tai types */

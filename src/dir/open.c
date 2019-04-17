@@ -4,13 +4,17 @@
 int
 c_dir_open(CDir *dir, char *path, uint opts)
 {
+	CArr arr;
 	CStat st;
 
 	if ((dir->fd = c_sys_open(path, C_OREAD|C_OCEXEC, 0)) < 0)
 		return -1;
 
-	dir->path = path;
-	dir->len  = c_str_len(path, C_USIZEMAX);
+	c_arr_init(&arr, dir->path, sizeof(dir->path));
+	if (c_arr_cats(&arr, path) < 0)
+		return -1;
+
+	dir->len  = c_arr_bytes(&arr);
 	dir->opts = opts;
 
 	if (c_sys_fstat(&st, dir->fd) < 0) {
