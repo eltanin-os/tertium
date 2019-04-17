@@ -42,7 +42,7 @@ search:
 
 	dent->nlen = c_str_len(d->d_name, C_USIZEMAX);
 	dent->plen = r;
-	dent->name = dir->path + dent->nlen;
+	dent->name = dent->path + dent->nlen;
 
 	if (dir->opts & C_FSNOI) {
 		c_mem_set(&dent->info, sizeof(dent->info), 0);
@@ -58,10 +58,8 @@ search:
 		}
 	} else {
 		stf = (dir->opts & C_FSLOG) ? c_sys_stat : c_sys_lstat;
-		if (stf(&dent->info, dent->path) < 0) {
-			c_err_warn("stf %s", dent->path);
+		if (stf(&dent->info, dent->path) < 0)
 			return -1;
-		}
 	}
 
 	if ((dir->opts & C_FSXDV) && dir->dev != dent->info.st_dev)
