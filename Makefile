@@ -128,6 +128,7 @@ LIBCSRC=\
 	src/sys/munmap.c\
 	src/sys/open.c\
 	src/sys/read.c\
+	src/sys/rmdir.c\
 	src/sys/seek.c\
 	src/sys/stat.c\
 	src/sys/strerror.c\

@@ -356,6 +356,7 @@ void * c_sys_mmap(void *, usize, int, int, int, int);
 int    c_sys_munmap(void *, usize);
 int    c_sys_open(char *, int, int);
 size   c_sys_read(int, void *, usize);
+int    c_sys_rmdir(char *);
 vlong  c_sys_seek(int, vlong, int);
 int    c_sys_stat(CStat *, char *);
 char * c_sys_strerror(int, char *, usize);
