@@ -242,7 +242,7 @@ int c_dir_open(CDir *, char *, uint);
 int c_dir_read(CDent *, CDir *);
 
 /* dst routines */
-void    c_dst_lfree(CNode *, void (*)(void *));
+void    c_dst_lfree(CNode *);
 CNode * c_dst_lnew(void *, usize, usize);
 CNode * c_dst_lpop(CNode **);
 int     c_dst_lpush(CNode **, CNode *);
