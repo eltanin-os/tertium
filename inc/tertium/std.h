@@ -13,11 +13,11 @@ for (argc--, argv++;\
 		_argc = (*argv)[0];\
 		switch (_argc)
 #define C_ARGF() \
-(((*argv)[1] == '\0' && !argv[1]) ? (char *)0 :\
-(_brk = 1, ((*argv)[1] != '\0') ? (&(*argv)[1]) : (argc--, argv++, *argv)))
+((!((*argv)[1]) && !(argv[1])) ? nil :\
+(_brk = 1, ((*argv)[1]) ? (&(*argv)[1]) : (argc--, argv++, *argv)))
 #define C_EARGF(x) \
-(((*argv)[1] == '\0' && !argv[1]) ? ((x), c_sys_abort(), (char *)0) :\
-(_brk = 1, ((*argv)[1] != '\0') ? (&(*argv)[1]) : (argc--, argv++, *argv)))
+((!((*argv)[1]) && !(argv[1])) ? ((x), c_sys_abort(), nil) :\
+(_brk = 1, ((*argv)[1]) ? (&(*argv)[1]) : (argc--, argv++, *argv)))
 #define C_ARGC() _argc
 #define C_ARGEND } }
 
