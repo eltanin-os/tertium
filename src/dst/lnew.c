@@ -14,7 +14,7 @@ c_dst_lnew(void *v, usize m, usize n)
 	if (!(np = c_std_alloc(1, sizeof(*np))))
 		return nil;
 
-	np->p = c_arr_bget(&arr, 0);
+	np->p = c_arr_data(&arr);
 
 	return np;
 }

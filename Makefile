@@ -12,14 +12,14 @@ HDR=\
 # LIB SOURCE
 LIBCSRC=\
 	src/arr/avail.c\
-	src/arr/bget.c\
 	src/arr/bytes.c\
 	src/arr/cat.c\
-	src/arr/cats.c\
+	src/arr/data.c\
 	src/arr/fmt.c\
 	src/arr/get.c\
 	src/arr/init.c\
 	src/arr/len.c\
+	src/arr/total.c\
 	src/arr/trunc.c\
 	src/arr/vfmt.c\
 	src/dir/close.c\
@@ -37,7 +37,6 @@ LIBCSRC=\
 	src/dst/qpush.c\
 	src/dyn/alloc.c\
 	src/dyn/cat.c\
-	src/dyn/cats.c\
 	src/dyn/fmt.c\
 	src/dyn/free.c\
 	src/dyn/vfmt.c\

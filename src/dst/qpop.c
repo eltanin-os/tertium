@@ -31,8 +31,8 @@ c_dst_qpop(CQueue *p, CArr *b, usize m, usize n)
 		return -1;
 	}
 
-	c_arr_cat(b, c_arr_bget(&p->mb, p->h), m, sizeof(uchar));
-	c_arr_cat(b, c_arr_bget(&p->mb, 0), len, sizeof(uchar));
+	c_arr_cat(b, c_arr_get(&p->mb, p->h, sizeof(uchar)), m, sizeof(uchar));
+	c_arr_cat(b, c_arr_data(&p->mb), len, sizeof(uchar));
 
 	if (m >= c_arr_bytes(&p->mb)) {
 		c_arr_trunc(&p->mb, 0, sizeof(uchar));

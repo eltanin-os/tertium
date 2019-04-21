@@ -11,7 +11,7 @@ c_dir_open(CDir *dir, char *path, uint opts)
 		return -1;
 
 	c_arr_init(&arr, dir->path, sizeof(dir->path));
-	if (c_arr_cats(&arr, path) < 0)
+	if (c_arr_fmt(&arr, "%s", path) < 0)
 		return -1;
 
 	dir->len  = c_arr_bytes(&arr);

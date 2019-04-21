@@ -13,10 +13,10 @@ c_dyn_alloc(CArr *p, usize m, usize n)
 
 	m *= n;
 	t  = m ? m : n;
-	a  = p->a ? p->a : t >> 1;
+	a  = p->a ? p->a : t;
 
-	while (t > c_arr_avail(p)) {
-		a *= 2;
+	while (t >= c_arr_avail(p)) {
+		a <<= 1;
 		if (!(p->p = c_std_realloc(p->p, a, sizeof(uchar))))
 			return nil;
 		p->a = a;

@@ -1,6 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
+#define GETPATH(a) (!(a) || (a)[0] == ':') ? "." : (a)
+
 extern CArr newenv;
 
 int
@@ -22,7 +24,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 				return -1;
 
 	if ((path = c_str_chr(prog, C_USIZEMAX, '/')))
-		return c_sys_exec(prog, argv, (char **)c_arr_bget(&e, 0));
+		return c_sys_exec(prog, argv, (char **)c_arr_data(&e));
 
 	if (!(path = c_sys_getenv("PATH")))
 		path = "/bin:/usr/bin:.";
@@ -33,13 +35,9 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	for (;;) {
 		if ((s = c_str_chr(s, C_USIZEMAX, ':')))
 			*s++ = 0;
-		if (c_arr_cats(&f, (!*path || *path == ':') ? "." : path) < 0)
+		if (c_arr_fmt(&f, "%s/%s", GETPATH(path), prog) < 0)
 			return -1;
-		if (c_arr_cats(&f, "/")  < 0)
-			return -1;
-		if (c_arr_cats(&f, prog) < 0)
-			return -1;
-		c_sys_exec(c_arr_bget(&f, 0), argv, (char **)c_arr_bget(&e, 0));
+		c_sys_exec(c_arr_data(&f), argv, (char **)c_arr_data(&e));
 		if (!(errno == C_ENOENT || errno == C_EACCES ||\
 		    errno == C_EPERM    || errno == C_EISDIR))
 			break;

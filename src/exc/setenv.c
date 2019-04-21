@@ -17,17 +17,14 @@ c_exc_setenv(char *s, char *v)
 
 	c_mem_set(&e, sizeof(e), 0);
 
-	if (c_dyn_cats(&e, s) < 0)
+	if (c_dyn_fmt(&e, "%s", s) < 0)
 		goto fail;
 
-	if (v) {
-		if (c_dyn_cats(&e, "=") < 0)
+	if (v)
+		if (c_dyn_fmt(&e, "=%s", v) < 0)
 			goto fail;
-		if (c_dyn_cats(&e, v)   < 0)
-			goto fail;
-	}
 
-	p = c_arr_bget(&e, 0);
+	p = c_arr_data(&e);
 	c_dyn_cat(&newenv, &p, 1, sizeof(char *));
 	return 0;
 fail:

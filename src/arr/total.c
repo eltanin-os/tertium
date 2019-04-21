@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 usize
-c_arr_bytes(CArr *p)
+c_arr_total(CArr *p)
 {
-	return p->n;
+	return p->a;
 }

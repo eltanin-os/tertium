@@ -32,8 +32,8 @@ c_dst_qpush(CQueue *p, void *v, usize m, usize n)
 		p->mb.p[tail+m] = 0;
 	}
 
-	c_mem_cpy(c_arr_bget(&p->mb, tail), m, v);
-	c_mem_cpy(c_arr_bget(&p->mb, 0), len, (uchar *)v+m);
+	c_mem_cpy(c_arr_get(&p->mb, tail, sizeof(uchar)), m, v);
+	c_mem_cpy(c_arr_data(&p->mb), len, (uchar *)v+m);
 	p->mb.n = len ? len : p->mb.n + m;
 
 	return 0;

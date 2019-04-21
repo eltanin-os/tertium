@@ -39,6 +39,9 @@ enum {
 
 #define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSCOM) && !(b)))
 
+/* dyn macros */
+#define C_DYNMINALLOC 64
+
 /* fmt macros */
 enum {
 	C_FMTWIDTH    = 1 << 0,
@@ -226,12 +229,12 @@ struct CTaia {
 usize  c_arr_avail(CArr *);
 usize  c_arr_bytes(CArr *);
 size   c_arr_cat(CArr *, void *, usize, usize);
-size   c_arr_cats(CArr *, char *);
+void * c_arr_data(CArr *);
 size   c_arr_fmt(CArr *, char *, ...);
-void * c_arr_bget(CArr *, usize);
 void * c_arr_get(CArr *, usize, usize);
 void   c_arr_init(CArr *, char *, usize);
 usize  c_arr_len(CArr *, usize);
+usize  c_arr_total(CArr *);
 int    c_arr_trunc(CArr *, usize, usize);
 size   c_arr_vfmt(CArr *, char *, va_list);
 
@@ -255,7 +258,6 @@ int     c_dst_qpush(CQueue *, void *, usize, usize);
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);
 size   c_dyn_cat(CArr *, void *, usize, usize);
-size   c_dyn_cats(CArr *, char *);
 size   c_dyn_fmt(CArr *, char *, ...);
 void   c_dyn_free(CArr *);
 size   c_dyn_vfmt(CArr *, char *, va_list);
