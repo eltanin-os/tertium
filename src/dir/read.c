@@ -42,7 +42,7 @@ search:
 
 	dent->nlen = c_str_len(d->d_name, C_USIZEMAX);
 	dent->plen = r;
-	dent->name = dent->path + dent->nlen;
+	dent->name = dent->path + dent->plen - dent->nlen;
 
 	if (dir->opts & C_FSNOI) {
 		c_mem_set(&dent->info, sizeof(dent->info), 0);
