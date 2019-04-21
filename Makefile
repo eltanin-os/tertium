@@ -118,12 +118,13 @@ LIBCSRC=\
 	src/sys/fstat.c\
 	src/sys/getcwd.c\
 	src/sys/getenv.c\
-	src/sys/lstat.c\
 	src/sys/getgid.c\
 	src/sys/getsyserr.c\
 	src/sys/gettime.c\
 	src/sys/getuid.c\
 	src/sys/link.c\
+	src/sys/lstat.c\
+	src/sys/mkdir.c\
 	src/sys/mmap.c\
 	src/sys/munmap.c\
 	src/sys/open.c\

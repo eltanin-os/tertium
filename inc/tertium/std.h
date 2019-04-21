@@ -352,6 +352,7 @@ int    c_sys_gettime(int, CTime *);
 short  c_sys_getuid(void);
 int    c_sys_link(char *, char *);
 int    c_sys_lstat(CStat *, char *);
+int    c_sys_mkdir(char *, ushort);
 void * c_sys_mmap(void *, usize, int, int, int, int);
 int    c_sys_munmap(void *, usize);
 int    c_sys_open(char *, int, int);
