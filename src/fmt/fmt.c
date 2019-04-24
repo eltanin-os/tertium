@@ -7,8 +7,7 @@ static int
 fmtfmt(CFmt *f, uchar *s)
 {
 	struct fmtverb *p;
-	usize n;
-	int i;
+	int i, n;
 
 	n = c_arr_len(&Fmts, sizeof(*p));
 

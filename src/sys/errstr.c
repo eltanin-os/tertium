@@ -4,7 +4,7 @@
 int
 c_sys_errstr(char *s, usize n)
 {
-	int   i;
+	usize i;
 	char *p;
 	uchar t;
 

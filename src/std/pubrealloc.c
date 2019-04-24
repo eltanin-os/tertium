@@ -297,7 +297,7 @@ mappages(usize pages)
 	void *r, *rr, *t;
 
 	bytes = pages << mpageshift;
-	if (bytes < 0 || bytes < pages) {
+	if (bytes < 0 || bytes < (intptr)pages) {
 		errno = C_ENOMEM;
 		return nil;
 	}

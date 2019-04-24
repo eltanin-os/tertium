@@ -35,7 +35,7 @@ isrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 
 	i = 0;
 
-	for (; i < m; i++)
+	for (; i < (int)m; i++)
 		for (j = i; j > 0 && f(v+n*(j-1), v+n*j)>0; j--)
 			swap(v+n*j, v+n*(j-1), n);
 }
@@ -43,8 +43,7 @@ isrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 static void
 msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 {
-	usize t;
-	int i, j;
+	usize  i, j, t;
 	uchar *p;
 
 	/* TODO: stable fallback that requires O(1) additional space */

@@ -44,7 +44,7 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 		b = 10;
 	}
 
-	o  = n ? -(uvlong)l : h;
+	o  = n ? -(uvlong)l : (uvlong)h;
 	m  = o %  (uvlong)b;
 	o /= (uvlong)b;
 

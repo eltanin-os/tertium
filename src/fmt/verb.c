@@ -99,7 +99,7 @@ fmtcat(CFmt *p, char *s, usize n)
 		s = "<nil>";
 	if (!n)
 		n = c_str_len(s, C_USIZEMAX);
-	if ((p->flags & C_FMTPREC) && n > p->prec)
+	if ((p->flags & C_FMTPREC) && n > (usize)p->prec)
 		n = p->prec;
 	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
