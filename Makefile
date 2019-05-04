@@ -3,13 +3,17 @@ include config.mk
 .SUFFIXES:
 .SUFFIXES: .o .c .s
 
-INC= -I inc -I inc/$(OBJTYPE) -I oss/$(OSNAME)/$(OBJTYPE)
+INC= -I inc -I oss/$(OSNAME) -I oss/$(OSNAME)/$(OBJTYPE)
 
 HDR=\
 	inc/tertium/std.h\
-	oss/$(OSNAME)/$(OBJTYPE)/tertium/cpu.h
+	oss/$(OSNAME)/$(OBJTYPE)/tertium/cpu.h\
+	oss/$(OSNAME)/tertium/os.h
 
 # LIB SOURCE
+ASMSRC=\
+	oss/$(OSNAME)/$(OBJTYPE)/syscall.s
+
 LIBCSRC=\
 	src/arr/avail.c\
 	src/arr/bytes.c\
@@ -152,9 +156,6 @@ LIBCSRC=\
 	src/tna/sub.c\
 	src/tna/tai.c\
 	src/tna/unpack.c
-
-ASMSRC=\
-	oss/$(OSNAME)/$(OBJTYPE)/syscall.s
 
 # LIB PATH
 LIBC= lib/libtertium.a
