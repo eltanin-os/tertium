@@ -4,8 +4,8 @@
 int
 c_ioq_putfd(CIoq *p, int fd, usize n)
 {
-	size r;
-	char buf[C_BIOSIZ];
+	size  r;
+	char  buf[C_BIOSIZ];
 	void *mp;
 
 	if (!fd)

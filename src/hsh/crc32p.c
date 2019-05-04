@@ -5,7 +5,7 @@ static int init(CH32st *);
 static int update(CH32st *, char *, usize);
 static int end(CH32st *);
 
-CH32md md = {
+static CH32md md = {
 	&init,
 	&update,
 	&end,
