@@ -1,28 +1,25 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-u32int
-c_hsh_putfile(CH32md *p, char *s)
+int
+c_hsh_putfile(CH32st *hs, CH32md *p, char *s)
 {
-	CStat  st;
-	int    fd;
-	u32int r;
+	CStat st;
+	int fd;
 
 	if (!c_mem_cmp(s, sizeof("<stdin>")-1, "<stdin>"))
-		return c_hsh_putfd(p, C_FD0, 0);
+		return c_hsh_putfd(hs, p, C_FD0, 0);
 
 	if ((fd = c_sys_open(s, C_OREAD, 0)) < 0)
-		return 0;
+		return -1;
 
-	if (c_sys_fstat(&st, fd) < 0)
-		goto fail;
+	if (c_sys_fstat(&st, fd) < 0) {
+		c_sys_close(fd);
+		return -1;
+	}
 
-	r = c_hsh_putfd(p, fd, st.st_size);
-
-	goto done;
-fail:
-	r = 0;
-done:
+	c_hsh_putfd(hs, p, fd, st.st_size);
 	c_sys_close(fd);
-	return r;
+
+	return 0;
 }

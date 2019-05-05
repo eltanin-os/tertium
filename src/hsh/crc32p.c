@@ -1,9 +1,12 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static int init(CH32st *);
-static int update(CH32st *, char *, usize);
-static int end(CH32st *);
+#define CRCTAB(a) \
+(((a) << 4) ^ crctab[((a) >> 28) & 15])
+
+static void init(CH32st *);
+static void update(CH32st *, char *, usize);
+static void end(CH32st *);
 
 static CH32md md = {
 	&init,
@@ -20,41 +23,36 @@ static u32int crctab[] = {
 	0x350C9B64, 0x31CD86D3, 0x3C8EA00A, 0x384FBDBD
 };
 
-static int
+static void
 init(CH32st *p)
 {
-	p->a = 0;
-	p->b = 0;
-	return 0;
+	p->len = 0;
+	p->state[0] = 0;
 }
 
-static int
+static void
 update(CH32st *p, char *data, usize n)
 {
 	uchar *s;
 
-	p->b += n;
+	p->len += n;
 	s = (uchar *)data;
 
 	for (; n; n--) {
-		p->a ^= *s++ << 24;
-		p->a  = (p->a << 4) ^ crctab[(p->a >> 28) & 15];
-		p->a  = (p->a << 4) ^ crctab[(p->a >> 28) & 15];
+		p->state[0] ^= *s++ << 24;
+		p->state[0]  = CRCTAB(p->state[0]);
+		p->state[0]  = CRCTAB(p->state[0]);
 	}
-
-	return 0;
 }
 
-static int
+static void
 end(CH32st *p)
 {
-	for (; p->b; p->b >>= 8) {
-		p->a ^=  p->b << 24;
-		p->a  = (p->a << 4) ^ crctab[(p->a >> 28) & 15];
-		p->a  = (p->a << 4) ^ crctab[(p->a >> 28) & 15];
+	usize n;
+	for (n = p->len; n; n >>= 8) {
+		p->state[0] ^= n << 24;
+		p->state[0]  = CRCTAB(p->state[0]);
+		p->state[0]  = CRCTAB(p->state[0]);
 	}
-
-	p->a ^= 0xFFFFFFFF;
-
-	return 0;
+	p->state[0] ^= 0xFFFFFFFF;
 }

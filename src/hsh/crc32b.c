@@ -1,9 +1,12 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static int init(CH32st *);
-static int update(CH32st *, char *, usize);
-static int end(CH32st *);
+#define CRCTAB(a) \
+(((a) >> 4) ^ crctab[(a) & 15])
+
+static void init(CH32st *);
+static void update(CH32st *, char *, usize);
+static void end(CH32st *);
 
 static CH32md md = {
 	&init,
@@ -20,32 +23,30 @@ static u32int crctab[] = {
 	0x9B64C2B0, 0x86D3D2D4, 0xA00AE278, 0xBDBDF21C
 };
 
-static int
+static void
 init(CH32st *p)
 {
-	p->a = 0xFFFFFFFF;
-	return 0;
+	p->len = 0;
+	p->state[0] = 0xFFFFFFFF;
 }
 
-static int
+static void
 update(CH32st *p, char *data, usize n)
 {
 	uchar *s;
 
+	p->len += n;
 	s = (uchar *)data;
 
 	for (; n; n--) {
-		p->a ^= *s++;
-		p->a  = (p->a >> 4) ^ crctab[p->a & 15];
-		p->a  = (p->a >> 4) ^ crctab[p->a & 15];
+		p->state[0] ^= *s++;
+		p->state[0]  = CRCTAB(p->state[0]);
+		p->state[0]  = CRCTAB(p->state[0]);
 	}
-
-	return 0;
 }
 
-static int
+static void
 end(CH32st *p)
 {
-	p->a ^= 0xFFFFFFFF;
-	return 0;
+	p->state[0] ^= 0xFFFFFFFF;
 }

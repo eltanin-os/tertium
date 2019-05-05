@@ -142,14 +142,14 @@ typedef struct CH32md CH32md;
 typedef struct CH32st CH32st;
 
 struct CH32md {
-	int (*init)(CH32st *);
-	int (*update)(CH32st *, char *, usize);
-	int (*end)(CH32st *);
+	void (*init)(CH32st *);
+	void (*update)(CH32st *, char *, usize);
+	void (*end)(CH32st *);
 };
 
 struct CH32st {
-	u32int a;
-	u32int b;
+	u32int state[2];
+	usize  len;
 };
 
 /* ioq types */
@@ -288,9 +288,9 @@ char * c_gen_basename(char *);
 char * c_gen_dirname(char *);
 
 /* hsh routines */
-u32int c_hsh_all(CH32md *, char *, usize);
-u32int c_hsh_putfile(CH32md *, char *);
-u32int c_hsh_putfd(CH32md *, int, usize);
+void c_hsh_all(CH32st *, CH32md *, char *, usize);
+int  c_hsh_putfile(CH32st *, CH32md *, char *);
+int  c_hsh_putfd(CH32st *, CH32md *, int, usize);
 
 /* ioq routines */
 size   c_ioq_feed(CIoq *);

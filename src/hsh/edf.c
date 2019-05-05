@@ -1,9 +1,9 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static int init(CH32st *);
-static int update(CH32st *, char *, usize);
-static int end(CH32st *);
+static void init(CH32st *);
+static void update(CH32st *, char *, usize);
+static void end(CH32st *);
 
 static CH32md md = {
 	&init,
@@ -13,33 +13,31 @@ static CH32md md = {
 
 CH32md *c_hsh_edf = &md;
 
-static int
+static void
 init(CH32st *p)
 {
-	p->a = 0;
-	return 0;
+	p->len = 0;
+	p->state[0] = 0;
 }
 
-static int
+static void
 update(CH32st *p, char *data, usize n)
 {
 	uchar *s;
 
+	p->len += n;
 	s = (uchar *)data;
 
 	for (; n; n--)
-		p->a = (p->a * 4327) + *s++;
-
-	return 0;
+		p->state[0] = (p->state[0] * 4327) + *s++;
 }
 
-static int
+static void
 end(CH32st *p)
 {
-	p->a += p->a << 24;
-	p->a ^= p->a >> 5;
-	p->a += p->a << 3;
-	p->a ^= p->a >> 17;
-	p->a += p->a << 7;
-	return 0;
+	p->state[0] += p->state[0] << 24;
+	p->state[0] ^= p->state[0] >> 5;
+	p->state[0] += p->state[0] << 3;
+	p->state[0] ^= p->state[0] >> 17;
+	p->state[0] += p->state[0] << 7;
 }
