@@ -11,10 +11,13 @@ c_arr_get(CArr *p, usize m, usize n)
 
 	m *= n;
 
-	if (m > c_arr_avail(p)) {
+	if (m > c_arr_total(p)) {
 		errno = C_ENOMEM;
 		return nil;
 	}
+
+	if (m > c_arr_bytes(p))
+		p->n = m;
 
 	return (p->p+m);
 }

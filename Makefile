@@ -101,6 +101,7 @@ LIBCSRC=\
 	src/std/free.c\
 	src/std/pubrealloc.c\
 	src/std/realloc.c\
+	src/std/setalloc.c\
 	src/std/sort.c\
 	src/std/strtovl.c\
 	src/str/chr.c\
@@ -146,16 +147,24 @@ LIBCSRC=\
 	src/tai/pack.c\
 	src/tai/sub.c\
 	src/tai/unpack.c\
-	src/tna/add.c\
-	src/tna/approx.c\
-	src/tna/frac.c\
-	src/tna/half.c\
-	src/tna/less.c\
-	src/tna/now.c\
-	src/tna/pack.c\
-	src/tna/sub.c\
-	src/tna/tai.c\
-	src/tna/unpack.c
+	src/taia/add.c\
+	src/taia/approx.c\
+	src/taia/frac.c\
+	src/taia/half.c\
+	src/taia/less.c\
+	src/taia/now.c\
+	src/taia/pack.c\
+	src/taia/sub.c\
+	src/taia/tai.c\
+	src/taia/unpack.c\
+	src/uint/16bigpack.c\
+	src/uint/16bigunpack.c\
+	src/uint/16pack.c\
+	src/uint/16unpack.c\
+	src/uint/32bigpack.c\
+	src/uint/32bigunpack.c\
+	src/uint/32pack.c\
+	src/uint/32unpack.c
 
 # LIB PATH
 LIBC= lib/libtertium.a

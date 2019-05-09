@@ -8,12 +8,7 @@ c_std_calloc(usize m, usize n)
 {
 	void *p;
 
-	if (C_OFLW_UM(usize, m, n)) {
-		errno = C_ENOMEM;
-		return nil;
-	}
-
-	if ((p = pubrealloc(nil, m*n)))
+	if ((p = __allocator(nil, m, n)))
 		c_mem_set(p, n, 0);
 
 	return p;

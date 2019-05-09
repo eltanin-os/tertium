@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tna_now(CTaia *t)
+c_taia_now(CTaia *t)
 {
 	CTime tm;
 	c_sys_gettime(CLOCK_REALTIME, &tm);

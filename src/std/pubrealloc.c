@@ -617,9 +617,14 @@ minit(void)
 }
 
 void *
-pubrealloc(void *p, usize n)
+pubrealloc(void *p, usize m, usize n)
 {
 	void *r;
+
+	if (C_OFLW_UM(usize, m, n)) {
+		errno = C_EOVERFLOW;
+		return nil;
+	}
 
 	r = nil;
 

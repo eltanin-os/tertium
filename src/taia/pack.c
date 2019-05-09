@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tna_pack(char *s, CTaia *t)
+c_taia_pack(char *s, CTaia *t)
 {
 	ulong x;
 	c_tai_pack(s, &t->sec);

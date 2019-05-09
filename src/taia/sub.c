@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tna_sub(CTaia *t, CTaia *u, CTaia *v)
+c_taia_sub(CTaia *t, CTaia *u, CTaia *v)
 {
 	t->sec.x = u->sec.x - v->sec.x;
 	t->nano  = u->nano  - v->nano;

@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tna_half(CTaia *t, CTaia *u)
+c_taia_half(CTaia *t, CTaia *u)
 {
 	t->atto = u->atto >> 1;
 	if (u->nano & 1)

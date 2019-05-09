@@ -87,14 +87,14 @@ enum {
 #define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
 #define c_std_setprogname(a) argv0 = (a)
 
+/* sys macros */
+#define c_sys_call(...) c_sys_call_(__VA_ARGS__, nil)
+
 /* tai macros */
 #define C_TAI_PACK 8
 
-/* tna macros */
+/* taia macros */
 #define C_TAIA_PACK 16
-
-/* sys macros */
-#define c_sys_call(...) c_sys_call_(__VA_ARGS__, nil)
 
 /* arr types */
 typedef struct CArr CArr;
@@ -216,7 +216,7 @@ struct CTai {
 	u64int x;
 };
 
-/* tna types */
+/* taia types */
 typedef struct CTaia CTaia;
 
 struct CTaia {
@@ -324,6 +324,7 @@ void * c_std_calloc(usize, usize);
 void   c_std_exit(int);
 void * c_std_free_(void *);
 void * c_std_realloc(void *, usize, usize);
+void   c_std_setalloc(void *(*)(void *, usize, usize));
 void   c_std_sort(void *, usize, usize, int (*)(void *, void *));
 vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 
@@ -376,17 +377,27 @@ void   c_tai_now(CTai *);
 void   c_tai_sub(CTai *, CTai *, CTai *);
 void   c_tai_unpack(char *, CTai *);
 
-/* tna routines */
-void   c_tna_add(CTaia *, CTaia *, CTaia *);
-double c_tna_approx(CTaia *);
-double c_tna_frac(CTaia *);
-void   c_tna_half(CTaia *, CTaia *);
-int    c_tna_less(CTaia *, CTaia *);
-void   c_tna_now(CTaia *);
-void   c_tna_pack(char *, CTaia *);
-void   c_tna_sub(CTaia *, CTaia *, CTaia *);
-void   c_tna_tai(CTaia *, CTai *);
-void   c_tna_unpack(char *, CTaia *);
+/* taia routines */
+void   c_taia_add(CTaia *, CTaia *, CTaia *);
+double c_taia_approx(CTaia *);
+double c_taia_frac(CTaia *);
+void   c_taia_half(CTaia *, CTaia *);
+int    c_taia_less(CTaia *, CTaia *);
+void   c_taia_now(CTaia *);
+void   c_taia_pack(char *, CTaia *);
+void   c_taia_sub(CTaia *, CTaia *, CTaia *);
+void   c_taia_tai(CTaia *, CTai *);
+void   c_taia_unpack(char *, CTaia *);
+
+/* uint routines */
+void c_uint_16bigpack(char *, u16int);
+void c_uint_16bigunpack(char *, u16int *);
+void c_uint_16pack(char *, u16int);
+void c_uint_16unpack(char *, u16int *);
+void c_uint_32bigpack(char *, u32int);
+void c_uint_32bigunpack(char *, u32int *);
+void c_uint_32pack(char *, u32int);
+void c_uint_32unpack(char *, u32int *);
 
 /* hsh variables */
 extern CH32md *c_hsh_crc32b;

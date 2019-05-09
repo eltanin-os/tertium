@@ -6,5 +6,5 @@
 void *
 c_std_free_(void *p)
 {
-	return pubrealloc(p, 0);
+	return __allocator(p, 0, sizeof(uchar));
 }
