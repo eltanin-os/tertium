@@ -4,7 +4,7 @@
 static int
 growbuffer(CFmt *p)
 {
-	if (!c_dyn_alloc(p->mb, c_arr_total(p->mb)+1, sizeof(uchar)))
+	if (c_dyn_ready(p->mb, c_arr_total(p->mb)+1, sizeof(uchar)) < 0)
 		return -1;
 
 	return 0;
@@ -16,8 +16,8 @@ c_dyn_vfmt(CArr *p, char *fmt, va_list args)
 	CFmt f;
 	size n;
 
-	if (!p->a)
-		if (!c_dyn_alloc(p, C_DYNMINALLOC, sizeof(uchar)))
+	if (!c_arr_total(p))
+		if (c_dyn_ready(p, C_DYNMINALLOC, sizeof(uchar)) < 0)
 			return -1;
 
 	c_fmt_fdinit(&f, 0, p, nil);

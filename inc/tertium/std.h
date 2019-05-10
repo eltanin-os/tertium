@@ -260,6 +260,7 @@ void * c_dyn_alloc(CArr *, usize, usize);
 size   c_dyn_cat(CArr *, void *, usize, usize);
 size   c_dyn_fmt(CArr *, char *, ...);
 void   c_dyn_free(CArr *);
+int    c_dyn_ready(CArr *, usize, usize);
 size   c_dyn_vfmt(CArr *, char *, va_list);
 
 /* err routines */
