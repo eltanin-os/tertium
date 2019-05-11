@@ -391,14 +391,14 @@ void   c_taia_tai(CTaia *, CTai *);
 void   c_taia_unpack(char *, CTaia *);
 
 /* uint routines */
-void c_uint_16bigpack(char *, u16int);
-void c_uint_16bigunpack(char *, u16int *);
-void c_uint_16pack(char *, u16int);
-void c_uint_16unpack(char *, u16int *);
-void c_uint_32bigpack(char *, u32int);
-void c_uint_32bigunpack(char *, u32int *);
-void c_uint_32pack(char *, u32int);
-void c_uint_32unpack(char *, u32int *);
+char * c_uint_16bigpack(char *, u16int);
+u16int c_uint_16bigunpack(char *);
+char * c_uint_16pack(char *, u16int);
+u16int c_uint_16unpack(char *);
+char * c_uint_32bigpack(char *, u32int);
+u32int c_uint_32bigunpack(char *);
+char * c_uint_32pack(char *, u32int);
+u32int c_uint_32unpack(char *);
 
 /* hsh variables */
 extern CH32md *c_hsh_crc32b;

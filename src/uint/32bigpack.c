@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-void
+char *
 c_uint_32bigpack(char *s, u32int u)
 {
 	s[3] = u & 255;
@@ -10,4 +10,5 @@ c_uint_32bigpack(char *s, u32int u)
 	u >>= 8;
 	s[1] = u & 255;
 	s[0] = u >> 8;
+	return s;
 }
