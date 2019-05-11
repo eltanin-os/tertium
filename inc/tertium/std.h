@@ -404,7 +404,7 @@ u32int c_uint_32unpack(char *);
 extern CH32md *c_hsh_crc32b;
 extern CH32md *c_hsh_crc32p;
 extern CH32md *c_hsh_edf;
-extern CH32md *c_hsh_fletcher16;
+extern CH32md *c_hsh_fletcher32;
 
 /* ioq variables */
 extern CIoq *ioq0;
