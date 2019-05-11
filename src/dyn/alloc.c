@@ -4,11 +4,16 @@
 void *
 c_dyn_alloc(CArr *p, usize m, usize n)
 {
+	usize t;
+
 	if (c_dyn_ready(p, m, n) < 0)
 		return nil;
 
-	if (m > c_arr_bytes(p))
-		p->n = m;
+	m *= n;
+	t  = m+n;
 
-	return (p->p+m);
+	if (t > c_arr_bytes(p))
+		p->n = t;
+
+	return ((uchar *)c_arr_data(p)+m);
 }
