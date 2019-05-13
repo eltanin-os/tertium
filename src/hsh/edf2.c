@@ -11,13 +11,13 @@ static CH32md md = {
 	&end,
 };
 
-CH32md *c_hsh_edf = &md;
+CH32md *c_hsh_edf2 = &md;
 
 static void
 init(CH32st *p)
 {
 	p->len = 0;
-	p->state[0] = 0;
+	p->state[0] = 9311;
 }
 
 static void
@@ -29,15 +29,15 @@ update(CH32st *p, char *data, usize n)
 	s = (uchar *)data;
 
 	for (; n; n--)
-		p->state[0] = (p->state[0] * 4327) + *s++;
+		p->state[0] = (p->state[0] + (*s++ - ' ')) * 1237;
 }
 
 static void
 end(CH32st *p)
 {
-	p->state[0] += p->state[0] << 24;
+	p->state[0] += p->state[0] << 13;
+	p->state[0] ^= p->state[0] >> 7;
+	p->state[0] += p->state[0] << 15;
 	p->state[0] ^= p->state[0] >> 5;
 	p->state[0] += p->state[0] << 3;
-	p->state[0] ^= p->state[0] >> 17;
-	p->state[0] += p->state[0] << 7;
 }

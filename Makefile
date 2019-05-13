@@ -66,7 +66,7 @@ LIBCSRC=\
 	src/hsh/all.c\
 	src/hsh/crc32b.c\
 	src/hsh/crc32p.c\
-	src/hsh/edf.c\
+	src/hsh/edf2.c\
 	src/hsh/fletcher32.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
