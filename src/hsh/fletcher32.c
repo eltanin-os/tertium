@@ -31,17 +31,17 @@ update(CH32st *p, char *data, usize n)
 	p->len += n;
 	i = 0;
 
-	while (n) {
+	while (n >= 2) {
 		n -= i = C_MIN(360, n);
 		SUM16(p->state[1], p->state[0], i, data);
 		p->state[0] = (p->state[0] & 0xFFFF) + (p->state[0] >> 16);
 		p->state[1] = (p->state[1] & 0xFFFF) + (p->state[1] >> 16);
 	}
 
-	if (i) {
-		p->state[1] += p->state[0] += *(uchar *)data;
-		p->state[0] = (p->state[0] & 0xFFFF) + (p->state[0] >> 16);
-		p->state[1] = (p->state[1] & 0xFFFF) + (p->state[1] >> 16);
+	if (n) {
+		p->state[1] += p->state[0] += (uchar)data[0];
+		p->state[0]  = (p->state[0] & 0xFFFF) + (p->state[0] >> 16);
+		p->state[1]  = (p->state[1] & 0xFFFF) + (p->state[1] >> 16);
 	}
 }
 
