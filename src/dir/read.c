@@ -20,18 +20,18 @@ c_dir_read(CDent *dent, CDir *dir)
 	int (*stf)(CStat *, char *);
 	char *sep;
 search:
-	if (dir->n >= dir->a) {
+	if (dir->__dir.n >= dir->__dir.a) {
 		if ((r = c_sys_call(__NR_getdents64, dir->fd,
-		    dir->buf, sizeof(dir->buf))) < 0)
+		    dir->__dir.buf, sizeof(dir->__dir.buf))) < 0)
 			return -1;
 		if (!r)
 			return 0;
-		dir->a = r;
-		dir->n = 0;
+		dir->__dir.a = r;
+		dir->__dir.n = 0;
 	}
 
-	d = (void *)(dir->buf + dir->n);
-	dir->n += d->d_reclen;
+	d = (void *)(dir->__dir.buf + dir->__dir.n);
+	dir->__dir.n += d->d_reclen;
 	if (C_ISDOT(d->d_name) && (~dir->opts & C_FSDOT))
 		goto search;
 

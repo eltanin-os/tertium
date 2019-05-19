@@ -26,6 +26,19 @@ LIBCSRC=\
 	src/arr/total.c\
 	src/arr/trunc.c\
 	src/arr/vfmt.c\
+	src/cdb/datalen.c\
+	src/cdb/datapos.c\
+	src/cdb/find.c\
+	src/cdb/findnext.c\
+	src/cdb/findstart.c\
+	src/cdb/free.c\
+	src/cdb/init.c\
+	src/cdb/mkadd.c\
+	src/cdb/mkaddbegin.c\
+	src/cdb/mkaddend.c\
+	src/cdb/mkfinish.c\
+	src/cdb/mkstart.c\
+	src/cdb/read.c\
 	src/dir/close.c\
 	src/dir/hist.c\
 	src/dir/open.c\
@@ -66,6 +79,7 @@ LIBCSRC=\
 	src/hsh/all.c\
 	src/hsh/crc32b.c\
 	src/hsh/crc32p.c\
+	src/hsh/djb.c\
 	src/hsh/edf2.c\
 	src/hsh/fletcher32.c\
 	src/hsh/putfd.c\

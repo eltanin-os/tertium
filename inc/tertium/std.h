@@ -68,8 +68,8 @@ enum {
 #define C_ISDOT(a)  ((a)[0]=='.' && ((a)[1]==0 || ((a)[1]=='.' && (a)[2]==0)))
 #define C_ISDASH(a) ((a)[0]=='-' && (a)[1]=='\0')
 
-#define C_OFLW_UM(a, b, c) ((b) && (c) > (a)-1/(b))
-#define C_OFLW_UA(a, b)    ((b) > (a)-1)
+#define C_OFLW_UM(a, b, c) ((b) && (c) > (((a)-1)/(b)))
+#define C_OFLW_UA(a, b, c) ((c) > (((a)-1)-(b)))
 
 #define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
 
@@ -104,7 +104,6 @@ struct CArr {
 	usize  n;
 	uchar *p;
 };
-
 
 /* dst types */
 typedef struct CNode  CNode;
@@ -161,6 +160,32 @@ struct CIoq {
 	int    fd;
 };
 
+/* cdb types */
+typedef struct CCdb   CCdb;
+typedef struct CCdbmk CCdbmk;
+
+struct CCdb {
+	u32int dpos;
+	u32int dlen;
+	u32int hpos;
+	u32int hslots;
+	u32int khash;
+	u32int kpos;
+	u32int loop;
+	u32int size;
+	int    fd;
+	uchar *map;
+};
+
+struct CCdbmk {
+	CArr   arr;
+	CArr   hplist;
+	CIoq   ioq;
+	u32int off;
+	int    fd;
+	char   buf[C_BIOSIZ];
+};
+
 /* sys types */
 typedef struct CTime CTime;
 typedef struct CStat CStat;
@@ -199,13 +224,15 @@ struct CDent {
 };
 
 struct CDir {
+	struct {
+		short  a;
+		short  n;
+		char   buf[2048];
+	} __dir;
 	ulong  dev;
 	int    fd;
 	uint   opts;
-	short  a;
-	short  n;
 	ushort len;
-	char   buf[2048];
 	char   path[C_PATHMAX];
 };
 
@@ -237,6 +264,23 @@ usize  c_arr_len(CArr *, usize);
 usize  c_arr_total(CArr *);
 int    c_arr_trunc(CArr *, usize, usize);
 size   c_arr_vfmt(CArr *, char *, va_list);
+
+/* cdb routines */
+u32int c_cdb_datalen(CCdb *);
+u32int c_cdb_datapos(CCdb *);
+int    c_cdb_find(CCdb *, char *, usize);
+int    c_cdb_findnext(CCdb *, char *, usize);
+void   c_cdb_findstart(CCdb *);
+void   c_cdb_free(CCdb *);
+u32int c_cdb_hash(char *, usize);
+u32int c_cdb_hashadd(u32int, uchar);
+int    c_cdb_init(CCdb *, int);
+int    c_cdb_mkadd(CCdbmk *, char *, usize, char *, usize);
+int    c_cdb_mkaddbegin(CCdbmk *, usize, usize);
+int    c_cdb_mkaddend(CCdbmk *, usize, usize, u32int);
+int    c_cdb_mkfinish(CCdbmk *);
+int    c_cdb_mkstart(CCdbmk *, int);
+int    c_cdb_read(CCdb *, char *, usize, u32int);
 
 /* dir routines */
 int c_dir_close(CDir *);
@@ -403,6 +447,7 @@ u32int c_uint_32unpack(char *);
 /* hsh variables */
 extern CH32md *c_hsh_crc32b;
 extern CH32md *c_hsh_crc32p;
+extern CH32md *c_hsh_djb;
 extern CH32md *c_hsh_edf2;
 extern CH32md *c_hsh_fletcher32;
 
