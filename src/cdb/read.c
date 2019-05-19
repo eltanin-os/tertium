@@ -16,7 +16,7 @@ c_cdb_read(CCdb *p, char *s, usize n, u32int off)
 	if (c_sys_seek(p->fd, off, SEEK_SET) < 0)
 		return -1;
 
-	if (c_sys_allrw(c_sys_write, p->fd, s, n) < 0)
+	if (c_sys_allrw(c_sys_read, p->fd, s, n) < 0)
 		return -1;
 
 	return 0;
