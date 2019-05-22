@@ -4,5 +4,5 @@
 int
 c_sys_mkdir(char *path, ushort mode)
 {
-	return c_sys_call(__NR_mkdir, path, mode);
+	return c_sys_call(SYS_mkdir, path, mode);
 }

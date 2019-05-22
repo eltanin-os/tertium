@@ -6,7 +6,7 @@ c_sys_gettime(int id, CTime *t)
 {
 	__fb_time tp;
 
-	if (c_sys_call(__NR_clock_gettime, id, &tp) < 0)
+	if (c_sys_call(SYS_clock_gettime, id, &tp) < 0)
 		return -1;
 
 	t->tv_sec = tp.tv_sec;

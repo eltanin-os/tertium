@@ -4,5 +4,5 @@
 int
 c_sys_link(char *oldpath, char *newpath)
 {
-	return c_sys_call(__NR_link, oldpath, newpath);
+	return c_sys_call(SYS_link, oldpath, newpath);
 }

@@ -80,7 +80,8 @@ static void   ifree(void *);
 static int
 _brk(void *p)
 {
-	return ((cbrk=(void*)(uintptr)c_sys_call(__NR_brk, p))==(void*)-1?-1:0);
+	cbrk = (void *)(uintptr)c_sys_call(SYS_brk, p);
+	return ((cbrk == (void *)-1) ? -1 : 0);
 }
 
 static void *

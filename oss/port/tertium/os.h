@@ -168,6 +168,22 @@
 #define C_ALLPERMS    (S_ISUID|S_ISGID|S_ISTXT|S_IRWXU|S_IRWXG|S_IRWXO)
 #define C_DEFFILEMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
 
+/* compatibility macros */
+#ifdef SYS___getcwd
+#undef SYS_getcwd
+#define SYS_getcwd SYS___getcwd
+#endif
+
+#ifdef SYS_break
+#undef SYS_brk
+#define SYS_brk SYS_break
+#endif
+
+#ifdef __linux__
+#undef SYS_getdents
+#define SYS_getdents SYS_getdents64
+#endif
+
 typedef struct dirent   __fb_dirent;
 typedef struct stat     __fb_stat;
 typedef struct timespec __fb_time;

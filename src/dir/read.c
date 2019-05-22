@@ -1,6 +1,11 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
+#define __D_RECLEN(dp) \
+((c_std_offsetof(__fb_dirent, d_name) + \
+  c_str_len((dp)->d_name, C_USIZEMAX) + 1 + \
+  (sizeof((dp)->d_ino) - 1)) & ~(sizeof((dp)->d_ino) - 1))
+
 #define T(a) \
 ((a) ==  1) ? C_IFIFO : \
 ((a) ==  2) ? C_IFCHR : \
@@ -21,7 +26,7 @@ c_dir_read(CDent *dent, CDir *dir)
 	char *sep;
 search:
 	if (dir->__dir.n >= dir->__dir.a) {
-		if ((r = c_sys_call(__NR_getdents64, dir->fd,
+		if ((r = c_sys_call(SYS_getdents, dir->fd,
 		    dir->__dir.buf, sizeof(dir->__dir.buf))) < 0)
 			return -1;
 		if (!r)
@@ -31,7 +36,7 @@ search:
 	}
 
 	d = (void *)(dir->__dir.buf + dir->__dir.n);
-	dir->__dir.n += d->d_reclen;
+	dir->__dir.n += __D_RECLEN(d);
 	if (C_ISDOT(d->d_name) && (~dir->opts & C_FSDOT))
 		goto search;
 

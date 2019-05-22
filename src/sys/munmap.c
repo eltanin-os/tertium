@@ -4,5 +4,5 @@
 int
 c_sys_munmap(void *p, usize n)
 {
-	return c_sys_call(__NR_munmap, p, n);
+	return c_sys_call(SYS_munmap, p, n);
 }

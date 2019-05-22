@@ -4,5 +4,5 @@
 int
 c_sys_unlink(char *s)
 {
-	return c_sys_call(__NR_unlink, s);
+	return c_sys_call(SYS_unlink, s);
 }
