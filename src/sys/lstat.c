@@ -6,7 +6,7 @@ c_sys_lstat(CStat *p, char *s)
 {
 	__fb_stat st;
 
-	if (c_sys_call(SYS_lstat, s, &st) < 0)
+	if (c_sys_call(SYS_fstatat, AT_FDCWD, s, &st, AT_SYMLINK_NOFOLLOW) < 0)
 		return -1;
 
 	p->st_size = st.st_size;

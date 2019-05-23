@@ -20,6 +20,14 @@
 #define __asm_syscall syscall
 
 /* errno */
+#ifndef EOWNERDEAD
+#define EOWNERDEAD -1
+#endif
+
+#ifndef ENOTRECOVERABLE
+#define ENOTRECOVERABLE -1
+#endif
+
 #define C_E2BIG E2BIG
 #define C_EACCES EACCES
 #define C_EADDRINUSE EADDRINUSE
@@ -169,19 +177,23 @@
 #define C_DEFFILEMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
 
 /* compatibility macros */
-#ifdef SYS___getcwd
-#undef SYS_getcwd
-#define SYS_getcwd SYS___getcwd
-#endif
-
-#ifdef SYS_break
-#undef SYS_brk
-#define SYS_brk SYS_break
-#endif
-
-#ifdef __linux__
-#undef SYS_getdents
-#define SYS_getdents SYS_getdents64
+#ifdef __NetBSD__
+ #define SYS_clock_gettime SYS___clock_gettime50
+ #define SYS_brk SYS_break
+ #define SYS_fstat SYS___fstat50
+ #define SYS_getcwd SYS___getcwd
+ #define SYS_getdents SYS___getdents30
+#elif defined(__FreeBSD__)
+ #define SYS_brk SYS_break
+ #define SYS_getcwd SYS___getcwd
+ #define SYS_getdents SYS_freebsd11_getdents
+#elif defined(__OpenBSD__) || defined(__DragonFly__)
+ #define SYS_brk SYS_break
+ #define SYS_getcwd SYS___getcwd
+#elif defined(__linux__)
+ #define SYS_fstatat SYS_newfstatat
+ #undef SYS_getdents
+ #define SYS_getdents SYS_getdents64
 #endif
 
 typedef struct dirent   __fb_dirent;
