@@ -12,13 +12,13 @@ static CHmd md = {
 	nil,
 };
 
-CHmd *c_hsh_djb = &md;
+CHmd *c_hsh_edf = &md;
 
 static void
 init(CHst *p)
 {
 	p->len = 0;
-	p->st.x32[0] = 5381;
+	p->st.x32[0] = 2111;
 }
 
 static void
@@ -30,11 +30,16 @@ update(CHst *p, char *data, usize n)
 	s = (uchar *)data;
 
 	for (; n; n--)
-		p->st.x32[0] = (p->st.x32[0] + (p->st.x32[0] << 5)) ^ *s++;
+		p->st.x32[0] = (p->st.x32[0] + (*s++ - ' ')) * 2521;
 }
 
 static void
 end(CHst *p)
 {
-	(void)p;
+	p->st.x32[0] ^= p->st.x32[0] << 16;
+	p->st.x32[0] += p->st.x32[0] << 13;
+	p->st.x32[0] ^= p->st.x32[0] >> 7;
+	p->st.x32[0] += p->st.x32[0] << 9;
+	p->st.x32[0] ^= p->st.x32[0] >> 8;
+	p->st.x32[0] += p->st.x32[0] << 2;
 }

@@ -4,17 +4,18 @@
 #define CRCTAB(a) \
 (((a) >> 4) ^ crctab[(a) & 15])
 
-static void init(CH32st *);
-static void update(CH32st *, char *, usize);
-static void end(CH32st *);
+static void init(CHst *);
+static void update(CHst *, char *, usize);
+static void end(CHst *);
 
-static CH32md md = {
+static CHmd md = {
 	&init,
 	&update,
 	&end,
+	nil,
 };
 
-CH32md *c_hsh_crc32b = &md;
+CHmd *c_hsh_crc32b = &md;
 
 static u32int crctab[] = {
 	0x00000000, 0x1DB71064, 0x3B6E20C8, 0x26D930AC,
@@ -24,14 +25,14 @@ static u32int crctab[] = {
 };
 
 static void
-init(CH32st *p)
+init(CHst *p)
 {
 	p->len = 0;
-	p->state[0] = 0xFFFFFFFF;
+	p->st.x32[0] = 0xFFFFFFFF;
 }
 
 static void
-update(CH32st *p, char *data, usize n)
+update(CHst *p, char *data, usize n)
 {
 	uchar *s;
 
@@ -39,14 +40,14 @@ update(CH32st *p, char *data, usize n)
 	s = (uchar *)data;
 
 	for (; n; n--) {
-		p->state[0] ^= *s++;
-		p->state[0]  = CRCTAB(p->state[0]);
-		p->state[0]  = CRCTAB(p->state[0]);
+		p->st.x32[0] ^= *s++;
+		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
+		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
 	}
 }
 
 static void
-end(CH32st *p)
+end(CHst *p)
 {
-	p->state[0] ^= 0xFFFFFFFF;
+	p->st.x32[0] ^= 0xFFFFFFFF;
 }

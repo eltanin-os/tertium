@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_hsh_putfd(CH32st *hs, CH32md *p, int fd, usize n)
+c_hsh_putfd(CHst *hs, CHmd *p, int fd, usize n)
 {
 	size  r;
 	char  buf[C_BIOSIZ];

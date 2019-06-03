@@ -137,18 +137,23 @@ struct CFmt {
 };
 
 /* hsh types */
-typedef struct CH32md CH32md;
-typedef struct CH32st CH32st;
+typedef struct CHmd CHmd;
+typedef struct CHst CHst;
 
-struct CH32md {
-	void (*init)(CH32st *);
-	void (*update)(CH32st *, char *, usize);
-	void (*end)(CH32st *);
+struct CHmd {
+	void (*init)(CHst *);
+	void (*update)(CHst *, char *, usize);
+	void (*end)(CHst *);
+	void (*digest)(CHst *, char *);
 };
 
-struct CH32st {
-	u32int state[2];
-	usize  len;
+struct CHst {
+	union {
+		u32int x32[16];
+		u64int x64[8];
+	} st;
+	char  buf[128];
+	usize len;
 };
 
 /* ioq types */
@@ -333,9 +338,11 @@ char * c_gen_basename(char *);
 char * c_gen_dirname(char *);
 
 /* hsh routines */
-void c_hsh_all(CH32st *, CH32md *, char *, usize);
-int  c_hsh_putfile(CH32st *, CH32md *, char *);
-int  c_hsh_putfd(CH32st *, CH32md *, int, usize);
+u32int c_hsh_state0(CHst *);
+void   c_hsh_all(CHst *, CHmd *, char *, usize);
+int    c_hsh_digest(CHst *, CHmd *, char *);
+int    c_hsh_putfile(CHst *, CHmd *, char *);
+int    c_hsh_putfd(CHst *, CHmd *, int, usize);
 
 /* ioq routines */
 size   c_ioq_feed(CIoq *);
@@ -443,13 +450,16 @@ char * c_uint_32bigpack(char *, u32int);
 u32int c_uint_32bigunpack(char *);
 char * c_uint_32pack(char *, u32int);
 u32int c_uint_32unpack(char *);
+char * c_uint_64bigpack(char *, u64int);
+u64int c_uint_64bigunpack(char *);
+char * c_uint_64pack(char *, u64int);
+u64int c_uint_64unpack(char *);
 
 /* hsh variables */
-extern CH32md *c_hsh_crc32b;
-extern CH32md *c_hsh_crc32p;
-extern CH32md *c_hsh_djb;
-extern CH32md *c_hsh_edf2;
-extern CH32md *c_hsh_fletcher32;
+extern CHmd *c_hsh_crc32b;
+extern CHmd *c_hsh_crc32p;
+extern CHmd *c_hsh_djb;
+extern CHmd *c_hsh_edf;
 
 /* ioq variables */
 extern CIoq *ioq0;

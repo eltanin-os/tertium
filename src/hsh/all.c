@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_hsh_all(CH32st *hs, CH32md *p, char *data, usize n)
+c_hsh_all(CHst *hs, CHmd *p, char *data, usize n)
 {
 	p->init(hs);
 	p->update(hs, data, n);

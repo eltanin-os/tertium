@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_hsh_putfile(CH32st *hs, CH32md *p, char *s)
+c_hsh_putfile(CHst *hs, CHmd *p, char *s)
 {
 	CStat st;
 	int fd;

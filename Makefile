@@ -79,11 +79,12 @@ LIBCSRC=\
 	src/hsh/all.c\
 	src/hsh/crc32b.c\
 	src/hsh/crc32p.c\
+	src/hsh/digest.c\
 	src/hsh/djb.c\
-	src/hsh/edf2.c\
-	src/hsh/fletcher32.c\
+	src/hsh/edf.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
+	src/hsh/state0.c\
 	src/ioq/feed.c\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\
@@ -179,7 +180,11 @@ LIBCSRC=\
 	src/uint/32bigpack.c\
 	src/uint/32bigunpack.c\
 	src/uint/32pack.c\
-	src/uint/32unpack.c
+	src/uint/32unpack.c\
+	src/uint/64bigpack.c\
+	src/uint/64bigunpack.c\
+	src/uint/64pack.c\
+	src/uint/64unpack.c
 
 # LIB PATH
 LIBC= lib/libtertium.a

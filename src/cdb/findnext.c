@@ -24,20 +24,21 @@ match(CCdb *p, char *k, usize n, u32int off)
 int
 c_cdb_findnext(CCdb *p, char *k, usize n)
 {
-	CH32st hs;
-	u32int u;
+	CHst hs;
 	u32int off;
+	u32int h;
 	char   buf[8];
 
 	if (!p->loop) {
 		c_hsh_all(&hs, c_hsh_djb, k, n);
-		if (c_cdb_read(p, buf, 8, (hs.state[0] << 3) & 2047) < 0)
+		h = c_hsh_state0(&hs);
+		if (c_cdb_read(p, buf, 8, (h << 3) & 2047) < 0)
 			return -1;
 		if (!(p->hslots = c_uint_32unpack(buf + 4)))
 			return 0;
 		p->hpos  = c_uint_32unpack(buf);
-		p->khash = hs.state[0];
-		p->kpos  = p->hpos + (((hs.state[0] >> 8) % p->hslots) << 3);
+		p->khash = h;
+		p->kpos  = p->hpos + (((h >> 8) % p->hslots) << 3);
 	}
 
 	while (p->loop < p->hslots) {
@@ -49,10 +50,10 @@ c_cdb_findnext(CCdb *p, char *k, usize n)
 		p->kpos += 8;
 		if (p->kpos == p->hpos + (p->hslots << 3))
 			p->kpos = p->hpos;
-		if ((u = c_uint_32unpack(buf)) == p->khash) {
+		if (c_uint_32unpack(buf) == p->khash) {
 			if (c_cdb_read(p, buf, 8, off) < 0)
 				return -1;
-			if ((u = c_uint_32unpack(buf)) == n) {
+			if (c_uint_32unpack(buf) == n) {
 				switch (match(p, k, n, off + 8)) {
 				case -1:
 					return -1;

@@ -4,7 +4,7 @@
 int
 c_cdb_mkadd(CCdbmk *p, char *k, usize klen, char *s, usize dlen)
 {
-	CH32st hs;
+	CHst hs;
 
 	if (c_cdb_mkaddbegin(p, klen, dlen) < 0)
 		goto fail;
@@ -16,7 +16,7 @@ c_cdb_mkadd(CCdbmk *p, char *k, usize klen, char *s, usize dlen)
 		goto fail;
 
 	c_hsh_all(&hs, c_hsh_djb, k, klen);
-	if (c_cdb_mkaddend(p, klen, dlen, hs.state[0]) < 0)
+	if (c_cdb_mkaddend(p, klen, dlen, c_hsh_state0(&hs)) < 0)
 		goto fail;
 
 	return 0;
