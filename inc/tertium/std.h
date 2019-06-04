@@ -340,7 +340,7 @@ char * c_gen_dirname(char *);
 /* hsh routines */
 u32int c_hsh_state0(CHst *);
 void   c_hsh_all(CHst *, CHmd *, char *, usize);
-int    c_hsh_digest(CHst *, CHmd *, char *);
+void   c_hsh_digest(CHst *, CHmd *, char *);
 int    c_hsh_putfile(CHst *, CHmd *, char *);
 int    c_hsh_putfd(CHst *, CHmd *, int, usize);
 
@@ -460,6 +460,7 @@ extern CHmd *c_hsh_crc32b;
 extern CHmd *c_hsh_crc32p;
 extern CHmd *c_hsh_djb;
 extern CHmd *c_hsh_edf;
+extern CHmd *c_hsh_sha1;
 
 /* ioq variables */
 extern CIoq *ioq0;

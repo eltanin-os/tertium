@@ -84,7 +84,9 @@ LIBCSRC=\
 	src/hsh/edf.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
+	src/hsh/sha1.c\
 	src/hsh/state0.c\
+	src/hsh/update.c\
 	src/ioq/feed.c\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\
