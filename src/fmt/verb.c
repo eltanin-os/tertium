@@ -16,7 +16,7 @@ static int Vstr(CFmt *);
 static uchar buf[64*sizeof(struct fmtverb)];
 CArr __fmt_Fmts = c_arr_INIT(buf);
 
-struct fmtverb VFmts[] = {
+struct fmtverb __fmt_VFmts[] = {
 	{ ',', Vflag },
 	{ '-', Vflag },
 	{ '+', Vflag },
