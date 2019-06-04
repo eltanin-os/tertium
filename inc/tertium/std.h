@@ -461,6 +461,7 @@ extern CHmd *c_hsh_crc32p;
 extern CHmd *c_hsh_djb;
 extern CHmd *c_hsh_edf;
 extern CHmd *c_hsh_sha1;
+extern CHmd *c_hsh_sha256;
 
 /* ioq variables */
 extern CIoq *ioq0;
