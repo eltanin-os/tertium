@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "verb.h"
+#include "__int__.h"
 
 static int
 fmtfmt(CFmt *f, uchar *s)
@@ -9,13 +9,13 @@ fmtfmt(CFmt *f, uchar *s)
 	struct fmtverb *p;
 	int i, n;
 
-	n = c_arr_len(&Fmts, sizeof(*p));
+	n = c_arr_len(&__fmt_Fmts, sizeof(*p));
 
 	for (;;) {
 		i = 0;
 		f->r = *s;
 		for (; i <= n; i++) {
-			p = c_arr_get(&Fmts, i, sizeof(*p));
+			p = c_arr_get(&__fmt_Fmts, i, sizeof(*p));
 			if (p->c == *s) {
 				for (; !(p->f); )
 					;
@@ -25,7 +25,7 @@ fmtfmt(CFmt *f, uchar *s)
 
 		i = 0;
 		for (;;) {
-			if (!(p = &VFmts[i++]))
+			if (!(p = &__fmt_VFmts[i++]))
 				break;
 			if (p->c == *s) {
 				c_fmt_install(p->c, p->f);
@@ -114,7 +114,7 @@ c_fmt_fmt(CFmt *p, char *fmt)
 			continue;
 		}
 
-		trycat(p, (char *)s, 1, sizeof(uchar));
+		__fmt_trycat(p, (char *)s, 1, sizeof(uchar));
 	}
 
 	return p->nfmt - nfmt;

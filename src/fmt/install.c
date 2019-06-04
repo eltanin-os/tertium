@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "verb.h"
+#include "__int__.h"
 
 int
 c_fmt_install(int c, int (*f)(CFmt *))
@@ -11,10 +11,10 @@ c_fmt_install(int c, int (*f)(CFmt *))
 	int i, n;
 
 	i = 0;
-	n = c_arr_len(&Fmts, sizeof(*p));
+	n = c_arr_len(&__fmt_Fmts, sizeof(*p));
 
 	for (; i < n; i++) {
-		p = c_arr_get(&Fmts, i, sizeof(*p));
+		p = c_arr_get(&__fmt_Fmts, i, sizeof(*p));
 		if (p->c == c) {
 			p->f = f;
 			return 0;
@@ -24,7 +24,7 @@ c_fmt_install(int c, int (*f)(CFmt *))
 	nf.c = c;
 	nf.f = f;
 
-	if (c_arr_cat(&Fmts, &nf, 1, sizeof(nf)) < 0)
+	if (c_arr_cat(&__fmt_Fmts, &nf, 1, sizeof(nf)) < 0)
 		return -1;
 
 	return 0;

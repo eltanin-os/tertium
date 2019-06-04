@@ -1,42 +1,42 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "verb.h"
+#include "__int__.h"
 
 #define getbase(a) \
 ((a)=='p'||(a)=='x'||(a)=='X')?16:((a)=='o')?8:((a)=='b')?2:10;
 
-static int __Vchar(CFmt *);
-static int __Verr(CFmt *);
-static int __Vflag(CFmt *);
-static int __Vint(CFmt *);
-static int __Vperc(CFmt *);
-static int __Vstr(CFmt *);
+static int Vchar(CFmt *);
+static int Verr(CFmt *);
+static int Vflag(CFmt *);
+static int Vint(CFmt *);
+static int Vperc(CFmt *);
+static int Vstr(CFmt *);
 
 static uchar buf[64*sizeof(struct fmtverb)];
-CArr Fmts = c_arr_INIT(buf);
+CArr __fmt_Fmts = c_arr_INIT(buf);
 
 struct fmtverb VFmts[] = {
-	{ ',', __Vflag },
-	{ '-', __Vflag },
-	{ '+', __Vflag },
-	{ '#', __Vflag },
-	{ '%', __Vperc },
-	{ ' ', __Vflag },
-	{ 'X', __Vint  },
-	{ 'b', __Vint  },
-	{ 'c', __Vchar },
-	{ 'd', __Vint  },
-	{ 'h', __Vflag },
-	{ 'l', __Vflag },
-	{ 'o', __Vint  },
-	{ 'p', __Vint  },
-	{ 'u', __Vflag },
-	{ 'r', __Verr  },
-	{ 's', __Vstr  },
-	{ 'x', __Vint  },
-	{ 'z', __Vflag },
-	{   0, nil     },
+	{ ',', Vflag },
+	{ '-', Vflag },
+	{ '+', Vflag },
+	{ '#', Vflag },
+	{ '%', Vperc },
+	{ ' ', Vflag },
+	{ 'X', Vint  },
+	{ 'b', Vint  },
+	{ 'c', Vchar },
+	{ 'd', Vint  },
+	{ 'h', Vflag },
+	{ 'l', Vflag },
+	{ 'o', Vint  },
+	{ 'p', Vint  },
+	{ 'u', Vflag },
+	{ 'r', Verr  },
+	{ 's', Vstr  },
+	{ 'x', Vint  },
+	{ 'z', Vflag },
+	{   0, nil   },
 };
 
 static size
@@ -59,7 +59,7 @@ buffered(CFmt *p, char *s, usize n)
 }
 
 int
-trycat(CFmt *p, char *s, usize m, usize n)
+__fmt_trycat(CFmt *p, char *s, usize m, usize n)
 {
 	size (*f)(CFmt *, char *, usize);
 	size r;
@@ -87,7 +87,7 @@ fmtpad(CFmt *p, usize n)
 	int w;
 	w = p->width - n;
 	for (; w > 0; w--)
-		if (trycat(p, " ", 1, sizeof(uchar)) < 0)
+		if (__fmt_trycat(p, " ", 1, sizeof(uchar)) < 0)
 			return -1;
 	return 0;
 }
@@ -103,7 +103,7 @@ fmtcat(CFmt *p, char *s, usize n)
 		n = p->prec;
 	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
-	if (trycat(p, s, n, sizeof(uchar)) < 0)
+	if (__fmt_trycat(p, s, n, sizeof(uchar)) < 0)
 		return -1;
 	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
@@ -111,7 +111,7 @@ fmtcat(CFmt *p, char *s, usize n)
 }
 
 static int
-__Vchar(CFmt *p)
+Vchar(CFmt *p)
 {
 	char buf[8];
 	int x;
@@ -122,7 +122,7 @@ __Vchar(CFmt *p)
 }
 
 static int
-__Verr(CFmt *p)
+Verr(CFmt *p)
 {
 	char buf[C_ERRSIZ];
 
@@ -135,7 +135,7 @@ __Verr(CFmt *p)
 }
 
 static int
-__Vflag(CFmt *p)
+Vflag(CFmt *p)
 {
 	switch(p->r){
 	case ',':
@@ -176,7 +176,7 @@ __Vflag(CFmt *p)
 }
 
 static int
-__Vint(CFmt *p)
+Vint(CFmt *p)
 {
 	uvlong l;
 	int b, d, i, j, u, n;
@@ -223,14 +223,14 @@ __Vint(CFmt *p)
 }
 
 static int
-__Vperc(CFmt *p)
+Vperc(CFmt *p)
 {
 	p->prec = 1;
 	return fmtcat(p, "%", 1);;
 }
 
 static int
-__Vstr(CFmt *p)
+Vstr(CFmt *p)
 {
 	char *s;
 	s = va_arg(p->args, char *);
