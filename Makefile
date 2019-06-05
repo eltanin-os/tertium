@@ -90,6 +90,7 @@ LIBCSRC=\
 	src/hsh/sha512.c\
 	src/hsh/state0.c\
 	src/hsh/update.c\
+	src/hsh/whirlpool.c\
 	src/ioq/feed.c\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\

@@ -230,9 +230,9 @@ struct CDent {
 
 struct CDir {
 	struct {
-		short  a;
-		short  n;
-		char   buf[2048];
+		short a;
+		short n;
+		char  buf[2048];
 	} __dir;
 	ulong  dev;
 	int    fd;
@@ -463,6 +463,7 @@ extern CHmd *c_hsh_edf;
 extern CHmd *c_hsh_sha1;
 extern CHmd *c_hsh_sha256;
 extern CHmd *c_hsh_sha512;
+extern CHmd *c_hsh_whirlpool;
 
 /* ioq variables */
 extern CIoq *ioq0;

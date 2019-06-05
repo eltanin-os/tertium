@@ -3,8 +3,6 @@
 
 #include "__int__.h"
 
-#define ROR(a, b) __hsh_ror64((a), (b))
-#define REV(a,b,c,d,e,f,g,h) { h=g; g=f; f=e; e=d+t0; d=c; c=b; b=a; a=t0+t1; }
 #define Ch(a,b,c)  ((c ^ (a & (b ^ c))))
 #define Maj(a,b,c) ((a & b) | (c & (a | b)))
 #define R(a, b)    (((a)&0xFFFFFFFFFFFFFFFFULL)>>((u64int)b))
@@ -12,6 +10,9 @@
 #define G1(x)      (ROR(x, 19) ^ ROR(x, 61) ^ R(x, 6))
 #define S0(x)      (ROR(x, 28) ^ ROR(x, 34) ^ ROR(x, 39))
 #define S1(x)      (ROR(x, 14) ^ ROR(x, 18) ^ ROR(x, 41))
+
+#define ROR(a, b) __hsh_ror64((a), (b))
+#define REV(a,b,c,d,e,f,g,h) { h=g; g=f; f=e; e=d+t0; d=c; c=b; b=a; a=t0+t1; }
 
 static void init(CHst *);
 static void update(CHst *, char *, usize);
@@ -27,7 +28,7 @@ static CHmd md = {
 
 CHmd *c_hsh_sha512 = &md;
 
-static const u64int K[] = {
+static u64int K[] = {
 	0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL,
 	0xb5c0fbcfec4d3b2fULL, 0xe9b5dba58189dbbcULL,
 	0x3956c25bf348b538ULL, 0x59f111f1b605d019ULL,
