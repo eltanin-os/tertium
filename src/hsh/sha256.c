@@ -3,6 +3,7 @@
 
 #include "__int__.h"
 
+#define ROR(a, b) __hsh_ror32((a), (b))
 #define REV(a,b,c,d,e,f,g,h,t) { t=h; h=g; g=f; f=e; e=d; d=c; c=b; b=a; a=t; }
 #define Ch(a,b,c)  (c ^ (a & (b ^ c)))
 #define Maj(a,b,c) ((a & b) | (c & (a | b)))

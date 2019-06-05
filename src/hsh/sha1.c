@@ -3,11 +3,12 @@
 
 #include "__int__.h"
 
+#define ROL(a, b) __hsh_rol32((a), (b))
+#define REV(a,b,c,d,e,t) { t=e; e=d; d=c; c=b; b=a; a=t; }
 #define F0(a,b,c) (c ^ (a & (b ^ c)))
 #define F1(a,b,c) (a ^ b ^ c)
 #define F2(a,b,c) ((a & b) | (c & (a | b)))
 #define F3(a,b,c) (a ^ b ^ c)
-
 #define FF0(a,b,c,d,e,i) \
 { e = (ROL(a, 5) + F0(b,c,d) + e + w[i] + 0x5a827999UL); b = ROL(b, 30); }
 #define FF1(a,b,c,d,e,i) \
@@ -17,7 +18,6 @@
 #define FF3(a,b,c,d,e,i) \
 { e = (ROL(a, 5) + F3(b,c,d) + e + w[i] + 0xca62c1d6UL); b = ROL(b, 30); }
 
-#define REV(a,b,c,d,e,t) { t=e; e=d; d=c; c=b; b=a; a=t; }
 
 static void init(CHst *);
 static void update(CHst *, char *, usize);
