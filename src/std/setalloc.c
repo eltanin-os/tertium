@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "alloc.h"
+#include "__int__.h"
 
 void * (*__allocator)(void *, usize, usize) = pubrealloc;
 

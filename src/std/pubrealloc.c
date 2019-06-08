@@ -9,6 +9,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
+#include "__int__.h"
+
 enum {
 	OJUNK    = 1 << 0,
 	OREALLOC = 1 << 1,

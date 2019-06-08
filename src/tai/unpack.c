@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-tai_unpack(char *s, CTai *t)
+c_tai_unpack(char *s, CTai *t)
 {
 	u64int x;
 	x = t->x;
