@@ -139,13 +139,13 @@ end(CHst *p)
 
 	if (r > 112) {
 		c_mem_set(p->buf + r, 128 - r, 0);
-		compress(p, p->buf);
+		compress(p, (char *)p->buf);
 		r = 0;
 	}
 
 	c_mem_set(p->buf + r, 120 - r, 0);
-	c_uint_64bigpack(p->buf + 120, p->len * 8);
-	compress(p, p->buf);
+	c_uint_64bigpack((char *)p->buf + 120, p->len * 8);
+	compress(p, (char *)p->buf);
 }
 
 static void

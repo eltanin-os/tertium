@@ -19,7 +19,7 @@ __hsh_update(void (*f)(CHst *, char *), int b, CHst *p, char *data, usize n)
 		c_mem_cpy(p->buf + r, b - r, data);
 		n -= b - r;
 		data += b - r;
-		f(p, p->buf);
+		f(p, (char *)p->buf);
 	}
 
 	for (; n >= (usize)b; n -= b, data += b)

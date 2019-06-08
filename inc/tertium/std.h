@@ -152,7 +152,7 @@ struct CHst {
 		u32int x32[16];
 		u64int x64[8];
 	} st;
-	char  buf[128];
+	uchar buf[128];
 	usize len;
 };
 
@@ -204,12 +204,12 @@ struct CStat {
 	CTime  st_atim;
 	CTime  st_ctim;
 	CTime  st_mtim;
+	vlong  st_size;
 	ulong  st_blksize;
 	ulong  st_blocks;
 	ulong  st_dev;
 	ulong  st_ino;
 	ulong  st_rdev;
-	vlong  st_size;
 	int    st_gid;
 	int    st_nlink;
 	int    st_uid;

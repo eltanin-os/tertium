@@ -107,13 +107,13 @@ end(CHst *p)
 
 	if (r > 56) {
 		c_mem_set(p->buf + r, 64 - r, 0);
-		compress(p, p->buf);
+		compress(p, (char *)p->buf);
 		r = 0;
 	}
 
 	c_mem_set(p->buf + r, 56 - r, 0);
-	c_uint_64bigpack(p->buf + 56, p->len * 8);
-	compress(p, p->buf);
+	c_uint_64bigpack((char *)p->buf + 56, p->len * 8);
+	compress(p, (char *)p->buf);
 }
 
 static void

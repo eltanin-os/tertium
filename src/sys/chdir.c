@@ -8,7 +8,7 @@ c_sys_chdir(char *s)
 
 	do {
 		r = c_sys_call(SYS_chdir, s);
-	} while((r < 0) && (r == EINTR));
+	} while((r < 0) && (errno == EINTR));
 
 	return r;
 }

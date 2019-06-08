@@ -8,7 +8,7 @@ c_sys_dup(int o, int n)
 
 	do {
 		r = c_sys_call(SYS_dup2, o, n);
-	} while ((r < 0) && (r == EINTR));
+	} while ((r < 0) && (errno == EINTR));
 
 	return r;
 }

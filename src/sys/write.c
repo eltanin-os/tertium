@@ -8,7 +8,7 @@ c_sys_write(int f, void *p, usize n)
 
 	do {
 		r = c_sys_call(SYS_write, f, p, n);
-	} while ((r < 0) && (r == EINTR));
+	} while ((r < 0) && (errno == EINTR));
 
 	return r;
 }
