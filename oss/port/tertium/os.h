@@ -19,6 +19,25 @@
 
 #define __asm_syscall syscall
 
+/* fallback macros */
+#define __C_STCOPY(a, b)                      \
+{ (a)->st_size = (b).st_size;                 \
+  (a)->st_blksize = (b).st_blksize;           \
+  (a)->st_blocks = (b).st_blocks;             \
+  (a)->st_atim.tv_sec = (b).st_atim.tv_sec;   \
+  (a)->st_atim.tv_nsec = (b).st_atim.tv_nsec; \
+  (a)->st_ctim.tv_sec = (b).st_ctim.tv_sec;   \
+  (a)->st_ctim.tv_nsec = (b).st_ctim.tv_nsec; \
+  (a)->st_mtim.tv_sec = (b).st_mtim.tv_sec;   \
+  (a)->st_mtim.tv_nsec = (b).st_mtim.tv_nsec; \
+  (a)->st_gid = (b).st_gid;                   \
+  (a)->st_nlink = (b).st_nlink;               \
+  (a)->st_uid = (b).st_uid;                   \
+  (a)->st_dev = (b).st_dev;                   \
+  (a)->st_ino = (b).st_ino;                   \
+  (a)->st_mode = (b).st_mode;                 \
+  (a)->st_rdev = (b).st_rdev; }
+
 /* errno */
 #ifndef EOWNERDEAD
 #define EOWNERDEAD -1
@@ -28,84 +47,84 @@
 #define ENOTRECOVERABLE -1
 #endif
 
-#define C_E2BIG E2BIG
-#define C_EACCES EACCES
-#define C_EADDRINUSE EADDRINUSE
-#define C_EADDRNOTAVAIL EADDRNOTAVAIL
-#define C_EAFNOSUPPORT EAFNOSUPPORT
-#define C_EAGAIN EAGAIN
-#define C_EALREADY EALREADY
-#define C_EBADF EBADF
-#define C_EBADMSG EBADMSG
-#define C_EBUSY EBUSY
-#define C_ECANCELED ECANCELED
-#define C_ECHILD ECHILD
-#define C_ECONNABORTED ECONNABORTED
-#define C_ECONNREFUSED ECONNREFUSED
-#define C_ECONNRESET ECONNRESET
-#define C_EDEADLK EDEADLK
-#define C_EDESTADDRREQ EDESTADDRREQ
-#define C_EDOM EDOM
-#define C_EDQUOT EDQUOT
-#define C_EEXIST EEXIST
-#define C_EFAULT EFAULT
-#define C_EFBIG EFBIG
-#define C_EHOSTUNREACH EHOSTUNREACH
-#define C_EIDRM EIDRM
-#define C_EILSEQ EILSEQ
-#define C_EINPROGRESS EINPROGRESS
-#define C_EINTR EINTR
-#define C_EINVAL EINVAL
-#define C_EIO EIO
-#define C_EISCONN EISCONN
-#define C_EISDIR EISDIR
-#define C_ELOOP ELOOP
-#define C_EMFILE EMFILE
-#define C_EMLINK EMLINK
-#define C_EMSGSIZE EMSGSIZE
-#define C_EMULTIHOP EMULTIHOP
-#define C_ENAMETOOLONG ENAMETOOLONG
-#define C_ENETDOWN ENETDOWN
-#define C_ENETRESET ENETRESET
-#define C_ENETUNREACH ENETUNREACH
-#define C_ENFILE ENFILE
-#define C_ENOBUFS ENOBUFS
-#define C_ENODEV ENODEV
-#define C_ENOENT ENOENT
-#define C_ENOEXEC ENOEXEC
-#define C_ENOLCK ENOLCK
-#define C_ENOLINK ENOLINK
-#define C_ENOMEM ENOMEM
-#define C_ENOMSG ENOMSG
-#define C_ENOPROTOOPT ENOPROTOOPT
-#define C_ENOSPC ENOSPC
-#define C_ENOSYS ENOSYS
-#define C_ENOTCONN ENOTCONN
-#define C_ENOTDIR ENOTDIR
-#define C_ENOTEMPTY ENOTEMPTY
+#define C_E2BIG           E2BIG
+#define C_EACCES          EACCES
+#define C_EADDRINUSE      EADDRINUSE
+#define C_EADDRNOTAVAIL   EADDRNOTAVAIL
+#define C_EAFNOSUPPORT    EAFNOSUPPORT
+#define C_EAGAIN          EAGAIN
+#define C_EALREADY        EALREADY
+#define C_EBADF           EBADF
+#define C_EBADMSG         EBADMSG
+#define C_EBUSY           EBUSY
+#define C_ECANCELED       ECANCELED
+#define C_ECHILD          ECHILD
+#define C_ECONNABORTED    ECONNABORTED
+#define C_ECONNREFUSED    ECONNREFUSED
+#define C_ECONNRESET      ECONNRESET
+#define C_EDEADLK         EDEADLK
+#define C_EDESTADDRREQ    EDESTADDRREQ
+#define C_EDOM            EDOM
+#define C_EDQUOT          EDQUOT
+#define C_EEXIST          EEXIST
+#define C_EFAULT          EFAULT
+#define C_EFBIG           EFBIG
+#define C_EHOSTUNREACH    EHOSTUNREACH
+#define C_EIDRM           EIDRM
+#define C_EILSEQ          EILSEQ
+#define C_EINPROGRESS     EINPROGRESS
+#define C_EINTR           EINTR
+#define C_EINVAL          EINVAL
+#define C_EIO             EIO
+#define C_EISCONN         EISCONN
+#define C_EISDIR          EISDIR
+#define C_ELOOP           ELOOP
+#define C_EMFILE          EMFILE
+#define C_EMLINK          EMLINK
+#define C_EMSGSIZE        EMSGSIZE
+#define C_EMULTIHOP       EMULTIHOP
+#define C_ENAMETOOLONG    ENAMETOOLONG
+#define C_ENETDOWN        ENETDOWN
+#define C_ENETRESET       ENETRESET
+#define C_ENETUNREACH     ENETUNREACH
+#define C_ENFILE          ENFILE
+#define C_ENOBUFS         ENOBUFS
+#define C_ENODEV          ENODEV
+#define C_ENOENT          ENOENT
+#define C_ENOEXEC         ENOEXEC
+#define C_ENOLCK          ENOLCK
+#define C_ENOLINK         ENOLINK
+#define C_ENOMEM          ENOMEM
+#define C_ENOMSG          ENOMSG
+#define C_ENOPROTOOPT     ENOPROTOOPT
+#define C_ENOSPC          ENOSPC
+#define C_ENOSYS          ENOSYS
+#define C_ENOTCONN        ENOTCONN
+#define C_ENOTDIR         ENOTDIR
+#define C_ENOTEMPTY       ENOTEMPTY
 #define C_ENOTRECOVERABLE ENOTRECOVERABLE
-#define C_ENOTSOCK ENOTSOCK
-#define C_ENOTSUP ENOTSUP
-#define C_ENOTTY ENOTTY
-#define C_ENXIO ENXIO
-#define C_EOPNOTSUPP EOPNOTSUPP
-#define C_EOVERFLOW EOVERFLOW
-#define C_EOWNERDEAD EOWNERDEAD
-#define C_EPERM EPERM
-#define C_EPIPE EPIPE
-#define C_EPROTO EPROTO
+#define C_ENOTSOCK        ENOTSOCK
+#define C_ENOTSUP         ENOTSUP
+#define C_ENOTTY          ENOTTY
+#define C_ENXIO           ENXIO
+#define C_EOPNOTSUPP      EOPNOTSUPP
+#define C_EOVERFLOW       EOVERFLOW
+#define C_EOWNERDEAD      EOWNERDEAD
+#define C_EPERM           EPERM
+#define C_EPIPE           EPIPE
+#define C_EPROTO          EPROTO
 #define C_EPROTONOSUPPORT EPROTONOSUPPORT
-#define C_EPROTOTYPE EPROTOTYPE
-#define C_ERANGE ERANGE
-#define C_EROFS EROFS
-#define C_ESPIPE ESPIPE
-#define C_ESRCH ESRCH
-#define C_ESTALE ESTALE
-#define C_ETIMEDOUT ETIMEDOUT
-#define C_ETXTBSY ETXTBSY
-#define C_EWOULDBLOCK EWOULDBLOCK
-#define C_EXDEV EXDEV
-#define C_ECSTM 0x66D7C8BA
+#define C_EPROTOTYPE      EPROTOTYPE
+#define C_ERANGE          ERANGE
+#define C_EROFS           EROFS
+#define C_ESPIPE          ESPIPE
+#define C_ESRCH           ESRCH
+#define C_ESTALE          ESTALE
+#define C_ETIMEDOUT       ETIMEDOUT
+#define C_ETXTBSY         ETXTBSY
+#define C_EWOULDBLOCK     EWOULDBLOCK
+#define C_EXDEV           EXDEV
+#define C_ECSTM           0x66D7C8BA
 
 /* use sysconf as fallback, as the posix minimum is a bad option ("1") */
 #ifndef PAGESIZE

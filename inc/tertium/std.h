@@ -1,5 +1,3 @@
-#include <tertium/os.h>
-
 /* arg macros */
 #define C_ARGBEGIN \
 for (argc--, argv++;\
