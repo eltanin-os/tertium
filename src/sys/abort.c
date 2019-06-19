@@ -4,6 +4,5 @@
 void
 c_sys_abort(void)
 {
-	while (*(volatile int *)0)
-		;
+	while (*(volatile int *)0) ;
 }

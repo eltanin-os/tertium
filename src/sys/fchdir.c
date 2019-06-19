@@ -8,7 +8,7 @@ c_sys_fchdir(int f)
 
 	do {
 		r = c_sys_call(SYS_fchdir, f);
-	} while((r < 0) && (errno == EINTR));
+	} while((r < 0) && (errno == C_EINTR));
 
 	return r;
 }
