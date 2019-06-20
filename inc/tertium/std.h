@@ -382,6 +382,7 @@ vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 char * c_str_chr(char *, usize, int);
 int    c_str_cmp(char *, usize, char *);
 usize  c_str_len(char *, usize);
+char * c_str_rchr(char *, usize, int);
 char * c_str_str(char *, usize, char *);
 
 /* sys routines */
@@ -471,3 +472,6 @@ extern CIoq *ioq2;
 /* std variables */
 extern char *argv0;
 extern char **environ;
+
+/* sys variables */
+extern int errno;

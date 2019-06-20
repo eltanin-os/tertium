@@ -1,4 +1,3 @@
-#include <errno.h>
 #include "tertium/os.h"
 
 #define nil ((void *)0)

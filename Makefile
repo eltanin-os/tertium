@@ -129,6 +129,7 @@ LIBCSRC=\
 	src/str/chr.c\
 	src/str/cmp.c\
 	src/str/len.c\
+	src/str/rchr.c\
 	src/str/str.c\
 	src/sys/abort.c\
 	src/sys/allrw.c\
@@ -137,6 +138,7 @@ LIBCSRC=\
 	src/sys/close.c\
 	src/sys/conf.c\
 	src/sys/dup.c\
+	src/sys/errno.c\
 	src/sys/errstr.c\
 	src/sys/exec.c\
 	src/sys/exit.c\
