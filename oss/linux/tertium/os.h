@@ -28,8 +28,8 @@
 #define C_NGROUPSMAX   32
 #define C_OPENMAX      1024  /* !!! */
 #define C_PAGESIZE     4096
-#define C_SYMLOOPMAX   40 /* !!! */
-#define C_TTYNAMEMAX   32 /* !!! */
+#define C_SYMLOOPMAX   40    /* !!! */
+#define C_TTYNAMEMAX   32    /* !!! */
 
 #define C_CHARBIT   8
 #define C_CHARMAX   0x7F
@@ -100,10 +100,10 @@
 #define C_ISREG(a)  (((a) & C_IFREG) == C_IFREG)
 #define C_ISSCK(a)  (((a) & C_IFSCK) == C_IFSCK)
 
-#define C_ACESSPERMS  (0x1C0|0x038|0x007)
+#define C_ACCESSPERMS (0x1C0|0x038|0x007)
 #define C_ALLPERMS    (0x800|0x400|0x200|0x1C0|0x038|0x007)
 #define C_DEFFILEMODE (0x100|0x080|0x020|0x010|0x004|0x002)
 
 /* */
-int __asm_syscall(int, ...);
+long __asm_syscall(long, ...);
 
