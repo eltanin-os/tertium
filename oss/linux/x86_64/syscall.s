@@ -1,5 +1,4 @@
 .global __asm_syscall
-.hidden __asm_syscall
 .type __asm_syscall,@function
 __asm_syscall:
 	movq %rdi,%rax
@@ -10,4 +9,10 @@ __asm_syscall:
 	movq %r9,%r8
 	movq 8(%rsp),%r9
 	syscall
-ret
+	cmpq $-4095,%rax
+	jbe .L1
+	negq %rax
+	movq %rax,errno(%rip)
+	movq $-1,%rax
+.L1:
+	retq
