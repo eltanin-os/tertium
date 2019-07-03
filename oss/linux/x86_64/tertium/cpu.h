@@ -83,9 +83,11 @@
 #define C_ECSTM           0x66D7C8BA
 
 /* options macros */
-#define C_OTRUNC 0x00200
-#define C_OCEXEC 0x80000
-#define C_OEXCL  0x00080
+#define C_OAPPEND 0x00400
+#define C_OCREATE 0x00040
+#define C_OTRUNC  0x00200
+#define C_OCEXEC  0x80000
+#define C_OEXCL   0x00080
 
 /* others macros */
 #define MAP_ANON 0x20

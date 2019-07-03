@@ -166,12 +166,14 @@
 #define C_VLONGMIN  (-C_VLONGMAX-1)
 
 /* options macros */
-#define C_OREAD  O_RDONLY
-#define C_OWRITE O_WRONLY
-#define C_ORDWR  O_RDWR
-#define C_OTRUNC O_TRUNC
-#define C_OCEXEC O_CLOEXEC
-#define C_OEXCL  O_EXCL
+#define C_OAPPEND O_APPEND
+#define C_OCREATE O_CREAT
+#define C_OREAD   O_RDONLY
+#define C_OWRITE  O_WRONLY
+#define C_ORDWR   O_RDWR
+#define C_OTRUNC  O_TRUNC
+#define C_OCEXEC  O_CLOEXEC
+#define C_OEXCL   O_EXCL
 
 /* stat macros */
 #define C_IFMT  S_IFMT
