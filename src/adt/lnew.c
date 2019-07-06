@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 CNode *
-c_dst_lnew(void *v, usize m, usize n)
+c_adt_lnew(void *v, usize m, usize n)
 {
 	CArr   arr;
 	CNode *np;

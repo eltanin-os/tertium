@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_dst_qpush(CQueue *p, void *v, usize m, usize n)
+c_adt_qpush(CQueue *p, void *v, usize m, usize n)
 {
 	usize len, tail;
 

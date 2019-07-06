@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_dst_lpush(CNode **sp, CNode *p)
+c_adt_lpush(CNode **sp, CNode *p)
 {
 	if (!p)
 		return -1;

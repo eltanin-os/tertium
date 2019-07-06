@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_dst_lsort(CNode **np, int (*f)(void *, void *))
+c_adt_lsort(CNode **np, int (*f)(void *, void *))
 {
 	CNode *p, *q;
 	CNode *e, *h, *t;

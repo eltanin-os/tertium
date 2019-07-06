@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_dst_qpops(CQueue *p, CArr *b)
+c_adt_qpops(CQueue *p, CArr *b)
 {
 	usize len, n;
 
@@ -11,5 +11,5 @@ c_dst_qpops(CQueue *p, CArr *b)
 	if (len == n)
 		len += c_str_len(c_arr_data(&p->mb), p->mb.a);
 
-	return c_dst_qpop(p, b, len, sizeof(uchar));
+	return c_adt_qpop(p, b, len, sizeof(uchar));
 }

@@ -103,7 +103,7 @@ struct CArr {
 	uchar *p;
 };
 
-/* dst types */
+/* adt types */
 typedef struct CNode  CNode;
 typedef struct CQueue CQueue;
 
@@ -255,6 +255,17 @@ struct CTaia {
 	ulong nano;
 };
 
+/* adt routines */
+void    c_adt_lfree(CNode *);
+CNode * c_adt_lnew(void *, usize, usize);
+CNode * c_adt_lpop(CNode **);
+int     c_adt_lpush(CNode **, CNode *);
+void    c_adt_lsort(CNode **, int (*)(void *, void *));
+void    c_adt_qinit(CQueue *, char *, usize);
+int     c_adt_qpop(CQueue *, CArr *, usize, usize);
+int     c_adt_qpops(CQueue *, CArr *);
+int     c_adt_qpush(CQueue *, void *, usize, usize);
+
 /* arr routines */
 usize  c_arr_avail(CArr *);
 usize  c_arr_bytes(CArr *);
@@ -290,17 +301,6 @@ int c_dir_close(CDir *);
 int c_dir_hist(CNode **, CStat *);
 int c_dir_open(CDir *, char *, uint);
 int c_dir_read(CDent *, CDir *);
-
-/* dst routines */
-void    c_dst_lfree(CNode *);
-CNode * c_dst_lnew(void *, usize, usize);
-CNode * c_dst_lpop(CNode **);
-int     c_dst_lpush(CNode **, CNode *);
-void    c_dst_lsort(CNode **, int (*)(void *, void *));
-void    c_dst_qinit(CQueue *, char *, usize);
-int     c_dst_qpop(CQueue *, CArr *, usize, usize);
-int     c_dst_qpops(CQueue *, CArr *);
-int     c_dst_qpush(CQueue *, void *, usize, usize);
 
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);

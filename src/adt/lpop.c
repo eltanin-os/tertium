@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 CNode *
-c_dst_lpop(CNode **sp)
+c_adt_lpop(CNode **sp)
 {
 	CNode *o;
 

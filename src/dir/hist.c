@@ -26,7 +26,7 @@ c_dir_hist(CNode **hist, CStat *st)
 				break;
 		}
 
-	if (c_dst_lpush(hist, c_dst_lnew(&h, 1, sizeof(h))) < 0)
+	if (c_adt_lpush(hist, c_adt_lnew(&h, 1, sizeof(h))) < 0)
 		return -1;
 
 	return 0;

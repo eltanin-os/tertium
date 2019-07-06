@@ -15,6 +15,15 @@ ASMSRC=\
 	oss/$(OSNAME)/$(OBJTYPE)/syscall.s
 
 LIBCSRC=\
+	src/adt/lfree.c\
+	src/adt/lnew.c\
+	src/adt/lpop.c\
+	src/adt/lpush.c\
+	src/adt/lsort.c\
+	src/adt/qinit.c\
+	src/adt/qpop.c\
+	src/adt/qpops.c\
+	src/adt/qpush.c\
 	src/arr/avail.c\
 	src/arr/bytes.c\
 	src/arr/cat.c\
@@ -43,15 +52,6 @@ LIBCSRC=\
 	src/dir/hist.c\
 	src/dir/open.c\
 	src/dir/read.c\
-	src/dst/lfree.c\
-	src/dst/lnew.c\
-	src/dst/lpop.c\
-	src/dst/lpush.c\
-	src/dst/lsort.c\
-	src/dst/qinit.c\
-	src/dst/qpop.c\
-	src/dst/qpops.c\
-	src/dst/qpush.c\
 	src/dyn/alloc.c\
 	src/dyn/cat.c\
 	src/dyn/fmt.c\

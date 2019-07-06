@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_dst_qpop(CQueue *p, CArr *b, usize m, usize n)
+c_adt_qpop(CQueue *p, CArr *b, usize m, usize n)
 {
 	usize len;
 
