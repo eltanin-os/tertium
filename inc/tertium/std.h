@@ -33,6 +33,8 @@ enum {
 	C_FSNOI = 1 << 3,
 	C_FSDOT = 1 << 4,
 	C_FSXDV = 1 << 5,
+	C_FSDRL = 1 << 6,
+	C_FSKHP = 1 << 7,
 };
 
 #define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSCOM) && !(b)))
@@ -301,6 +303,7 @@ int c_dir_close(CDir *);
 int c_dir_hist(CNode **, CStat *);
 int c_dir_open(CDir *, char *, uint);
 int c_dir_read(CDent *, CDir *);
+int c_dir_walk(char **, int, uint, void *, int (*)(CDent *, void *));
 
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);

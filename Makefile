@@ -52,6 +52,7 @@ LIBCSRC=\
 	src/dir/hist.c\
 	src/dir/open.c\
 	src/dir/read.c\
+	src/dir/walk.c\
 	src/dyn/alloc.c\
 	src/dyn/cat.c\
 	src/dyn/fmt.c\
