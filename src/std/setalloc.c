@@ -8,5 +8,5 @@ void * (*__allocator)(void *, usize, usize) = pubrealloc;
 void
 c_std_setalloc(void *(*f)(void *, usize, usize))
 {
-	__allocator = f;
+	__allocator = f ? f : pubrealloc;
 }
