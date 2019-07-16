@@ -1,34 +1,38 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
+#include "__int__.h"
+
 int
-c_dir_open(CDir *dir, char *path, uint opts)
+c_dir_open(CDir *p, char **argv, uint opts, int (*f)(void *, void *))
 {
-	CArr arr;
-	CStat st;
+	CNode *np;
+	CDent *ep;
 
-	if ((dir->fd = c_sys_open(path, C_OREAD|C_OCEXEC, 0)) < 0)
-		return -1;
+	c_mem_set(p, sizeof(*p), 0);
+	np = nil;
 
-	c_arr_init(&arr, dir->path, sizeof(dir->path));
-	if (c_arr_fmt(&arr, "%s", path) < 0)
-		return -1;
+	for (; *argv; argv++) {
+		if (c_adt_lpush(&np, __dir_newfile("", *argv, opts)) < 0) {
+			while (np)
+				c_adt_lfree(c_adt_lpop(&np));
 
-	dir->len  = c_arr_bytes(&arr);
-	dir->opts = opts;
+			return -1;
+		}
 
-	if (c_sys_fstat(&st, dir->fd) < 0) {
-		c_dir_close(dir);
-		return -1;
+		ep = np->p;
+		ep->info = __dir_info(p, ep);
+
+		if (ep->info == C_FSDOT)
+			ep->info = C_FSD;
 	}
 
-	if (!C_ISDIR(st.st_mode)) {
-		c_dir_close(dir);
-		errno = C_ENOTDIR;
-		return -1;
-	}
+	if (f)
+		c_adt_lsort(&np, f);
 
-	dir->dev = st.st_dev;
+	p->f = f;
+	p->cur = np->next;
+	p->opts = opts;
 
 	return 0;
 }

@@ -1,74 +1,130 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define __D_RECLEN(dp) \
-((c_std_offsetof(__fb_dirent, d_name) + \
-  c_str_len((dp)->d_name, C_USIZEMAX) + 1 + \
-  (sizeof((dp)->d_ino) - 1)) & ~(sizeof((dp)->d_ino) - 1))
+#include "__int__.h"
 
-#define T(a) \
-((a) ==  1) ? C_IFIFO : \
-((a) ==  2) ? C_IFCHR : \
-((a) ==  4) ? C_IFDIR : \
-((a) ==  6) ? C_IFBLK : \
-((a) ==  8) ? C_IFREG : \
-((a) == 10) ? C_IFLNK : \
-((a) == 12) ? C_IFSCK : 0
+#define RECLEN(dp) \
+((c_std_offsetof(__fb_dirent, d_name)    + \
+ c_str_len((dp)->d_name, C_USHRTMAX) + 1 + \
+ (sizeof((dp)->d_ino) - 1)) & ~(sizeof((dp)->d_ino) - 1))
 
-int
-c_dir_read(CDent *dent, CDir *dir)
+struct dir {
+	ushort a;
+	ushort n;
+	uchar  buf[2048];
+};
+
+static CNode *
+builddir(CDir *p)
 {
 	__fb_dirent *d;
-	CArr  arr;
-	CStat st;
-	size  r;
-	int (*stf)(CStat *, char *);
-	char *sep;
-search:
-	if (dir->__dir.n >= dir->__dir.a) {
-		if ((r = c_sys_call(SYS_getdents, dir->fd,
-		    dir->__dir.buf, sizeof(dir->__dir.buf))) < 0)
-			return -1;
-		if (!r)
-			return 0;
-		dir->__dir.a = r;
-		dir->__dir.n = 0;
-	}
+	CDent *cur, *ep;
+	CNode *np;
+	struct dir dir;
+	int fd, r;
+	char rp[C_PATHMAX];
 
-	d = (void *)(dir->__dir.buf + dir->__dir.n);
-	dir->__dir.n += __D_RECLEN(d);
-	if (C_ISDOT(d->d_name) && (~dir->opts & C_FSDOT))
-		goto search;
+	cur = p->cur->p;
 
-	c_arr_init(&arr, dent->path, sizeof(dent->path));
-	sep = dir->path[dir->len-1] == '/' ? "" : "/";
-	if ((r = c_arr_fmt(&arr, "%s%s%s", dir->path, sep, d->d_name)) < 0)
-		return -1;
+	if ((fd = c_sys_open(cur->path, C_OREAD|C_OCEXEC, 0)) < 0)
+		return nil;
 
-	dent->nlen = c_str_len(d->d_name, C_USIZEMAX);
-	dent->plen = r;
-	dent->name = dent->path + dent->plen - dent->nlen;
+	c_mem_cpy(rp, cur->len, cur->path);
+	rp[cur->len] = 0;
 
-	if (dir->opts & C_FSNOI) {
-		c_mem_set(&dent->info, sizeof(dent->info), 0);
-		dent->info.st_dev  = dir->dev;
-		dent->info.st_ino  = d->d_ino;
-		dent->info.st_mode = T(d->d_type);
-		if (C_ISLNK(d->d_type) && (dir->opts & C_FSLOG)) {
-			if (c_sys_stat(&st, dent->path) < 0)
-				return -1;
-			dent->info.st_dev  = st.st_dev;
-			dent->info.st_ino  = st.st_ino;
-			dent->info.st_mode = st.st_mode;
+	c_mem_set(&dir, sizeof(dir), 0);
+	np = nil;
+
+	for (;;) {
+		if (dir.n >= dir.a) {
+			if ((r = c_sys_call(SYS_getdents, fd,
+			    dir.buf, sizeof(dir.buf))) < 0)
+				goto err;
+			if (!r)
+				break;
+			dir.a = r;
+			dir.n = 0;
 		}
-	} else {
-		stf = (dir->opts & C_FSLOG) ? c_sys_stat : c_sys_lstat;
-		if (stf(&dent->info, dent->path) < 0)
-			return -1;
+		d = (void *)(dir.buf + dir.n);
+		dir.n += RECLEN(d);
+
+		if (!(p->opts & C_FSVDT) && C_ISDOT(d->d_name))
+			continue;
+
+		if (c_adt_lpush(&np, __dir_newfile(rp, d->d_name, p->opts)) < 0)
+			goto err;
+
+		ep = np->p;
+		ep->info = __dir_info(p, ep);
+		ep->parent = cur;
+		ep->__p = p->cur;
 	}
 
-	if ((dir->opts & C_FSXDV) && dir->dev != dent->info.st_dev)
-		goto search;
+	c_sys_close(fd);
 
-	return 1;
+	if (p->f)
+		c_adt_lsort(&np, p->f);
+
+	return np ? np->next : nil;
+err:
+	c_sys_close(fd);
+
+	while (np)
+		c_adt_lfree(c_adt_lpop(&np));
+
+	return (void *)-1;
+}
+
+CDent *
+c_dir_read(CDir *p)
+{
+	CDent *ep;
+	CNode *cur;
+
+	cur = p->cur;
+	ep  = cur->p;
+
+	if (!cur)
+		return nil;
+
+	if (ep->info == C_FSD) {
+		/* TODO: handle skip and exclusive device */
+		if ((p->child = builddir(p)) == (void *)-1) {
+			ep->info = C_FSDNR;
+			return ep;
+		}
+		if (!p->child) {
+			ep->info = C_FSDP;
+			return ep;
+		}
+		p->depth++;
+		cur = p->child;
+		p->cur = cur;
+		ep = cur->p;
+		return ep;
+	}
+
+	cur = cur->next;
+	if (cur->prev) {
+		p->cur = cur;
+		ep = cur->p;
+		return ep;
+	}
+
+	cur = ep->__p;
+	if (cur) {
+		while (p->cur)
+			c_adt_lfree(c_adt_lpop(&p->cur));
+
+		p->depth--;
+		p->cur = cur;
+		ep = cur->p;
+		ep->info = C_FSDP;
+		return ep;
+	}
+
+	while (p->cur)
+		c_adt_lfree(c_adt_lpop(&p->cur));
+
+	return nil;
 }

@@ -49,10 +49,10 @@ LIBCSRC=\
 	src/cdb/mkstart.c\
 	src/cdb/read.c\
 	src/dir/close.c\
-	src/dir/hist.c\
+	src/dir/info.c\
+	src/dir/newfile.c\
 	src/dir/open.c\
 	src/dir/read.c\
-	src/dir/walk.c\
 	src/dyn/alloc.c\
 	src/dyn/cat.c\
 	src/dyn/fmt.c\

@@ -27,17 +27,35 @@ for (argc--, argv++;\
 
 /* dir macros */
 enum {
+	/* instr */
+	C_FSAGN = 1 << 0,
+	C_FSFLW = 1 << 1,
+	C_FSSKP = 1 << 2,
+
+	/* opts */
 	C_FSLOG = 1 << 0,
 	C_FSPHY = 1 << 1,
 	C_FSCOM = 1 << 2,
 	C_FSNOI = 1 << 3,
-	C_FSDOT = 1 << 4,
+	C_FSVDT = 1 << 4,
 	C_FSXDV = 1 << 5,
 	C_FSDRL = 1 << 6,
-	C_FSKHP = 1 << 7,
-};
 
-#define C_FSFLW(a, b) (((a) & C_FSLOG) || (((a) & C_FSCOM) && !(b)))
+	/* types */
+	C_FSD   =  1,
+	C_FSDC  =  2,
+	C_FSDEF =  3,
+	C_FSDNR =  4,
+	C_FSDOT =  5,
+	C_FSDP  =  6,
+	C_FSERR =  7,
+	C_FSF   =  8,
+	C_FSINT =  9,
+	C_FSNS  = 10,
+	C_FSNOK = 11,
+	C_FSSL  = 12,
+	C_FSSLN = 13,
+};
 
 /* dyn macros */
 #define C_DYNMINALLOC 64
@@ -221,24 +239,27 @@ typedef struct CDent CDent;
 typedef struct CDir  CDir;
 
 struct CDent {
-	CStat  info;
-	ushort nlen;
-	ushort plen;
+	CDent *parent;
+	CStat *statp;
+	vlong  num;
+	usize  len;
+	usize  nlen;
+	ushort instr;
+	ushort info;
+	char  *path;
 	char  *name;
-	char   path[C_PATHMAX];
+	void  *ptr;
+	void  *__p; /* (private) */
 };
 
 struct CDir {
-	struct {
-		short a;
-		short n;
-		char  buf[2048];
-	} __dir;
-	ulong  dev;
-	int    fd;
+	CNode *cur;
+	CNode *child;
+	CArr   hist;
+	int  (*f)(void *, void *);
+	int    depth;
+	int    rfd;
 	uint   opts;
-	ushort len;
-	char   path[C_PATHMAX];
 };
 
 /* tai types */
@@ -299,11 +320,9 @@ int    c_cdb_mkstart(CCdbmk *, int);
 int    c_cdb_read(CCdb *, char *, usize, u32int);
 
 /* dir routines */
-int c_dir_close(CDir *);
-int c_dir_hist(CNode **, CStat *);
-int c_dir_open(CDir *, char *, uint);
-int c_dir_read(CDent *, CDir *);
-int c_dir_walk(char **, int, uint, void *, int (*)(CDent *, void *));
+int     c_dir_close(CDir *);
+int     c_dir_open(CDir *, char **, uint, int (*)(void *, void *));
+CDent * c_dir_read(CDir *);
 
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);

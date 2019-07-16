@@ -2,8 +2,8 @@
 #include <tertium/std.h>
 
 int
-c_dir_close(CDir *dir)
+c_dir_close(CDir *p)
 {
-	c_sys_close(dir->fd);
+	c_dyn_free(&p->hist);
 	return 0;
 }
