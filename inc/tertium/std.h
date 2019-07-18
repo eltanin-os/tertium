@@ -280,7 +280,6 @@ struct CTaia {
 
 /* adt routines */
 void    c_adt_lfree(CNode *);
-CNode * c_adt_lnew(void *, usize, usize);
 CNode * c_adt_lpop(CNode **);
 int     c_adt_lpush(CNode **, CNode *);
 void    c_adt_lsort(CNode **, int (*)(void *, void *));
