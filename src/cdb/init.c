@@ -14,16 +14,16 @@ c_cdb_init(CCdb *p, int fd)
 	if (c_sys_fstat(&st, fd) < 0)
 		return -1;
 
-	if (st.st_size <= 0xFFFFFFFF) {
+	if (st.size <= 0xFFFFFFFF) {
 		errno = C_EOVERFLOW;
 		return -1;
 	}
 
-	x = c_sys_mmap(0, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
+	x = c_sys_mmap(0, st.size, PROT_READ, MAP_SHARED, fd, 0);
 	if (x == (void *)-1)
 		return -1;
 
-	p->size = st.st_size;
+	p->size = st.size;
 	p->map  = x;
 
 	return 0;

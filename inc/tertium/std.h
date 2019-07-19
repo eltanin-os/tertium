@@ -216,24 +216,24 @@ typedef struct CTime CTime;
 typedef struct CStat CStat;
 
 struct CTime {
-	long tv_sec;
-	long tv_nsec;
+	long sec;
+	long nsec;
 };
 
 struct CStat {
-	CTime  st_atim;
-	CTime  st_ctim;
-	CTime  st_mtim;
-	vlong  st_size;
-	ulong  st_blksize;
-	ulong  st_blocks;
-	ulong  st_dev;
-	ulong  st_ino;
-	ulong  st_rdev;
-	int    st_gid;
-	int    st_nlink;
-	int    st_uid;
-	ushort st_mode;
+	CTime  atim;
+	CTime  ctim;
+	CTime  mtim;
+	vlong  size;
+	ulong  blksize;
+	ulong  blocks;
+	ulong  dev;
+	ulong  ino;
+	ulong  rdev;
+	int    gid;
+	int    nlink;
+	int    uid;
+	ushort mode;
 };
 
 /* dir types */

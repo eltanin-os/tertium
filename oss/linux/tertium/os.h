@@ -1,21 +1,21 @@
 /* fallback macros */
-#define __C_STCOPY(a, b)                    \
-{ (a)->st_size = (b).st_size;               \
-  (a)->st_blksize = (b).st_blksize;         \
-  (a)->st_blocks = (b).st_blocks;           \
-  (a)->st_atim.tv_sec = (b).st_atime;       \
-  (a)->st_atim.tv_nsec = (b).st_atime_nsec; \
-  (a)->st_ctim.tv_sec = (b).st_ctime;       \
-  (a)->st_ctim.tv_nsec = (b).st_ctime_nsec; \
-  (a)->st_mtim.tv_sec = (b).st_mtime;       \
-  (a)->st_mtim.tv_nsec = (b).st_mtime_nsec; \
-  (a)->st_gid = (b).st_gid;                 \
-  (a)->st_nlink = (b).st_nlink;             \
-  (a)->st_uid = (b).st_uid;                 \
-  (a)->st_dev = (b).st_dev;                 \
-  (a)->st_ino = (b).st_ino;                 \
-  (a)->st_mode = (b).st_mode;               \
-  (a)->st_rdev = (b).st_rdev; }
+#define __C_STCOPY(a, b)              \
+{ (a)->size = (b).st_size;            \
+  (a)->blksize = (b).st_blksize;      \
+  (a)->blocks = (b).st_blocks;        \
+  (a)->atim.sec = (b).st_atime;       \
+  (a)->atim.nsec = (b).st_atime_nsec; \
+  (a)->ctim.sec = (b).st_ctime;       \
+  (a)->ctim.nsec = (b).st_ctime_nsec; \
+  (a)->mtim.sec = (b).st_mtime;       \
+  (a)->mtim.nsec = (b).st_mtime_nsec; \
+  (a)->gid = (b).st_gid;              \
+  (a)->nlink = (b).st_nlink;          \
+  (a)->uid = (b).st_uid;              \
+  (a)->dev = (b).st_dev;              \
+  (a)->ino = (b).st_ino;              \
+  (a)->mode = (b).st_mode;            \
+  (a)->rdev = (b).st_rdev; }
 
 /* limits macros */
 #define C_NAMEMAX 255

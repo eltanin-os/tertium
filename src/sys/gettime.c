@@ -9,8 +9,8 @@ c_sys_gettime(int id, CTime *t)
 	if (c_sys_call(SYS_clock_gettime, id, &tp) < 0)
 		return -1;
 
-	t->tv_sec = tp.tv_sec;
-	t->tv_nsec = tp.tv_nsec;
+	t->sec = tp.tv_sec;
+	t->nsec = tp.tv_nsec;
 
 	return 0;
 }

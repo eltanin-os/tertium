@@ -18,7 +18,7 @@ c_hsh_putfile(CHst *hs, CHmd *p, char *s)
 		return -1;
 	}
 
-	c_hsh_putfd(hs, p, fd, st.st_size);
+	c_hsh_putfd(hs, p, fd, st.size);
 	c_sys_close(fd);
 
 	return 0;

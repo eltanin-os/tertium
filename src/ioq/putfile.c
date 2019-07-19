@@ -18,7 +18,7 @@ c_ioq_putfile(CIoq *p, char *s)
 	if (c_sys_fstat(&st, fd) < 0)
 		goto fail;
 
-	if ((c_ioq_putfd(p, fd, st.st_size)) < 0)
+	if ((c_ioq_putfd(p, fd, st.size)) < 0)
 		goto fail;
 
 	goto done;

@@ -45,17 +45,17 @@ __dir_info(CDir *p, CDent *ep)
 	if (statf(stp, ep->path))
 		return C_FSNS;
 
-	if (C_ISDIR(stp->st_mode)) {
+	if (C_ISDIR(stp->mode)) {
 		if (C_ISDOT(ep->name))
 			return C_FSDOT;
 
-		return hist(p, stp->st_dev, stp->st_ino) ? C_FSDC : C_FSD;
+		return hist(p, stp->dev, stp->ino) ? C_FSDC : C_FSD;
 	}
 
-	if (C_ISLNK(stp->st_mode))
+	if (C_ISLNK(stp->mode))
 		return C_FSSL;
 
-	if (C_ISREG(stp->st_mode))
+	if (C_ISREG(stp->mode))
 		return C_FSF;
 
 	return C_FSDEF;
