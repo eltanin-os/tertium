@@ -4,12 +4,17 @@
 int
 c_adt_qpops(CQueue *p, CArr *b)
 {
-	usize len, n;
+	usize n, len;
 
-	n   = c_arr_total(&p->mb) - p->h;
-	len = c_str_len(c_arr_get(&p->mb, p->h, sizeof(uchar)), n);
-	if (len == n)
-		len += c_str_len(c_arr_data(&p->mb), p->mb.a);
+	n = p->a - p->h;
 
-	return c_adt_qpop(p, b, len, sizeof(uchar));
+	if ((len = c_str_len((char *)(p->p + p->h), n)) == n)
+		len += c_str_len((char *)p->p, p->a);
+
+	if (c_adt_qpop(p, b, len+1, sizeof(uchar)) < 0)
+		return -1;
+
+	--b->n;
+
+	return 0;
 }

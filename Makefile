@@ -16,7 +16,6 @@ ASMSRC=\
 
 LIBCSRC=\
 	src/adt/lfree.c\
-	src/adt/lnew.c\
 	src/adt/lpop.c\
 	src/adt/lpush.c\
 	src/adt/lsort.c\

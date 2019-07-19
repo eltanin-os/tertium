@@ -4,6 +4,8 @@
 void
 c_adt_qinit(CQueue *p, char *s, usize n)
 {
-	c_arr_init(&p->mb, s, n);
+	p->a = n;
 	p->h = 0;
+	p->t = 0;
+	p->p = (uchar *)s;
 }

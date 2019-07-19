@@ -134,8 +134,10 @@ struct CNode {
 };
 
 struct CQueue {
-	CArr  mb;
-	usize h;
+	usize  a;
+	usize  h;
+	usize  t;
+	uchar *p;
 };
 
 /* fmt types */
