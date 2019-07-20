@@ -1,6 +1,9 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
+#define MMAP(a, b) \
+c_sys_mmap(0, (b), PROT_READ, MAP_SHARED, (a), 0)
+
 int
 c_ioq_putfd(CIoq *p, int fd, usize n)
 {
@@ -8,27 +11,17 @@ c_ioq_putfd(CIoq *p, int fd, usize n)
 	char  buf[C_BIOSIZ];
 	void *mp;
 
-	if (!fd)
-		goto fallback;
-
-	if (!n)
+	if (fd && !n)
 		return 0;
 
-	if ((mp = c_sys_mmap(0, n, PROT_READ, MAP_SHARED, fd, 0)) == (void *)-1)
-		goto fallback;
+	if (!fd || (mp = MMAP(fd, n)) == (void *)-1) {
+		while ((r = c_sys_read(fd, buf, sizeof(buf))) > 0)
+			if (c_ioq_nput(p, buf, r) < 0)
+				return -1;
+		return -(r < 0);
+	}
 
-	if (c_ioq_nput(p, (char *)mp, n) < 0)
-		return -1;
-
+	r = c_ioq_nput(p, (char *)mp, n);
 	c_sys_munmap(mp, n);
-	return 0;
-fallback:
-	while ((r = c_sys_read(fd, buf, sizeof(buf))) > 0)
-		if (c_ioq_nput(p, buf, r) < 0)
-			return -1;
-
-	if (r < 0)
-		return -1;
-
-	return 0;
+	return -(r < 0);
 }
