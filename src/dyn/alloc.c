@@ -15,5 +15,5 @@ c_dyn_alloc(CArr *p, usize m, usize n)
 	if (t > c_arr_bytes(p))
 		p->n = t;
 
-	return ((uchar *)c_arr_data(p)+m);
+	return p->p + m;
 }
