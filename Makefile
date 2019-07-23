@@ -57,6 +57,7 @@ LIBCSRC=\
 	src/dyn/fmt.c\
 	src/dyn/free.c\
 	src/dyn/ready.c\
+	src/dyn/shrink.c\
 	src/dyn/vfmt.c\
 	src/err/die.c\
 	src/err/diex.c\
