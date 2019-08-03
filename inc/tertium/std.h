@@ -393,7 +393,7 @@ void * c_mem_set(void *, usize, int);
 
 /* std routines */
 void * c_std_alloc(usize, usize);
-void * c_std_bsearch(void *, void *, usize, usize, int (*)(void *, void *));
+void * c_std_bsearch(void *, usize, usize, void *, int (*)(void *, void *));
 void * c_std_calloc(usize, usize);
 void   c_std_exit(int);
 void * c_std_free_(void *);

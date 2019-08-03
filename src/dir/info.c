@@ -20,7 +20,7 @@ hist(CDir *p, ulong dev, ulong ino)
 
 	hp = &p->hist;
 	k = (dev + ino) * (dev + ino + 1) / 2 + ino;
-	if (c_std_bsearch(&k, hp, c_arr_len(hp, sizeof(k)), sizeof(k), cmp))
+	if (c_std_bsearch(hp, c_arr_len(hp, sizeof(k)), sizeof(k), &k, cmp))
 		return 1;
 
 	/* TODO: free & fallback to brute force */
