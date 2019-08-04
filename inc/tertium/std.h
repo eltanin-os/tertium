@@ -324,6 +324,7 @@ int    c_cdb_read(CCdb *, char *, usize, u32int);
 int     c_dir_close(CDir *);
 int     c_dir_open(CDir *, char **, uint, int (*)(void *, void *));
 CDent * c_dir_read(CDir *);
+int     c_dir_set(CDir *, CDent *, int);
 
 /* dyn routines */
 void * c_dyn_alloc(CArr *, usize, usize);

@@ -88,7 +88,11 @@ c_dir_read(CDir *p)
 		return nil;
 
 	if (ep->info == C_FSD) {
-		/* TODO: handle skip and exclusive device */
+		if (ep->instr == C_FSSKP) {
+			ep->info = C_FSDP;
+			return ep;
+		}
+		/* TODO: handle exclusive device */
 		if ((p->child = builddir(p)) == (void *)-1) {
 			ep->info = C_FSDNR;
 			return ep;
