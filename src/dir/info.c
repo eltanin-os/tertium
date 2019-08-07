@@ -3,34 +3,55 @@
 
 #include "__int__.h"
 
-#define FOLLOW(a, b) \
-((a) & C_FSLOG) || ((a) & C_FSCOM && !(b))
+#define FOLLOW(a, b) ((a) & C_FSLOG) || ((a) & C_FSCOM && !(b))
+#define PAIR(a, b) ((a) >= (b) ? ((a) >> 1) + (b) : ((b) >> 1) + (a))
 
 static int
-cmp(void *a, void *b)
+insert(uvlong *sp, usize n, uvlong k)
 {
-	return *(uvlong *)a - *(uvlong *)b;
+	uvlong *p, *l;
+
+	if (!n) {
+		sp[0] = 0;
+		sp[1] = k;
+		return 2;
+	}
+
+	l = sp + n;
+
+	while (n) {
+		p = sp + (n >> 1);
+		if (*p == k) {
+			return 0;
+		} else if (*p < k) {
+			sp = p + 1;
+			n--;
+		}
+		n >>= 1;
+	}
+
+	c_mem_cpy(p + 2, (uchar *)l - (uchar *)p, p);
+	p[1] = k;
+
+	return 1;
 }
 
 static int
-hist(CDir *p, ulong dev, ulong ino)
+hist(CArr *hp, ulong dev, ulong ino)
 {
-	CArr  *hp;
 	uvlong k;
+	usize n;
+	int r;
 
-	hp = &p->hist;
-	k = (dev + ino) * (dev + ino + 1) / 2 + ino;
-	if (c_std_bsearch(hp, c_arr_len(hp, sizeof(k)), sizeof(k), &k, cmp))
-		return 1;
-
-	/* TODO: free & fallback to brute force */
-	if (c_dyn_cat(hp, &k, 1, sizeof(k)) < 0)
+	n = c_arr_len(hp, sizeof(k));
+	if (c_dyn_ready(hp, n+2, sizeof(k)) < 0)
 		return -1;
 
-	/* TODO: replace with ordered insertion */
-	c_std_sort(c_arr_data(hp), c_arr_len(hp, sizeof(k)), sizeof(k), cmp);
+	k = PAIR(dev, ino);
+	r = insert(c_arr_data(hp), n, k);
+	hp->n += r * sizeof(k);
 
-	return 0;
+	return r;
 }
 
 int
@@ -49,7 +70,7 @@ __dir_info(CDir *p, CDent *ep)
 		if (C_ISDOT(ep->name))
 			return C_FSDOT;
 
-		return hist(p, stp->dev, stp->ino) ? C_FSDC : C_FSD;
+		return hist(&p->hist, stp->dev, stp->ino) ? C_FSD : C_FSDC;
 	}
 
 	if (C_ISLNK(stp->mode))
