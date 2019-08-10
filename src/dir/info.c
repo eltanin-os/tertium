@@ -4,7 +4,7 @@
 #include "__int__.h"
 
 #define FOLLOW(a, b) ((a) & C_FSLOG) || ((a) & C_FSCOM && !(b))
-#define PAIR(a, b) ((a) >= (b) ? ((a) >> 1) + (b) : ((b) >> 1) + (a))
+#define PACK(a, b) ((a) << 32 | (b))
 
 static int
 insert(uvlong *sp, usize n, uvlong k)
@@ -47,7 +47,7 @@ hist(CArr *hp, ulong dev, ulong ino)
 	if (c_dyn_ready(hp, n+2, sizeof(k)) < 0)
 		return -1;
 
-	k = PAIR(dev, ino);
+	k = PACK(dev, ino);
 	r = insert(c_arr_data(hp), n, k);
 	hp->n += r * sizeof(k);
 
