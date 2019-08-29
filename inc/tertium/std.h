@@ -479,6 +479,9 @@ u64int c_uint_64bigunpack(char *);
 char * c_uint_64pack(char *, u64int);
 u64int c_uint_64unpack(char *);
 
+/* arr variables */
+extern CArr *arr_zero;
+
 /* hsh variables */
 extern CHmd *c_hsh_crc32b;
 extern CHmd *c_hsh_crc32p;
