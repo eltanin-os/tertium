@@ -98,7 +98,7 @@ c_sys_strerror(int e, char *s, usize n)
 		return nil;
 
 	for (i = 0; i < (int)C_NELEM(errlist); i++)
-		if (errno == errlist[i].e) {
+		if (e == errlist[i].e) {
 			c_mem_cpy(s, C_MIN(n, errlist[i].n), errlist[i].s);
 			break;
 		}
