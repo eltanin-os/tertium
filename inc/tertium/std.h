@@ -28,9 +28,10 @@ for (argc--, argv++;\
 /* dir macros */
 enum {
 	/* instr */
-	C_FSAGN = 1 << 0,
-	C_FSFLW = 1 << 1,
-	C_FSSKP = 1 << 2,
+	C_FSAGN = 1,
+	C_FSFLW = 2,
+	C_FSSKP = 3,
+	C_FSINT = 4,
 
 	/* opts */
 	C_FSLOG = 1 << 0,
@@ -40,6 +41,8 @@ enum {
 	C_FSVDT = 1 << 4,
 	C_FSXDV = 1 << 5,
 	C_FSDRL = 1 << 6,
+	C_FSFHT = 1 << 7,
+	C_FSSTP = 1 << 8,
 
 	/* types */
 	C_FSD   =  1,
@@ -50,11 +53,10 @@ enum {
 	C_FSDP  =  6,
 	C_FSERR =  7,
 	C_FSF   =  8,
-	C_FSINT =  9,
+	C_FSFC  =  9,
 	C_FSNS  = 10,
-	C_FSNOK = 11,
-	C_FSSL  = 12,
-	C_FSSLN = 13,
+	C_FSSL  = 11,
+	C_FSSLN = 12,
 };
 
 /* dyn macros */
@@ -242,12 +244,15 @@ typedef struct CDir  CDir;
 
 struct CDent {
 	CDent *parent;
-	CStat *statp;
+	CStat *stp;
 	vlong  num;
+	ulong  dev;
 	usize  len;
 	usize  nlen;
 	ushort instr;
 	ushort info;
+	int    errno;
+	int    depth;
 	char  *path;
 	char  *name;
 	void  *ptr;
@@ -258,8 +263,8 @@ struct CDir {
 	CNode *cur;
 	CNode *child;
 	CArr   hist;
+	ulong  dev;
 	int  (*f)(void *, void *);
-	int    depth;
 	int    rfd;
 	uint   opts;
 };

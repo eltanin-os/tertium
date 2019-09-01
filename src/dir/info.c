@@ -59,25 +59,55 @@ __dir_info(CDir *p, CDent *ep)
 {
 	CStat *stp;
 	CStat  st;
-	int  (*statf)(CStat *, char *);
+	int    sverr;
 
-	statf = FOLLOW(p->opts, p->depth) ? c_sys_stat : c_sys_lstat;
-	stp = &st;
-	if (statf(stp, ep->path))
+	stp = (p->opts & C_FSNOI) ? &st : ep->stp;
+	if (FOLLOW(p->opts, ep->depth)) {
+		if (c_sys_stat(stp, ep->path) < 0) {
+			sverr = errno;
+			if (!c_sys_lstat(stp, ep->path))
+				return C_FSSLN;
+			ep->errno = sverr;
+			return C_FSNS;
+		}
+	} else if (c_sys_lstat(stp, ep->path) < 0) {
+		ep->errno = errno;
 		return C_FSNS;
+	}
 
 	if (C_ISDIR(stp->mode)) {
+		ep->dev = stp->dev;
+
 		if (C_ISDOT(ep->name))
 			return C_FSDOT;
 
-		return hist(&p->hist, stp->dev, stp->ino) ? C_FSD : C_FSDC;
+		switch (hist(&p->hist, stp->dev, stp->ino)) {
+		case -1:
+			p->opts |= C_FSSTP;
+			return C_FSERR;
+		case  0:
+			return C_FSDC;
+		default:
+			return C_FSD;
+		}
 	}
 
 	if (C_ISLNK(stp->mode))
 		return C_FSSL;
 
-	if (C_ISREG(stp->mode))
+	if (C_ISREG(stp->mode)) {
+		if ((p->opts & C_FSFHT) && stp->nlink > 1)
+			switch(hist(&p->hist, stp->dev, stp->ino)) {
+			case -1:
+				p->opts |= C_FSSTP;
+				return C_FSERR;
+			case  0:
+				return C_FSFC;
+			default:
+				return C_FSF;
+			}
 		return C_FSF;
+	}
 
 	return C_FSDEF;
 }

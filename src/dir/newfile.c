@@ -13,13 +13,17 @@ __dir_newfile(char *path, char *name, uint opts)
 	ushort nlen;
 	uchar *sp;
 
-	plen = c_str_len(path, C_USIZEMAX);
 	nlen = c_str_len(name, C_USHRTMAX);
-	len  = sizeof(*p) + sizeof(*ep) + plen + nlen + 1;
-	if (!(opts & C_FSNOI))
-		len += sizeof(CStat);
+	if (name[nlen - 1] == '/')
+		nlen--;
 
-	if (!(sp = c_std_calloc(1, len)))
+	plen = c_str_len(path, C_USIZEMAX);
+	len = sizeof(*p) + sizeof(*ep) + plen + nlen + 2;
+
+	if (!(opts & C_FSNOI))
+		len += sizeof(CStat) + 16;
+
+	if (!(sp = c_std_alloc(len, sizeof(uchar))))
 		return nil;
 
 	p = (void *)sp;
@@ -29,31 +33,21 @@ __dir_newfile(char *path, char *name, uint opts)
 	sp += sizeof(*ep);
 
 	ep->path = (void *)sp;
-	sp += plen + nlen + 1;
+	sp += plen + nlen + 2;
 
 	if (!(opts & C_FSNOI))
-		ep->statp = (void *)sp;
+		ep->stp = (void *)((uintptr)(sp + 16) & ~16);
 
 	if (plen) {
 		c_mem_cpy(ep->path, plen, path);
-		if (!(ep->path[plen-1] == '/')) {
-			ep->path[plen] = '/';
-			ep->path[++plen] = 0;
-		}
-		ep->name = ep->path + plen;
-		c_mem_cpy(ep->name, nlen, name);
-		ep->len = plen + nlen;
-		ep->nlen = nlen;
-	} else {
-		c_mem_cpy(ep->path, nlen, name);
-		if (!(ep->path[nlen-1] == '/')) {
-			ep->path[nlen] = '/';
-			ep->path[++nlen] = 0;
-		}
-		ep->name = ep->path;
-		ep->len = nlen;
-		ep->nlen = nlen;
+		if (ep->path[plen - 1] != '/')
+			ep->path[plen++] = '/';
 	}
+	ep->name = ep->path + plen;
+	c_mem_cpy(ep->name, nlen, name);
+	ep->name[nlen] = 0;
+	ep->len = plen + nlen;
+	ep->nlen = nlen;
 
 	return p;
 }

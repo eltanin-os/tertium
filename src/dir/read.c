@@ -27,7 +27,7 @@ builddir(CDir *p)
 	cur = p->cur->p;
 
 	if ((fd = c_sys_open(cur->path, C_OREAD|C_OCEXEC, 0)) < 0)
-		return nil;
+		return (void *)-1;
 
 	c_mem_cpy(rp, cur->len, cur->path);
 	rp[cur->len] = 0;
@@ -57,6 +57,7 @@ builddir(CDir *p)
 		ep = np->p;
 		ep->info = __dir_info(p, ep);
 		ep->parent = cur;
+		ep->depth = cur->depth + 1;
 		ep->__p = p->cur;
 	}
 
@@ -80,28 +81,42 @@ c_dir_read(CDir *p)
 {
 	CDent *ep;
 	CNode *cur;
+	int instr;
 
 	cur = p->cur;
 	ep  = cur->p;
 
-	if (!cur)
+	if (!cur || (p->opts & C_FSSTP))
 		return nil;
 
+	instr = ep->instr;
+	ep->instr = 0;
+
+	switch (instr) {
+	case C_FSAGN:
+		ep->info = __dir_info(p, ep);
+	case C_FSINT:
+		return ep;
+	}
+
 	if (ep->info == C_FSD) {
-		if (ep->instr == C_FSSKP) {
+		if (instr == C_FSSKP ||
+		    ((p->opts & C_FSXDV) && p->dev != ep->dev)) {
 			ep->info = C_FSDP;
 			return ep;
 		}
-		/* TODO: handle exclusive device */
 		if ((p->child = builddir(p)) == (void *)-1) {
 			ep->info = C_FSDNR;
+			if (errno == C_ENOMEM) {
+				p->opts |= C_FSSTP;
+				ep->info = C_FSERR;
+			}
 			return ep;
 		}
 		if (!p->child) {
 			ep->info = C_FSDP;
 			return ep;
 		}
-		p->depth++;
 		cur = p->child;
 		p->cur = cur;
 		ep = cur->p;
@@ -120,7 +135,6 @@ c_dir_read(CDir *p)
 		while (p->cur)
 			c_adt_lfree(c_adt_lpop(&p->cur));
 
-		p->depth--;
 		p->cur = cur;
 		ep = cur->p;
 		ep->info = C_FSDP;
