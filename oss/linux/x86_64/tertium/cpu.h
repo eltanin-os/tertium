@@ -113,6 +113,8 @@
 #define SYS_link          86
 #define SYS_unlink        87
 #define SYS_symlink       88
+#define SYS_chown         92
+#define SYS_fchown        92
 #define SYS_getuid        102
 #define SYS_getgid        104
 #define SYS_getdents      217
