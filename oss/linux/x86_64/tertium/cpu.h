@@ -93,30 +93,32 @@
 #define MAP_ANON 0x20
 
 /* syscalls macros */
-#define SYS_unlink        87
-#define SYS_open          2
-#define SYS_exit          60
-#define SYS_dup2          33
-#define SYS_fstat         5
-#define SYS_link          86
-#define SYS_write         1
-#define SYS_rmdir         84
-#define SYS_fchdir        81
-#define SYS_getgid        104
-#define SYS_getuid        102
-#define SYS_getcwd        79
-#define SYS_munmap        11
-#define SYS_fstatat       262
 #define SYS_read          0
-#define SYS_mmap          9
-#define SYS_lseek         8
-#define SYS_execve        59
-#define SYS_mkdir         83
-#define SYS_chdir         80
+#define SYS_write         1
+#define SYS_open          2
 #define SYS_close         3
-#define SYS_clock_gettime 228
-#define SYS_getdents      217
+#define SYS_fstat         5
+#define SYS_lseek         8
+#define SYS_mmap          9
+#define SYS_munmap        11
 #define SYS_brk           12
+#define SYS_dup2          33
+#define SYS_execve        59
+#define SYS_exit          60
+#define SYS_getcwd        79
+#define SYS_chdir         80
+#define SYS_fchdir        81
+#define SYS_mkdir         83
+#define SYS_rmdir         84
+#define SYS_link          86
+#define SYS_unlink        87
+#define SYS_symlink       88
+#define SYS_getuid        102
+#define SYS_getgid        104
+#define SYS_getdents      217
+#define SYS_clock_gettime 228
+#define SYS_fstatat       262
+#define SYS_linkat        265
 
 /* variadic macros */
 #define va_arg(a, b)   __builtin_va_arg(a, b)

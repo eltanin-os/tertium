@@ -154,6 +154,7 @@ LIBCSRC=\
 	src/sys/gettime.c\
 	src/sys/getuid.c\
 	src/sys/link.c\
+	src/sys/llink.c\
 	src/sys/lstat.c\
 	src/sys/mkdir.c\
 	src/sys/mmap.c\
@@ -164,6 +165,7 @@ LIBCSRC=\
 	src/sys/seek.c\
 	src/sys/stat.c\
 	src/sys/strerror.c\
+	src/sys/symlink.c\
 	src/sys/unlink.c\
 	src/sys/werrstr.c\
 	src/sys/write.c\
