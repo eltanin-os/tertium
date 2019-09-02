@@ -651,7 +651,7 @@ pubrealloc(void *p, usize m, usize n)
 			ifree(p);
 		r = alloc0;
 	} else {
-		r = p ? irealloc(p, n) : imalloc(n);
+		r = p ? irealloc(p, m*n) : imalloc(m*n);
 	}
 
 	if (!r)
