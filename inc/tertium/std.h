@@ -232,9 +232,9 @@ struct CStat {
 	ulong  dev;
 	ulong  ino;
 	ulong  rdev;
-	int    gid;
-	int    nlink;
-	int    uid;
+	uint   gid;
+	uint   nlink;
+	uint   uid;
 	ushort mode;
 };
 
@@ -430,10 +430,10 @@ int    c_sys_fchdir(int);
 int    c_sys_fstat(CStat *, int);
 char * c_sys_getcwd(char *, usize);
 char * c_sys_getenv(char *);
-short  c_sys_getgid(void);
+uint   c_sys_getgid(void);
 char * c_sys_getsyserr(void);
 int    c_sys_gettime(int, CTime *);
-short  c_sys_getuid(void);
+uint   c_sys_getuid(void);
 int    c_sys_link(char *, char *);
 int    c_sys_llink(char *, char *);
 int    c_sys_lstat(CStat *, char *);
