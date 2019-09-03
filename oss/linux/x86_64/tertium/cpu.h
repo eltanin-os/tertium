@@ -113,10 +113,12 @@
 #define SYS_link          86
 #define SYS_unlink        87
 #define SYS_symlink       88
+#define SYS_readlink      89
 #define SYS_chown         92
 #define SYS_fchown        92
 #define SYS_getuid        102
 #define SYS_getgid        104
+#define SYS_mknod         133
 #define SYS_getdents      217
 #define SYS_clock_gettime 228
 #define SYS_fstatat       262

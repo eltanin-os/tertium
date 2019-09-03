@@ -159,10 +159,12 @@ LIBCSRC=\
 	src/sys/llink.c\
 	src/sys/lstat.c\
 	src/sys/mkdir.c\
+	src/sys/mknod.c\
 	src/sys/mmap.c\
 	src/sys/munmap.c\
 	src/sys/open.c\
 	src/sys/read.c\
+	src/sys/readlink.c\
 	src/sys/rmdir.c\
 	src/sys/seek.c\
 	src/sys/stat.c\
