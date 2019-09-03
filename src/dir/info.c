@@ -67,11 +67,11 @@ __dir_info(CDir *p, CDent *ep)
 			sverr = errno;
 			if (!c_sys_lstat(stp, ep->path))
 				return C_FSSLN;
-			ep->errno = sverr;
+			ep->err = sverr;
 			return C_FSNS;
 		}
 	} else if (c_sys_lstat(stp, ep->path) < 0) {
-		ep->errno = errno;
+		ep->err = errno;
 		return C_FSNS;
 	}
 

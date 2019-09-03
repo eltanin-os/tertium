@@ -251,7 +251,7 @@ struct CDent {
 	usize  nlen;
 	ushort instr;
 	ushort info;
-	int    errno;
+	int    err;
 	int    depth;
 	char  *path;
 	char  *name;
