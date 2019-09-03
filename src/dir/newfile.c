@@ -31,6 +31,7 @@ __dir_newfile(char *path, char *name, uint opts)
 
 	ep = p->p = (void *)sp;
 	sp += sizeof(*ep);
+	c_mem_set(ep, sizeof(*ep), 0);
 
 	ep->path = (void *)sp;
 	sp += plen + nlen + 2;
