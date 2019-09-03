@@ -153,7 +153,6 @@ LIBCSRC=\
 	src/sys/getenv.c\
 	src/sys/getgid.c\
 	src/sys/getsyserr.c\
-	src/sys/gettime.c\
 	src/sys/getuid.c\
 	src/sys/link.c\
 	src/sys/llink.c\

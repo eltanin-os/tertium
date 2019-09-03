@@ -434,7 +434,6 @@ char * c_sys_getcwd(char *, usize);
 char * c_sys_getenv(char *);
 uint   c_sys_getgid(void);
 char * c_sys_getsyserr(void);
-int    c_sys_gettime(int, CTime *);
 uint   c_sys_getuid(void);
 int    c_sys_link(char *, char *);
 int    c_sys_llink(char *, char *);
