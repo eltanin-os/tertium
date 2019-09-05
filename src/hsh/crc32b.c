@@ -41,8 +41,8 @@ update(CHst *p, char *data, usize n)
 
 	for (; n; n--) {
 		p->st.x32[0] ^= *s++;
-		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
-		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
+		p->st.x32[0] = CRCTAB(p->st.x32[0]);
+		p->st.x32[0] = CRCTAB(p->st.x32[0]);
 	}
 }
 

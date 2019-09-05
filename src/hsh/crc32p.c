@@ -41,8 +41,8 @@ update(CHst *p, char *data, usize n)
 
 	for (; n; n--) {
 		p->st.x32[0] ^= *s++ << 24;
-		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
-		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
+		p->st.x32[0] = CRCTAB(p->st.x32[0]);
+		p->st.x32[0] = CRCTAB(p->st.x32[0]);
 	}
 }
 
@@ -50,10 +50,11 @@ static void
 end(CHst *p)
 {
 	usize n;
+
 	for (n = p->len; n; n >>= 8) {
 		p->st.x32[0] ^= n << 24;
-		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
-		p->st.x32[0]  = CRCTAB(p->st.x32[0]);
+		p->st.x32[0] = CRCTAB(p->st.x32[0]);
+		p->st.x32[0] = CRCTAB(p->st.x32[0]);
 	}
 	p->st.x32[0] ^= 0xFFFFFFFF;
 }

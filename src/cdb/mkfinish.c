@@ -12,13 +12,13 @@ c_cdb_mkfinish(CCdbmk *p)
 	u32int count[256];
 	u32int start[256];
 	u32int k, len, u, where;
-	usize  i, j;
-	usize  n, msiz;
+	usize i, j;
+	usize n, msiz;
 	char buf[8];
 	char final[2048];
 
 	hp = c_arr_data(&p->hplist);
-	n  = c_arr_len(&p->hplist, sizeof(*hp));
+	n = c_arr_len(&p->hplist, sizeof(*hp));
 
 	c_mem_set(count, sizeof(count), 0);
 
@@ -70,7 +70,7 @@ c_cdb_mkfinish(CCdbmk *p)
 
 		for (j = 0; j < len; j++) {
 			c_uint_32pack(buf, hp[j].h);
-			c_uint_32pack(buf+4, hp[j].p);
+			c_uint_32pack(buf + 4, hp[j].p);
 			if (c_ioq_nput(&p->ioq, buf, 8) < 0)
 				goto error_palloc;
 			if (C_OFLW_UA(u32int, p->off, 8)) {

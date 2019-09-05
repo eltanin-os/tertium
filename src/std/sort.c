@@ -10,9 +10,9 @@ swap(uchar *a, uchar *b, usize n)
 	uchar t;
 
 	for (; n; n--) {
-		t    = *a;
+		t = *a;
 		*a++ = *b;
-		*b++ =  t;
+		*b++ = t;
 	}
 }
 
@@ -25,7 +25,8 @@ mrg(uchar *p, uchar *v, usize n, int (*f)(void *, void *), int l, int m, int r)
 	k = m;
 
 	for (; i < r; i++)
-		c_mem_cpy(p+n*i, n, v+n*(F(j,m,k,r,f,v,n)?j++:k++));
+		c_mem_cpy(p + n * i, n,
+		    v + n * (F(j, m, k, r, f, v, n) ? j++ : k++));
 }
 
 static void
@@ -36,14 +37,14 @@ isrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 	i = 0;
 
 	for (; i < (int)m; i++)
-		for (j = i; j > 0 && f(v+n*(j-1), v+n*j)>0; j--)
-			swap(v+n*j, v+n*(j-1), n);
+		for (j = i; j > 0 && f(v + n * (j - 1), v + n * j) > 0; j--)
+			swap(v + n * j, v + n * (j - 1), n);
 }
 
 static void
 msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 {
-	usize  i, j, t;
+	usize i, j, t;
 	uchar *p;
 
 	/* TODO: stable fallback that requires O(1) additional space */
@@ -51,11 +52,12 @@ msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 		return;
 
 	i = 1;
-	t = m*n;
+	t = m * n;
 
 	for (; i < m; i *= 2) {
 		for (j = 0; j < m; j += i * 2)
-			mrg(p, v, n, f, j, C_MIN(j+i, m), C_MIN(j+i*2, m));
+			mrg(p, v, n, f, j, C_MIN(j + i, m),
+			    C_MIN(j + i * 2, m));
 		c_mem_cpy(v, t, p);
 	}
 }
@@ -71,5 +73,5 @@ c_std_sort(void *v, usize m, usize n, int (*f)(void *, void *))
 		return;
 	}
 
-	msrt(v,m, n, f);
+	msrt(v, m, n, f);
 }

@@ -24,7 +24,7 @@ c_cdb_init(CCdb *p, int fd)
 		return -1;
 
 	p->size = st.size;
-	p->map  = x;
+	p->map = x;
 
 	return 0;
 }

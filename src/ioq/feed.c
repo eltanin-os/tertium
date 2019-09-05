@@ -12,7 +12,7 @@ c_ioq_feed(CIoq *p)
 	if ((r = (p->op)(p->fd, p->mb->p, p->mb->a)) <= 0)
 		return r;
 
-	p->mb->n  = r;
+	p->mb->n = r;
 	p->mb->a -= r;
 
 	if (p->mb->a)

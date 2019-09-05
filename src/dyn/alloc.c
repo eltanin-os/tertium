@@ -10,7 +10,7 @@ c_dyn_alloc(CArr *p, usize m, usize n)
 		return nil;
 
 	m *= n;
-	t  = m+n;
+	t = m + n;
 
 	if (t > c_arr_bytes(p))
 		p->n = t;

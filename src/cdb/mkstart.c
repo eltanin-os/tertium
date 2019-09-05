@@ -4,7 +4,7 @@
 int
 c_cdb_mkstart(CCdbmk *p, int fd)
 {
-	p->fd  = fd;
+	p->fd = fd;
 	p->off = 2048;
 
 	c_mem_set(&p->hplist, sizeof(p->hplist), 0);

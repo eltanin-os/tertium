@@ -6,7 +6,7 @@ CArr newenv;
 int
 c_exc_setenv(char *s, char *v)
 {
-	CArr  e;
+	CArr e;
 	char *p;
 
 	if (!s || !*s)

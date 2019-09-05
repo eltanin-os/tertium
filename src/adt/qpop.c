@@ -16,7 +16,8 @@ c_adt_qpop(CQueue *p, CArr *b, usize m, usize n)
 	if (!htt)
 		return 0;
 
-	m = C_MIN(m*n, htt);
+	m *= n;
+	m = C_MIN(m, htt);
 
 	if (m > c_arr_avail(b)) {
 		errno = C_ENOMEM;

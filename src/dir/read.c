@@ -11,7 +11,7 @@
 struct dir {
 	ushort a;
 	ushort n;
-	uchar  buf[2048];
+	uchar buf[2048];
 };
 
 static CNode *
@@ -26,7 +26,7 @@ builddir(CDir *p)
 
 	cur = p->cur->p;
 
-	if ((fd = c_sys_open(cur->path, C_OREAD|C_OCEXEC, 0)) < 0)
+	if ((fd = c_sys_open(cur->path, C_OREAD | C_OCEXEC, 0)) < 0)
 		return (void *)-1;
 
 	c_mem_cpy(rp, cur->len, cur->path);
@@ -84,7 +84,7 @@ c_dir_read(CDir *p)
 	int instr;
 
 	cur = p->cur;
-	ep  = cur->p;
+	ep = cur->p;
 
 	if (!cur || (p->opts & C_FSSTP))
 		return nil;

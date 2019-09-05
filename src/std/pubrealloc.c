@@ -12,9 +12,9 @@
 #include "__int__.h"
 
 enum {
-	OJUNK    = 1 << 0,
+	OJUNK = 1 << 0,
 	OREALLOC = 1 << 1,
-	OZERO    = 1 << 2,
+	OZERO = 1 << 2,
 };
 
 #define MMAP(a) \
@@ -41,43 +41,46 @@ c_sys_mmap(0, (a), PROT_READ|PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0)
 
 struct pginfo {
 	struct pginfo *next;
-	void          *page;
-	ushort         size;
-	ushort         shift;
-	ushort         free;
-	ushort         total;
-	uint           bits[1];
+	void *page;
+	ushort size;
+	ushort shift;
+	ushort free;
+	ushort total;
+	uint bits[1];
 };
 
 struct pgfree {
 	struct pgfree *next;
 	struct pgfree *prev;
-	void          *page;
-	void          *end;
-	usize          size;
+	void *page;
+	void *end;
+	usize size;
 };
 
-static union { uchar uc[16]; long double ld; } const zeroblock;
+static union {
+	uchar uc[16];
+	long double ld;
+} const zeroblock;
 char *alloc0 = (char *)(uintptr)&zeroblock;
 
 static struct pginfo **pagedir;
 static struct pgfree freelist;
-static struct pgfree *px; /* freelist cache */
-static usize lastidx;     /* last relevant index in the page dir */
-static usize mcache = 16; /* freepages to cache */
-static usize minfo;       /* slots in the page dir */
-static usize morigo;      /* offset from pagenumber to index into the page dir */
+static struct pgfree *px;	/* freelist cache */
+static usize lastidx;		/* last relevant index in the page dir */
+static usize mcache = 16;	/* freepages to cache */
+static usize minfo;		/* slots in the page dir */
+static usize morigo;		/* offset from pagenumber to index into the page dir */
 static usize mpagemask;
 static usize mpageshift;
 static usize mpagesize;
-static int   mact;        /* malloc active */
-static int   mstt;        /* malloc started */
-static uint  mopts;       /* malloc options */
-static void *cbrk;        /* current break */
-static void *mbrk;        /* last break */
+static int mact;		/* malloc active */
+static int mstt;		/* malloc started */
+static uint mopts;		/* malloc options */
+static void *cbrk;		/* current break */
+static void *mbrk;		/* last break */
 
-static void * imalloc(usize);
-static void   ifree(void *);
+static void *imalloc(usize);
+static void ifree(void *);
 
 static int
 _brk(void *p)
@@ -90,12 +93,13 @@ static void *
 segbrk(uintptr p)
 {
 	void *o;
+
 	if (!cbrk && _brk(0) < 0)
 		return (void *)-1;
 	if (!p)
 		return cbrk;
 	o = cbrk;
-	if (_brk((char *)o+p) < 0)
+	if (_brk((char *)o + p) < 0)
 		return (void *)-1;
 	return o;
 }
@@ -120,21 +124,21 @@ freepages(void *p, usize idx, struct pginfo *info)
 		return;
 
 	pagedir[idx] = MFREE;
-	for (i = 1; pagedir[idx+i] == MFOLLOW; i++)
-		pagedir[idx+i] = MFREE;
+	for (i = 1; pagedir[idx + i] == MFOLLOW; i++)
+		pagedir[idx + i] = MFREE;
 
 	l = i << mpageshift;
 
 	if (ISOPT(OJUNK))
 		c_mem_set(p, l, JUNK);
 
-	t = (uchar *)p+l;
+	t = (uchar *)p + l;
 
 	if (!px)
 		px = imalloc(sizeof(*px));
 
 	px->page = p;
-	px->end  = t;
+	px->end = t;
 	px->size = l;
 
 	pt = nil;
@@ -146,9 +150,9 @@ freepages(void *p, usize idx, struct pginfo *info)
 		pf = px;
 		px = nil;
 	} else {
-		t = (uchar *)p+l;
-		for (pf = freelist.next; pf->end < p && pf->next; pf = pf->next)
-			;
+		t = (uchar *)p + l;
+		for (pf = freelist.next; pf->end < p && pf->next;
+		    pf = pf->next) ;
 		if (pf->page > t) {
 			px->next = pf;
 			px->prev = pf->prev;
@@ -157,18 +161,20 @@ freepages(void *p, usize idx, struct pginfo *info)
 			pf = px;
 			px = nil;
 		} else if (pf->end == p) {
-			pf->end   = (uchar *)pf->end + l;
+			pf->end = (uchar *)pf->end + l;
 			pf->size += l;
+
 			if (px->next && px->end == pf->next->page) {
 				pt = pf->next;
 				pf->end = pt->end;
 				pf->size += pt->size;
+
 				if ((pf->next = pt->next))
 					pf->next->prev = pf;
 			}
 		} else if (pf->page == t) {
 			pf->size += l;
-			pf->page  = p;
+			pf->page = p;
 		} else if (!pf->next) {
 			px->next = nil;
 			px->prev = pf;
@@ -183,7 +189,7 @@ freepages(void *p, usize idx, struct pginfo *info)
 
 	if (!pf->next && pf->size > mcache &&
 	    pf->end == mbrk && mbrk == segbrk(0)) {
-		pf->end  = (uchar *)pf->page + mcache;
+		pf->end = (uchar *)pf->page + mcache;
 		pf->size = mcache;
 		_brk(pf->end);
 		mbrk = pf->end;
@@ -207,17 +213,17 @@ freebytes(void *p, usize idx, struct pginfo *info)
 	i = ((usize)(uintptr)p & mpagemask) >> info->shift;
 
 	/* modified chunk */
-	if ((usize)(uintptr)p & (info->size-1))
+	if ((usize)(uintptr)p & (info->size - 1))
 		return;
 
 	/* chunk is already free */
-	if (info->bits[i/MBITS] & (1UL << (i % MBITS)))
+	if (info->bits[i / MBITS] & (1UL << (i % MBITS)))
 		return;
 
 	if (ISOPT(OJUNK))
 		c_mem_set(p, info->size, JUNK);
 
-	info->bits[i/MBITS] |= (1UL << (i % MBITS));
+	info->bits[i / MBITS] |= (1UL << (i % MBITS));
 	info->free++;
 
 	mp = pagedir + info->shift;
@@ -234,8 +240,7 @@ freebytes(void *p, usize idx, struct pginfo *info)
 	if (info->free != info->total)
 		return;
 
-	for (; *mp != info; mp = &(*mp)->next)
-		;
+	for (; *mp != info; mp = &(*mp)->next) ;
 
 	*mp = info->next;
 	pagedir[idx] = MFIRST;
@@ -271,8 +276,8 @@ extendpgdir(usize idx)
 	struct pginfo **p, **o;
 	usize nl, ol;
 
-	if ((((~(1UL<<((sizeof(usize)*8)-1))/sizeof(*pagedir))+1)
-	    + (mpagesize/sizeof(*pagedir))) < idx) {
+	if ((((~(1UL << ((sizeof(usize) * 8) - 1)) / sizeof(*pagedir)) + 1)
+	    + (mpagesize / sizeof(*pagedir))) < idx) {
 		errno = C_ENOMEM;
 		return 0;
 	}
@@ -317,9 +322,9 @@ mappages(usize pages)
 	}
 
 	lastidx = ptr2idx((t = (uchar *)rr + bytes)) - 1;
-	mbrk    = t;
+	mbrk = t;
 
-	if ((lastidx+1) >= minfo && extendpgdir(lastidx)) {
+	if ((lastidx + 1) >= minfo && extendpgdir(lastidx)) {
 		lastidx = ptr2idx((mbrk = r)) - 1;
 		if (_brk(mbrk)) {
 			c_sys_write(2, "brk(2) failed [internal error]\n", 31);
@@ -343,7 +348,7 @@ allocpages(usize n)
 		return nil;
 	}
 
-	n  = idx;
+	n = idx;
 	df = p = nil;
 
 	for (pf = freelist.next; pf; pf = pf->next) {
@@ -359,8 +364,9 @@ allocpages(usize n)
 		}
 
 		p = pf->page;
-		pf->page  = (uchar *)pf->page + n;
+		pf->page = (uchar *)pf->page + n;
 		pf->size -= n;
+
 		break;
 	}
 
@@ -373,7 +379,7 @@ allocpages(usize n)
 		idx = ptr2idx(p);
 		pagedir[idx] = MFIRST;
 		for (i = 1; i < n; i++)
-			pagedir[idx+i] = MFOLLOW;
+			pagedir[idx + i] = MFOLLOW;
 		if (ISOPT(OJUNK))
 			c_mem_set(p, n << mpageshift, JUNK);
 	}
@@ -392,17 +398,17 @@ static int
 allocchunks(int bits)
 {
 	struct pginfo *bp;
-	long  l;
-	int   i, k;
+	long l;
+	int i, k;
 	void *pp;
 
 	if (!(pp = allocpages(mpagesize)))
 		return 0;
 
-	l  = c_std_offsetof(struct pginfo, bits[0]);
-	l += sizeof(bp->bits[0]) * (((mpagesize >> bits)+MBITS-1)/MBITS);
+	l = c_std_offsetof(struct pginfo, bits[0]);
+	l += sizeof(bp->bits[0]) * (((mpagesize >> bits) + MBITS - 1) / MBITS);
 
-	if ((1<<bits) <= (l << 1)) {
+	if ((1 << bits) <= (l << 1)) {
 		bp = pp;
 	} else {
 		if (!(bp = imalloc(l))) {
@@ -411,26 +417,27 @@ allocchunks(int bits)
 		}
 	}
 
-	bp->size  = (1<<bits);
+	bp->size = (1 << bits);
+
 	bp->shift = bits;
 	bp->total = bp->free = mpagesize >> bits;
-	bp->page  = pp;
+	bp->page = pp;
 
 	k = bp->total;
 	i = 0;
 
-	for (; k-i >= MBITS; i += MBITS)
-		bp->bits[i/MBITS] = ~0U;
+	for (; k - i >= MBITS; i += MBITS)
+		bp->bits[i / MBITS] = ~0U;
 
 	for (; i < k; i++)
-		bp->bits[i/MBITS] |= 1<<(i%MBITS);
+		bp->bits[i / MBITS] |= 1 << (i % MBITS);
 
 	if (bp == bp->page) {
 		for (i = 0; l > 0; i++) {
-			bp->bits[i/MBITS] &= ~(1<<(i%MBITS));
+			bp->bits[i / MBITS] &= ~(1 << (i % MBITS));
 			bp->free--;
 			bp->total--;
-			l -= 1<<bits;
+			l -= 1 << bits;
 		}
 	}
 
@@ -446,15 +453,15 @@ allocbytes(usize n)
 {
 	struct pginfo *bp;
 	usize i, k;
-	int   j;
+	int j;
 	uint *lp;
-	uint  u;
+	uint u;
 
 	if (n < mminsize)
 		n = mminsize;
 
 	j = 1;
-	i = n-1;
+	i = n - 1;
 	while (i >>= 1)
 		j++;
 
@@ -463,8 +470,7 @@ allocbytes(usize n)
 
 	bp = pagedir[j];
 
-	for (lp = bp->bits; !*lp; lp++)
-		;
+	for (lp = bp->bits; !*lp; lp++) ;
 
 	u = 1;
 	k = 0;
@@ -475,10 +481,10 @@ allocbytes(usize n)
 
 	if (!--bp->free) {
 		pagedir[j] = bp->next;
-		bp->next   = nil;
+		bp->next = nil;
 	}
 
-	k  += (lp - bp->bits) * MBITS;
+	k += (lp - bp->bits) * MBITS;
 	k <<= bp->shift;
 
 	if (ISOPT(OJUNK))
@@ -513,7 +519,7 @@ irealloc(void *p, usize n)
 	idx = ptr2idx(p);
 
 	/* too low or too high */
-	if (idx < mpageshift || idx > lastidx )
+	if (idx < mpageshift || idx > lastidx)
 		return nil;
 
 	mp = &pagedir[idx];
@@ -522,30 +528,28 @@ irealloc(void *p, usize n)
 		/* modified (page-) pointer */
 		if ((usize)(uintptr)p & mpagemask)
 			return nil;
-		for (o = mpagesize; *++mp == MFOLLOW; o += mpagesize)
-			;
+		for (o = mpagesize; *++mp == MFOLLOW; o += mpagesize) ;
 		if (!ISOPT(OREALLOC) && n <= o && n > (o - mpagesize)) {
 			if (ISOPT(OJUNK))
-				c_mem_set((uchar *)p+n, o-n, JUNK);
+				c_mem_set((uchar *)p + n, o - n, JUNK);
 			return p;
 		}
 	} else if (*mp >= MMAGIC) {
 		/* modified (chunk-) pointer */
-		if ((usize)(uintptr)p & ((*mp)->size-1))
+		if ((usize)(uintptr)p & ((*mp)->size - 1))
 			return nil;
 
 		i = ((usize)(uintptr)p & mpagemask) >> (*mp)->shift;
 
 		/* chunk is already free */
-		if ((*mp)->bits[i/MBITS] & (1UL << (i % MBITS)))
+		if ((*mp)->bits[i / MBITS] & (1UL << (i % MBITS)))
 			return nil;
 
 		o = (*mp)->size;
 
-		if (!ISOPT(OREALLOC) &&
-		    n <= o && (n > o / 2 || o == mminsize)) {
+		if (!ISOPT(OREALLOC) && n <= o && (n > o / 2 || o == mminsize)) {
 			if (ISOPT(OJUNK))
-				c_mem_set((uchar *)p+n, o-n, JUNK);
+				c_mem_set((uchar *)p + n, o - n, JUNK);
 			return p;
 		}
 	} else {
@@ -566,13 +570,12 @@ static void
 minit(void)
 {
 	char *p;
-	int   e;
+	int e;
 
 	e = errno;
 	mpagesize = C_PAGESIZE;
 	mpagemask = mpagesize - 1;
-	for (mpageshift = 0; (1UL << mpageshift) != mpagesize; mpageshift++)
-		;
+	for (mpageshift = 0; (1UL << mpageshift) != mpagesize; mpageshift++) ;
 
 	p = c_sys_getenv("MALLOC_OPTIONS");
 	for (; p && *p; p++) {
@@ -606,9 +609,9 @@ minit(void)
 		c_sys_abort();
 	}
 
-	morigo  = pageround((usize)(uintptr)segbrk(0)) >> mpageshift;
+	morigo = pageround((usize)(uintptr)segbrk(0)) >> mpageshift;
 	morigo -= mpageshift;
-	minfo   = mpagesize / sizeof(*pagedir);
+	minfo = mpagesize / sizeof(*pagedir);
 
 	if (!mcache)
 		mcache++;
@@ -651,7 +654,7 @@ pubrealloc(void *p, usize m, usize n)
 			ifree(p);
 		r = alloc0;
 	} else {
-		r = p ? irealloc(p, m*n) : imalloc(m*n);
+		r = p ? irealloc(p, m * n) : imalloc(m * n);
 	}
 
 	if (!r)

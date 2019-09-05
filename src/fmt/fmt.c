@@ -17,8 +17,7 @@ fmtfmt(CFmt *f, uchar *s)
 		for (; i <= n; i++) {
 			p = c_arr_get(&__fmt_Fmts, i, sizeof(*p));
 			if (p->c == *s) {
-				for (; !(p->f); )
-					;
+				for (; !(p->f);) ;
 				return (p->f)(f);
 			}
 		}
@@ -42,7 +41,7 @@ fmtflag(CFmt *f, uchar *s)
 
 	f->flags = 0;
 	f->width = 0;
-	f->prec  = 0;
+	f->prec = 0;
 
 	nfmt = 0;
 
@@ -53,7 +52,7 @@ fmtflag(CFmt *f, uchar *s)
 
 		switch (f->r) {
 		case '.':
-			f->flags = C_FMTWIDTH|C_FMTPREC;
+			f->flags = C_FMTWIDTH | C_FMTPREC;
 			continue;
 		case '0':
 			if (!(f->flags & C_FMTWIDTH)) {
@@ -61,12 +60,20 @@ fmtflag(CFmt *f, uchar *s)
 				continue;
 			}
 			/* FALLTHROUGH */
-		case '1': case '2': case '3': case '4':
-		case '5': case '6': case '7': case '8': case '9':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
 			i = 0;
 			for (; *s >= '0' && *s <= '9'; nfmt++, s++)
 				i = i * 10 + *s - '0';
-			s--; nfmt--;
+			s--;
+			nfmt--;
 numflag:
 			if (f->flags & C_FMTWIDTH) {
 				f->flags |= C_FMTPREC;
@@ -99,8 +106,8 @@ numflag:
 size
 c_fmt_fmt(CFmt *p, char *fmt)
 {
-	usize  nfmt;
-	int    n;
+	usize nfmt;
+	int n;
 	uchar *s;
 
 	s = (uchar *)fmt;

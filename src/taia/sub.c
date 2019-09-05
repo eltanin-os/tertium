@@ -5,8 +5,8 @@ void
 c_taia_sub(CTaia *t, CTaia *u, CTaia *v)
 {
 	t->sec.x = u->sec.x - v->sec.x;
-	t->nano  = u->nano  - v->nano;
-	t->atto  = u->atto  - v->atto;
+	t->nano = u->nano - v->nano;
+	t->atto = u->atto - v->atto;
 	if (t->atto > u->atto) {
 		t->atto += 1000000000UL;
 		t->nano--;

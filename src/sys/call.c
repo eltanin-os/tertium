@@ -9,8 +9,8 @@ vlong
 c_sys_call_(vlong num, ...)
 {
 	va_list ap;
-	int     i;
-	void   *args[8];
+	int i;
+	void *args[8];
 
 	c_mem_set(&args, sizeof(args), 0);
 
@@ -21,4 +21,3 @@ c_sys_call_(vlong num, ...)
 
 	return __asm_syscall(num, ARGS(args));
 }
-

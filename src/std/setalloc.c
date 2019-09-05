@@ -3,7 +3,7 @@
 
 #include "__int__.h"
 
-void * (*__allocator)(void *, usize, usize) = pubrealloc;
+void *(*__allocator)(void *, usize, usize) = pubrealloc;
 
 void
 c_std_setalloc(void *(*f)(void *, usize, usize))

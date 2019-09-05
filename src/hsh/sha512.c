@@ -152,6 +152,7 @@ static void
 digest(CHst *p, char *s)
 {
 	int i;
+
 	for (i = 0; i < 8; i++)
 		c_uint_64bigpack(s + i * 8, p->st.x64[i]);
 }

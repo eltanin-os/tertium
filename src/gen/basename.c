@@ -13,10 +13,9 @@ c_gen_basename(char *s)
 	n = c_str_len(s, C_USIZEMAX);
 	n--;
 
-	for (; s[n] == '/'; n--)
-		;
+	for (; s[n] == '/'; n--) ;
 
-	s[n+1] = 0;
+	s[n + 1] = 0;
 
 	if (!(p = c_mem_rchr(s, n, '/')))
 		return s;

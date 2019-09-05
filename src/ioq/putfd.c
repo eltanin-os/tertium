@@ -7,8 +7,8 @@ c_sys_mmap(0, (b), PROT_READ, MAP_SHARED, (a), 0)
 int
 c_ioq_putfd(CIoq *p, int fd, usize n)
 {
-	size  r;
-	char  buf[C_BIOSIZ];
+	size r;
+	char buf[C_BIOSIZ];
 	void *mp;
 
 	if (fd && !n)

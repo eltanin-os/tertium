@@ -11,6 +11,7 @@ c_mem_set(void *v, usize n, int c)
 	for (; n; n--)
 		*s++ = c;
 
-	__asm__ __volatile__("" : : "r"(v) : "memory");
+	__asm__ __volatile__(""::"r"(v):"memory");
+
 	return v;
 }

@@ -26,6 +26,6 @@ c_sys_conf(int v)
 	case _SC_VERSION:
 		return _POSIX_VERSION;
 	}
-	/*EINVAL*/
+	errno = C_EINVAL;
 	return -1;
 }

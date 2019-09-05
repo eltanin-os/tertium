@@ -8,7 +8,6 @@ movemem(CArr *p, char *b, usize n)
 	c_mem_cpy(b, n, p->p + p->a);
 	p->n -= n;
 	p->a += n;
-
 	return n;
 }
 

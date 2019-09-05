@@ -4,7 +4,7 @@
 #include "__int__.h"
 
 #define getbase(a) \
-((a)=='p'||(a)=='x'||(a)=='X')?16:((a)=='o')?8:((a)=='b')?2:10;
+((a) == 'p' || (a | 32) == 'x' ? 16 : ((a) == 'o') ? 8 : ((a) == 'b') ? 2 : 10)
 
 static int Vchar(CFmt *);
 static int Verr(CFmt *);
@@ -13,7 +13,7 @@ static int Vint(CFmt *);
 static int Vperc(CFmt *);
 static int Vstr(CFmt *);
 
-static uchar buf[64*sizeof(struct fmtverb)];
+static uchar buf[64 * sizeof(struct fmtverb)];
 CArr __fmt_Fmts = c_arr_INIT(buf);
 
 struct fmtverb __fmt_VFmts[] = {
@@ -48,14 +48,10 @@ nobuffer(CFmt *p, char *s, usize n)
 static size
 buffered(CFmt *p, char *s, usize n)
 {
-	size r;
-
 	if (n > c_arr_avail(p->mb) && p->fn(p) < 0)
 		return -1;
 
-	c_arr_cat(p->mb, s, (r = C_MIN(n, c_arr_avail(p->mb))), sizeof(uchar));
-
-	return r;
+	return c_arr_cat(p->mb, s, C_MIN(n, c_arr_avail(p->mb)), sizeof(uchar));
 }
 
 int
@@ -85,10 +81,13 @@ static int
 fmtpad(CFmt *p, usize n)
 {
 	int w;
+
 	w = p->width - n;
+
 	for (; w > 0; w--)
 		if (__fmt_trycat(p, " ", 1, sizeof(uchar)) < 0)
 			return -1;
+
 	return 0;
 }
 
@@ -97,16 +96,22 @@ fmtcat(CFmt *p, char *s, usize n)
 {
 	if (!s)
 		s = "<nil>";
+
 	if (!n)
 		n = c_str_len(s, C_USIZEMAX);
+
 	if ((p->flags & C_FMTPREC) && n > (usize)p->prec)
 		n = p->prec;
+
 	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
+
 	if (__fmt_trycat(p, s, n, sizeof(uchar)) < 0)
 		return -1;
+
 	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
+
 	return 0;
 }
 
@@ -115,10 +120,11 @@ Vchar(CFmt *p)
 {
 	char buf[8];
 	int x;
+
 	x = va_arg(p->args, int);
 	c_mem_cpy(buf, sizeof(x), &x);
-	buf[sizeof(x)] = '\0';
-	return fmtcat(p, buf, 0);
+	buf[sizeof(x) - 1] = 0;
+	return fmtcat(p, buf, sizeof(x));
 }
 
 static int
@@ -137,7 +143,7 @@ Verr(CFmt *p)
 static int
 Vflag(CFmt *p)
 {
-	switch(p->r){
+	switch (p->r) {
 	case ',':
 		p->flags |= C_FMTCOMMA;
 		break;
@@ -157,18 +163,18 @@ Vflag(CFmt *p)
 		p->flags |= C_FMTUNSIGNED;
 		break;
 	case 'h':
-		if(p->flags & C_FMTSHORT)
+		if (p->flags & C_FMTSHORT)
 			p->flags |= C_FMTBYTE;
 		p->flags |= C_FMTSHORT;
 		break;
 	case 'l':
-		if(p->flags & C_FMTLONG)
+		if (p->flags & C_FMTLONG)
 			p->flags |= C_FMTVLONG;
 		p->flags |= C_FMTLONG;
 		break;
 	case 'z':
 		p->flags |= C_FMTLONG;
-		if(sizeof(uintptr) == sizeof(uvlong))
+		if (sizeof(uintptr) == sizeof(uvlong))
 			p->flags |= C_FMTVLONG;
 		break;
 	}
@@ -181,17 +187,23 @@ Vint(CFmt *p)
 	uvlong l;
 	int b, d, i, j, u, n;
 	char buf[64];
+
 	n = 0;
 	l = va_arg(p->args, uvlong);
+
 	if (!(p->flags & C_FMTUNSIGNED) && (vlong)l < 0) {
 		n++;
 		l = -(vlong)l;
 	}
+
 	b = getbase(p->r);
 	u = (p->r == 'X') ? 'A' : 'a';
-	i = sizeof(buf)-1;
+	i = sizeof(buf) - 1;
 	j = 0;
-	if (!l) buf[--i] = '0';
+
+	if (!l)
+		buf[--i] = '0';
+
 	for (; l; j++) {
 		d = (l % b);
 		if ((p->flags & C_FMTCOMMA) && j % 4 == 3) {
@@ -201,25 +213,29 @@ Vint(CFmt *p)
 		buf[--i] = (d < 10) ? d + '0' : u + d - 10;
 		l /= b;
 	}
-	if ((p->flags & C_FMTZERO) && !(p->flags & (C_FMTLEFT|C_FMTPREC))) {
-		p->width -= sizeof(buf)-i;
+
+	if ((p->flags & C_FMTZERO) && !(p->flags & (C_FMTLEFT | C_FMTPREC))) {
+		p->width -= sizeof(buf) - i;
 		for (; p->width > 0; p->width--)
 			buf[--i] = '0';
 		p->width = 0;
 	}
+
 	if (p->flags & C_FMTSHARP) {
 		if (b == 16)
-			buf[--i] = u+23; /* 'x' */
+			buf[--i] = u + 23;	/* 'x' */
 		if (b == 16 || b == 8)
 			buf[--i] = '0';
 	}
+
 	if (n)
 		buf[--i] = '-';
 	else if (p->flags & C_FMTSIGN)
 		buf[--i] = '+';
 	else if (p->flags & C_FMTSPACE)
 		buf[--i] = ' ';
-	return fmtcat(p, buf+i, sizeof(buf)-(i+1));
+
+	return fmtcat(p, buf + i, sizeof(buf) - (i + 1));
 }
 
 static int
@@ -233,6 +249,7 @@ static int
 Vstr(CFmt *p)
 {
 	char *s;
+
 	s = va_arg(p->args, char *);
 	return fmtcat(p, s, 0);
 }

@@ -5,6 +5,7 @@ u64int
 c_uint_64bigunpack(char *s)
 {
 	u64int r;
+
 	r = (uchar)s[0];
 	r <<= 8;
 	r += (uchar)s[1];

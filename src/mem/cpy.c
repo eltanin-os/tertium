@@ -16,8 +16,8 @@ c_mem_cpy(void *d, usize n, void *s)
 		for (; n; n--)
 			*s1++ = *s2++;
 	} else {
-		s1 += n-1;
-		s2 += n-1;
+		s1 += n - 1;
+		s2 += n - 1;
 		for (; n; n--)
 			*s1-- = *s2--;
 	}

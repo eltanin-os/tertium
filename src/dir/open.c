@@ -8,7 +8,7 @@ c_dir_open(CDir *p, char **argv, uint opts, int (*f)(void *, void *))
 {
 	CDent *ep;
 	CNode *np;
-	CStat  st;
+	CStat st;
 
 	c_mem_set(p, sizeof(*p), 0);
 

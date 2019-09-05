@@ -45,17 +45,17 @@ enum {
 	C_FSSTP = 1 << 8,
 
 	/* types */
-	C_FSD   =  1,
-	C_FSDC  =  2,
-	C_FSDEF =  3,
-	C_FSDNR =  4,
-	C_FSDOT =  5,
-	C_FSDP  =  6,
-	C_FSERR =  7,
-	C_FSF   =  8,
-	C_FSFC  =  9,
-	C_FSNS  = 10,
-	C_FSSL  = 11,
+	C_FSD = 1,
+	C_FSDC = 2,
+	C_FSDEF = 3,
+	C_FSDNR = 4,
+	C_FSDOT = 5,
+	C_FSDP = 6,
+	C_FSERR = 7,
+	C_FSF = 8,
+	C_FSFC = 9,
+	C_FSNS = 10,
+	C_FSSL = 11,
 	C_FSSLN = 12,
 };
 
@@ -64,20 +64,20 @@ enum {
 
 /* fmt macros */
 enum {
-	C_FMTWIDTH    = 1 << 0,
-	C_FMTLEFT     = 1 << 1,
-	C_FMTPREC     = 1 << 2,
-	C_FMTSHARP    = 1 << 3,
-	C_FMTSPACE    = 1 << 4,
-	C_FMTSIGN     = 1 << 5,
-	C_FMTZERO     = 1 << 6,
+	C_FMTWIDTH = 1 << 0,
+	C_FMTLEFT = 1 << 1,
+	C_FMTPREC = 1 << 2,
+	C_FMTSHARP = 1 << 3,
+	C_FMTSPACE = 1 << 4,
+	C_FMTSIGN = 1 << 5,
+	C_FMTZERO = 1 << 6,
 	C_FMTUNSIGNED = 1 << 7,
-	C_FMTSHORT    = 1 << 8,
-	C_FMTLONG     = 1 << 9,
-	C_FMTVLONG    = 1 << 10,
-	C_FMTCOMMA    = 1 << 11,
-	C_FMTBYTE     = 1 << 12,
-	C_FMTFLAG     = 1 << 13,
+	C_FMTSHORT = 1 << 8,
+	C_FMTLONG = 1 << 9,
+	C_FMTVLONG = 1 << 10,
+	C_FMTCOMMA = 1 << 11,
+	C_FMTBYTE = 1 << 12,
+	C_FMTFLAG = 1 << 13,
 };
 
 /* general macros */
@@ -120,25 +120,25 @@ enum {
 typedef struct CArr CArr;
 
 struct CArr {
-	usize  a;
-	usize  n;
+	usize a;
+	usize n;
 	uchar *p;
 };
 
 /* adt types */
-typedef struct CNode  CNode;
+typedef struct CNode CNode;
 typedef struct CQueue CQueue;
 
 struct CNode {
 	CNode *next;
 	CNode *prev;
-	void  *p;
+	void *p;
 };
 
 struct CQueue {
-	usize  a;
-	usize  h;
-	usize  t;
+	usize a;
+	usize h;
+	usize t;
 	uchar *p;
 };
 
@@ -146,16 +146,16 @@ struct CQueue {
 typedef struct CFmt CFmt;
 
 struct CFmt {
-	CArr    *mb;
-	va_list  args;
-	size   (*op)(int, void *, usize);
-	int    (*fn)(CFmt *);
-	usize    nfmt;
-	int      prec;
-	int      r;
-	int      width;
-	ulong    flags;
-	void    *farg;
+	CArr *mb;
+	va_list args;
+	size (*op)(int, void *, usize);
+	int (*fn)(CFmt *);
+	usize nfmt;
+	int prec;
+	int r;
+	int width;
+	ulong flags;
+	void *farg;
 };
 
 /* hsh types */
@@ -182,13 +182,13 @@ struct CHst {
 typedef struct CIoq CIoq;
 
 struct CIoq {
-	CArr  *mb;
+	CArr *mb;
 	size (*op)(int, void *, usize);
-	int    fd;
+	int fd;
 };
 
 /* cdb types */
-typedef struct CCdb   CCdb;
+typedef struct CCdb CCdb;
 typedef struct CCdbmk CCdbmk;
 
 struct CCdb {
@@ -200,17 +200,17 @@ struct CCdb {
 	u32int kpos;
 	u32int loop;
 	u32int size;
-	int    fd;
+	int fd;
 	uchar *map;
 };
 
 struct CCdbmk {
-	CArr   arr;
-	CArr   hplist;
-	CIoq   ioq;
+	CArr arr;
+	CArr hplist;
+	CIoq ioq;
 	u32int off;
-	int    fd;
-	char   buf[C_BIOSIZ];
+	int fd;
+	char buf[C_BIOSIZ];
 };
 
 /* sys types */
@@ -223,50 +223,50 @@ struct CTime {
 };
 
 struct CStat {
-	CTime  atim;
-	CTime  ctim;
-	CTime  mtim;
-	vlong  size;
-	ulong  blksize;
-	ulong  blocks;
-	ulong  dev;
-	ulong  ino;
-	ulong  rdev;
-	uint   gid;
-	uint   nlink;
-	uint   uid;
+	CTime atim;
+	CTime ctim;
+	CTime mtim;
+	vlong size;
+	ulong blksize;
+	ulong blocks;
+	ulong dev;
+	ulong ino;
+	ulong rdev;
+	uint gid;
+	uint nlink;
+	uint uid;
 	ushort mode;
 };
 
 /* dir types */
 typedef struct CDent CDent;
-typedef struct CDir  CDir;
+typedef struct CDir CDir;
 
 struct CDent {
 	CDent *parent;
 	CStat *stp;
-	vlong  num;
-	ulong  dev;
-	usize  len;
-	usize  nlen;
+	vlong num;
+	ulong dev;
+	usize len;
+	usize nlen;
 	ushort instr;
 	ushort info;
-	int    err;
-	int    depth;
-	char  *path;
-	char  *name;
-	void  *ptr;
-	void  *__p; /* (private) */
+	int err;
+	int depth;
+	char *path;
+	char *name;
+	void *ptr;
+	void *__p;		/* (private) */
 };
 
 struct CDir {
 	CNode *cur;
 	CNode *child;
-	CArr   hist;
-	ulong  dev;
-	int  (*f)(void *, void *);
-	int    rfd;
-	uint   opts;
+	CArr hist;
+	ulong dev;
+	int (*f)(void *, void *);
+	int rfd;
+	uint opts;
 };
 
 /* tai types */
@@ -280,75 +280,75 @@ struct CTai {
 typedef struct CTaia CTaia;
 
 struct CTaia {
-	CTai  sec;
+	CTai sec;
 	ulong atto;
 	ulong nano;
 };
 
 /* adt routines */
-void    c_adt_lfree(CNode *);
-CNode * c_adt_lpop(CNode **);
-int     c_adt_lpush(CNode **, CNode *);
-void    c_adt_lsort(CNode **, int (*)(void *, void *));
-void    c_adt_qinit(CQueue *, char *, usize);
-int     c_adt_qpop(CQueue *, CArr *, usize, usize);
-int     c_adt_qpops(CQueue *, CArr *);
-int     c_adt_qpush(CQueue *, void *, usize, usize);
+void c_adt_lfree(CNode *);
+CNode *c_adt_lpop(CNode **);
+int c_adt_lpush(CNode **, CNode *);
+void c_adt_lsort(CNode **, int (*)(void *, void *));
+void c_adt_qinit(CQueue *, char *, usize);
+int c_adt_qpop(CQueue *, CArr *, usize, usize);
+int c_adt_qpops(CQueue *, CArr *);
+int c_adt_qpush(CQueue *, void *, usize, usize);
 
 /* arr routines */
-usize  c_arr_avail(CArr *);
-usize  c_arr_bytes(CArr *);
-size   c_arr_cat(CArr *, void *, usize, usize);
-void * c_arr_data(CArr *);
-size   c_arr_fmt(CArr *, char *, ...);
-void * c_arr_get(CArr *, usize, usize);
-void   c_arr_init(CArr *, char *, usize);
-usize  c_arr_len(CArr *, usize);
-usize  c_arr_total(CArr *);
-int    c_arr_trunc(CArr *, usize, usize);
-size   c_arr_vfmt(CArr *, char *, va_list);
+usize c_arr_avail(CArr *);
+usize c_arr_bytes(CArr *);
+size c_arr_cat(CArr *, void *, usize, usize);
+void *c_arr_data(CArr *);
+size c_arr_fmt(CArr *, char *, ...);
+void *c_arr_get(CArr *, usize, usize);
+void c_arr_init(CArr *, char *, usize);
+usize c_arr_len(CArr *, usize);
+usize c_arr_total(CArr *);
+int c_arr_trunc(CArr *, usize, usize);
+size c_arr_vfmt(CArr *, char *, va_list);
 
 /* cdb routines */
 u32int c_cdb_datalen(CCdb *);
 u32int c_cdb_datapos(CCdb *);
-int    c_cdb_find(CCdb *, char *, usize);
-int    c_cdb_findnext(CCdb *, char *, usize);
-void   c_cdb_findstart(CCdb *);
-void   c_cdb_free(CCdb *);
+int c_cdb_find(CCdb *, char *, usize);
+int c_cdb_findnext(CCdb *, char *, usize);
+void c_cdb_findstart(CCdb *);
+void c_cdb_free(CCdb *);
 u32int c_cdb_hash(char *, usize);
 u32int c_cdb_hashadd(u32int, uchar);
-int    c_cdb_init(CCdb *, int);
-int    c_cdb_mkadd(CCdbmk *, char *, usize, char *, usize);
-int    c_cdb_mkaddbegin(CCdbmk *, usize, usize);
-int    c_cdb_mkaddend(CCdbmk *, usize, usize, u32int);
-int    c_cdb_mkfinish(CCdbmk *);
-int    c_cdb_mkstart(CCdbmk *, int);
-int    c_cdb_read(CCdb *, char *, usize, u32int);
+int c_cdb_init(CCdb *, int);
+int c_cdb_mkadd(CCdbmk *, char *, usize, char *, usize);
+int c_cdb_mkaddbegin(CCdbmk *, usize, usize);
+int c_cdb_mkaddend(CCdbmk *, usize, usize, u32int);
+int c_cdb_mkfinish(CCdbmk *);
+int c_cdb_mkstart(CCdbmk *, int);
+int c_cdb_read(CCdb *, char *, usize, u32int);
 
 /* dir routines */
-int     c_dir_close(CDir *);
-int     c_dir_open(CDir *, char **, uint, int (*)(void *, void *));
-CDent * c_dir_read(CDir *);
-int     c_dir_set(CDir *, CDent *, int);
+int c_dir_close(CDir *);
+int c_dir_open(CDir *, char **, uint, int (*)(void *, void *));
+CDent *c_dir_read(CDir *);
+int c_dir_set(CDir *, CDent *, int);
 
 /* dyn routines */
-void * c_dyn_alloc(CArr *, usize, usize);
-size   c_dyn_cat(CArr *, void *, usize, usize);
-size   c_dyn_fmt(CArr *, char *, ...);
-void   c_dyn_free(CArr *);
-int    c_dyn_ready(CArr *, usize, usize);
-int    c_dyn_shrink(CArr *);
-size   c_dyn_vfmt(CArr *, char *, va_list);
+void *c_dyn_alloc(CArr *, usize, usize);
+size c_dyn_cat(CArr *, void *, usize, usize);
+size c_dyn_fmt(CArr *, char *, ...);
+void c_dyn_free(CArr *);
+int c_dyn_ready(CArr *, usize, usize);
+int c_dyn_shrink(CArr *);
+size c_dyn_vfmt(CArr *, char *, va_list);
 
 /* err routines */
 void c_err_die(int, char *, ...);
 void c_err_diex(int, char *, ...);
 void c_err_vdie(int, char *, va_list);
 void c_err_vdiex(int, char *, va_list);
-int  c_err_vwarn(char *, va_list);
-int  c_err_vwarnx(char *, va_list);
-int  c_err_warn(char *, ...);
-int  c_err_warnx(char *, ...);
+int c_err_vwarn(char *, va_list);
+int c_err_vwarnx(char *, va_list);
+int c_err_warn(char *, ...);
+int c_err_warnx(char *, ...);
 
 /* exc routines */
 int c_exc_run(char *, char **);
@@ -356,137 +356,137 @@ int c_exc_runenv(char *, char **, char **);
 int c_exc_setenv(char *, char *);
 
 /* fmt routines */
-int  c_fmt_fdflush(CFmt *);
+int c_fmt_fdflush(CFmt *);
 void c_fmt_fdinit(CFmt *, int, CArr *, size (*)(int, void *, usize));
 size c_fmt_fmt(CFmt *, char *);
-int  c_fmt_install(int, int (*)(CFmt *));
+int c_fmt_install(int, int (*)(CFmt *));
 
 /* gen routines */
-char * c_gen_basename(char *);
-char * c_gen_dirname(char *);
+char *c_gen_basename(char *);
+char *c_gen_dirname(char *);
 
 /* hsh routines */
 u32int c_hsh_state0(CHst *);
-void   c_hsh_all(CHst *, CHmd *, char *, usize);
-void   c_hsh_digest(CHst *, CHmd *, char *);
-int    c_hsh_putfile(CHst *, CHmd *, char *);
-int    c_hsh_putfd(CHst *, CHmd *, int, usize);
+void c_hsh_all(CHst *, CHmd *, char *, usize);
+void c_hsh_digest(CHst *, CHmd *, char *);
+int c_hsh_putfile(CHst *, CHmd *, char *);
+int c_hsh_putfd(CHst *, CHmd *, int, usize);
 
 /* ioq routines */
-size   c_ioq_feed(CIoq *);
-int    c_ioq_flush(CIoq *);
-size   c_ioq_fmt(CIoq *, char *, ...);
-size   c_ioq_get(CIoq *, char *, usize);
-int    c_ioq_getln(CIoq *, CArr *);
-void   c_ioq_init(CIoq *, int, CArr *, size (*)(int, void *, usize));
-size   c_ioq_nput(CIoq *, char *, usize);
-void * c_ioq_peek(CIoq *);
-size   c_ioq_put(CIoq *, char *);
-int    c_ioq_putfd(CIoq *, int, usize);
-int    c_ioq_putfile(CIoq *, char *);
-void   c_ioq_seek(CIoq *, usize);
-size   c_ioq_vfmt(CIoq *, char *, va_list);
+size c_ioq_feed(CIoq *);
+int c_ioq_flush(CIoq *);
+size c_ioq_fmt(CIoq *, char *, ...);
+size c_ioq_get(CIoq *, char *, usize);
+int c_ioq_getln(CIoq *, CArr *);
+void c_ioq_init(CIoq *, int, CArr *, size (*)(int, void *, usize));
+size c_ioq_nput(CIoq *, char *, usize);
+void *c_ioq_peek(CIoq *);
+size c_ioq_put(CIoq *, char *);
+int c_ioq_putfd(CIoq *, int, usize);
+int c_ioq_putfile(CIoq *, char *);
+void c_ioq_seek(CIoq *, usize);
+size c_ioq_vfmt(CIoq *, char *, va_list);
 
 /* mem routines */
-void * c_mem_ccpy(void *, usize, void *, int);
-void * c_mem_chr(void *, usize, int);
-int    c_mem_cmp(void *, usize, void *);
-void * c_mem_cpy(void *, usize, void *);
-int    c_mem_equal(void *, usize, void *);
-void * c_mem_mem(void *, usize, void *, usize);
-void * c_mem_rchr(void *, usize, int);
-void * c_mem_set(void *, usize, int);
+void *c_mem_ccpy(void *, usize, void *, int);
+void *c_mem_chr(void *, usize, int);
+int c_mem_cmp(void *, usize, void *);
+void *c_mem_cpy(void *, usize, void *);
+int c_mem_equal(void *, usize, void *);
+void *c_mem_mem(void *, usize, void *, usize);
+void *c_mem_rchr(void *, usize, int);
+void *c_mem_set(void *, usize, int);
 
 /* std routines */
-void * c_std_alloc(usize, usize);
-void * c_std_bsearch(void *, usize, usize, void *, int (*)(void *, void *));
-void * c_std_calloc(usize, usize);
-void   c_std_exit(int);
-void * c_std_free_(void *);
-void * c_std_realloc(void *, usize, usize);
-void   c_std_setalloc(void *(*)(void *, usize, usize));
-void   c_std_sort(void *, usize, usize, int (*)(void *, void *));
-vlong  c_std_strtovl(char *, int, vlong, vlong, char **, int *);
+void *c_std_alloc(usize, usize);
+void *c_std_bsearch(void *, usize, usize, void *, int (*)(void *, void *));
+void *c_std_calloc(usize, usize);
+void c_std_exit(int);
+void *c_std_free_(void *);
+void *c_std_realloc(void *, usize, usize);
+void c_std_setalloc(void *(*)(void *, usize, usize));
+void c_std_sort(void *, usize, usize, int (*)(void *, void *));
+vlong c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 
 /* str routines */
-char * c_str_chr(char *, usize, int);
-int    c_str_cmp(char *, usize, char *);
-usize  c_str_len(char *, usize);
-char * c_str_rchr(char *, usize, int);
-char * c_str_str(char *, usize, char *);
+char *c_str_chr(char *, usize, int);
+int c_str_cmp(char *, usize, char *);
+usize c_str_len(char *, usize);
+char *c_str_rchr(char *, usize, int);
+char *c_str_str(char *, usize, char *);
 
 /* sys routines */
-void   c_sys_abort(void);
-size   c_sys_allrw(size (*)(int, void *, usize), int, void *, usize);
-vlong  c_sys_call_(vlong, ...);
-int    c_sys_chdir(char *);
-int    c_sys_chown(char *, uint, uint);
-int    c_sys_close(int);
-long   c_sys_conf(int);
-int    c_sys_dup(int, int);
-int    c_sys_errstr(char *, usize);
-int    c_sys_exec(char *, char **, char **);
-void   c_sys_exit(int);
-int    c_sys_fchdir(int);
-int    c_sys_fchown(int, uint, uint);
-int    c_sys_fstat(CStat *, int);
-char * c_sys_getcwd(char *, usize);
-char * c_sys_getenv(char *);
-uint   c_sys_getgid(void);
-char * c_sys_getsyserr(void);
-uint   c_sys_getuid(void);
-int    c_sys_link(char *, char *);
-int    c_sys_llink(char *, char *);
-int    c_sys_lstat(CStat *, char *);
-int    c_sys_mkdir(char *, ushort);
-int    c_sys_mknod(char *, uint, ulong);
-void * c_sys_mmap(void *, usize, int, int, int, int);
-int    c_sys_munmap(void *, usize);
-int    c_sys_open(char *, int, int);
-size   c_sys_read(int, void *, usize);
-size   c_sys_readlink(char *, usize, char *);
-int    c_sys_rmdir(char *);
-vlong  c_sys_seek(int, vlong, int);
-int    c_sys_stat(CStat *, char *);
-char * c_sys_strerror(int, char *, usize);
-int    c_sys_symlink(char *, char *);
-int    c_sys_unlink(char *);
-void   c_sys_werrstr(char *, ...);
-size   c_sys_write(int, void *, usize);
+void c_sys_abort(void);
+size c_sys_allrw(size (*)(int, void *, usize), int, void *, usize);
+vlong c_sys_call_(vlong, ...);
+int c_sys_chdir(char *);
+int c_sys_chown(char *, uint, uint);
+int c_sys_close(int);
+long c_sys_conf(int);
+int c_sys_dup(int, int);
+int c_sys_errstr(char *, usize);
+int c_sys_exec(char *, char **, char **);
+void c_sys_exit(int);
+int c_sys_fchdir(int);
+int c_sys_fchown(int, uint, uint);
+int c_sys_fstat(CStat *, int);
+char *c_sys_getcwd(char *, usize);
+char *c_sys_getenv(char *);
+uint c_sys_getgid(void);
+char *c_sys_getsyserr(void);
+uint c_sys_getuid(void);
+int c_sys_link(char *, char *);
+int c_sys_llink(char *, char *);
+int c_sys_lstat(CStat *, char *);
+int c_sys_mkdir(char *, ushort);
+int c_sys_mknod(char *, uint, ulong);
+void *c_sys_mmap(void *, usize, int, int, int, int);
+int c_sys_munmap(void *, usize);
+int c_sys_open(char *, int, int);
+size c_sys_read(int, void *, usize);
+size c_sys_readlink(char *, usize, char *);
+int c_sys_rmdir(char *);
+vlong c_sys_seek(int, vlong, int);
+int c_sys_stat(CStat *, char *);
+char *c_sys_strerror(int, char *, usize);
+int c_sys_symlink(char *, char *);
+int c_sys_unlink(char *);
+void c_sys_werrstr(char *, ...);
+size c_sys_write(int, void *, usize);
 
 /* tai routines */
-void   c_tai_add(CTai *, CTai *, CTai *);
+void c_tai_add(CTai *, CTai *, CTai *);
 double c_tai_approx(CTai *);
-int    c_tai_less(CTai *, CTai *);
-void   c_tai_pack(char *, CTai *);
-void   c_tai_now(CTai *);
-void   c_tai_sub(CTai *, CTai *, CTai *);
-void   c_tai_unpack(char *, CTai *);
+int c_tai_less(CTai *, CTai *);
+void c_tai_pack(char *, CTai *);
+void c_tai_now(CTai *);
+void c_tai_sub(CTai *, CTai *, CTai *);
+void c_tai_unpack(char *, CTai *);
 
 /* taia routines */
-void   c_taia_add(CTaia *, CTaia *, CTaia *);
+void c_taia_add(CTaia *, CTaia *, CTaia *);
 double c_taia_approx(CTaia *);
 double c_taia_frac(CTaia *);
-void   c_taia_half(CTaia *, CTaia *);
-int    c_taia_less(CTaia *, CTaia *);
-void   c_taia_now(CTaia *);
-void   c_taia_pack(char *, CTaia *);
-void   c_taia_sub(CTaia *, CTaia *, CTaia *);
-void   c_taia_tai(CTaia *, CTai *);
-void   c_taia_unpack(char *, CTaia *);
+void c_taia_half(CTaia *, CTaia *);
+int c_taia_less(CTaia *, CTaia *);
+void c_taia_now(CTaia *);
+void c_taia_pack(char *, CTaia *);
+void c_taia_sub(CTaia *, CTaia *, CTaia *);
+void c_taia_tai(CTaia *, CTai *);
+void c_taia_unpack(char *, CTaia *);
 
 /* uint routines */
-char * c_uint_16bigpack(char *, u16int);
+char *c_uint_16bigpack(char *, u16int);
 u16int c_uint_16bigunpack(char *);
-char * c_uint_16pack(char *, u16int);
+char *c_uint_16pack(char *, u16int);
 u16int c_uint_16unpack(char *);
-char * c_uint_32bigpack(char *, u32int);
+char *c_uint_32bigpack(char *, u32int);
 u32int c_uint_32bigunpack(char *);
-char * c_uint_32pack(char *, u32int);
+char *c_uint_32pack(char *, u32int);
 u32int c_uint_32unpack(char *);
-char * c_uint_64bigpack(char *, u64int);
+char *c_uint_64bigpack(char *, u64int);
 u64int c_uint_64bigunpack(char *);
-char * c_uint_64pack(char *, u64int);
+char *c_uint_64pack(char *, u64int);
 u64int c_uint_64unpack(char *);
 
 /* arr variables */

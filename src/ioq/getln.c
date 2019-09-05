@@ -4,7 +4,7 @@
 int
 c_ioq_getln(CIoq *p, CArr *b)
 {
-	size  r, n;
+	size r, n;
 	char *s, *nl;
 
 	nl = nil;
@@ -13,11 +13,11 @@ c_ioq_getln(CIoq *p, CArr *b)
 		if ((r = c_ioq_feed(p)) <= 0)
 			return r;
 
-		s  = c_ioq_peek(p);
+		s = c_ioq_peek(p);
 		if (!(nl = c_mem_chr(s, r, '\n')))
 			n = r;
 		else
-			n = (nl-s)+1;
+			n = (nl - s) + 1;
 
 		if (c_arr_cat(b, s, n, sizeof(uchar)) < 0)
 			return -1;

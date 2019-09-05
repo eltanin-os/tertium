@@ -14,8 +14,8 @@ c_mem_ccpy(void *d, usize n, void *s, int c)
 			if ((*s1++ = *s2++) == c)
 				return s1;
 	} else {
-		s1 += n-1;
-		s2 += n-1;
+		s1 += n - 1;
+		s2 += n - 1;
 		for (; n; n--)
 			if ((*s1-- = *s2--) == c)
 				return s1;

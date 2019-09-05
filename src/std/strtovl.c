@@ -2,10 +2,12 @@
 #include <tertium/std.h>
 
 #define debase(a) \
-((a)>='a')?(a)-'a'+10:((a)>='A')?(a)-'A'+10:((a)<='9')?(a)-'0':-1
+((a) >= 'a') ? (a) - 'a' + 10 : \
+((a) >= 'A') ? (a) - 'A' + 10 : \
+((a) <= '9') ? (a) - '0'      : -1
 
 #define rangeflow(a, b, c, d) \
-((a) > (b) || ((a) == (b) && (c) > (d)))?1:0
+(((a) > (b) || ((a) == (b) && (c) > (d))) ? 1 : 0)
 
 vlong
 c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
@@ -19,8 +21,7 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 
 	s = (uchar *)p;
 
-	for (; c_chr_isspace(*s); s++)
-		;
+	for (; c_chr_isspace(*s); s++) ;
 
 	n = 0;
 
@@ -44,8 +45,8 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 		b = 10;
 	}
 
-	o  = n ? -(uvlong)l : (uvlong)h;
-	m  = o %  (uvlong)b;
+	o = n ? -(uvlong)l : (uvlong)h;
+	m = o % (uvlong)b;
 	o /= (uvlong)b;
 
 	a = 0;
@@ -63,7 +64,7 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 	}
 
 	if (e) {
-		*e = v ? (char *)s: p;
+		*e = v ? (char *)s : p;
 		if (**e) {
 			if (r)
 				*r = -1;

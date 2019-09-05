@@ -10,8 +10,7 @@ c_str_cmp(char *v1, usize n, char *v2)
 	s1 = (uchar *)v1;
 	s2 = (uchar *)v2;
 
-	for (; n && *s1 && *s1 == *s2; n--, s1++, s2++)
-		;
+	for (; n && *s1 && *s1 == *s2; n--, s1++, s2++) ;
 
 	return *s1 - *s2;
 }

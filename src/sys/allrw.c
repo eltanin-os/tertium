@@ -4,7 +4,7 @@
 size
 c_sys_allrw(size (*op)(int, void *, usize), int f, void *p, usize n)
 {
-	size   r, t;
+	size r, t;
 	uchar *s;
 
 	s = p;

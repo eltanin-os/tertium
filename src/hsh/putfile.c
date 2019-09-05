@@ -7,7 +7,7 @@ c_hsh_putfile(CHst *hs, CHmd *p, char *s)
 	CStat st;
 	int r, fd;
 
-	if (!c_mem_cmp(s, sizeof("<stdin>")-1, "<stdin>"))
+	if (!c_mem_cmp(s, sizeof("<stdin>") - 1, "<stdin>"))
 		return c_hsh_putfd(hs, p, C_FD0, 0);
 
 	if ((fd = c_sys_open(s, C_OREAD, 0)) < 0)
@@ -26,5 +26,5 @@ fail:
 	r = -1;
 done:
 	c_sys_close(fd);
-	return 0;
+	return r;
 }

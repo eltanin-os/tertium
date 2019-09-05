@@ -44,7 +44,6 @@ static u32int K[] = {
 	0x90befffaUL, 0xa4506cebUL, 0xbef9a3f7UL, 0xc67178f2UL
 };
 
-
 static void
 init(CHst *p)
 {
@@ -86,7 +85,7 @@ compress(CHst *p, char *data)
 		t0 = st[7] + S1(st[4]) + Ch(st[4], st[5], st[6]) + K[i] + w[i];
 		t1 = S0(st[0]) + Maj(st[0], st[1], st[2]);
 		st[3] += t0;
-		st[7]  = t0 + t1;
+		st[7] = t0 + t1;
 		REV(st[0], st[1], st[2], st[3], st[4], st[5], st[6], st[7], t);
 	}
 
@@ -129,6 +128,7 @@ static void
 digest(CHst *p, char *s)
 {
 	int i;
+
 	for (i = 0; i < 8; i++)
 		c_uint_32bigpack(s + i * 4, p->st.x32[i]);
 }

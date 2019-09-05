@@ -13,7 +13,7 @@ c_dyn_ready(CArr *p, usize m, usize n)
 
 	m *= n;
 	m += n;
-	a  = p->a ? p->a : m;
+	a = p->a ? p->a : m;
 
 	while (m > c_arr_avail(p)) {
 		a <<= 1;

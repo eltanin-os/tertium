@@ -8,8 +8,8 @@ __dir_newfile(char *path, char *name, uint opts)
 {
 	CNode *p;
 	CDent *ep;
-	usize  len;
-	usize  plen;
+	usize len;
+	usize plen;
 	ushort nlen;
 	uchar *sp;
 

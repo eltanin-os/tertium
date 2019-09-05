@@ -9,5 +9,5 @@ c_str_len(char *s, usize n)
 	if (!(p = c_mem_chr(s, n, 0)))
 		return n;
 
-	return p-s;
+	return p - s;
 }

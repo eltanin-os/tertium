@@ -7,7 +7,7 @@ int
 c_fmt_install(int c, int (*f)(CFmt *))
 {
 	struct fmtverb *p;
-	struct fmtverb  nf;
+	struct fmtverb nf;
 	int i, n;
 
 	i = 0;

@@ -12,7 +12,7 @@ c_arr_get(CArr *p, usize m, usize n)
 	}
 
 	m *= n;
-	t  = m+n;
+	t = m + n;
 
 	if (t > c_arr_total(p)) {
 		errno = C_ENOMEM;
@@ -22,5 +22,5 @@ c_arr_get(CArr *p, usize m, usize n)
 	if (t > c_arr_bytes(p))
 		p->n = t;
 
-	return (p->p+m);
+	return (p->p + m);
 }

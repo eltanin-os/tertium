@@ -120,6 +120,7 @@ static void
 digest(CHst *p, char *s)
 {
 	int i;
+
 	for (i = 0; i < 5; i++)
 		c_uint_32bigpack(s + i * 4, p->st.x32[i]);
 }

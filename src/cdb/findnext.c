@@ -5,7 +5,7 @@ static int
 match(CCdb *p, char *k, usize n, u32int off)
 {
 	usize len;
-	char  buf[1024];
+	char buf[1024];
 
 	while (n) {
 		len = C_MIN(n, sizeof(buf));
@@ -14,8 +14,8 @@ match(CCdb *p, char *k, usize n, u32int off)
 		if (c_mem_cmp(buf, len, k))
 			return 0;
 		off += len;
-		k   += len;
-		n   -= len;
+		k += len;
+		n -= len;
 	}
 
 	return 1;
@@ -27,7 +27,7 @@ c_cdb_findnext(CCdb *p, char *k, usize n)
 	CHst hs;
 	u32int off;
 	u32int h;
-	char   buf[8];
+	char buf[8];
 
 	if (!p->loop) {
 		c_hsh_all(&hs, c_hsh_djb, k, n);
@@ -36,9 +36,9 @@ c_cdb_findnext(CCdb *p, char *k, usize n)
 			return -1;
 		if (!(p->hslots = c_uint_32unpack(buf + 4)))
 			return 0;
-		p->hpos  = c_uint_32unpack(buf);
+		p->hpos = c_uint_32unpack(buf);
 		p->khash = h;
-		p->kpos  = p->hpos + (((h >> 8) % p->hslots) << 3);
+		p->kpos = p->hpos + (((h >> 8) % p->hslots) << 3);
 	}
 
 	while (p->loop < p->hslots) {

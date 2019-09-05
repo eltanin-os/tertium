@@ -8,10 +8,10 @@ extern CArr newenv;
 int
 c_exc_runenv(char *prog, char **argv, char **envp)
 {
-	CArr   e, f;
+	CArr e, f;
 	char **pv;
-	char  *path, *s;
-	char   buf[C_PATHMAX];
+	char *path, *s;
+	char buf[C_PATHMAX];
 
 	c_mem_set(&e, sizeof(e), 0);
 
@@ -38,8 +38,8 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 		if (c_arr_fmt(&f, "%s/%s", GETPATH(path), prog) < 0)
 			return -1;
 		c_sys_exec(c_arr_data(&f), argv, (char **)c_arr_data(&e));
-		if (!(errno == C_ENOENT || errno == C_EACCES ||\
-		    errno == C_EPERM    || errno == C_EISDIR))
+		if (!(errno == C_ENOENT || errno == C_EACCES ||
+		    errno == C_EPERM || errno == C_EISDIR))
 			break;
 		if (!(path = s))
 			break;

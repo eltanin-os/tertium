@@ -7,6 +7,7 @@ c_sys_werrstr(char *fmt, ...)
 	CArr arr;
 	va_list ap;
 	char buf[C_ERRSIZ];
+
 	c_arr_init(&arr, buf, sizeof(buf));
 	va_start(ap, fmt);
 	c_arr_vfmt(&arr, fmt, ap);

@@ -44,7 +44,7 @@ hist(CArr *hp, ulong dev, ulong ino)
 	int r;
 
 	n = c_arr_len(hp, sizeof(k));
-	if (c_dyn_ready(hp, n+2, sizeof(k)) < 0)
+	if (c_dyn_ready(hp, n + 2, sizeof(k)) < 0)
 		return -1;
 
 	k = PACK(dev, ino);
@@ -58,8 +58,8 @@ int
 __dir_info(CDir *p, CDent *ep)
 {
 	CStat *stp;
-	CStat  st;
-	int    sverr;
+	CStat st;
+	int sverr;
 
 	stp = (p->opts & C_FSNOI) ? &st : ep->stp;
 	if (FOLLOW(p->opts, ep->depth)) {
@@ -85,7 +85,7 @@ __dir_info(CDir *p, CDent *ep)
 		case -1:
 			p->opts |= C_FSSTP;
 			return C_FSERR;
-		case  0:
+		case 0:
 			return C_FSDC;
 		default:
 			return C_FSD;
@@ -97,11 +97,11 @@ __dir_info(CDir *p, CDent *ep)
 
 	if (C_ISREG(stp->mode)) {
 		if ((p->opts & C_FSFHT) && stp->nlink > 1)
-			switch(hist(&p->hist, stp->dev, stp->ino)) {
+			switch (hist(&p->hist, stp->dev, stp->ino)) {
 			case -1:
 				p->opts |= C_FSSTP;
 				return C_FSERR;
-			case  0:
+			case 0:
 				return C_FSFC;
 			default:
 				return C_FSF;

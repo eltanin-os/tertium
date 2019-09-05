@@ -4,9 +4,9 @@
 #define S(a) (a), sizeof((a))
 
 static struct {
-	int   e;
+	int e;
 	char *s;
-	uint  n;
+	uint n;
 } errlist[] = {
 	{ C_E2BIG, S("Argument list too long") },
 	{ C_EACCES, S("Permission denied") },

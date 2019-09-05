@@ -12,16 +12,16 @@ c_adt_lsort(CNode **np, int (*f)(void *, void *))
 		return;
 
 	*np = (*np)->next;
-	k   = 1;
+	k = 1;
 
 	for (;;) {
-		h    = p = *np;
-		*np  = t = nil;
+		h = p = *np;
+		*np = t = nil;
 		nm = 0;
 
 		while (p) {
 			nm++;
-			q  = p;
+			q = p;
 			ps = 0;
 			for (i = 0; i < k; i++) {
 				ps++;
@@ -32,7 +32,7 @@ c_adt_lsort(CNode **np, int (*f)(void *, void *))
 			for (;;) {
 				if (!(i = !!ps + (qs && q)))
 					break;
-				i = i-1 ? ((*f)(p->p, q->p) <= 0) : ps;
+				i = i - 1 ? ((*f)(p->p, q->p) <= 0) : ps;
 				if (i) {
 					e = p;
 					p = (p->next == h) ? nil : p->next;
@@ -53,7 +53,7 @@ c_adt_lsort(CNode **np, int (*f)(void *, void *))
 		}
 		t->next = *np;
 		(*np)->prev = nil;
-		if (!(nm-1)) {
+		if (!(nm - 1)) {
 			*np = t;
 			break;
 		}

@@ -181,7 +181,7 @@ static CHmd md = {
 	&digest,
 };
 
-CHmd * c_hsh_whirlpool = &md;
+CHmd *c_hsh_whirlpool = &md;
 
 static void
 init(CHst *p)
@@ -206,8 +206,8 @@ compress(CHst *p, char *data)
 	k[0][7] = p->st.x64[7];
 
 	for (i = 0; i < 8; i++) {
-		t[0][i]  = c_uint_64bigunpack(data + (8 * i));
-		t[2][i]  = t[0][i];
+		t[0][i] = c_uint_64bigunpack(data + (8 * i));
+		t[2][i] = t[0][i];
 		t[0][i] ^= k[0][i];
 	}
 
@@ -225,7 +225,7 @@ compress(CHst *p, char *data)
 		for (j = 0; j < 8; j++)
 			k[0][j] = THETA_PI_GAMMA(k[1], j);
 
-		k[0][0] ^= cont[i+1];
+		k[0][0] ^= cont[i + 1];
 
 		for (j = 0; j < 8; j++)
 			t[0][j] = THETA_PI_GAMMA(t[1], j) ^ k[0][j];
@@ -269,6 +269,7 @@ static void
 digest(CHst *p, char *s)
 {
 	int i;
+
 	for (i = 0; i < 8; i++)
 		c_uint_64bigpack(s + i * 8, p->st.x64[i]);
 }
