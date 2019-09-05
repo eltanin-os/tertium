@@ -1,50 +1,63 @@
-#define _GNU_SOURCE
+#define _GNU_SOURCE 1
 
-/* nix/std environment */
-#include <sys/mman.h>
+/* name compat */
+#define st_dev dev
+#define st_ino ino
+#define st_nlink nlink
+#define st_mode mode
+#define st_uid uid
+#define st_gid gid
+#define st_rdev rdev
+#define st_size size
+#define st_blksize blksize
+#define st_blocks blocks
+#define st_atim atim
+#define st_mtim mtim
+#define st_ctim ctim
+#define tv_sec sec
+#define tv_nsec nsec
+
 #include <sys/stat.h>
+#include <sys/mman.h>
+#include <sys/types.h>
 #include <sys/syscall.h>
+
 #include <errno.h>
 #include <dirent.h>
 #include <fcntl.h>
-#include <stdlib.h>
-#include <string.h>
+#include <limits.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdint.h>
 #include <time.h>
 #include <unistd.h>
 
-#undef st_atime
-#undef st_mtime
-#undef st_ctime
-#undef offsetof
+#undef st_dev
+#undef st_ino
+#undef st_nlink
+#undef st_mode
+#undef st_uid
+#undef st_gid
+#undef st_rdev
+#undef st_size
+#undef st_blksize
+#undef st_blocks
+#undef st_atim
+#undef st_mtim
+#undef st_ctim
+#define tv_sec sec
+#define tv_nsec nsec
 
-#define __asm_syscall syscall
-
-/* fallback macros */
-#define __C_STCOPY(a, b)                \
-{ (a)->size = (b).st_size;              \
-  (a)->blksize = (b).st_blksize;        \
-  (a)->blocks = (b).st_blocks;          \
-  (a)->atim.sec = (b).st_atim.tv_sec;   \
-  (a)->atim.nsec = (b).st_atim.tv_nsec; \
-  (a)->ctim.sec = (b).st_ctim.tv_sec;   \
-  (a)->ctim.nsec = (b).st_ctim.tv_nsec; \
-  (a)->mtim.sec = (b).st_mtim.tv_sec;   \
-  (a)->mtim.nsec = (b).st_mtim.tv_nsec; \
-  (a)->gid = (b).st_gid;                \
-  (a)->nlink = (b).st_nlink;            \
-  (a)->uid = (b).st_uid;                \
-  (a)->dev = (b).st_dev;                \
-  (a)->ino = (b).st_ino;                \
-  (a)->mode = (b).st_mode;              \
-  (a)->rdev = (b).st_rdev; }
+#define __asm_syscall(a, ...) syscall(a, __VA_ARGS__)
+#define nil NULL
 
 /* errno */
 #ifndef EOWNERDEAD
-# define EOWNERDEAD -1
+#define EOWNERDEAD -1
 #endif
 
 #ifndef ENOTRECOVERABLE
-# define ENOTRECOVERABLE -1
+#define ENOTRECOVERABLE -1
 #endif
 
 #define C_E2BIG E2BIG
@@ -126,44 +139,39 @@
 #define C_EXDEV EXDEV
 #define C_ECSTM 0x66D7C8BA
 
-/* use sysconf as fallback, as the posix minimum is a bad option ("1") */
-#ifndef PAGESIZE
-# define PAGESIZE sysconf(_SC_PAGESIZE)
-#endif
-
 /* limits macros */
-#define C_NAMEMAX 255
-#define C_PATHMAX 1024
+#define C_NAMEMAX NAME_MAX
+#define C_PATHMAX PATH_MAX
 
-#define C_ARGMAX 4096
-#define C_CHILDMAX 25
-#define C_HOSTNAMEMAX 255
-#define C_LOGINNAMEMAX 9
-#define C_NGROUPSMAX 8
-#define C_OPENMAX 20
-#define C_PAGESIZE PAGESIZE
-#define C_SYMLOOPMAX 8
-#define C_TTYNAMEMAX 9
+#define C_ARGMAX sysconf(_SC_ARG_MAX)
+#define C_CHILDMAX sysconf(_SC_CHILD_MAX)
+#define C_HOSTNAMEMAX sysconf(_SC_HOST_NAME_MAX)
+#define C_LOGINNAMEMAX sysconf(_SC_LOGIN_NAME_MAX)
+#define C_NGROUPSMAX sysconf(_SC_NGROUPS_MAX)
+#define C_OPENMAX sysconf(_SC_OPEN_MAX)
+#define C_PAGESIZE sysconf(_SC_PAGESIZE)
+#define C_SYMLOOPMAX sysconf(_SC_SYMLOOP_MAX)
+#define C_TTYNAMEMAX sysconf(_SC_TTY_NAME_MAX)
 
-#define C_CHARBIT 8
-#define C_CHARMAX 0x7F
-#define C_UCHARMAX 0xFF
-#define C_INTMAX 0x7FFFFFFF
-#define C_UINTMAX 0xFFFFFFFFU
-#define C_LONGMAX 0x7FFFFFFFL
-#define C_ULONGMAX 0xFFFFFFFFUL
-#define C_SHRTMAX 0x7FFF
-#define C_USHRTMAX 0xFFFFU
-#define C_SIZEMAX 0x7FFF
-#define C_USIZEMAX 0xFFFFU
-#define C_VLONGMAX 0x7FFFFFFFFFFFFFFFLL
-#define C_UVLONGMAX 0x7FFFFFFFFFFFFFFFULL
-#define C_CHARMIN (-C_CHARMAX-1)
-#define C_INTMIN (-C_INTMAX-1)
-#define C_LONGMIN (-C_LONGMAX-1)
-#define C_SHRTMIN (-C_SHRTMAX-1)
-#define C_SIZEMIN (-C_SIZEMAX-1)
-#define C_VLONGMIN (-C_VLONGMAX-1)
+#define C_CHARBIT CHAR_BIT
+#define C_CHARMAX CHAR_MAX
+#define C_UCHARMAX UCHAR_MAX
+#define C_INTMAX INT_MAX
+#define C_UINTMAX UINT_MAX
+#define C_LONGMAX LONG_MAX
+#define C_ULONGMAX ULONG_MAX
+#define C_SHRTMAX SHRT_MAX
+#define C_USHRTMAX USHRT_MAX
+#define C_SIZEMAX SSIZE_MAX
+#define C_USIZEMAX SIZE_MAX
+#define C_VLONGMAX LLONG_MAX
+#define C_UVLONGMAX ULLONG_MAX
+#define C_CHARMIN CHAR_MIN
+#define C_INTMIN INT_MIN
+#define C_LONGMIN LONG_MIN
+#define C_SHRTMIN SHRT_MIN
+#define C_SIZEMIN SIZE_MIN
+#define C_VLONGMIN LLONG_MIN
 
 /* options macros */
 #define C_OAPPEND O_APPEND
@@ -176,7 +184,7 @@
 #define C_OEXCL O_EXCL
 
 /* stat macros */
-#define C_IFMT  S_IFMT
+#define C_IFMT S_IFMT
 #define C_IFBLK S_IFBLK
 #define C_IFCHR S_IFCHR
 #define C_IFDIR S_IFDIR
@@ -199,24 +207,48 @@
 
 /* compatibility macros */
 #ifdef __NetBSD__
-# define SYS_clock_gettime SYS___clock_gettime50
-# define SYS_brk SYS_break
-# define SYS_fstat SYS___fstat50
-# define SYS_getcwd SYS___getcwd
-# define SYS_getdents SYS___getdents30
+ #define SYS_clock_gettime SYS___clock_gettime50
+ #define SYS_brk SYS_break
+ #define SYS_fstat SYS___fstat50
+ #define SYS_getcwd SYS___getcwd
+ #define SYS_getdents SYS___getdents30
 #elif defined(__FreeBSD__)
-# define SYS_brk SYS_break
-# define SYS_getcwd SYS___getcwd
-# define SYS_getdents SYS_freebsd11_getdents
+ #define SYS_brk SYS_break
+ #define SYS_getcwd SYS___getcwd
+ #define SYS_getdents SYS_freebsd11_getdents
 #elif defined(__OpenBSD__) || defined(__DragonFly__)
-# define SYS_brk SYS_break
-# define SYS_getcwd SYS___getcwd
+ #define SYS_brk SYS_break
+ #define SYS_getcwd SYS___getcwd
 #elif defined(__linux__)
-# define SYS_fstatat SYS_newfstatat
-# undef SYS_getdents
-# define SYS_getdents SYS_getdents64
+ #define SYS_fstatat SYS_newfstatat
+ #undef SYS_getdents
+ #define SYS_getdents SYS_getdents64
 #endif
 
+/* types */
+typedef unsigned short ushort;
+typedef unsigned char uchar;
+typedef unsigned long ulong;
+typedef unsigned int uint;
+typedef long long vlong;
+typedef unsigned long long uvlong;
+typedef long long intptr;
+typedef unsigned long long uintptr;
+typedef size_t usize;
+typedef ssize_t size;
+typedef int32_t Rune;
+typedef uint8_t u8int;
+typedef uint16_t u16int;
+typedef uint32_t u32int;
+typedef uint64_t u64int;
+typedef int8_t s8int;
+typedef int16_t s16int;
+typedef int32_t s32int;
+typedef int64_t s64int;
+
+/* fallback types */
 typedef struct dirent __fb_dirent;
-typedef struct stat __fb_stat;
-typedef struct timespec __fb_time;
+
+/* sys types */
+typedef struct timespec CTime;
+typedef struct stat CStat;

@@ -1,5 +1,3 @@
-#include "tertium/os.h"
-
 #define nil ((void *)0)
 
 /* errno */
@@ -163,28 +161,29 @@ typedef struct {
 	char d_name[256];
 } __fb_dirent;
 
-typedef struct {
-	ulong st_dev;
-	ulong st_ino;
-	ulong st_nlink;
-	u32int st_mode;
-	u32int st_uid;
-	u32int st_gid;
-	u32int __pad0;
-	ulong st_rdev;
-	ulong st_size;
-	ulong st_blksize;
-	ulong st_blocks;
-	vlong st_atime;
-	ulong st_atime_nsec;
-	vlong st_mtime;
-	ulong st_mtime_nsec;
-	vlong st_ctime;
-	ulong st_ctime_nsec;
-	long __unused[3];
-} __fb_stat;
+/* sys types */
+typedef struct CTime CTime;
+typedef struct CStat CStat;
 
-typedef struct {
-	vlong tv_sec;
-	long tv_nsec;
-} __fb_time;
+struct CTime {
+	vlong sec;
+	ulong nsec;
+};
+
+struct CStat {
+	ulong dev;
+	ulong ino;
+	ulong nlink;
+	u32int mode;
+	u32int uid;
+	u32int gid;
+	u32int __pad0;
+	ulong rdev;
+	ulong size;
+	ulong blksize;
+	ulong blocks;
+	CTime atim;
+	CTime mtim;
+	CTime ctim;
+	long __unused[3];
+};

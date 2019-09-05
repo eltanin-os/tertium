@@ -142,6 +142,37 @@ struct CQueue {
 	uchar *p;
 };
 
+/* dir types */
+typedef struct CDent CDent;
+typedef struct CDir CDir;
+
+struct CDent {
+	CDent *parent;
+	CStat *stp;
+	vlong num;
+	ulong dev;
+	usize len;
+	usize nlen;
+	ushort instr;
+	ushort info;
+	int err;
+	int depth;
+	char *path;
+	char *name;
+	void *ptr;
+	void *__p;		/* (private) */
+};
+
+struct CDir {
+	CNode *cur;
+	CNode *child;
+	CArr hist;
+	ulong dev;
+	int (*f)(void *, void *);
+	int rfd;
+	uint opts;
+};
+
 /* fmt types */
 typedef struct CFmt CFmt;
 
@@ -211,62 +242,6 @@ struct CCdbmk {
 	u32int off;
 	int fd;
 	char buf[C_BIOSIZ];
-};
-
-/* sys types */
-typedef struct CTime CTime;
-typedef struct CStat CStat;
-
-struct CTime {
-	long sec;
-	long nsec;
-};
-
-struct CStat {
-	CTime atim;
-	CTime ctim;
-	CTime mtim;
-	vlong size;
-	ulong blksize;
-	ulong blocks;
-	ulong dev;
-	ulong ino;
-	ulong rdev;
-	uint gid;
-	uint nlink;
-	uint uid;
-	ushort mode;
-};
-
-/* dir types */
-typedef struct CDent CDent;
-typedef struct CDir CDir;
-
-struct CDent {
-	CDent *parent;
-	CStat *stp;
-	vlong num;
-	ulong dev;
-	usize len;
-	usize nlen;
-	ushort instr;
-	ushort info;
-	int err;
-	int depth;
-	char *path;
-	char *name;
-	void *ptr;
-	void *__p;		/* (private) */
-};
-
-struct CDir {
-	CNode *cur;
-	CNode *child;
-	CArr hist;
-	ulong dev;
-	int (*f)(void *, void *);
-	int rfd;
-	uint opts;
 };
 
 /* tai types */

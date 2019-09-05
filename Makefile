@@ -7,12 +7,13 @@ INC= -I inc -I oss/$(OSNAME) -I oss/$(OSNAME)/$(OBJTYPE)
 
 HDR=\
 	inc/tertium/std.h\
-	oss/$(OSNAME)/$(OBJTYPE)/tertium/cpu.h\
-	oss/$(OSNAME)/tertium/os.h
+	inc/tertium/cpu.h\
+	sys/$(OSNAME)/common.h.in\
+	sys/$(OSNAME)/$(OBJTYPE).h.in
 
 # LIB SOURCE
 ASMSRC=\
-	oss/$(OSNAME)/$(OBJTYPE)/syscall.s
+	sys/$(OSNAME)/$(OBJTYPE).s
 
 LIBCSRC=\
 	src/adt/lfree.c\
@@ -224,6 +225,12 @@ $(OBJ): $(HDR) config.mk
 .s.o:
 	$(CC) $(CPPFLAGS) $(INC) -o $@ -c $<
 
+# HEADERS RULES
+inc/tertium/cpu.h: config.mk sys/$(OSNAME)/common.h.in sys/$(OSNAME)/$(OBJTYPE).h.in
+	@cat sys/$(OSNAME)/common.h.in     1> $@
+	@echo                              1>> $@
+	@cat sys/$(OSNAME)/$(OBJTYPE).h.in 1>> $@
+
 # LIBRARIES RULES
 # 'ar' is retarded and cannot update an object with same name
 # correctly, so just create the entire library everytime
@@ -235,6 +242,7 @@ $(LIBC): $(LIBCOBJ)
 # USER ACTIONS
 clean:
 	rm -f $(BIN) $(OBJ) $(LIB)
+	rm -f inc/tertium/cpu.h
 
 .PHONY:
 	all install clean

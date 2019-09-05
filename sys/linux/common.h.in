@@ -1,22 +1,3 @@
-/* fallback macros */
-#define __C_STCOPY(a, b)              \
-{ (a)->size = (b).st_size;            \
-  (a)->blksize = (b).st_blksize;      \
-  (a)->blocks = (b).st_blocks;        \
-  (a)->atim.sec = (b).st_atime;       \
-  (a)->atim.nsec = (b).st_atime_nsec; \
-  (a)->ctim.sec = (b).st_ctime;       \
-  (a)->ctim.nsec = (b).st_ctime_nsec; \
-  (a)->mtim.sec = (b).st_mtime;       \
-  (a)->mtim.nsec = (b).st_mtime_nsec; \
-  (a)->gid = (b).st_gid;              \
-  (a)->nlink = (b).st_nlink;          \
-  (a)->uid = (b).st_uid;              \
-  (a)->dev = (b).st_dev;              \
-  (a)->ino = (b).st_ino;              \
-  (a)->mode = (b).st_mode;            \
-  (a)->rdev = (b).st_rdev; }
-
 /* limits macros */
 #define C_NAMEMAX 255
 #define C_PATHMAX 4095
@@ -26,10 +7,10 @@
 #define C_HOSTNAMEMAX 255
 #define C_LOGINNAMEMAX 256
 #define C_NGROUPSMAX 32
-#define C_OPENMAX 1024	/* !!! */
+#define C_OPENMAX 1024		/* !!! */
 #define C_PAGESIZE 4096
-#define C_SYMLOOPMAX 40	/* !!! */
-#define C_TTYNAMEMAX 32	/* !!! */
+#define C_SYMLOOPMAX 40		/* !!! */
+#define C_TTYNAMEMAX 32		/* !!! */
 
 #define C_CHARBIT 8
 #define C_CHARMAX 0x7F
@@ -43,7 +24,7 @@
 #define C_SIZEMAX 0x7FFFFFFFL
 #define C_USIZEMAX 0xFFFFFFFFUL
 #define C_VLONGMAX 0x7FFFFFFFFFFFFFFFLL
-#define C_UVLONGMA 0x7FFFFFFFFFFFFFFFULL
+#define C_UVLONGMAX 0x7FFFFFFFFFFFFFFFULL
 #define C_CHARMIN (-C_CHARMAX-1)
 #define C_INTMIN (-C_INTMAX-1)
 #define C_LONGMIN (-C_LONGMAX-1)
@@ -83,7 +64,7 @@
 #define AT_SYMLINK_FOLLOW 0x400
 
 /* stat macros */
-#define C_IFMT  0xF000
+#define C_IFMT 0xF000
 #define C_IFBLK 0x6000
 #define C_IFCHR 0x2000
 #define C_IFDIR 0x4000
