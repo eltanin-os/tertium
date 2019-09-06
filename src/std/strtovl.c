@@ -2,9 +2,7 @@
 #include <tertium/std.h>
 
 #define debase(a) \
-((a) >= 'a') ? (a) - 'a' + 10 : \
-((a) >= 'A') ? (a) - 'A' + 10 : \
-((a) <= '9') ? (a) - '0'      : -1
+((((a) | 32) >= 'a') ? ((a) | 32) - 'a' + 10 : ((a) <= '9') ? (a) - '0' : -1)
 
 #define rangeflow(a, b, c, d) \
 (((a) > (b) || ((a) == (b) && (c) > (d))) ? 1 : 0)
@@ -16,8 +14,12 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 	int a, c, m, n;
 	uchar *s;
 
-	if (b && (b > 36 || b < 1))
+	if ((uint)b > 36 || b == 1) {
+		if (r)
+			*r = -1;
+		errno = C_EINVAL;
 		return 0;
+	}
 
 	s = (uchar *)p;
 
@@ -32,17 +34,21 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 		s++;
 	}
 
+	if (b == 16 && *s == '0')
+		b = 0;
+
 	if (!b) {
-		if (b == 16 && *s == '0') {
+		if (*s == '0') {
 			s++;
-			if (*s == 'x' || *s == 'X') {
+			if ((*s | 32) == 'x') {
 				b = 16;
 				s++;
 			} else {
 				b = 8;
 			}
+		} else {
+			b = 10;
 		}
-		b = 10;
 	}
 
 	o = n ? -(uvlong)l : (uvlong)h;
