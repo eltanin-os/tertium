@@ -5,6 +5,7 @@ ctype_status
 c_dyn_ready(ctype_arr *p, usize m, usize n)
 {
 	usize a;
+	void *tmp;
 
 	if (C_OFLW_UM(usize, m, n)) {
 		errno = C_EOVERFLOW;
@@ -17,8 +18,9 @@ c_dyn_ready(ctype_arr *p, usize m, usize n)
 
 	while (m > c_arr_avail(p)) {
 		a <<= 1;
-		if (!(p->p = c_std_realloc(p->p, a, sizeof(uchar))))
+		if (!(tmp = c_std_realloc(p->p, a, sizeof(uchar))))
 			return -1;
+		p->p = tmp;
 		p->a = a;
 	}
 
