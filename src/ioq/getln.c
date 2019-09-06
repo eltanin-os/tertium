@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_ioq_getln(CIoq *p, CArr *b)
+ctype_status
+c_ioq_getln(ctype_ioq *p, ctype_arr *b)
 {
 	size r, n;
 	char *s, *nl;

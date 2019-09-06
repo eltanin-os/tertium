@@ -4,8 +4,8 @@
 #define MMAP(a, b) \
 c_sys_mmap(0, (b), PROT_READ, MAP_SHARED, (a), 0)
 
-int
-c_ioq_putfd(CIoq *p, int fd, usize n)
+ctype_status
+c_ioq_putfd(ctype_ioq *p, ctype_fd fd, usize n)
 {
 	size r;
 	char buf[C_BIOSIZ];

@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_arr_trunc(CArr *p, usize m, usize n)
+ctype_status
+c_arr_trunc(ctype_arr *p, usize m, usize n)
 {
 	if (C_OFLW_UM(usize, m, n)) {
 		errno = C_EOVERFLOW;

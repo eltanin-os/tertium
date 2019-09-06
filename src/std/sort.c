@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 #define F(j, m, k, r, f, v, n) \
-((j) < (m) && ((k) >= (r) || (f)((v)+(n)*(j), (v)+(n)*(k))<=0))
+((j) < (m) && ((k) >= (r) || (f)((v) + (n) * (j), (v) + (n) * (k)) <= 0))
 
 static void
 swap(uchar *a, uchar *b, usize n)
@@ -17,7 +17,7 @@ swap(uchar *a, uchar *b, usize n)
 }
 
 static void
-mrg(uchar *p, uchar *v, usize n, int (*f)(void *, void *), int l, int m, int r)
+mrg(uchar *p, uchar *v, usize n, ctype_cmpfn f, int l, int m, int r)
 {
 	int i, j, k;
 
@@ -30,7 +30,7 @@ mrg(uchar *p, uchar *v, usize n, int (*f)(void *, void *), int l, int m, int r)
 }
 
 static void
-isrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
+isrt(uchar *v, usize m, usize n, ctype_cmpfn f)
 {
 	int i, j;
 
@@ -42,7 +42,7 @@ isrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 }
 
 static void
-msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
+msrt(uchar *v, usize m, usize n, ctype_cmpfn f)
 {
 	usize i, j, t;
 	uchar *p;
@@ -63,7 +63,7 @@ msrt(uchar *v, usize m, usize n, int (*f)(void *, void *))
 }
 
 void
-c_std_sort(void *v, usize m, usize n, int (*f)(void *, void *))
+c_std_sort(void *v, usize m, usize n, ctype_cmpfn f)
 {
 	if (C_OFLW_UM(usize, n, m))
 		return;

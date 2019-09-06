@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_cdb_mkstart(CCdbmk *p, int fd)
+ctype_status
+c_cdb_mkstart(ctype_cdbmk *p, ctype_fd fd)
 {
 	p->fd = fd;
 	p->off = 2048;

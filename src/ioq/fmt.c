@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_ioq_fmt(CIoq *p, char *fmt, ...)
+c_ioq_fmt(ctype_ioq *p, char *fmt, ...)
 {
 	va_list ap;
 	size n;

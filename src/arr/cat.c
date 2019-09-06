@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_arr_cat(CArr *p, void *v, usize m, usize n)
+c_arr_cat(ctype_arr *p, void *v, usize m, usize n)
 {
 	if (C_OFLW_UM(usize, m, n)) {
 		errno = C_EOVERFLOW;

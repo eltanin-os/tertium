@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_dyn_ready(CArr *p, usize m, usize n)
+ctype_status
+c_dyn_ready(ctype_arr *p, usize m, usize n)
 {
 	usize a;
 

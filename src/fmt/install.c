@@ -3,8 +3,8 @@
 
 #include "__int__.h"
 
-int
-c_fmt_install(int c, int (*f)(CFmt *))
+ctype_status
+c_fmt_install(int c, ctype_fmtfn f)
 {
 	struct fmtverb *p;
 	struct fmtverb nf;

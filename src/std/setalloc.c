@@ -3,10 +3,10 @@
 
 #include "__int__.h"
 
-void *(*__allocator)(void *, usize, usize) = pubrealloc;
+ctype_allocfn __allocator = pubrealloc;
 
 void
-c_std_setalloc(void *(*f)(void *, usize, usize))
+c_std_setalloc(ctype_allocfn f)
 {
 	__allocator = f ? f : pubrealloc;
 }

@@ -4,8 +4,8 @@
 #define MMAP(a, b) \
 c_sys_mmap(0, (b), PROT_READ, MAP_SHARED, (a), 0)
 
-int
-c_hsh_putfd(CHst *hs, CHmd *p, int fd, usize n)
+ctype_status
+c_hsh_putfd(ctype_hst *hs, ctype_hmd *p, ctype_fd fd, usize n)
 {
 	size r;
 	char buf[C_BIOSIZ];

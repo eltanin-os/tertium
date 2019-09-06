@@ -3,30 +3,30 @@
 
 #include "__int__.h"
 
-#define Ch(a,b,c)  ((c ^ (a & (b ^ c))))
+#define Ch(a,b,c) ((c ^ (a & (b ^ c))))
 #define Maj(a,b,c) ((a & b) | (c & (a | b)))
-#define R(a, b)    (((a)&0xFFFFFFFFFFFFFFFFULL)>>((u64int)b))
-#define G0(x)      (ROR(x, 1)  ^ ROR(x, 8)  ^ R(x, 7))
-#define G1(x)      (ROR(x, 19) ^ ROR(x, 61) ^ R(x, 6))
-#define S0(x)      (ROR(x, 28) ^ ROR(x, 34) ^ ROR(x, 39))
-#define S1(x)      (ROR(x, 14) ^ ROR(x, 18) ^ ROR(x, 41))
+#define R(a, b) (((a)&0xFFFFFFFFFFFFFFFFULL)>>((u64int)b))
+#define G0(x) (ROR(x, 1)  ^ ROR(x, 8)  ^ R(x, 7))
+#define G1(x) (ROR(x, 19) ^ ROR(x, 61) ^ R(x, 6))
+#define S0(x) (ROR(x, 28) ^ ROR(x, 34) ^ ROR(x, 39))
+#define S1(x) (ROR(x, 14) ^ ROR(x, 18) ^ ROR(x, 41))
 
 #define ROR(a, b) __hsh_ror64((a), (b))
 #define REV(a,b,c,d,e,f,g,h) { h=g; g=f; f=e; e=d+t0; d=c; c=b; b=a; a=t0+t1; }
 
-static void init(CHst *);
-static void update(CHst *, char *, usize);
-static void end(CHst *);
-static void digest(CHst *, char *);
+static void init(ctype_hst *);
+static void update(ctype_hst *, char *, usize);
+static void end(ctype_hst *);
+static void digest(ctype_hst *, char *);
 
-static CHmd md = {
+static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
 	&digest,
 };
 
-CHmd *c_hsh_sha512 = &md;
+ctype_hmd *c_hsh_sha512 = &md;
 
 static u64int K[] = {
 	0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL,
@@ -72,7 +72,7 @@ static u64int K[] = {
 };
 
 static void
-init(CHst *p)
+init(ctype_hst *p)
 {
 	p->len = 0;
 	p->st.x64[0] = 0x6a09e667f3bcc908ULL;
@@ -86,7 +86,7 @@ init(CHst *p)
 }
 
 static void
-compress(CHst *p, char *data)
+compress(ctype_hst *p, char *data)
 {
 	u64int w[80], st[8];
 	u64int t0, t1;
@@ -124,13 +124,13 @@ compress(CHst *p, char *data)
 }
 
 static void
-update(CHst *p, char *data, usize n)
+update(ctype_hst *p, char *data, usize n)
 {
 	__hsh_update(compress, 128, p, data, n);
 }
 
 static void
-end(CHst *p)
+end(ctype_hst *p)
 {
 	uint r;
 
@@ -149,7 +149,7 @@ end(CHst *p)
 }
 
 static void
-digest(CHst *p, char *s)
+digest(ctype_hst *p, char *s)
 {
 	int i;
 

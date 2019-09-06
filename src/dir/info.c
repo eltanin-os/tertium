@@ -37,7 +37,7 @@ insert(uvlong *sp, usize n, uvlong k)
 }
 
 static int
-hist(CArr *hp, ulong dev, ulong ino)
+hist(ctype_arr *hp, ulong dev, ulong ino)
 {
 	uvlong k;
 	usize n;
@@ -55,10 +55,10 @@ hist(CArr *hp, ulong dev, ulong ino)
 }
 
 int
-__dir_info(CDir *p, CDent *ep)
+__dir_info(ctype_dir *p, ctype_dent *ep)
 {
-	CStat *stp;
-	CStat st;
+	ctype_stat *stp;
+	ctype_stat st;
 	int sverr;
 
 	stp = (p->opts & C_FSNOI) ? &st : ep->stp;

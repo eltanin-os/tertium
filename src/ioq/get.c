@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 static usize
-movemem(CArr *p, char *b, usize n)
+movemem(ctype_arr *p, char *b, usize n)
 {
 	n = C_MIN(n, p->n);
 	c_mem_cpy(b, n, p->p + p->a);
@@ -12,7 +12,7 @@ movemem(CArr *p, char *b, usize n)
 }
 
 size
-c_ioq_get(CIoq *p, char *b, usize n)
+c_ioq_get(ctype_ioq *p, char *b, usize n)
 {
 	size r;
 

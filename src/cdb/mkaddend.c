@@ -3,8 +3,8 @@
 
 #include "cdb.h"
 
-int
-c_cdb_mkaddend(CCdbmk *p, usize klen, usize dlen, u32int h)
+ctype_status
+c_cdb_mkaddend(ctype_cdbmk *p, usize klen, usize dlen, u32int h)
 {
 	struct hp hp;
 	vlong newoff;

@@ -20,22 +20,22 @@
 #define ROL(a, b) __hsh_rol32((a), (b))
 #define REV(a,b,c,d,e,t) { t=e; e=d; d=c; c=b; b=a; a=t; }
 
-static void init(CHst *);
-static void update(CHst *, char *, usize);
-static void end(CHst *);
-static void digest(CHst *, char *);
+static void init(ctype_hst *);
+static void update(ctype_hst *, char *, usize);
+static void end(ctype_hst *);
+static void digest(ctype_hst *, char *);
 
-static CHmd md = {
+static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
 	&digest,
 };
 
-CHmd *c_hsh_sha1 = &md;
+ctype_hmd *c_hsh_sha1 = &md;
 
 static void
-init(CHst *p)
+init(ctype_hst *p)
 {
 	p->len = 0;
 	p->st.x32[0] = 0x67452301UL;
@@ -46,7 +46,7 @@ init(CHst *p)
 }
 
 static void
-compress(CHst *p, char *data)
+compress(ctype_hst *p, char *data)
 {
 	u32int st[5], w[80];
 	u32int t;
@@ -92,13 +92,13 @@ compress(CHst *p, char *data)
 }
 
 static void
-update(CHst *p, char *data, usize n)
+update(ctype_hst *p, char *data, usize n)
 {
 	__hsh_update(compress, 64, p, data, n);
 }
 
 static void
-end(CHst *p)
+end(ctype_hst *p)
 {
 	unsigned r;
 
@@ -117,7 +117,7 @@ end(CHst *p)
 }
 
 static void
-digest(CHst *p, char *s)
+digest(ctype_hst *p, char *s)
 {
 	int i;
 

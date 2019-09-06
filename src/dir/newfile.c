@@ -3,11 +3,11 @@
 
 #include "__int__.h"
 
-CNode *
+ctype_node *
 __dir_newfile(char *path, char *name, uint opts)
 {
-	CNode *p;
-	CDent *ep;
+	ctype_node *p;
+	ctype_dent *ep;
 	usize len;
 	usize plen;
 	ushort nlen;
@@ -21,7 +21,7 @@ __dir_newfile(char *path, char *name, uint opts)
 	len = sizeof(*p) + sizeof(*ep) + plen + nlen + 2;
 
 	if (!(opts & C_FSNOI))
-		len += sizeof(CStat) + 16;
+		len += sizeof(ctype_stat) + 16;
 
 	if (!(sp = c_std_alloc(len, sizeof(uchar))))
 		return nil;

@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_cdb_free(CCdb *p)
+c_cdb_free(ctype_cdb *p)
 {
 	if (p->map)
 		c_sys_munmap(p->map, p->size);

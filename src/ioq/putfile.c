@@ -1,11 +1,12 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_ioq_putfile(CIoq *p, char *s)
+ctype_status
+c_ioq_putfile(ctype_ioq *p, char *s)
 {
-	CStat st;
-	int r, fd;
+	ctype_stat st;
+	ctype_fd fd;
+	int r;
 
 	if (!c_mem_cmp(s, sizeof("<stdin>") - 1, "<stdin>"))
 		return c_ioq_putfd(p, C_FD0, 0);

@@ -6,15 +6,15 @@
 #define getbase(a) \
 ((a) == 'p' || (a | 32) == 'x' ? 16 : ((a) == 'o') ? 8 : ((a) == 'b') ? 2 : 10)
 
-static int Vchar(CFmt *);
-static int Verr(CFmt *);
-static int Vflag(CFmt *);
-static int Vint(CFmt *);
-static int Vperc(CFmt *);
-static int Vstr(CFmt *);
+static ctype_status Vchar(ctype_fmt *);
+static ctype_status Verr(ctype_fmt *);
+static ctype_status Vflag(ctype_fmt *);
+static ctype_status Vint(ctype_fmt *);
+static ctype_status Vperc(ctype_fmt *);
+static ctype_status Vstr(ctype_fmt *);
 
 static uchar buf[64 * sizeof(struct fmtverb)];
-CArr __fmt_Fmts = c_arr_INIT(buf);
+ctype_arr __fmt_Fmts = c_arr_INIT(buf);
 
 struct fmtverb __fmt_VFmts[] = {
 	{ ',', Vflag },
@@ -40,13 +40,13 @@ struct fmtverb __fmt_VFmts[] = {
 };
 
 static size
-nobuffer(CFmt *p, char *s, usize n)
+nobuffer(ctype_fmt *p, char *s, usize n)
 {
 	return c_sys_allrw(p->op, (uintptr)p->farg, s, C_MIN(n, C_BIOSIZ));
 }
 
 static size
-buffered(CFmt *p, char *s, usize n)
+buffered(ctype_fmt *p, char *s, usize n)
 {
 	if (n > c_arr_avail(p->mb) && p->fn(p) < 0)
 		return -1;
@@ -54,10 +54,10 @@ buffered(CFmt *p, char *s, usize n)
 	return c_arr_cat(p->mb, s, C_MIN(n, c_arr_avail(p->mb)), sizeof(uchar));
 }
 
-int
-__fmt_trycat(CFmt *p, char *s, usize m, usize n)
+ctype_status
+__fmt_trycat(ctype_fmt *p, char *s, usize m, usize n)
 {
-	size (*f)(CFmt *, char *, usize);
+	size (*f)(ctype_fmt *, char *, usize);
 	size r;
 
 	if (C_OFLW_UM(usize, n, m))
@@ -77,8 +77,8 @@ __fmt_trycat(CFmt *p, char *s, usize m, usize n)
 	return 0;
 }
 
-static int
-fmtpad(CFmt *p, usize n)
+static ctype_status
+fmtpad(ctype_fmt *p, usize n)
 {
 	int w;
 
@@ -91,8 +91,8 @@ fmtpad(CFmt *p, usize n)
 	return 0;
 }
 
-static int
-fmtcat(CFmt *p, char *s, usize n)
+static ctype_status
+fmtcat(ctype_fmt *p, char *s, usize n)
 {
 	if (!s)
 		s = "<nil>";
@@ -115,8 +115,8 @@ fmtcat(CFmt *p, char *s, usize n)
 	return 0;
 }
 
-static int
-Vchar(CFmt *p)
+static ctype_status
+Vchar(ctype_fmt *p)
 {
 	char buf[8];
 	int x;
@@ -127,8 +127,8 @@ Vchar(CFmt *p)
 	return fmtcat(p, buf, sizeof(x));
 }
 
-static int
-Verr(CFmt *p)
+static ctype_status
+Verr(ctype_fmt *p)
 {
 	char buf[C_ERRSIZ];
 
@@ -140,8 +140,8 @@ Verr(CFmt *p)
 	return fmtcat(p, buf, 0);
 }
 
-static int
-Vflag(CFmt *p)
+static ctype_status
+Vflag(ctype_fmt *p)
 {
 	switch (p->r) {
 	case ',':
@@ -181,8 +181,8 @@ Vflag(CFmt *p)
 	return 1;
 }
 
-static int
-Vint(CFmt *p)
+static ctype_status
+Vint(ctype_fmt *p)
 {
 	uvlong l;
 	int b, d, i, j, u, n;
@@ -238,15 +238,15 @@ Vint(CFmt *p)
 	return fmtcat(p, buf + i, sizeof(buf) - (i + 1));
 }
 
-static int
-Vperc(CFmt *p)
+static ctype_status
+Vperc(ctype_fmt *p)
 {
 	p->prec = 1;
 	return fmtcat(p, "%", 1);;
 }
 
-static int
-Vstr(CFmt *p)
+static ctype_status
+Vstr(ctype_fmt *p)
 {
 	char *s;
 

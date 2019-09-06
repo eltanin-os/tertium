@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_fmt_fdinit(CFmt *p, int fd, CArr *mb, size (*fn)(int, void *, usize))
+c_fmt_fdinit(ctype_fmt *p, ctype_fd fd, ctype_arr *mb, ctype_iofn fn)
 {
 	p->mb = mb;
 	p->fn = &c_fmt_fdflush;

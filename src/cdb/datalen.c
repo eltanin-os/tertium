@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 u32int
-c_cdb_datalen(CCdb *p)
+c_cdb_datalen(ctype_cdb *p)
 {
 	return p->dlen;
 }

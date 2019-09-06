@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void *
-c_std_bsearch(void *buf, usize m, usize n, void *k, int (*f)(void *, void *))
+c_std_bsearch(void *buf, usize m, usize n, void *k, ctype_cmpfn f)
 {
 	int r;
 	uchar *p, *s;

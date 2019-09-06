@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tai_now(CTai *t)
+c_tai_now(ctype_tai *t)
 {
 	CTime tm;
 

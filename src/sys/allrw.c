@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_sys_allrw(size (*op)(int, void *, usize), int f, void *p, usize n)
+c_sys_allrw(ctype_iofn op, ctype_fd fd, void *p, usize n)
 {
 	size r, t;
 	uchar *s;
@@ -11,7 +11,7 @@ c_sys_allrw(size (*op)(int, void *, usize), int f, void *p, usize n)
 	t = 0;
 
 	while (n) {
-		if ((r = op(f, p, n)) <= 0)
+		if ((r = op(fd, p, n)) <= 0)
 			return r;
 		t += r;
 		s += r;

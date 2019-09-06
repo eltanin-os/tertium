@@ -85,5 +85,20 @@
 #define C_ALLPERMS (0x800|0x400|0x200|0x1C0|0x038|0x007)
 #define C_DEFFILEMODE (0x100|0x080|0x020|0x010|0x004|0x002)
 
+/* types */
+typedef unsigned short ushort;
+typedef unsigned char uchar;
+typedef unsigned long ulong;
+typedef unsigned int uint;
+typedef long long vlong;
+typedef unsigned long long uvlong;
+typedef unsigned Rune;
+
+typedef int ctype_fd;
+typedef int ctype_error;
+typedef int ctype_status;
+
+typedef __builtin_va_list va_list;
+
 /* */
 long __asm_syscall(long, ...);

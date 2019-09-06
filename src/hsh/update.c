@@ -4,7 +4,8 @@
 #include "__int__.h"
 
 void
-__hsh_update(void (*f)(CHst *, char *), int b, CHst *p, char *data, usize n)
+__hsh_update(void (*f)(ctype_hst *, char *), int b,
+    ctype_hst *p, char *data, usize n)
 {
 	uint r;
 

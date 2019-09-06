@@ -3,12 +3,12 @@
 
 #include "__int__.h"
 
-int
-c_dir_open(CDir *p, char **argv, uint opts, int (*f)(void *, void *))
+ctype_status
+c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 {
-	CDent *ep;
-	CNode *np;
-	CStat st;
+	ctype_dent *ep;
+	ctype_node *np;
+	ctype_stat st;
 
 	c_mem_set(p, sizeof(*p), 0);
 

@@ -3,30 +3,30 @@
 
 #include "__int__.h"
 
-#define Ch(a,b,c)  (c ^ (a & (b ^ c)))
+#define Ch(a,b,c) (c ^ (a & (b ^ c)))
 #define Maj(a,b,c) ((a & b) | (c & (a | b)))
-#define R(a,b)     (((a)&0xFFFFFFFF)>>(b))
-#define G0(x)      (ROR(x, 7)  ^ ROR(x, 18) ^ R(x, 3))
-#define G1(x)      (ROR(x, 17) ^ ROR(x, 19) ^ R(x, 10))
-#define S0(x)      (ROR(x, 2)  ^ ROR(x, 13) ^ ROR(x, 22))
-#define S1(x)      (ROR(x, 6)  ^ ROR(x, 11) ^ ROR(x, 25))
+#define R(a,b) (((a)&0xFFFFFFFF)>>(b))
+#define G0(x) (ROR(x, 7)  ^ ROR(x, 18) ^ R(x, 3))
+#define G1(x) (ROR(x, 17) ^ ROR(x, 19) ^ R(x, 10))
+#define S0(x) (ROR(x, 2)  ^ ROR(x, 13) ^ ROR(x, 22))
+#define S1(x) (ROR(x, 6)  ^ ROR(x, 11) ^ ROR(x, 25))
 
 #define ROR(a, b) __hsh_ror32((a), (b))
 #define REV(a,b,c,d,e,f,g,h,t) { t=h; h=g; g=f; f=e; e=d; d=c; c=b; b=a; a=t; }
 
-static void init(CHst *);
-static void update(CHst *, char *, usize);
-static void end(CHst *);
-static void digest(CHst *, char *);
+static void init(ctype_hst *);
+static void update(ctype_hst *, char *, usize);
+static void end(ctype_hst *);
+static void digest(ctype_hst *, char *);
 
-static CHmd md = {
+static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
 	&digest,
 };
 
-CHmd *c_hsh_sha256 = &md;
+ctype_hmd *c_hsh_sha256 = &md;
 
 static u32int K[] = {
 	0x428a2f98UL, 0x71374491UL, 0xb5c0fbcfUL, 0xe9b5dba5UL, 0x3956c25bUL,
@@ -45,7 +45,7 @@ static u32int K[] = {
 };
 
 static void
-init(CHst *p)
+init(ctype_hst *p)
 {
 	p->len = 0;
 	p->st.x32[0] = 0x6A09E667UL;
@@ -59,7 +59,7 @@ init(CHst *p)
 }
 
 static void
-compress(CHst *p, char *data)
+compress(ctype_hst *p, char *data)
 {
 	u32int w[64], st[8];
 	u32int t0, t1;
@@ -100,13 +100,13 @@ compress(CHst *p, char *data)
 }
 
 static void
-update(CHst *p, char *data, usize n)
+update(ctype_hst *p, char *data, usize n)
 {
 	__hsh_update(compress, 64, p, data, n);
 }
 
 static void
-end(CHst *p)
+end(ctype_hst *p)
 {
 	uint r;
 
@@ -125,7 +125,7 @@ end(CHst *p)
 }
 
 static void
-digest(CHst *p, char *s)
+digest(ctype_hst *p, char *s)
 {
 	int i;
 

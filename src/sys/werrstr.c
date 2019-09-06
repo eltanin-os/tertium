@@ -4,7 +4,7 @@
 void
 c_sys_werrstr(char *fmt, ...)
 {
-	CArr arr;
+	ctype_arr arr;
 	va_list ap;
 	char buf[C_ERRSIZ];
 

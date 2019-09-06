@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_dyn_shrink(CArr *p)
+ctype_status
+c_dyn_shrink(ctype_arr *p)
 {
 	if (p->n == p->a)
 		return 0;

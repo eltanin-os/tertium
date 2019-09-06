@@ -3,8 +3,8 @@
 
 #include "__int__.h"
 
-static int
-fmtfmt(CFmt *f, uchar *s)
+static ctype_status
+fmtfmt(ctype_fmt *f, uchar *s)
 {
 	struct fmtverb *p;
 	int i, n;
@@ -34,8 +34,8 @@ fmtfmt(CFmt *f, uchar *s)
 	}
 }
 
-static int
-fmtflag(CFmt *f, uchar *s)
+static ctype_status
+fmtflag(ctype_fmt *f, uchar *s)
 {
 	int i, r, nfmt;
 
@@ -104,7 +104,7 @@ numflag:
 }
 
 size
-c_fmt_fmt(CFmt *p, char *fmt)
+c_fmt_fmt(ctype_fmt *p, char *fmt)
 {
 	usize nfmt;
 	int n;

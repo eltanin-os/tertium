@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
+ctype_status
 c_sys_chdir(char *s)
 {
-	int r;
+	ctype_status r;
 
 	do {
 		r = c_sys_call(SYS_chdir, s);

@@ -4,18 +4,18 @@
 #define CRCTAB(a) \
 (((a) << 4) ^ crctab[((a) >> 28) & 15])
 
-static void init(CHst *);
-static void update(CHst *, char *, usize);
-static void end(CHst *);
+static void init(ctype_hst *);
+static void update(ctype_hst *, char *, usize);
+static void end(ctype_hst *);
 
-static CHmd md = {
+static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
 	nil,
 };
 
-CHmd *c_hsh_crc32p = &md;
+ctype_hmd *c_hsh_crc32p = &md;
 
 static u32int crctab[] = {
 	0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9,
@@ -25,14 +25,14 @@ static u32int crctab[] = {
 };
 
 static void
-init(CHst *p)
+init(ctype_hst *p)
 {
 	p->len = 0;
 	p->st.x32[0] = 0;
 }
 
 static void
-update(CHst *p, char *data, usize n)
+update(ctype_hst *p, char *data, usize n)
 {
 	uchar *s;
 
@@ -47,7 +47,7 @@ update(CHst *p, char *data, usize n)
 }
 
 static void
-end(CHst *p)
+end(ctype_hst *p)
 {
 	usize n;
 

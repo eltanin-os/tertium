@@ -1,13 +1,13 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_sys_fchdir(int f)
+ctype_status
+c_sys_fchdir(ctype_fd fd)
 {
-	int r;
+	ctype_status r;
 
 	do {
-		r = c_sys_call(SYS_fchdir, f);
+		r = c_sys_call(SYS_fchdir, fd);
 	} while ((r < 0) && (errno == C_EINTR));
 
 	return r;

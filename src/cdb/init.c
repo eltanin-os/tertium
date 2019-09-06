@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_cdb_init(CCdb *p, int fd)
+ctype_status
+c_cdb_init(ctype_cdb *p, ctype_fd fd)
 {
-	CStat st;
+	ctype_stat st;
 	uchar *x;
 
 	c_cdb_free(p);

@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_dyn_fmt(CArr *p, char *fmt, ...)
+c_dyn_fmt(ctype_arr *p, char *fmt, ...)
 {
 	va_list ap;
 	size n;

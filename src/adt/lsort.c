@@ -2,10 +2,10 @@
 #include <tertium/std.h>
 
 void
-c_adt_lsort(CNode **np, int (*f)(void *, void *))
+c_adt_lsort(ctype_node **np, ctype_cmpfn f)
 {
-	CNode *p, *q;
-	CNode *e, *h, *t;
+	ctype_node *p, *q;
+	ctype_node *e, *h, *t;
 	int i, k, nm, ps, qs;
 
 	if (!*np || !(*np)->prev)

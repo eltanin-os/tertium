@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_adt_qpops(CQueue *p, CArr *b)
+ctype_status
+c_adt_qpops(ctype_queue *p, ctype_arr *b)
 {
 	usize n, len;
 

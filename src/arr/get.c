@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void *
-c_arr_get(CArr *p, usize m, usize n)
+c_arr_get(ctype_arr *p, usize m, usize n)
 {
 	usize t;
 

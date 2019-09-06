@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void *
-c_dyn_alloc(CArr *p, usize m, usize n)
+c_dyn_alloc(ctype_arr *p, usize m, usize n)
 {
 	usize t;
 

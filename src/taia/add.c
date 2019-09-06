@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_taia_add(CTaia *t, CTaia *u, CTaia *v)
+c_taia_add(ctype_taia *t, ctype_taia *u, ctype_taia *v)
 {
 	t->sec.x = u->sec.x + v->sec.x;
 	t->nano = u->nano + v->nano;

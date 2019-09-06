@@ -169,29 +169,29 @@ static u64int cont[] = {
  SB6(GB(a, i-6, 1)) ^        \
  SB7(GB(a, i-7, 0)))
 
-static void init(CHst *);
-static void update(CHst *, char *, usize);
-static void end(CHst *);
-static void digest(CHst *, char *);
+static void init(ctype_hst *);
+static void update(ctype_hst *, char *, usize);
+static void end(ctype_hst *);
+static void digest(ctype_hst *, char *);
 
-static CHmd md = {
+static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
 	&digest,
 };
 
-CHmd *c_hsh_whirlpool = &md;
+ctype_hmd *c_hsh_whirlpool = &md;
 
 static void
-init(CHst *p)
+init(ctype_hst *p)
 {
 	p->len = 0;
 	c_mem_set(p->st.x64, sizeof(p->st.x64), 0);
 }
 
 static void
-compress(CHst *p, char *data)
+compress(ctype_hst *p, char *data)
 {
 	u64int k[2][8], t[3][8];
 	int i, j;
@@ -242,13 +242,13 @@ compress(CHst *p, char *data)
 }
 
 static void
-update(CHst *p, char *data, usize n)
+update(ctype_hst *p, char *data, usize n)
 {
 	__hsh_update(compress, 64, p, data, n);
 }
 
 static void
-end(CHst *p)
+end(ctype_hst *p)
 {
 	uint r;
 
@@ -266,7 +266,7 @@ end(CHst *p)
 }
 
 static void
-digest(CHst *p, char *s)
+digest(ctype_hst *p, char *s)
 {
 	int i;
 

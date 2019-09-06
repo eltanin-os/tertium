@@ -1,13 +1,13 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_sys_dup(int o, int n)
+ctype_status
+c_sys_dup(ctype_fd ofd, ctype_fd nfd)
 {
-	int r;
+	ctype_status r;
 
 	do {
-		r = c_sys_call(SYS_dup2, o, n);
+		r = c_sys_call(SYS_dup2, ofd, nfd);
 	} while ((r < 0) && (errno == C_EINTR));
 
 	return r;

@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static int
-growbuffer(CFmt *p)
+static ctype_status
+growbuffer(ctype_fmt *p)
 {
 	if (c_dyn_ready(p->mb, c_arr_total(p->mb) + 1, sizeof(uchar)) < 0)
 		return -1;
@@ -11,9 +11,9 @@ growbuffer(CFmt *p)
 }
 
 size
-c_dyn_vfmt(CArr *p, char *fmt, va_list args)
+c_dyn_vfmt(ctype_arr *p, char *fmt, va_list args)
 {
-	CFmt f;
+	ctype_fmt f;
 	size n;
 
 	if (!c_arr_total(p))

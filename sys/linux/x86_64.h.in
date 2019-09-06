@@ -129,17 +129,10 @@
 #define va_start(a, b) __builtin_va_start(a, b)
 
 /* types */
-typedef unsigned short ushort;
-typedef unsigned char uchar;
-typedef unsigned long ulong;
-typedef unsigned int uint;
-typedef long long vlong;
-typedef unsigned long long uvlong;
 typedef long long intptr;
 typedef unsigned long long uintptr;
 typedef unsigned long usize;
 typedef long size;
-typedef unsigned Rune;
 typedef unsigned char u8int;
 typedef unsigned short u16int;
 typedef unsigned u32int;
@@ -149,8 +142,13 @@ typedef short s16int;
 typedef int s32int;
 typedef long long s64int;
 
-//typedef char * va_list;
-typedef __builtin_va_list va_list;
+typedef uvlong ctype_fsid; /* dev, ino, nlink */
+typedef int ctype_id; /* gid, pid, uid */
+typedef vlong ctype_fssize; /* file size, block size, block count */
+
+typedef int (*ctype_cmpfn)(void *, void *);
+typedef size (*ctype_iofn)(int, void *, usize);
+typedef void *(*ctype_allocfn)(void *, usize, usize);
 
 /* fallback types */
 typedef struct {
@@ -163,14 +161,14 @@ typedef struct {
 
 /* sys types */
 typedef struct CTime CTime;
-typedef struct CStat CStat;
+typedef struct ctype_stat ctype_stat;
 
 struct CTime {
 	vlong sec;
 	ulong nsec;
 };
 
-struct CStat {
+struct ctype_stat {
 	ulong dev;
 	ulong ino;
 	ulong nlink;

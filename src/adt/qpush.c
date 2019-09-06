@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_adt_qpush(CQueue *p, void *v, usize m, usize n)
+ctype_status
+c_adt_qpush(ctype_queue *p, void *v, usize m, usize n)
 {
 	usize htt, len;
 

@@ -1,12 +1,12 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-CArr newenv;
+ctype_arr newenv;
 
-int
+ctype_status
 c_exc_setenv(char *s, char *v)
 {
-	CArr e;
+	ctype_arr e;
 	char *p;
 
 	if (!s || !*s)

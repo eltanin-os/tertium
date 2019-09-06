@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static int
-nomem(CFmt *p)
+static ctype_status
+nomem(ctype_fmt *p)
 {
 	(void)p;
 	errno = C_ENOMEM;
@@ -10,9 +10,9 @@ nomem(CFmt *p)
 }
 
 size
-c_arr_vfmt(CArr *p, char *fmt, va_list args)
+c_arr_vfmt(ctype_arr *p, char *fmt, va_list args)
 {
-	CFmt f;
+	ctype_fmt f;
 	size n;
 
 	c_fmt_fdinit(&f, 0, p, nil);

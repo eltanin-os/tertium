@@ -246,9 +246,20 @@ typedef int16_t s16int;
 typedef int32_t s32int;
 typedef int64_t s64int;
 
+typedef int ctype_fd;
+typedef int ctype_error;
+typedef uint ctype_status;
+typedef uvlong ctype_fsid; /* dev, ino, nlink */
+typedef id_t ctype_id; /* gid, pid, uid */
+typedef off_t ctype_fssize; /* file size, block size, block count */
+
+typedef int (*ctype_cmpfn)(void *, void *);
+typedef size (*ctype_iofn)(int, void *, usize);
+typedef void *(*ctype_allocfn)(void *, usize, usize);
+
 /* fallback types */
 typedef struct dirent __fb_dirent;
 
 /* sys types */
 typedef struct timespec CTime;
-typedef struct stat CStat;
+typedef struct stat ctype_stat;

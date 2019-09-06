@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_adt_lpush(CNode **sp, CNode *p)
+ctype_status
+c_adt_lpush(ctype_node **sp, ctype_node *p)
 {
 	if (!p)
 		return -1;

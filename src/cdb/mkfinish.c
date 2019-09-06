@@ -3,8 +3,8 @@
 
 #include "cdb.h"
 
-int
-c_cdb_mkfinish(CCdbmk *p)
+ctype_status
+c_cdb_mkfinish(ctype_cdbmk *p)
 {
 	struct hp *hp;
 	struct hp *split;

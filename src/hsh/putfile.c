@@ -1,11 +1,12 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_hsh_putfile(CHst *hs, CHmd *p, char *s)
+ctype_status
+c_hsh_putfile(ctype_hst *hs, ctype_hmd *p, char *s)
 {
-	CStat st;
-	int r, fd;
+	ctype_stat st;
+	ctype_fd fd;
+	int r;
 
 	if (!c_mem_cmp(s, sizeof("<stdin>") - 1, "<stdin>"))
 		return c_hsh_putfd(hs, p, C_FD0, 0);

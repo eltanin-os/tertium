@@ -1,13 +1,13 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_sys_close(int f)
+ctype_status
+c_sys_close(ctype_fd fd)
 {
-	int r;
+	ctype_status r;
 
 	do {
-		r = c_sys_call(SYS_close, f);
+		r = c_sys_call(SYS_close, fd);
 	} while ((r < 0) && (errno == C_EINTR));
 
 	return r;

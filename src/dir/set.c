@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_dir_set(CDir *p, CDent *ep, int instr)
+ctype_status
+c_dir_set(ctype_dir *p, ctype_dent *ep, int instr)
 {
 	(void)p;
 	ep->instr = instr;

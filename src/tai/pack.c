@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_tai_pack(char *s, CTai *t)
+c_tai_pack(char *s, ctype_tai *t)
 {
 	u64int x;
 

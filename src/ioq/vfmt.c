@@ -2,9 +2,9 @@
 #include <tertium/std.h>
 
 size
-c_ioq_vfmt(CIoq *p, char *fmt, va_list args)
+c_ioq_vfmt(ctype_ioq *p, char *fmt, va_list args)
 {
-	CFmt f;
+	ctype_fmt f;
 	size n;
 
 	c_fmt_fdinit(&f, p->fd, p->mb, p->op);

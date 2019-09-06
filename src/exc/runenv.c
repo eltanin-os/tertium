@@ -3,12 +3,12 @@
 
 #define GETPATH(a) (!(a) || (a)[0] == ':') ? "." : (a)
 
-extern CArr newenv;
+extern ctype_arr newenv;
 
-int
+ctype_status
 c_exc_runenv(char *prog, char **argv, char **envp)
 {
-	CArr e, f;
+	ctype_arr e, f;
 	char **pv;
 	char *path, *s;
 	char buf[C_PATHMAX];

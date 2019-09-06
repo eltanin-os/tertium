@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_ioq_init(CIoq *p, int fd, CArr *b, size (*f)(int, void *, usize))
+c_ioq_init(ctype_ioq *p, ctype_fd fd, ctype_arr *b, ctype_iofn f)
 {
 	p->mb = b;
 	p->op = f;

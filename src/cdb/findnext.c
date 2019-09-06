@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static int
-match(CCdb *p, char *k, usize n, u32int off)
+static ctype_status
+match(ctype_cdb *p, char *k, usize n, u32int off)
 {
 	usize len;
 	char buf[1024];
@@ -21,10 +21,10 @@ match(CCdb *p, char *k, usize n, u32int off)
 	return 1;
 }
 
-int
-c_cdb_findnext(CCdb *p, char *k, usize n)
+ctype_status
+c_cdb_findnext(ctype_cdb *p, char *k, usize n)
 {
-	CHst hs;
+	ctype_hst hs;
 	u32int off;
 	u32int h;
 	char buf[8];

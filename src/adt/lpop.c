@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-CNode *
-c_adt_lpop(CNode **sp)
+ctype_node *
+c_adt_lpop(ctype_node **sp)
 {
-	CNode *o;
+	ctype_node *o;
 
 	if (!*sp)
 		return nil;

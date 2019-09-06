@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_cdb_mkaddbegin(CCdbmk *p, usize klen, usize dlen)
+ctype_status
+c_cdb_mkaddbegin(ctype_cdbmk *p, usize klen, usize dlen)
 {
 	char buf[8];
 

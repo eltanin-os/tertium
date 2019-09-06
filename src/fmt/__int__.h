@@ -1,8 +1,8 @@
 struct fmtverb {
 	int c;
-	int (*f)(CFmt *);
+	ctype_status (*f)(ctype_fmt *);
 };
 
-extern CArr __fmt_Fmts;
+extern ctype_arr __fmt_Fmts;
 extern struct fmtverb __fmt_VFmts[];
-extern int __fmt_trycat(CFmt *, char *, usize, usize);
+extern ctype_status __fmt_trycat(ctype_fmt *, char *, usize, usize);

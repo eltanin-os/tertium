@@ -1,6 +1,6 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static CArr arr = { 0, 0, nil };
+static ctype_arr arr = { 0, 0, nil };
 
-CArr *arr_zero = &arr;
+ctype_arr *arr_zero = &arr;

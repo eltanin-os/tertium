@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_adt_qinit(CQueue *p, char *s, usize n)
+c_adt_qinit(ctype_queue *p, char *s, usize n)
 {
 	p->a = n;
 	p->h = 0;

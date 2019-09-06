@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_cdb_read(CCdb *p, char *s, usize n, u32int off)
+ctype_status
+c_cdb_read(ctype_cdb *p, char *s, usize n, u32int off)
 {
 	if (p->map) {
 		if ((off > p->size) || (p->size - off < n)) {

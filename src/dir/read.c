@@ -14,14 +14,15 @@ struct dir {
 	uchar buf[2048];
 };
 
-static CNode *
-builddir(CDir *p)
+static ctype_node *
+builddir(ctype_dir *p)
 {
 	__fb_dirent *d;
-	CDent *cur, *ep;
-	CNode *np;
+	ctype_dent *cur, *ep;
+	ctype_node *np;
 	struct dir dir;
-	int fd, r;
+	ctype_fd fd;
+	int r;
 	char rp[C_PATHMAX];
 
 	cur = p->cur->p;
@@ -76,11 +77,11 @@ err:
 	return (void *)-1;
 }
 
-CDent *
-c_dir_read(CDir *p)
+ctype_dent *
+c_dir_read(ctype_dir *p)
 {
-	CDent *ep;
-	CNode *cur;
+	ctype_dent *ep;
+	ctype_node *cur;
 	int instr;
 
 	cur = p->cur;

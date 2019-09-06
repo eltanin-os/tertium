@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
+void
 c_sys_errstr(char *s, usize n)
 {
 	usize i;
@@ -18,6 +18,4 @@ c_sys_errstr(char *s, usize n)
 	}
 
 	errno = C_ECSTM;
-
-	return 0;
 }

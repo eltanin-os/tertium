@@ -1,2 +1,2 @@
-int __dir_info(CDir *, CDent *);
-CNode *__dir_newfile(char *, char *, uint);
+int __dir_info(ctype_dir *, ctype_dent *);
+ctype_node *__dir_newfile(char *, char *, uint);

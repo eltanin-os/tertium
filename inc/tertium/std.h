@@ -117,25 +117,25 @@ enum {
 #define C_TAIA_PACK 16
 
 /* arr types */
-typedef struct CArr CArr;
+typedef struct ctype_arr ctype_arr;
 
-struct CArr {
+struct ctype_arr {
 	usize a;
 	usize n;
 	uchar *p;
 };
 
 /* adt types */
-typedef struct CNode CNode;
-typedef struct CQueue CQueue;
+typedef struct ctype_node ctype_node;
+typedef struct ctype_queue ctype_queue;
 
-struct CNode {
-	CNode *next;
-	CNode *prev;
+struct ctype_node {
+	ctype_node *next;
+	ctype_node *prev;
 	void *p;
 };
 
-struct CQueue {
+struct ctype_queue {
 	usize a;
 	usize h;
 	usize t;
@@ -143,14 +143,14 @@ struct CQueue {
 };
 
 /* dir types */
-typedef struct CDent CDent;
-typedef struct CDir CDir;
+typedef struct ctype_dent ctype_dent;
+typedef struct ctype_dir ctype_dir;
 
-struct CDent {
-	CDent *parent;
-	CStat *stp;
+struct ctype_dent {
+	ctype_dent *parent;
+	ctype_stat *stp;
 	vlong num;
-	ulong dev;
+	ctype_fsid dev;
 	usize len;
 	usize nlen;
 	ushort instr;
@@ -163,24 +163,24 @@ struct CDent {
 	void *__p;		/* (private) */
 };
 
-struct CDir {
-	CNode *cur;
-	CNode *child;
-	CArr hist;
-	ulong dev;
-	int (*f)(void *, void *);
-	int rfd;
+struct ctype_dir {
+	ctype_node *cur;
+	ctype_node *child;
+	ctype_arr hist;
+	ctype_fsid dev;
+	ctype_cmpfn f;
 	uint opts;
 };
 
 /* fmt types */
-typedef struct CFmt CFmt;
+typedef struct ctype_fmt ctype_fmt;
+typedef ctype_status (*ctype_fmtfn)(ctype_fmt *);
 
-struct CFmt {
-	CArr *mb;
+struct ctype_fmt {
+	ctype_arr *mb;
 	va_list args;
-	size (*op)(int, void *, usize);
-	int (*fn)(CFmt *);
+	ctype_iofn op;
+	ctype_fmtfn fn;
 	usize nfmt;
 	int prec;
 	int r;
@@ -190,17 +190,17 @@ struct CFmt {
 };
 
 /* hsh types */
-typedef struct CHmd CHmd;
-typedef struct CHst CHst;
+typedef struct ctype_hmd ctype_hmd;
+typedef struct ctype_hst ctype_hst;
 
-struct CHmd {
-	void (*init)(CHst *);
-	void (*update)(CHst *, char *, usize);
-	void (*end)(CHst *);
-	void (*digest)(CHst *, char *);
+struct ctype_hmd {
+	void (*init)(ctype_hst *);
+	void (*update)(ctype_hst *, char *, usize);
+	void (*end)(ctype_hst *);
+	void (*digest)(ctype_hst *, char *);
 };
 
-struct CHst {
+struct ctype_hst {
 	union {
 		u32int x32[16];
 		u64int x64[8];
@@ -210,19 +210,19 @@ struct CHst {
 };
 
 /* ioq types */
-typedef struct CIoq CIoq;
+typedef struct ctype_ioq ctype_ioq;
 
-struct CIoq {
-	CArr *mb;
-	size (*op)(int, void *, usize);
-	int fd;
+struct ctype_ioq {
+	ctype_arr *mb;
+	ctype_iofn op;
+	ctype_fd fd;
 };
 
 /* cdb types */
-typedef struct CCdb CCdb;
-typedef struct CCdbmk CCdbmk;
+typedef struct ctype_cdb ctype_cdb;
+typedef struct ctype_cdbmk ctype_cdbmk;
 
-struct CCdb {
+struct ctype_cdb {
 	u32int dpos;
 	u32int dlen;
 	u32int hpos;
@@ -231,89 +231,89 @@ struct CCdb {
 	u32int kpos;
 	u32int loop;
 	u32int size;
-	int fd;
+	ctype_fd fd;
 	uchar *map;
 };
 
-struct CCdbmk {
-	CArr arr;
-	CArr hplist;
-	CIoq ioq;
+struct ctype_cdbmk {
+	ctype_arr arr;
+	ctype_arr hplist;
+	ctype_ioq ioq;
 	u32int off;
-	int fd;
+	ctype_fd fd;
 	char buf[C_BIOSIZ];
 };
 
 /* tai types */
-typedef struct CTai CTai;
+typedef struct ctype_tai ctype_tai;
 
-struct CTai {
+struct ctype_tai {
 	u64int x;
 };
 
 /* taia types */
-typedef struct CTaia CTaia;
+typedef struct ctype_taia ctype_taia;
 
-struct CTaia {
-	CTai sec;
+struct ctype_taia {
+	ctype_tai sec;
 	ulong atto;
 	ulong nano;
 };
 
 /* adt routines */
-void c_adt_lfree(CNode *);
-CNode *c_adt_lpop(CNode **);
-int c_adt_lpush(CNode **, CNode *);
-void c_adt_lsort(CNode **, int (*)(void *, void *));
-void c_adt_qinit(CQueue *, char *, usize);
-int c_adt_qpop(CQueue *, CArr *, usize, usize);
-int c_adt_qpops(CQueue *, CArr *);
-int c_adt_qpush(CQueue *, void *, usize, usize);
+void c_adt_lfree(ctype_node *);
+ctype_node *c_adt_lpop(ctype_node **);
+ctype_status c_adt_lpush(ctype_node **, ctype_node *);
+void c_adt_lsort(ctype_node **, ctype_cmpfn);
+void c_adt_qinit(ctype_queue *, char *, usize);
+ctype_status c_adt_qpop(ctype_queue *, ctype_arr *, usize, usize);
+ctype_status c_adt_qpops(ctype_queue *, ctype_arr *);
+ctype_status c_adt_qpush(ctype_queue *, void *, usize, usize);
 
 /* arr routines */
-usize c_arr_avail(CArr *);
-usize c_arr_bytes(CArr *);
-size c_arr_cat(CArr *, void *, usize, usize);
-void *c_arr_data(CArr *);
-size c_arr_fmt(CArr *, char *, ...);
-void *c_arr_get(CArr *, usize, usize);
-void c_arr_init(CArr *, char *, usize);
-usize c_arr_len(CArr *, usize);
-usize c_arr_total(CArr *);
-int c_arr_trunc(CArr *, usize, usize);
-size c_arr_vfmt(CArr *, char *, va_list);
+usize c_arr_avail(ctype_arr *);
+usize c_arr_bytes(ctype_arr *);
+size c_arr_cat(ctype_arr *, void *, usize, usize);
+void *c_arr_data(ctype_arr *);
+size c_arr_fmt(ctype_arr *, char *, ...);
+void *c_arr_get(ctype_arr *, usize, usize);
+void c_arr_init(ctype_arr *, char *, usize);
+usize c_arr_len(ctype_arr *, usize);
+usize c_arr_total(ctype_arr *);
+ctype_status c_arr_trunc(ctype_arr *, usize, usize);
+size c_arr_vfmt(ctype_arr *, char *, va_list);
 
 /* cdb routines */
-u32int c_cdb_datalen(CCdb *);
-u32int c_cdb_datapos(CCdb *);
-int c_cdb_find(CCdb *, char *, usize);
-int c_cdb_findnext(CCdb *, char *, usize);
-void c_cdb_findstart(CCdb *);
-void c_cdb_free(CCdb *);
+u32int c_cdb_datalen(ctype_cdb *);
+u32int c_cdb_datapos(ctype_cdb *);
+ctype_status c_cdb_find(ctype_cdb *, char *, usize);
+ctype_status c_cdb_findnext(ctype_cdb *, char *, usize);
+void c_cdb_findstart(ctype_cdb *);
+void c_cdb_free(ctype_cdb *);
 u32int c_cdb_hash(char *, usize);
 u32int c_cdb_hashadd(u32int, uchar);
-int c_cdb_init(CCdb *, int);
-int c_cdb_mkadd(CCdbmk *, char *, usize, char *, usize);
-int c_cdb_mkaddbegin(CCdbmk *, usize, usize);
-int c_cdb_mkaddend(CCdbmk *, usize, usize, u32int);
-int c_cdb_mkfinish(CCdbmk *);
-int c_cdb_mkstart(CCdbmk *, int);
-int c_cdb_read(CCdb *, char *, usize, u32int);
+ctype_status c_cdb_init(ctype_cdb *, ctype_fd);
+ctype_status c_cdb_mkadd(ctype_cdbmk *, char *, usize, char *, usize);
+ctype_status c_cdb_mkaddbegin(ctype_cdbmk *, usize, usize);
+ctype_status c_cdb_mkaddend(ctype_cdbmk *, usize, usize, u32int);
+ctype_status c_cdb_mkfinish(ctype_cdbmk *);
+ctype_status c_cdb_mkstart(ctype_cdbmk *, ctype_fd);
+ctype_status c_cdb_read(ctype_cdb *, char *, usize, u32int);
 
 /* dir routines */
-int c_dir_close(CDir *);
-int c_dir_open(CDir *, char **, uint, int (*)(void *, void *));
-CDent *c_dir_read(CDir *);
-int c_dir_set(CDir *, CDent *, int);
+ctype_status c_dir_close(ctype_dir *);
+ctype_status c_dir_open(ctype_dir *, char **, uint, ctype_cmpfn);
+ctype_dent *c_dir_read(ctype_dir *);
+ctype_status c_dir_set(ctype_dir *, ctype_dent *, int);
 
 /* dyn routines */
-void *c_dyn_alloc(CArr *, usize, usize);
-size c_dyn_cat(CArr *, void *, usize, usize);
-size c_dyn_fmt(CArr *, char *, ...);
-void c_dyn_free(CArr *);
-int c_dyn_ready(CArr *, usize, usize);
-int c_dyn_shrink(CArr *);
-size c_dyn_vfmt(CArr *, char *, va_list);
+void *c_dyn_alloc(ctype_arr *, usize, usize);
+size c_dyn_cat(ctype_arr *, void *, usize, usize);
+size c_dyn_fmt(ctype_arr *, char *, ...);
+void c_dyn_free(ctype_arr *);
+ctype_status c_dyn_ready(ctype_arr *, usize, usize);
+ctype_status c_dyn_shrink(ctype_arr *);
+size c_dyn_vfmt(ctype_arr *, char *, va_list);
 
 /* err routines */
 void c_err_die(int, char *, ...);
@@ -326,41 +326,41 @@ int c_err_warn(char *, ...);
 int c_err_warnx(char *, ...);
 
 /* exc routines */
-int c_exc_run(char *, char **);
-int c_exc_runenv(char *, char **, char **);
-int c_exc_setenv(char *, char *);
+ctype_status c_exc_run(char *, char **);
+ctype_status c_exc_runenv(char *, char **, char **);
+ctype_status c_exc_setenv(char *, char *);
 
 /* fmt routines */
-int c_fmt_fdflush(CFmt *);
-void c_fmt_fdinit(CFmt *, int, CArr *, size (*)(int, void *, usize));
-size c_fmt_fmt(CFmt *, char *);
-int c_fmt_install(int, int (*)(CFmt *));
+ctype_status c_fmt_fdflush(ctype_fmt *);
+void c_fmt_fdinit(ctype_fmt *, ctype_fd, ctype_arr *, ctype_iofn);
+size c_fmt_fmt(ctype_fmt *, char *);
+ctype_status c_fmt_install(int, ctype_fmtfn);
 
 /* gen routines */
 char *c_gen_basename(char *);
 char *c_gen_dirname(char *);
 
 /* hsh routines */
-u32int c_hsh_state0(CHst *);
-void c_hsh_all(CHst *, CHmd *, char *, usize);
-void c_hsh_digest(CHst *, CHmd *, char *);
-int c_hsh_putfile(CHst *, CHmd *, char *);
-int c_hsh_putfd(CHst *, CHmd *, int, usize);
+u32int c_hsh_state0(ctype_hst *);
+void c_hsh_all(ctype_hst *, ctype_hmd *, char *, usize);
+void c_hsh_digest(ctype_hst *, ctype_hmd *, char *);
+ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
+ctype_status c_hsh_putfd(ctype_hst *, ctype_hmd *, ctype_fd, usize);
 
 /* ioq routines */
-size c_ioq_feed(CIoq *);
-int c_ioq_flush(CIoq *);
-size c_ioq_fmt(CIoq *, char *, ...);
-size c_ioq_get(CIoq *, char *, usize);
-int c_ioq_getln(CIoq *, CArr *);
-void c_ioq_init(CIoq *, int, CArr *, size (*)(int, void *, usize));
-size c_ioq_nput(CIoq *, char *, usize);
-void *c_ioq_peek(CIoq *);
-size c_ioq_put(CIoq *, char *);
-int c_ioq_putfd(CIoq *, int, usize);
-int c_ioq_putfile(CIoq *, char *);
-void c_ioq_seek(CIoq *, usize);
-size c_ioq_vfmt(CIoq *, char *, va_list);
+size c_ioq_feed(ctype_ioq *);
+ctype_status c_ioq_flush(ctype_ioq *);
+size c_ioq_fmt(ctype_ioq *, char *, ...);
+size c_ioq_get(ctype_ioq *, char *, usize);
+ctype_status c_ioq_getln(ctype_ioq *, ctype_arr *);
+void c_ioq_init(ctype_ioq *, ctype_fd, ctype_arr *, ctype_iofn);
+size c_ioq_nput(ctype_ioq *, char *, usize);
+void *c_ioq_peek(ctype_ioq *);
+size c_ioq_put(ctype_ioq *, char *);
+ctype_status c_ioq_putfd(ctype_ioq *, ctype_fd, usize);
+ctype_status c_ioq_putfile(ctype_ioq *, char *);
+void c_ioq_seek(ctype_ioq *, usize);
+size c_ioq_vfmt(ctype_ioq *, char *, va_list);
 
 /* mem routines */
 void *c_mem_ccpy(void *, usize, void *, int);
@@ -374,13 +374,13 @@ void *c_mem_set(void *, usize, int);
 
 /* std routines */
 void *c_std_alloc(usize, usize);
-void *c_std_bsearch(void *, usize, usize, void *, int (*)(void *, void *));
+void *c_std_bsearch(void *, usize, usize, void *, ctype_cmpfn);
 void *c_std_calloc(usize, usize);
 void c_std_exit(int);
 void *c_std_free_(void *);
 void *c_std_realloc(void *, usize, usize);
-void c_std_setalloc(void *(*)(void *, usize, usize));
-void c_std_sort(void *, usize, usize, int (*)(void *, void *));
+void c_std_setalloc(ctype_allocfn);
+void c_std_sort(void *, usize, usize, ctype_cmpfn);
 vlong c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 
 /* str routines */
@@ -392,63 +392,63 @@ char *c_str_str(char *, usize, char *);
 
 /* sys routines */
 void c_sys_abort(void);
-size c_sys_allrw(size (*)(int, void *, usize), int, void *, usize);
+size c_sys_allrw(ctype_iofn, ctype_fd, void *, usize);
 vlong c_sys_call_(vlong, ...);
-int c_sys_chdir(char *);
-int c_sys_chown(char *, uint, uint);
-int c_sys_close(int);
+ctype_status c_sys_chdir(char *);
+ctype_status c_sys_chown(char *, ctype_id, ctype_id);
+ctype_status c_sys_close(int);
 long c_sys_conf(int);
-int c_sys_dup(int, int);
-int c_sys_errstr(char *, usize);
-int c_sys_exec(char *, char **, char **);
+ctype_status c_sys_dup(ctype_fd, ctype_fd);
+void c_sys_errstr(char *, usize);
+ctype_status c_sys_exec(char *, char **, char **);
 void c_sys_exit(int);
-int c_sys_fchdir(int);
-int c_sys_fchown(int, uint, uint);
-int c_sys_fstat(CStat *, int);
+ctype_status c_sys_fchdir(ctype_fd);
+ctype_status c_sys_fchown(ctype_fd, ctype_id, ctype_id);
+ctype_status c_sys_fstat(ctype_stat *, ctype_fd);
 char *c_sys_getcwd(char *, usize);
 char *c_sys_getenv(char *);
-uint c_sys_getgid(void);
+ctype_id c_sys_getgid(void);
 char *c_sys_getsyserr(void);
-uint c_sys_getuid(void);
-int c_sys_link(char *, char *);
-int c_sys_llink(char *, char *);
-int c_sys_lstat(CStat *, char *);
-int c_sys_mkdir(char *, ushort);
-int c_sys_mknod(char *, uint, ulong);
-void *c_sys_mmap(void *, usize, int, int, int, int);
-int c_sys_munmap(void *, usize);
-int c_sys_open(char *, int, int);
-size c_sys_read(int, void *, usize);
+ctype_id c_sys_getuid(void);
+ctype_status c_sys_link(char *, char *);
+ctype_status c_sys_llink(char *, char *);
+ctype_status c_sys_lstat(ctype_stat *, char *);
+ctype_status c_sys_mkdir(char *, uint);
+ctype_status c_sys_mknod(char *, uint, ctype_fsid);
+void *c_sys_mmap(void *, usize, int, uint, ctype_fd, ctype_fssize);
+ctype_status c_sys_munmap(void *, usize);
+ctype_fd c_sys_open(char *, uint, uint);
+size c_sys_read(ctype_fd, void *, usize);
 size c_sys_readlink(char *, usize, char *);
-int c_sys_rmdir(char *);
-vlong c_sys_seek(int, vlong, int);
-int c_sys_stat(CStat *, char *);
+ctype_status c_sys_rmdir(char *);
+ctype_fssize c_sys_seek(ctype_fd, ctype_fssize, int);
+ctype_status c_sys_stat(ctype_stat *, char *);
 char *c_sys_strerror(int, char *, usize);
-int c_sys_symlink(char *, char *);
-int c_sys_unlink(char *);
+ctype_status c_sys_symlink(char *, char *);
+ctype_status c_sys_unlink(char *);
 void c_sys_werrstr(char *, ...);
-size c_sys_write(int, void *, usize);
+size c_sys_write(ctype_fd, void *, usize);
 
 /* tai routines */
-void c_tai_add(CTai *, CTai *, CTai *);
-double c_tai_approx(CTai *);
-int c_tai_less(CTai *, CTai *);
-void c_tai_pack(char *, CTai *);
-void c_tai_now(CTai *);
-void c_tai_sub(CTai *, CTai *, CTai *);
-void c_tai_unpack(char *, CTai *);
+void c_tai_add(ctype_tai *, ctype_tai *, ctype_tai *);
+double c_tai_approx(ctype_tai *);
+int c_tai_less(ctype_tai *, ctype_tai *);
+void c_tai_pack(char *, ctype_tai *);
+void c_tai_now(ctype_tai *);
+void c_tai_sub(ctype_tai *, ctype_tai *, ctype_tai *);
+void c_tai_unpack(char *, ctype_tai *);
 
 /* taia routines */
-void c_taia_add(CTaia *, CTaia *, CTaia *);
-double c_taia_approx(CTaia *);
-double c_taia_frac(CTaia *);
-void c_taia_half(CTaia *, CTaia *);
-int c_taia_less(CTaia *, CTaia *);
-void c_taia_now(CTaia *);
-void c_taia_pack(char *, CTaia *);
-void c_taia_sub(CTaia *, CTaia *, CTaia *);
-void c_taia_tai(CTaia *, CTai *);
-void c_taia_unpack(char *, CTaia *);
+void c_taia_add(ctype_taia *, ctype_taia *, ctype_taia *);
+double c_taia_approx(ctype_taia *);
+double c_taia_frac(ctype_taia *);
+void c_taia_half(ctype_taia *, ctype_taia *);
+int c_taia_less(ctype_taia *, ctype_taia *);
+void c_taia_now(ctype_taia *);
+void c_taia_pack(char *, ctype_taia *);
+void c_taia_sub(ctype_taia *, ctype_taia *, ctype_taia *);
+void c_taia_tai(ctype_taia *, ctype_tai *);
+void c_taia_unpack(char *, ctype_taia *);
 
 /* uint routines */
 char *c_uint_16bigpack(char *, u16int);
@@ -465,22 +465,22 @@ char *c_uint_64pack(char *, u64int);
 u64int c_uint_64unpack(char *);
 
 /* arr variables */
-extern CArr *arr_zero;
+extern ctype_arr *arr_zero;
 
 /* hsh variables */
-extern CHmd *c_hsh_crc32b;
-extern CHmd *c_hsh_crc32p;
-extern CHmd *c_hsh_djb;
-extern CHmd *c_hsh_edf;
-extern CHmd *c_hsh_sha1;
-extern CHmd *c_hsh_sha256;
-extern CHmd *c_hsh_sha512;
-extern CHmd *c_hsh_whirlpool;
+extern ctype_hmd *c_hsh_crc32b;
+extern ctype_hmd *c_hsh_crc32p;
+extern ctype_hmd *c_hsh_djb;
+extern ctype_hmd *c_hsh_edf;
+extern ctype_hmd *c_hsh_sha1;
+extern ctype_hmd *c_hsh_sha256;
+extern ctype_hmd *c_hsh_sha512;
+extern ctype_hmd *c_hsh_whirlpool;
 
 /* ioq variables */
-extern CIoq *ioq0;
-extern CIoq *ioq1;
-extern CIoq *ioq2;
+extern ctype_ioq *ioq0;
+extern ctype_ioq *ioq1;
+extern ctype_ioq *ioq2;
 
 /* std variables */
 extern char *argv0;

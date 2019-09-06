@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-int
-c_cdb_mkadd(CCdbmk *p, char *k, usize klen, char *s, usize dlen)
+ctype_status
+c_cdb_mkadd(ctype_cdbmk *p, char *k, usize klen, char *s, usize dlen)
 {
-	CHst hs;
+	ctype_hst hs;
 
 	if (c_cdb_mkaddbegin(p, klen, dlen) < 0)
 		goto fail;

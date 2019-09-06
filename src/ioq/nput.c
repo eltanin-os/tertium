@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_ioq_nput(CIoq *p, char *s, usize n)
+c_ioq_nput(ctype_ioq *p, char *s, usize n)
 {
 	size r, v;
 
