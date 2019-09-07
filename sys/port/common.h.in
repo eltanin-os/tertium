@@ -261,5 +261,5 @@ typedef void *(*ctype_allocfn)(void *, usize, usize);
 typedef struct dirent __fb_dirent;
 
 /* sys types */
-typedef struct timespec CTime;
+typedef struct timespec ctype_time;
 typedef struct stat ctype_stat;
