@@ -160,10 +160,10 @@ typedef struct {
 } __fb_dirent;
 
 /* sys types */
-typedef struct CTime CTime;
+typedef struct ctype_time ctype_time;
 typedef struct ctype_stat ctype_stat;
 
-struct CTime {
+struct ctype_time {
 	vlong sec;
 	ulong nsec;
 };
@@ -180,8 +180,8 @@ struct ctype_stat {
 	ulong size;
 	ulong blksize;
 	ulong blocks;
-	CTime atim;
-	CTime mtim;
-	CTime ctim;
+	ctype_time atim;
+	ctype_time mtim;
+	ctype_time ctim;
 	long __unused[3];
 };
