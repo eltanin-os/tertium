@@ -420,6 +420,7 @@ ctype_status c_sys_munmap(void *, usize);
 ctype_fd c_sys_open(char *, uint, uint);
 size c_sys_read(ctype_fd, void *, usize);
 size c_sys_readlink(char *, usize, char *);
+ctype_status c_sys_rename(char *, char *);
 ctype_status c_sys_rmdir(char *);
 ctype_fssize c_sys_seek(ctype_fd, ctype_fssize, int);
 ctype_status c_sys_stat(ctype_stat *, char *);
