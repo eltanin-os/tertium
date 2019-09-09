@@ -21,6 +21,7 @@
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/syscall.h>
+#include <sys/utsname.h>
 
 #include <errno.h>
 #include <dirent.h>
@@ -251,7 +252,7 @@ typedef int ctype_error;
 typedef int ctype_status;
 typedef uvlong ctype_fsid; /* dev, ino, nlink */
 typedef id_t ctype_id; /* gid, pid, uid */
-typedef off_t ctype_fssize; /* file size, block size, block count */
+typedef vlong ctype_fssize; /* file size, block size, block count */
 
 typedef int (*ctype_cmpfn)(void *, void *);
 typedef size (*ctype_iofn)(int, void *, usize);
@@ -263,3 +264,4 @@ typedef struct dirent __fb_dirent;
 /* sys types */
 typedef struct timespec ctype_time;
 typedef struct stat ctype_stat;
+typedef struct utsname ctype_utsname;
