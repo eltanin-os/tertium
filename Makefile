@@ -171,6 +171,7 @@ LIBCSRC=\
 	src/sys/stat.c\
 	src/sys/strerror.c\
 	src/sys/symlink.c\
+	src/sys/umask.c\
 	src/sys/uname.c\
 	src/sys/unlink.c\
 	src/sys/werrstr.c\

@@ -426,6 +426,7 @@ ctype_fssize c_sys_seek(ctype_fd, ctype_fssize, int);
 ctype_status c_sys_stat(ctype_stat *, char *);
 char *c_sys_strerror(int, char *, usize);
 ctype_status c_sys_symlink(char *, char *);
+uint c_sys_umask(uint);
 ctype_status c_sys_uname(ctype_utsname *);
 ctype_status c_sys_unlink(char *);
 void c_sys_werrstr(char *, ...);
