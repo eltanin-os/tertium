@@ -106,6 +106,8 @@ c_dir_read(ctype_dir *p)
 			ep->info = C_FSDP;
 			return ep;
 		}
+		while (p->child)
+			c_adt_lfree(c_adt_lpop(&p->child));
 		if ((p->child = builddir(p)) == (void *)-1) {
 			ep->info = C_FSDNR;
 			if (errno == C_ENOMEM) {
@@ -133,9 +135,6 @@ c_dir_read(ctype_dir *p)
 
 	cur = ep->__p;
 	if (cur) {
-		while (p->cur)
-			c_adt_lfree(c_adt_lpop(&p->cur));
-
 		p->cur = cur;
 		ep = cur->p;
 		ep->info = C_FSDP;
