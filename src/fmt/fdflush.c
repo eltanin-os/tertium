@@ -4,8 +4,12 @@
 ctype_status
 c_fmt_fdflush(ctype_fmt *p)
 {
-	if (c_sys_allrw(p->op, (uintptr)p->farg, p->mb->p, p->mb->n) < 0)
+	size r;
+
+	if ((r = c_sys_allrw(p->op, (uintptr)p->farg, p->mb->p, p->mb->n)) < 0)
 		return -1;
+
+	c_arr_trunc(p->mb, c_arr_bytes(p->mb) - r, sizeof(uchar));
 
 	return 0;
 }
