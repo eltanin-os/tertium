@@ -14,8 +14,10 @@ __dir_newfile(char *path, char *name, uint opts)
 	uchar *sp;
 
 	nlen = c_str_len(name, C_USHRTMAX);
-	if (name[nlen - 1] == '/')
-		nlen--;
+	if (name[nlen] != 0) {
+		while (name[nlen - 1] == '/')
+			--nlen;
+	}
 
 	plen = c_str_len(path, C_USIZEMAX);
 	len = sizeof(*p) + sizeof(*ep) + plen + nlen + 2;
