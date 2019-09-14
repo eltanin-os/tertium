@@ -49,6 +49,7 @@ LIBCSRC=\
 	src/cdb/mkfinish.c\
 	src/cdb/mkstart.c\
 	src/cdb/read.c\
+	src/dir/children.c\
 	src/dir/close.c\
 	src/dir/info.c\
 	src/dir/newfile.c\

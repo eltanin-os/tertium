@@ -165,6 +165,7 @@ struct ctype_dent {
 
 struct ctype_dir {
 	ctype_node *cur;
+	ctype_node *ccur;
 	ctype_node *child;
 	ctype_arr hist;
 	ctype_fsid dev;
@@ -301,6 +302,7 @@ ctype_status c_cdb_mkstart(ctype_cdbmk *, ctype_fd);
 ctype_status c_cdb_read(ctype_cdb *, char *, usize, u32int);
 
 /* dir routines */
+ctype_dent *c_dir_children(ctype_dir *);
 ctype_status c_dir_close(ctype_dir *);
 ctype_status c_dir_open(ctype_dir *, char **, uint, ctype_cmpfn);
 ctype_dent *c_dir_read(ctype_dir *);
