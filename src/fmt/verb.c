@@ -103,13 +103,13 @@ fmtcat(ctype_fmt *p, char *s, usize n)
 	if ((p->flags & C_FMTPREC) && n > (usize)p->prec)
 		n = p->prec;
 
-	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
+	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
 
 	if (__fmt_trycat(p, s, n, sizeof(uchar)) < 0)
 		return -1;
 
-	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
+	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
 
 	return 0;
