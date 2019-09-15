@@ -156,6 +156,7 @@ LIBCSRC=\
 	src/sys/getgid.c\
 	src/sys/getsyserr.c\
 	src/sys/getuid.c\
+	src/sys/isatty.c\
 	src/sys/link.c\
 	src/sys/llink.c\
 	src/sys/lstat.c\

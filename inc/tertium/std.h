@@ -412,6 +412,7 @@ char *c_sys_getenv(char *);
 ctype_id c_sys_getgid(void);
 char *c_sys_getsyserr(void);
 ctype_id c_sys_getuid(void);
+int c_sys_isatty(int fd);
 ctype_status c_sys_link(char *, char *);
 ctype_status c_sys_llink(char *, char *);
 ctype_status c_sys_lstat(ctype_stat *, char *);
