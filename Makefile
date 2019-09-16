@@ -140,6 +140,7 @@ LIBCSRC=\
 	src/sys/allrw.c\
 	src/sys/call.c\
 	src/sys/chdir.c\
+	src/sys/chmod.c\
 	src/sys/chown.c\
 	src/sys/close.c\
 	src/sys/conf.c\
@@ -149,6 +150,7 @@ LIBCSRC=\
 	src/sys/exec.c\
 	src/sys/exit.c\
 	src/sys/fchdir.c\
+	src/sys/fchmod.c\
 	src/sys/fchown.c\
 	src/sys/fstat.c\
 	src/sys/getcwd.c\
