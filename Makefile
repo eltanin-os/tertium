@@ -87,6 +87,7 @@ LIBCSRC=\
 	src/hsh/digest.c\
 	src/hsh/djb.c\
 	src/hsh/edf.c\
+	src/hsh/fletcher32.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
 	src/hsh/rotate.c\

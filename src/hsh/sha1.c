@@ -100,7 +100,7 @@ update(ctype_hst *p, char *data, usize n)
 static void
 end(ctype_hst *p)
 {
-	unsigned r;
+	uint r;
 
 	r = p->len % 64;
 	p->buf[r++] = 0x80;
