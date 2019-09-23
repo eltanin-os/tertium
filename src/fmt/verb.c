@@ -216,7 +216,7 @@ Vint(ctype_fmt *p)
 
 	if ((p->flags & C_FMTZERO) && !(p->flags & (C_FMTLEFT | C_FMTPREC))) {
 		p->width -= sizeof(buf) - i;
-		for (; p->width > 0; p->width--)
+		for (; p->width >= 0; --p->width)
 			buf[--i] = '0';
 		p->width = 0;
 	}
