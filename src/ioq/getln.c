@@ -19,7 +19,7 @@ c_ioq_getln(ctype_ioq *p, ctype_arr *b)
 		else
 			n = (nl - s) + 1;
 
-		if (c_arr_cat(b, s, n, sizeof(uchar)) < 0)
+		if (c_dyn_cat(b, s, n, sizeof(uchar)) < 0)
 			return -1;
 
 		c_ioq_seek(p, n);
