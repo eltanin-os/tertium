@@ -15,7 +15,8 @@ c_arr_trunc(ctype_arr *p, usize m, usize n)
 		return 0;
 
 	p->n = m;
-	p->p[p->n] = 0;
+	if (p->p)
+		p->p[p->n] = 0;
 
 	return 0;
 }
