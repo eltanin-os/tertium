@@ -153,6 +153,7 @@ LIBCSRC=\
 	src/sys/fchdir.c\
 	src/sys/fchmod.c\
 	src/sys/fchown.c\
+	src/sys/fork.c\
 	src/sys/fstat.c\
 	src/sys/getcwd.c\
 	src/sys/getenv.c\
@@ -168,6 +169,7 @@ LIBCSRC=\
 	src/sys/mmap.c\
 	src/sys/munmap.c\
 	src/sys/open.c\
+	src/sys/pipe.c\
 	src/sys/read.c\
 	src/sys/readlink.c\
 	src/sys/rename.c\
