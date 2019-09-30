@@ -181,6 +181,8 @@ LIBCSRC=\
 	src/sys/umask.c\
 	src/sys/uname.c\
 	src/sys/unlink.c\
+	src/sys/wait.c\
+	src/sys/waitpid.c\
 	src/sys/werrstr.c\
 	src/sys/write.c\
 	src/tai/add.c\

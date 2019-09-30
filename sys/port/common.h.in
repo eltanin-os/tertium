@@ -207,6 +207,7 @@
 #define C_DEFFILEMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
 
 /* compatibility macros */
+#define SYS_waitpid SYS_wait4
 #ifdef __NetBSD__
  #define SYS_clock_gettime SYS___clock_gettime50
  #define SYS_brk SYS_break

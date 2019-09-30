@@ -436,6 +436,8 @@ ctype_status c_sys_symlink(char *, char *);
 uint c_sys_umask(uint);
 ctype_status c_sys_uname(ctype_utsname *);
 ctype_status c_sys_unlink(char *);
+ctype_id c_sys_wait(int *);
+ctype_id c_sys_waitpid(ctype_id, int *, uint);
 void c_sys_werrstr(char *, ...);
 size c_sys_write(ctype_fd, void *, usize);
 
