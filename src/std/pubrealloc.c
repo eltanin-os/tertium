@@ -324,7 +324,7 @@ mappages(usize pages)
 	lastidx = ptr2idx((t = (uchar *)rr + bytes)) - 1;
 	mbrk = t;
 
-	if ((lastidx + 1) >= minfo && extendpgdir(lastidx)) {
+	if ((lastidx + 1) >= minfo && !extendpgdir(lastidx)) {
 		lastidx = ptr2idx((mbrk = r)) - 1;
 		if (_brk(mbrk)) {
 			c_sys_write(2, "brk(2) failed [internal error]\n", 31);
@@ -547,7 +547,8 @@ irealloc(void *p, usize n)
 
 		o = (*mp)->size;
 
-		if (!ISOPT(OREALLOC) && n <= o && (n > o / 2 || o == mminsize)) {
+		if (!ISOPT(OREALLOC) &&
+		    n <= o && (n > o / 2 || o == mminsize)) {
 			if (ISOPT(OJUNK))
 				c_mem_set((uchar *)p + n, o - n, JUNK);
 			return p;
