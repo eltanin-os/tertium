@@ -121,6 +121,7 @@
 #define SYS_fchmod 91
 #define SYS_chown 92
 #define SYS_fchown 93
+#define SYS_lchown 94
 #define SYS_umask 95
 #define SYS_getuid 102
 #define SYS_getgid 104
