@@ -1,5 +1,9 @@
-PREFIX=    /usr/local
-MANPREFIX= $(PREFIX)/share/man
+INSTALL= /usr/bin/install
+
+PREFIX= /usr/local
+MANDIR= $(PREFIX)/share/man
+LIBDIR= $(PREFIX)/lib
+INCDIR= $(PREFIX)/include
 
 AR     = ar
 CC     = cc

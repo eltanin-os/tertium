@@ -7,9 +7,7 @@ INC= -I inc -I oss/$(OSNAME) -I oss/$(OSNAME)/$(OBJTYPE)
 
 HDR=\
 	inc/tertium/std.h\
-	inc/tertium/cpu.h\
-	sys/$(OSNAME)/common.h.in\
-	sys/$(OSNAME)/$(OBJTYPE).h.in
+	inc/tertium/cpu.h
 
 # LIB SOURCE
 ASMSRC=\
@@ -254,6 +252,12 @@ $(LIBC): $(LIBCOBJ)
 	$(RANLIB) $@
 
 # USER ACTIONS
+install: all
+	$(INSTALL) -dm 755 $(DESTDIR)$(INCDIR)/tertium
+	$(INSTALL) -dm 755 $(DESTDIR)$(LIBDIR)
+	$(INSTALL) -cm 644 $(HDR) $(DESTDIR)$(INCDIR)/tertium
+	$(INSTALL) -cm 644 $(LIB) $(DESTDIR)$(LIBDIR)
+
 clean:
 	rm -f $(BIN) $(OBJ) $(LIB)
 	rm -f inc/tertium/cpu.h
