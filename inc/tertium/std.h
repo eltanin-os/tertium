@@ -266,6 +266,7 @@ void c_adt_lfree(ctype_node *);
 ctype_node *c_adt_lpop(ctype_node **);
 ctype_status c_adt_lpush(ctype_node **, ctype_node *);
 void c_adt_lsort(ctype_node **, ctype_cmpfn);
+ctype_status c_adt_ltpush(ctype_node **, ctype_node *);
 void c_adt_qinit(ctype_queue *, char *, usize);
 ctype_status c_adt_qpop(ctype_queue *, ctype_arr *, usize, usize);
 ctype_status c_adt_qpops(ctype_queue *, ctype_arr *);

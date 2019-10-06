@@ -20,6 +20,7 @@ LIBCSRC=\
 	src/adt/lpop.c\
 	src/adt/lpush.c\
 	src/adt/lsort.c\
+	src/adt/ltpush.c\
 	src/adt/qinit.c\
 	src/adt/qpop.c\
 	src/adt/qpops.c\
