@@ -81,9 +81,25 @@
 #define C_ISREG(a) (((a) & C_IFREG) == C_IFREG)
 #define C_ISSCK(a) (((a) & C_IFSCK) == C_IFSCK)
 
-#define C_ACCESSPERMS (0x1C0|0x038|0x007)
-#define C_ALLPERMS (0x800|0x400|0x200|0x1C0|0x038|0x007)
-#define C_DEFFILEMODE (0x100|0x080|0x020|0x010|0x004|0x002)
+#define C_ISUID 04000
+#define C_ISGID 02000
+#define C_ISVTX 01000
+#define C_IRUSR 00400
+#define C_IWUSR 00200
+#define C_IXUSR 00100
+#define C_IRWXU 00700
+#define C_IRGRP 00040
+#define C_IWGRP 00020
+#define C_IXGRP 00010
+#define C_IRWXG 00070
+#define C_IROTH 00004
+#define C_IWOTH 00002
+#define C_IXOTH 00001
+#define C_IRWXO 00007
+
+#define C_ACCESSPERMS (C_IRWXU|C_IRWXG|C_IRWXO)
+#define C_ALLPERMS (C_ISUID|C_ISGID|C_ISVTX|C_IRWXU|C_IRWXG|C_IRWXO)
+#define C_DEFFILEMODE (C_IRUSR|C_IWUSR|C_IRGRP|C_IWGRP|C_IROTH|C_IWOTH)
 
 /* types */
 typedef unsigned short ushort;
