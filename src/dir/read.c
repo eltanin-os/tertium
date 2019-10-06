@@ -93,10 +93,8 @@ c_dir_read(ctype_dir *p)
 	instr = ep->instr;
 	ep->instr = 0;
 
-	switch (instr) {
-	case C_FSAGN:
+	if (instr == C_FSAGN) {
 		ep->info = __dir_info(p, ep);
-	case C_FSINT:
 		return ep;
 	}
 

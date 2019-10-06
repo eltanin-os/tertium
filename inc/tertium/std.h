@@ -31,7 +31,6 @@ enum {
 	C_FSAGN = 1,
 	C_FSFLW = 2,
 	C_FSSKP = 3,
-	C_FSINT = 4,
 
 	/* opts */
 	C_FSLOG = 1 << 0,
