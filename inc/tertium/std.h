@@ -374,6 +374,12 @@ void *c_mem_mem(void *, usize, void *, usize);
 void *c_mem_rchr(void *, usize, int);
 void *c_mem_set(void *, usize, int);
 
+/* rand routines */
+char *c_rand_genseed(char *, usize);
+char *c_rand_data(char *, usize);
+char *c_rand_name(char *, usize);
+u32int c_rand_u32int(u32int);
+
 /* std routines */
 void *c_std_alloc(usize, usize);
 void *c_std_bsearch(void *, usize, usize, void *, ctype_cmpfn);
@@ -413,6 +419,7 @@ ctype_status c_sys_fstat(ctype_stat *, ctype_fd);
 char *c_sys_getcwd(char *, usize);
 char *c_sys_getenv(char *);
 ctype_id c_sys_getgid(void);
+ctype_id c_sys_getpid(void);
 char *c_sys_getsyserr(void);
 ctype_id c_sys_getuid(void);
 int c_sys_isatty(int fd);

@@ -120,6 +120,10 @@ LIBCSRC=\
 	src/mem/mem.c\
 	src/mem/rchr.c\
 	src/mem/set.c\
+	src/rand/data.c\
+	src/rand/genseed.c\
+	src/rand/name.c\
+	src/rand/u32int.c\
 	src/std/argv0.c\
 	src/std/alloc.c\
 	src/std/bsearch.c\
@@ -157,6 +161,7 @@ LIBCSRC=\
 	src/sys/getcwd.c\
 	src/sys/getenv.c\
 	src/sys/getgid.c\
+	src/sys/getpid.c\
 	src/sys/getsyserr.c\
 	src/sys/getuid.c\
 	src/sys/isatty.c\
