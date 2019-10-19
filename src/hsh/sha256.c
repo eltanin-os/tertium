@@ -67,7 +67,7 @@ compress(ctype_hst *p, char *data)
 	int i;
 
 	for (i = 0; i < 16; i++)
-		w[i] = c_uint_32bigunpack(data + i * 4);
+		w[i] = c_uint_32bigunpack(data + (i << 2));
 
 	for (i = 16; i < 64; i++)
 		w[i] = G1(w[i - 2]) + w[i - 7] + G0(w[i - 15]) + w[i - 16];
@@ -120,7 +120,7 @@ end(ctype_hst *p)
 	}
 
 	c_mem_set(p->buf + r, 56 - r, 0);
-	c_uint_64bigpack((char *)p->buf + 56, p->len * 8);
+	c_uint_64bigpack((char *)p->buf + 56, p->len << 3);
 	compress(p, (char *)p->buf);
 }
 
@@ -130,5 +130,5 @@ digest(ctype_hst *p, char *s)
 	int i;
 
 	for (i = 0; i < 8; i++)
-		c_uint_32bigpack(s + i * 4, p->st.x32[i]);
+		c_uint_32bigpack(s + (i << 2), p->st.x32[i]);
 }

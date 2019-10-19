@@ -89,7 +89,6 @@ LIBCSRC=\
 	src/hsh/fletcher32.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
-	src/hsh/rotate.c\
 	src/hsh/sha1.c\
 	src/hsh/sha256.c\
 	src/hsh/sha512.c\

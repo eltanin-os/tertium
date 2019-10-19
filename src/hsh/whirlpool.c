@@ -157,7 +157,7 @@ static u64int cont[] = {
 #define SB6(a) __hsh_ror64(sbox[(a)], 48)
 #define SB7(a) __hsh_ror64(sbox[(a)], 56)
 
-#define GB(a,i,j) ((a[(i) & 7] >> (8 * (j))) & 255)
+#define GB(a,i,j) ((a[(i) & 7] >> ((j) << 3)) & 255)
 
 #define THETA_PI_GAMMA(a, i) \
 (SB0(GB(a, i-0, 7)) ^        \
@@ -206,7 +206,7 @@ compress(ctype_hst *p, char *data)
 	k[0][7] = p->st.x64[7];
 
 	for (i = 0; i < 8; i++) {
-		t[0][i] = c_uint_64bigunpack(data + (8 * i));
+		t[0][i] = c_uint_64bigunpack(data + (i << 3));
 		t[2][i] = t[0][i];
 		t[0][i] ^= k[0][i];
 	}
@@ -261,7 +261,7 @@ end(ctype_hst *p)
 	}
 
 	c_mem_set(p->buf + r, 56 - r, 0);
-	c_uint_64bigpack((char *)p->buf + 56, p->len * 8);
+	c_uint_64bigpack((char *)p->buf + 56, p->len << 3);
 	compress(p, (char *)p->buf);
 }
 
@@ -271,5 +271,5 @@ digest(ctype_hst *p, char *s)
 	int i;
 
 	for (i = 0; i < 8; i++)
-		c_uint_64bigpack(s + i * 8, p->st.x64[i]);
+		c_uint_64bigpack(s + (i << 3), p->st.x64[i]);
 }
