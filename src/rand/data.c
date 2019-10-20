@@ -66,9 +66,8 @@ c_rand_data(char *s, usize n)
 		r = C_MIN(n, 64);
 		++buf[0], ++buf[5], ++buf[11];
 		surf(tmp, buf, (void *)seedbuf);
-		c_mem_cpy(s, r, tmp);
-		s += r;
 		n -= r;
+		c_mem_cpy(s + n, r, tmp);
 	}
 	return s;
 }
