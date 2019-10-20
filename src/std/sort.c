@@ -1,65 +1,65 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define F(j, m, k, r, f, v, n) \
-((j) < (m) && ((k) >= (r) || (f)((v) + (n) * (j), (v) + (n) * (k)) <= 0))
-
-static void
+static inline void
 swap(uchar *a, uchar *b, usize n)
 {
 	uchar t;
 
-	for (; n; n--) {
+	for (; n; --n, ++a, ++b) {
 		t = *a;
-		*a++ = *b;
-		*b++ = t;
+		*a = *b;
+		*b = t;
 	}
 }
 
 static void
-mrg(uchar *p, uchar *v, usize n, ctype_cmpfn f, int l, int m, int r)
+mrg(uchar *p, int l, int m, int r, uchar *v, usize n, ctype_cmpfn f)
 {
-	int i, j, k;
+	int idx[2], x;
 
-	i = j = l;
-	k = m;
+	idx[0] = l;
+	idx[1] = m;
 
-	for (; i < r; i++)
-		c_mem_cpy(p + n * i, n,
-		    v + n * (F(j, m, k, r, f, v, n) ? j++ : k++));
+	for (; l < r; ++l) {
+		x = !(idx[0] < m &&
+		    (idx[1] >= r || f(v + idx[0] * n, v + idx[1] * n) <= 0));
+		c_mem_cpy(p + l * n, n, v + idx[x] * n);
+		++idx[x];
+	}
 }
 
 static void
 isrt(uchar *v, usize m, usize n, ctype_cmpfn f)
 {
-	int i, j;
+	usize i, j;
 
-	i = 0;
-
-	for (; i < (int)m; i++)
-		for (j = i; j > 0 && f(v + n * (j - 1), v + n * j) > 0; j--)
-			swap(v + n * j, v + n * (j - 1), n);
+	for (i = 0; i < m; ++i)
+		for (j = i; j && f(v + (j - 1) * n, v + j * n) > 0; --j)
+			swap(v + j * n, v + (j - 1) * n, n);
 }
 
 static void
 msrt(uchar *v, usize m, usize n, ctype_cmpfn f)
 {
-	usize i, j, t;
+	usize i, j;
+	usize t;
 	uchar *p;
 
-	/* TODO: stable fallback that requires O(1) additional space */
-	if (!(p = c_std_alloc(m, n)))
+	if ((t = m * n) <= C_BIOSIZ) {
+		p = __builtin_alloca(t);
+	} else if (!(p = c_std_alloc(m, n))) {
+		isrt(v, m, n, f); /* TODO: fast fallback */
 		return;
+	}
 
-	i = 1;
-	t = m * n;
-
-	for (; i < m; i *= 2) {
+	for (i = 1; i < m; i *= 2) {
 		for (j = 0; j < m; j += i * 2)
-			mrg(p, v, n, f, j, C_MIN(j + i, m),
-			    C_MIN(j + i * 2, m));
+			mrg(p, j, C_MIN(j + i, m), C_MIN(j + i * 2, m),
+			    v, n, f);
 		c_mem_cpy(v, t, p);
 	}
+	c_std_free(p);
 }
 
 void
@@ -68,7 +68,7 @@ c_std_sort(void *v, usize m, usize n, ctype_cmpfn f)
 	if (C_OFLW_UM(usize, n, m))
 		return;
 
-	if (m < 32) {
+	if (m < 12) {
 		isrt(v, m, n, f);
 		return;
 	}
