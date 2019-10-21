@@ -4,13 +4,21 @@
 static inline void
 swap(uchar *a, uchar *b, usize n)
 {
-	uchar t;
-
 	for (; n; --n, ++a, ++b) {
-		t = *a;
-		*a = *b;
-		*b = t;
+		*a ^= *b;
+		*b ^= *a;
+		*a ^= *b;
 	}
+}
+
+static void
+isrt(uchar *v, usize m, usize n, ctype_cmpfn f)
+{
+	usize i, j;
+
+	for (i = 0; i < m; ++i)
+		for (j = i; j && f(v + (j - 1) * n, v + j * n) > 0; --j)
+			swap(v + j * n, v + (j - 1) * n, n);
 }
 
 static void
@@ -30,16 +38,6 @@ mrg(uchar *p, int l, int m, int r, uchar *v, usize n, ctype_cmpfn f)
 }
 
 static void
-isrt(uchar *v, usize m, usize n, ctype_cmpfn f)
-{
-	usize i, j;
-
-	for (i = 0; i < m; ++i)
-		for (j = i; j && f(v + (j - 1) * n, v + j * n) > 0; --j)
-			swap(v + j * n, v + (j - 1) * n, n);
-}
-
-static void
 msrt(uchar *v, usize m, usize n, ctype_cmpfn f)
 {
 	usize i, j;
@@ -53,9 +51,9 @@ msrt(uchar *v, usize m, usize n, ctype_cmpfn f)
 		return;
 	}
 
-	for (i = 1; i < m; i *= 2) {
-		for (j = 0; j < m; j += i * 2)
-			mrg(p, j, C_MIN(j + i, m), C_MIN(j + i * 2, m),
+	for (i = 1; i < m; i <<= 1) {
+		for (j = 0; j < m; j += i << 1)
+			mrg(p, j, C_MIN(j + i, m), C_MIN(j + (i << 1), m),
 			    v, n, f);
 		c_mem_cpy(v, t, p);
 	}
@@ -68,7 +66,7 @@ c_std_sort(void *v, usize m, usize n, ctype_cmpfn f)
 	if (C_OFLW_UM(usize, n, m))
 		return;
 
-	if (m < 12) {
+	if (m <= 12) {
 		isrt(v, m, n, f);
 		return;
 	}
