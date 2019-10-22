@@ -11,17 +11,19 @@
 char *
 c_rand_genseed(char *s, usize n)
 {
-	ctype_time tm;
+	ctype_taia now;
 	u64int r;
 
-	c_sys_call(SYS_clock_gettime, CLOCK_REALTIME, &tm);
-	r = F(F(F(F(F(tm.nsec)) + c_sys_getpid()) + (uintptr)s) + (uintptr)&n);
+	c_taia_now(&now);
+	r = (u64int)c_taia_approx(&now);
+	r = F(F(F(F(F(r)) + c_sys_getpid()) + (uintptr)s) + (uintptr)&n);
 	AVALANCHE();
 
 	while (n) {
 		n -= 8;
 		c_uint_64bigpack(s + n, r);
 		r = F(r ^ (n << 2));
+		AVALANCHE();
 	}
 
 	return s;
