@@ -16,6 +16,7 @@ and secure environment that produces more reliable software.
 * hsh: checksum and cryptographic hashes
 * ioq: buffered i/o
 * mem: operations on memory
+* rand: random data, numbers and strings
 * std: gereral routines
 * str: operations on C string
 * sys: system interaction
