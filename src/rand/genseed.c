@@ -7,13 +7,13 @@ c_rand_genseed(char *s, usize n)
 	ctype_hst hs;
 	ctype_taia now;
 	int r;
-	char buf[20];
+	char buf[36];
 
 	c_taia_now(&now);
 	c_taia_pack(buf, &now);
 	c_uint_32bigpack(buf + C_TAIA_PACK, c_sys_getpid());
-	c_uint_32bigpack(buf + 4 + C_TAIA_PACK, (uintptr)s);
-	c_uint_32bigpack(buf + 8 + C_TAIA_PACK, (uintptr)&n);
+	c_uint_64bigpack(buf + 4 + C_TAIA_PACK, (uintptr)s);
+	c_uint_64bigpack(buf + 8 + C_TAIA_PACK, (uintptr)&n);
 	c_hsh_all(&hs, c_hsh_edf, buf, sizeof(buf));
 
 	for (;;) {
@@ -24,7 +24,7 @@ c_rand_genseed(char *s, usize n)
 		if (!n)
 			break;
 
-		for (r = 0; r < 5; r++) {
+		for (r = 0; r < 9; r++) {
 			c_hsh_edf->update(&hs, buf, sizeof(buf));
 			c_hsh_edf->end(&hs);
 			c_uint_32bigpack(buf + (r << 2), c_hsh_state0(&hs));
