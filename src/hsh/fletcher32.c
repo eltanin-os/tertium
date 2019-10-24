@@ -28,7 +28,7 @@ init(ctype_hst *p)
 static void
 compress(ctype_hst *p, char *data)
 {
-	p->st.x32[1] += p->st.x32[0] += *(u16int *)(uintptr)data;
+	p->st.x32[1] += p->st.x32[0] += c_uint_16unpack(data);
 	if (--p->st.x32[2]) {
 		p->st.x32[0] = (p->st.x32[0] & 0xFFFF) + (p->st.x32[0] >> 16);
 		p->st.x32[1] = (p->st.x32[1] & 0xFFFF) + (p->st.x32[1] >> 16);
