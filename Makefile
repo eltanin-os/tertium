@@ -99,6 +99,7 @@ LIBCSRC=\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\
 	src/ioq/get.c\
+	src/ioq/getall.c\
 	src/ioq/getln.c\
 	src/ioq/init.c\
 	src/ioq/nput.c\

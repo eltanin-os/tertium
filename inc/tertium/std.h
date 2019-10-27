@@ -354,6 +354,7 @@ size c_ioq_feed(ctype_ioq *);
 ctype_status c_ioq_flush(ctype_ioq *);
 size c_ioq_fmt(ctype_ioq *, char *, ...);
 size c_ioq_get(ctype_ioq *, char *, usize);
+size c_ioq_getall(ctype_ioq *, char *, usize);
 ctype_status c_ioq_getln(ctype_ioq *, ctype_arr *);
 void c_ioq_init(ctype_ioq *, ctype_fd, ctype_arr *, ctype_iofn);
 size c_ioq_nput(ctype_ioq *, char *, usize);
