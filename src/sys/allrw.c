@@ -9,10 +9,11 @@ c_sys_allrw(ctype_iofn op, ctype_fd fd, void *p, usize n)
 
 	s = p;
 	t = 0;
-
 	while (n) {
-		if ((r = op(fd, p, n)) <= 0)
+		if ((r = op(fd, p, n)) < 0)
 			return r;
+		if (!r)
+			break;
 		t += r;
 		s += r;
 		n -= r;
