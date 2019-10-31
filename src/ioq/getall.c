@@ -13,6 +13,7 @@ c_ioq_getall(ctype_ioq *p, char *b, usize n)
 		if (!r)
 			break;
 		t += r;
+		b += r;
 		n -= r;
 	}
 
