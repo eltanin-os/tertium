@@ -39,41 +39,15 @@ struct fmtverb __fmt_VFmts[] = {
 	{   0, nil   },
 };
 
-static size
-nobuffer(ctype_fmt *p, char *s, usize n)
-{
-	return c_sys_allrw(p->op, (uintptr)p->farg, s, C_MIN(n, C_BIOSIZ));
-}
-
-static size
-buffered(ctype_fmt *p, char *s, usize n)
-{
-	if (n > c_arr_avail(p->mb) && p->fn(p) < 0)
-		return -1;
-
-	return c_arr_cat(p->mb, s, C_MIN(n, c_arr_avail(p->mb)), sizeof(uchar));
-}
-
 ctype_status
-__fmt_trycat(ctype_fmt *p, char *s, usize m, usize n)
+__fmt_trycat(ctype_fmt *p, char *s, usize n)
 {
-	size (*f)(ctype_fmt *, char *, usize);
 	size r;
 
-	if (C_OFLW_UM(usize, n, m))
+	if ((r = p->func(p, s, n)) < 0)
 		return -1;
 
-	m *= n;
-
-	f = p->mb->a ? buffered : nobuffer;
-	while (m) {
-		if ((r = f(p, s, m)) < 0)
-			return -1;
-		m -= r;
-		s += r;
-		p->nfmt += r;
-	}
-
+	p->nfmt += r;
 	return 0;
 }
 
@@ -85,7 +59,7 @@ fmtpad(ctype_fmt *p, usize n)
 	w = p->width - n;
 
 	for (; w > 0; w--)
-		if (__fmt_trycat(p, " ", 1, sizeof(uchar)) < 0)
+		if (__fmt_trycat(p, " ", 1) < 0)
 			return -1;
 
 	return 0;
@@ -106,7 +80,7 @@ fmtcat(ctype_fmt *p, char *s, usize n)
 	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
 		return -1;
 
-	if (__fmt_trycat(p, s, n, sizeof(uchar)) < 0)
+	if (__fmt_trycat(p, s, n) < 0)
 		return -1;
 
 	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)

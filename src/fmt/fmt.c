@@ -121,7 +121,7 @@ c_fmt_fmt(ctype_fmt *p, char *fmt)
 			continue;
 		}
 
-		__fmt_trycat(p, (char *)s, 1, sizeof(uchar));
+		__fmt_trycat(p, (char *)s, 1);
 	}
 
 	return p->nfmt - nfmt;

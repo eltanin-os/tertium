@@ -93,12 +93,18 @@ enum {
 #define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
 
 /* ioq macros */
-#define C_FD0 0
-#define C_FD1 1
-#define C_FD2 2
-#define C_BIOSIZ 8192
-#define C_ERRSIZ 512
-#define c_ioq_INIT(a, b, c) { (b), (c), (a) }
+enum {
+	/* default file descriptors */
+	C_FD0 = 0,
+	C_FD1 = 1,
+	C_FD2 = 2,
+
+	/* sizes */
+	C_BIOSIZ = 8192,
+	C_ERRSIZ = 512,
+};
+
+#define c_ioq_INIT(a, b, c) { (b), (c), (a), 0 }
 
 /* std macros */
 #define c_std_free(a) a = c_std_free_((a))
@@ -174,13 +180,13 @@ struct ctype_dir {
 
 /* fmt types */
 typedef struct ctype_fmt ctype_fmt;
+typedef ctype_status (*ctype_fmtopfn)(ctype_fmt *, char *, usize);
 typedef ctype_status (*ctype_fmtfn)(ctype_fmt *);
 
 struct ctype_fmt {
 	ctype_arr *mb;
 	va_list args;
-	ctype_iofn op;
-	ctype_fmtfn fn;
+	ctype_fmtopfn func;
 	usize nfmt;
 	int prec;
 	int r;
@@ -216,6 +222,7 @@ struct ctype_ioq {
 	ctype_arr *mb;
 	ctype_iofn op;
 	ctype_fd fd;
+	uchar opts;
 };
 
 /* cdb types */
@@ -333,8 +340,7 @@ ctype_status c_exc_runenv(char *, char **, char **);
 ctype_status c_exc_setenv(char *, char *);
 
 /* fmt routines */
-ctype_status c_fmt_fdflush(ctype_fmt *);
-void c_fmt_fdinit(ctype_fmt *, ctype_fd, ctype_arr *, ctype_iofn);
+void c_fmt_init(ctype_fmt *, void *, ctype_arr *, ctype_fmtopfn);
 size c_fmt_fmt(ctype_fmt *, char *);
 ctype_status c_fmt_install(int, ctype_fmtfn);
 
