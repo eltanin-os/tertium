@@ -11,12 +11,9 @@ c_hsh_putfd(ctype_hst *hs, ctype_hmd *p, ctype_fd fd, usize n)
 	char buf[C_BIOSIZ];
 	void *mp;
 
-	if (fd && !n)
-		return 0;
-
 	p->init(hs);
 
-	if (!fd || (mp = MMAP(fd, n)) == (void *)-1) {
+	if (!n || (mp = MMAP(fd, n)) == (void *)-1) {
 		while ((r = c_sys_read(fd, buf, sizeof(buf))) > 0)
 			p->update(hs, buf, r);
 		p->end(hs);
