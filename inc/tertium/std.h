@@ -102,6 +102,9 @@ enum {
 	/* sizes */
 	C_BIOSIZ = 8192,
 	C_ERRSIZ = 512,
+
+	/* private flags */
+	__IOQ_ONOFLUSH = 1 << 0,
 };
 
 #define c_ioq_INIT(a, b, c) { (b), (c), (a), 0 }
@@ -369,6 +372,7 @@ size c_ioq_put(ctype_ioq *, char *);
 ctype_status c_ioq_putfd(ctype_ioq *, ctype_fd, usize);
 ctype_status c_ioq_putfile(ctype_ioq *, char *);
 void c_ioq_seek(ctype_ioq *, usize);
+void c_ioq_setnoflush(ctype_ioq *);
 size c_ioq_vfmt(ctype_ioq *, char *, va_list);
 
 /* mem routines */
