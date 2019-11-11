@@ -8,20 +8,26 @@ __dir_newfile(char *path, char *name, uint opts)
 {
 	ctype_node *p;
 	ctype_dent *ep;
-	usize len;
-	usize plen;
+	usize len, plen;
 	ushort nlen;
 	uchar *sp;
 
-	nlen = c_str_len(name, C_USHRTMAX);
-	if (name[nlen] != 0) {
-		while (name[nlen - 1] == '/')
-			--nlen;
+	nlen = c_str_len(name, C_USIZEMAX);
+	plen = c_str_len(path, C_USIZEMAX);
+	if (!plen) {
+		for (; name[nlen - 1] == '/'; --nlen) ;
+		path = name;
+		if (!(name = c_mem_rchr(path, nlen, '/'))) {
+			name = path;
+			plen = 0;
+		} else {
+			++name;
+			plen = name - path;
+			nlen -= plen;
+		}
 	}
 
-	plen = c_str_len(path, C_USIZEMAX);
 	len = sizeof(*p) + sizeof(*ep) + plen + nlen + 2;
-
 	if (!(opts & C_FSNOI))
 		len += sizeof(ctype_stat) + 16;
 
@@ -46,6 +52,7 @@ __dir_newfile(char *path, char *name, uint opts)
 		if (ep->path[plen - 1] != '/')
 			ep->path[plen++] = '/';
 	}
+
 	ep->name = ep->path + plen;
 	c_mem_cpy(ep->name, nlen, name);
 	ep->name[nlen] = 0;
