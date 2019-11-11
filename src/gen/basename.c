@@ -11,9 +11,10 @@ c_gen_basename(char *s)
 		return ".";
 
 	n = c_str_len(s, C_USIZEMAX);
-	n--;
+	if (!--n)
+		return s;
 
-	for (; s[n] == '/'; n--) ;
+	for (; s[n] == '/'; --n) ;
 
 	s[n + 1] = 0;
 
