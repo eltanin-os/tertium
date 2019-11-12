@@ -86,7 +86,7 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 	if (c_sys_seek(p->fd, 0, SEEK_SET) < 0)
 		goto error_palloc;
 
-	if (c_sys_allrw(c_sys_write, p->fd, final, sizeof(final)) < 0)
+	if (c_std_allrw(c_sys_write, p->fd, final, sizeof(final)) < 0)
 		goto error_palloc;
 
 	return 0;

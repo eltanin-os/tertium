@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_sys_abort(void)
+c_std_abort(void)
 {
 	while (*(volatile int *)0) ;
 }

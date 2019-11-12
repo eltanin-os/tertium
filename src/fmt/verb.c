@@ -107,9 +107,9 @@ Verr(ctype_fmt *p)
 	char buf[C_ERRSIZ];
 
 	if (errno == C_ECSTM)
-		c_sys_errstr(buf, sizeof(buf));
+		c_std_errstr(buf, sizeof(buf));
 	else
-		c_sys_strerror(errno, buf, sizeof(buf));
+		c_std_strerror(errno, buf, sizeof(buf));
 
 	return fmtcat(p, buf, 0);
 }

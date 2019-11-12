@@ -88,7 +88,7 @@ static struct {
 };
 
 char *
-c_sys_strerror(int e, char *s, usize n)
+c_std_strerror(int e, char *s, usize n)
 {
 	int i;
 

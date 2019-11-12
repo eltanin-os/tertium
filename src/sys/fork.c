@@ -4,5 +4,5 @@
 ctype_id
 c_sys_fork(void)
 {
-	return c_sys_call(SYS_fork);
+	return c_std_syscall(SYS_fork);
 }

@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_sys_werrstr(char *fmt, ...)
+c_std_werrstr(char *fmt, ...)
 {
 	ctype_arr arr;
 	va_list ap;
@@ -12,5 +12,5 @@ c_sys_werrstr(char *fmt, ...)
 	va_start(ap, fmt);
 	c_arr_vfmt(&arr, fmt, ap);
 	va_end(ap);
-	c_sys_errstr(buf, sizeof(buf));
+	c_std_errstr(buf, sizeof(buf));
 }

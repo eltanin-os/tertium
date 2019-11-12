@@ -4,7 +4,7 @@
 ctype_status
 c_sys_fstat(ctype_stat *p, ctype_fd fd)
 {
-	if (c_sys_call(SYS_fstat, fd, p) < 0)
+	if (c_std_syscall(SYS_fstat, fd, p) < 0)
 		return -1;
 
 	return 0;

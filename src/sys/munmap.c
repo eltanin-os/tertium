@@ -4,5 +4,5 @@
 ctype_status
 c_sys_munmap(void *p, usize n)
 {
-	return c_sys_call(SYS_munmap, p, n);
+	return c_std_syscall(SYS_munmap, p, n);
 }

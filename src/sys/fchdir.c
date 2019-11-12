@@ -7,7 +7,7 @@ c_sys_fchdir(ctype_fd fd)
 	ctype_status r;
 
 	do {
-		r = c_sys_call(SYS_fchdir, fd);
+		r = c_std_syscall(SYS_fchdir, fd);
 	} while ((r < 0) && (errno == C_EINTR));
 
 	return r;

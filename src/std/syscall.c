@@ -6,7 +6,7 @@ a[0], a[1], a[2], a[3], \
 a[4], a[5], a[6], a[7]
 
 vlong
-c_sys_call_(vlong num, ...)
+c_std_syscall_(vlong num, ...)
 {
 	va_list ap;
 	int i;

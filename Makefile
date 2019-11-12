@@ -126,33 +126,36 @@ LIBCSRC=\
 	src/rand/genseed.c\
 	src/rand/name.c\
 	src/rand/u32int.c\
-	src/std/argv0.c\
+	src/std/abort.c\
 	src/std/alloc.c\
+	src/std/allrw.c\
+	src/std/argv0.c\
 	src/std/bsearch.c\
 	src/std/calloc.c\
+	src/std/errno.c\
+	src/std/errstr.c\
 	src/std/exit.c\
 	src/std/free.c\
+	src/std/getsyserr.c\
 	src/std/pubrealloc.c\
 	src/std/realloc.c\
 	src/std/setalloc.c\
 	src/std/sort.c\
+	src/std/strerror.c\
 	src/std/strtovl.c\
+	src/std/syscall.c\
+	src/std/werrstr.c\
 	src/str/chr.c\
 	src/str/cmp.c\
 	src/str/len.c\
 	src/str/rchr.c\
 	src/str/str.c\
-	src/sys/abort.c\
-	src/sys/allrw.c\
-	src/sys/call.c\
 	src/sys/chdir.c\
 	src/sys/chmod.c\
 	src/sys/chown.c\
 	src/sys/close.c\
 	src/sys/conf.c\
 	src/sys/dup.c\
-	src/sys/errno.c\
-	src/sys/errstr.c\
 	src/sys/exec.c\
 	src/sys/exit.c\
 	src/sys/fchdir.c\
@@ -164,7 +167,6 @@ LIBCSRC=\
 	src/sys/getenv.c\
 	src/sys/getgid.c\
 	src/sys/getpid.c\
-	src/sys/getsyserr.c\
 	src/sys/getuid.c\
 	src/sys/isatty.c\
 	src/sys/lchown.c\
@@ -183,14 +185,12 @@ LIBCSRC=\
 	src/sys/rmdir.c\
 	src/sys/seek.c\
 	src/sys/stat.c\
-	src/sys/strerror.c\
 	src/sys/symlink.c\
 	src/sys/umask.c\
 	src/sys/uname.c\
 	src/sys/unlink.c\
 	src/sys/wait.c\
 	src/sys/waitpid.c\
-	src/sys/werrstr.c\
 	src/sys/write.c\
 	src/tai/add.c\
 	src/tai/approx.c\

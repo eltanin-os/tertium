@@ -4,5 +4,5 @@
 ctype_id
 c_sys_getgid(void)
 {
-	return c_sys_call(SYS_getgid);
+	return c_std_syscall(SYS_getgid);
 }

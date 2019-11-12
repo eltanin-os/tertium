@@ -2,19 +2,17 @@
 #include <tertium/std.h>
 
 void
-c_sys_errstr(char *s, usize n)
+c_std_errstr(char *s, usize n)
 {
 	usize i;
 	char *p;
-	uchar t;
 
-	p = c_sys_getsyserr();
+	p = c_std_getsyserr();
 	n = C_MIN(n, C_ERRSIZ);
-
 	for (i = 0; i < n; i++) {
-		t = s[i];
-		s[i] = p[i];
-		p[i] = t;
+		s[i] ^= p[i];
+		p[i] ^= s[i];
+		s[i] ^= p[i];
 	}
 
 	errno = C_ECSTM;

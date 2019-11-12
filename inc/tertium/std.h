@@ -14,7 +14,7 @@ for (argc--, argv++;\
 ((!((*argv)[1]) && !(argv[1])) ? nil :\
 (_brk = 1, ((*argv)[1]) ? (&(*argv)[1]) : (argc--, argv++, *argv)))
 #define C_EARGF(x) \
-((!((*argv)[1]) && !(argv[1])) ? ((x), c_sys_abort(), nil) :\
+((!((*argv)[1]) && !(argv[1])) ? ((x), c_std_abort(), nil) :\
 (_brk = 1, ((*argv)[1]) ? (&(*argv)[1]) : (argc--, argv++, *argv)))
 #define C_ARGC() _argc
 #define C_ARGEND } }
@@ -114,9 +114,7 @@ enum {
 #define c_std_getprogname( ) argv0
 #define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
 #define c_std_setprogname(a) argv0 = (a)
-
-/* sys macros */
-#define c_sys_call(...) c_sys_call_(__VA_ARGS__, nil)
+#define c_std_syscall(...) c_std_syscall_(__VA_ARGS__, nil)
 
 /* tai macros */
 #define C_TAI_PACK 8
@@ -394,15 +392,22 @@ char *c_rand_name(char *, usize);
 u32int c_rand_u32int(u32int);
 
 /* std routines */
+void c_std_abort(void);
 void *c_std_alloc(usize, usize);
+size c_std_allrw(ctype_iofn, ctype_fd, void *, usize);
 void *c_std_bsearch(void *, void *, usize, usize, ctype_cmpfn);
 void *c_std_calloc(usize, usize);
+void c_std_errstr(char *, usize);
 void c_std_exit(int);
 void *c_std_free_(void *);
+char *c_std_getsyserr(void);
 void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);
+char *c_std_strerror(int, char *, usize);
 vlong c_std_strtovl(char *, int, vlong, vlong, char **, int *);
+vlong c_std_syscall_(vlong, ...);
+void c_std_werrstr(char *, ...);
 
 /* str routines */
 char *c_str_chr(char *, usize, int);
@@ -412,16 +417,12 @@ char *c_str_rchr(char *, usize, int);
 char *c_str_str(char *, usize, char *);
 
 /* sys routines */
-void c_sys_abort(void);
-size c_sys_allrw(ctype_iofn, ctype_fd, void *, usize);
-vlong c_sys_call_(vlong, ...);
 ctype_status c_sys_chdir(char *);
 ctype_status c_sys_chmod(char *, uint);
 ctype_status c_sys_chown(char *, ctype_id, ctype_id);
 ctype_status c_sys_close(int);
 long c_sys_conf(int);
 ctype_status c_sys_dup(ctype_fd, ctype_fd);
-void c_sys_errstr(char *, usize);
 ctype_status c_sys_exec(char *, char **, char **);
 void c_sys_exit(int);
 ctype_status c_sys_fchdir(ctype_fd);
@@ -433,7 +434,6 @@ char *c_sys_getcwd(char *, usize);
 char *c_sys_getenv(char *);
 ctype_id c_sys_getgid(void);
 ctype_id c_sys_getpid(void);
-char *c_sys_getsyserr(void);
 ctype_id c_sys_getuid(void);
 int c_sys_isatty(int fd);
 ctype_status c_sys_lchown(char *, ctype_id, ctype_id);
@@ -452,14 +452,12 @@ ctype_status c_sys_rename(char *, char *);
 ctype_status c_sys_rmdir(char *);
 ctype_fssize c_sys_seek(ctype_fd, ctype_fssize, int);
 ctype_status c_sys_stat(ctype_stat *, char *);
-char *c_sys_strerror(int, char *, usize);
 ctype_status c_sys_symlink(char *, char *);
 uint c_sys_umask(uint);
 ctype_status c_sys_uname(ctype_utsname *);
 ctype_status c_sys_unlink(char *);
 ctype_id c_sys_wait(int *);
 ctype_id c_sys_waitpid(ctype_id, int *, uint);
-void c_sys_werrstr(char *, ...);
 size c_sys_write(ctype_fd, void *, usize);
 
 /* tai routines */

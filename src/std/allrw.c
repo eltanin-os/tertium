@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 size
-c_sys_allrw(ctype_iofn op, ctype_fd fd, void *p, usize n)
+c_std_allrw(ctype_iofn op, ctype_fd fd, void *p, usize n)
 {
 	size r, t;
 	uchar *s;

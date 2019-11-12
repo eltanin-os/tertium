@@ -7,7 +7,7 @@ c_sys_fchmod(int fd, uint mode)
 	int r;
 
 	do {
-		r = c_sys_call(SYS_fchmod, fd, mode);
+		r = c_std_syscall(SYS_fchmod, fd, mode);
 	} while ((r < 0) && (errno == C_EINTR));
 
 	return r;

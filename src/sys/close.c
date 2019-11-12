@@ -7,7 +7,7 @@ c_sys_close(ctype_fd fd)
 	ctype_status r;
 
 	do {
-		r = c_sys_call(SYS_close, fd);
+		r = c_std_syscall(SYS_close, fd);
 	} while ((r < 0) && (errno == C_EINTR));
 
 	return r;

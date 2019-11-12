@@ -38,7 +38,7 @@ builddir(ctype_dir *p)
 
 	for (;;) {
 		if (dir.n >= dir.a) {
-			if ((r = c_sys_call(SYS_getdents, fd,
+			if ((r = c_std_syscall(SYS_getdents, fd,
 			    dir.buf, sizeof(dir.buf))) < 0)
 				goto err;
 			if (!r)

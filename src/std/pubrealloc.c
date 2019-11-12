@@ -85,7 +85,7 @@ static void ifree(void *);
 static int
 _brk(void *p)
 {
-	cbrk = (void *)(uintptr)c_sys_call(SYS_brk, p);
+	cbrk = (void *)(uintptr)c_std_syscall(SYS_brk, p);
 	return ((cbrk == (void *)-1) ? -1 : 0);
 }
 
@@ -183,7 +183,7 @@ freepages(void *p, usize idx, struct pginfo *info)
 			px = nil;
 		} else {
 			c_sys_write(2, "freelist is destroyed\n", 22);
-			c_sys_abort();
+			c_std_abort();
 		}
 	}
 
@@ -317,7 +317,7 @@ mappages(usize pages)
 	if (r < rr) {
 		if (segbrk((uchar *)rr - (uchar *)r) == (void *)-1 && _brk(r)) {
 			c_sys_write(2, "brk(2) failed [internal error]\n", 31);
-			c_sys_abort();
+			c_std_abort();
 		}
 	}
 
@@ -328,7 +328,7 @@ mappages(usize pages)
 		lastidx = ptr2idx((mbrk = r)) - 1;
 		if (_brk(mbrk)) {
 			c_sys_write(2, "brk(2) failed [internal error]\n", 31);
-			c_sys_abort();
+			c_std_abort();
 		}
 		return nil;
 	}
@@ -607,7 +607,7 @@ minit(void)
 
 	if ((pagedir = MMAP(mpagesize)) == MAP_FAILED) {
 		c_sys_write(2, "mmap(2) failed, check limits\n", 29);
-		c_sys_abort();
+		c_std_abort();
 	}
 
 	morigo = pageround((usize)(uintptr)segbrk(0)) >> mpageshift;

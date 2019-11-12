@@ -17,9 +17,9 @@ and secure environment that produces more reliable software.
 * ioq: buffered i/o
 * mem: operations on memory
 * rand: random data, numbers and strings
-* std: gereral routines
+* std: general routines
 * str: operations on C string
-* sys: system interaction
+* sys: typed system calls
 * tai: tai time
 * taia: atto-second precision tai time
 * uint: portable unsigned integer storage

@@ -4,5 +4,5 @@
 ctype_status
 c_sys_exec(char *path, char **argv, char **envp)
 {
-	return c_sys_call(SYS_execve, path, argv, envp);
+	return c_std_syscall(SYS_execve, path, argv, envp);
 }

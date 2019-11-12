@@ -7,7 +7,7 @@ c_sys_chdir(char *s)
 	ctype_status r;
 
 	do {
-		r = c_sys_call(SYS_chdir, s);
+		r = c_std_syscall(SYS_chdir, s);
 	} while ((r < 0) && (errno == C_EINTR));
 
 	return r;

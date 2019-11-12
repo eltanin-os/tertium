@@ -17,7 +17,7 @@ c_ioq_nput(ctype_ioq *p, char *s, usize n)
 				return -1;
 			while (n > c_arr_avail(p->mb)) {
 				r = C_MIN(n, C_BIOSIZ);
-				if (c_sys_allrw(p->op, p->fd, s, r) < 0)
+				if (c_std_allrw(p->op, p->fd, s, r) < 0)
 					return r;
 				n -= r;
 				s += r;

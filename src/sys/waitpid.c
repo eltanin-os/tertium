@@ -4,5 +4,5 @@
 ctype_id
 c_sys_waitpid(ctype_id id, int *status, uint opts)
 {
-	return c_sys_call(SYS_waitpid, id, status, opts);
+	return c_std_syscall(SYS_waitpid, id, status, opts);
 }

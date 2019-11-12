@@ -4,5 +4,5 @@
 ctype_status
 c_sys_mkdir(char *path, uint mode)
 {
-	return c_sys_call(SYS_mkdir, path, mode);
+	return c_std_syscall(SYS_mkdir, path, mode);
 }

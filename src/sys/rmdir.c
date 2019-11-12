@@ -4,5 +4,5 @@
 ctype_status
 c_sys_rmdir(char *s)
 {
-	return c_sys_call(SYS_rmdir, s);
+	return c_std_syscall(SYS_rmdir, s);
 }

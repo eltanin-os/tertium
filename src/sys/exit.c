@@ -4,5 +4,5 @@
 void
 c_sys_exit(int r)
 {
-	c_sys_call(SYS_exit, r);
+	c_std_syscall(SYS_exit, r);
 }

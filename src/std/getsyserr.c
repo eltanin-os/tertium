@@ -5,7 +5,7 @@ char *(*__syserr)(void);
 static char errbuf[C_ERRSIZ];
 
 char *
-c_sys_getsyserr(void)
+c_std_getsyserr(void)
 {
 	return __syserr ? __syserr() : errbuf;
 }
