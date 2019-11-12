@@ -15,7 +15,7 @@ __dir_newfile(char *path, char *name, uint opts)
 	nlen = c_str_len(name, C_USIZEMAX);
 	plen = c_str_len(path, C_USIZEMAX);
 	if (!plen) {
-		for (; name[nlen - 1] == '/'; --nlen) ;
+		for (; nlen > 1 && name[nlen - 1] == '/'; --nlen) ;
 		path = name;
 		if (!(name = c_mem_rchr(path, nlen, '/'))) {
 			name = path;
