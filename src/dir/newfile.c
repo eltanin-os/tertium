@@ -16,14 +16,16 @@ __dir_newfile(char *path, char *name, uint opts)
 	plen = c_str_len(path, C_USIZEMAX);
 	if (!plen) {
 		for (; nlen > 1 && name[nlen - 1] == '/'; --nlen) ;
-		path = name;
-		if (!(name = c_mem_rchr(path, nlen, '/'))) {
-			name = path;
-			plen = 0;
-		} else {
-			++name;
-			plen = name - path;
-			nlen -= plen;
+		if (nlen > 1) {
+			path = name;
+			if (!(name = c_mem_rchr(path, nlen, '/'))) {
+				name = path;
+				plen = 0;
+			} else {
+				++name;
+				plen = name - path;
+				nlen -= plen;
+			}
 		}
 	}
 

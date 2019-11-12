@@ -109,11 +109,13 @@ c_dir_read(ctype_dir *p)
 			return ep;
 		}
 		if ((p->child = builddir(p)) == (void *)-1) {
+			ep->err = errno;
 			ep->info = C_FSDNR;
 			if (errno == C_ENOMEM) {
 				p->opts |= C_FSSTP;
 				ep->info = C_FSERR;
 			}
+			p->child = nil;
 			return ep;
 		}
 		if (!p->child) {
