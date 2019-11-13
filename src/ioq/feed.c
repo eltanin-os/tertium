@@ -6,17 +6,17 @@ c_ioq_feed(ctype_ioq *p)
 {
 	size r;
 
-	if (p->mb->n)
-		return p->mb->n;
+	if (p->arr.n)
+		return p->arr.n;
 
-	if ((r = (p->op)(p->fd, p->mb->p, p->mb->a)) <= 0)
+	if ((r = (p->op)(p->fd, p->arr.p, p->arr.a)) <= 0)
 		return r;
 
-	p->mb->n = r;
-	p->mb->a -= r;
+	p->arr.n = r;
+	p->arr.a -= r;
 
-	if (p->mb->a)
-		c_mem_cpy(p->mb->p + p->mb->a, r, p->mb->p);
+	if (p->arr.a)
+		c_mem_cpy(p->arr.p + p->arr.a, r, p->arr.p);
 
 	return r;
 }

@@ -4,5 +4,5 @@
 void *
 c_ioq_peek(ctype_ioq *p)
 {
-	return (p->mb->p + p->mb->a);
+	return (p->arr.p + p->arr.a);
 }

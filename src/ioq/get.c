@@ -16,14 +16,14 @@ c_ioq_get(ctype_ioq *p, char *b, usize n)
 {
 	size r;
 
-	if (p->mb->n)
-		return movemem(p->mb, b, n);
+	if (p->arr.n)
+		return movemem(&p->arr, b, n);
 
-	if (n >= p->mb->a)
+	if (n >= p->arr.a)
 		return (p->op)(p->fd, b, n);
 
 	if ((r = c_ioq_feed(p)) <= 0)
 		return r;
 
-	return movemem(p->mb, b, n);
+	return movemem(&p->arr, b, n);
 }

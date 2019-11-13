@@ -4,6 +4,6 @@
 void
 c_ioq_seek(ctype_ioq *p, usize n)
 {
-	p->mb->a += n;
-	p->mb->n -= n;
+	p->arr.a += n;
+	p->arr.n -= n;
 }
