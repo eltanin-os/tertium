@@ -4,18 +4,18 @@
 size
 c_ioq_getall(ctype_ioq *p, char *b, usize n)
 {
-	size r, t;
+	size r;
+	uchar *s;
 
-	t = 0;
+	s = (uchar *)b;
 	while (n) {
 		if ((r = c_ioq_get(p, b, n)) < 0)
 			return r;
 		if (!r)
 			break;
-		t += r;
 		b += r;
 		n -= r;
 	}
 
-	return t;
+	return s - (uchar *)b;
 }

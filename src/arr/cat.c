@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-size
+ctype_status
 c_arr_cat(ctype_arr *p, void *v, usize m, usize n)
 {
 	if (C_OFLW_UM(usize, m, n)) {
@@ -20,5 +20,5 @@ c_arr_cat(ctype_arr *p, void *v, usize m, usize n)
 	p->n += m;
 	p->p[p->n] = 0;
 
-	return m;
+	return 0;
 }

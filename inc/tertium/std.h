@@ -282,7 +282,7 @@ ctype_status c_adt_qpush(ctype_queue *, void *, usize, usize);
 /* arr routines */
 usize c_arr_avail(ctype_arr *);
 usize c_arr_bytes(ctype_arr *);
-size c_arr_cat(ctype_arr *, void *, usize, usize);
+ctype_status c_arr_cat(ctype_arr *, void *, usize, usize);
 void *c_arr_data(ctype_arr *);
 size c_arr_fmt(ctype_arr *, char *, ...);
 void *c_arr_get(ctype_arr *, usize, usize);
@@ -318,7 +318,7 @@ ctype_status c_dir_set(ctype_dir *, ctype_dent *, int);
 
 /* dyn routines */
 void *c_dyn_alloc(ctype_arr *, usize, usize);
-size c_dyn_cat(ctype_arr *, void *, usize, usize);
+ctype_status c_dyn_cat(ctype_arr *, void *, usize, usize);
 size c_dyn_fmt(ctype_arr *, char *, ...);
 void c_dyn_free(ctype_arr *);
 ctype_status c_dyn_ready(ctype_arr *, usize, usize);
@@ -369,7 +369,7 @@ ctype_status c_ioq_getln(ctype_ioq *, ctype_arr *);
 void c_ioq_init(ctype_ioq *, ctype_fd, char *, usize, ctype_iofn);
 ctype_status c_ioq_nput(ctype_ioq *, char *, usize);
 void *c_ioq_peek(ctype_ioq *);
-size c_ioq_put(ctype_ioq *, char *);
+ctype_status c_ioq_put(ctype_ioq *, char *);
 ctype_status c_ioq_putfd(ctype_ioq *, ctype_fd, usize);
 ctype_status c_ioq_putfile(ctype_ioq *, char *);
 void c_ioq_seek(ctype_ioq *, usize);

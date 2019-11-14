@@ -42,12 +42,10 @@ struct fmtverb __fmt_VFmts[] = {
 ctype_status
 __fmt_trycat(ctype_fmt *p, char *s, usize n)
 {
-	size r;
-
-	if ((r = p->func(p, s, n)) < 0)
+	if (p->func(p, s, n) < 0)
 		return -1;
 
-	p->nfmt += r;
+	p->nfmt += n;
 	return 0;
 }
 
