@@ -12,9 +12,8 @@ insert(uvlong *sp, usize n, uvlong k)
 	uvlong *p, *l;
 
 	if (!n) {
-		sp[0] = 0;
-		sp[1] = k;
-		return 2;
+		sp[0] = k;
+		return 1;
 	}
 
 	l = sp + n;
@@ -30,9 +29,11 @@ insert(uvlong *sp, usize n, uvlong k)
 		n >>= 1;
 	}
 
-	c_mem_cpy(p + 2, (uchar *)l - (uchar *)p, p);
-	p[1] = k;
+	if (*p < k)
+		++p;
 
+	c_mem_cpy(p + 1, (uchar *)l - (uchar *)p, p);
+	*p = k;
 	return 1;
 }
 
@@ -44,13 +45,12 @@ hist(ctype_arr *hp, ulong dev, ulong ino)
 	int r;
 
 	n = c_arr_len(hp, sizeof(k));
-	if (c_dyn_ready(hp, n + 2, sizeof(k)) < 0)
+	if (c_dyn_ready(hp, n + 1, sizeof(k)) < 0)
 		return -1;
 
 	k = PACK(dev, ino);
 	r = insert(c_arr_data(hp), n, k);
 	hp->n += r * sizeof(k);
-
 	return r;
 }
 
