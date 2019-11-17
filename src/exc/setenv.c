@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-ctype_arr newenv;
+ctype_arr __exc_env;
 
 ctype_status
 c_exc_setenv(char *s, char *v)
@@ -25,7 +25,7 @@ c_exc_setenv(char *s, char *v)
 			goto fail;
 
 	p = c_arr_data(&e);
-	c_dyn_cat(&newenv, &p, 1, sizeof(char *));
+	c_dyn_cat(&__exc_env, &p, 1, sizeof(char *));
 	return 0;
 fail:
 	c_dyn_free(&e);
