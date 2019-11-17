@@ -9,11 +9,11 @@ c_ioq_getall(ctype_ioq *p, char *b, usize n)
 
 	s = (uchar *)b;
 	while (n) {
-		if ((r = c_ioq_get(p, b, n)) < 0)
+		if ((r = c_ioq_get(p, (char *)s, n)) < 0)
 			return r;
 		if (!r)
 			break;
-		b += r;
+		s += r;
 		n -= r;
 	}
 
