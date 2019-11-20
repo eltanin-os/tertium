@@ -123,6 +123,11 @@ enum {
 /* taia macros */
 #define C_TAIA_PACK 16
 
+/* utf8 macros */
+#define C_RUNEERROR 0xFFFD
+#define C_RUNEMAX 0x10FFFF
+#define C_UTFMAX 6
+
 /* arr types */
 typedef struct ctype_arr ctype_arr;
 
@@ -496,6 +501,19 @@ char *c_uint_64bigpack(char *, u64int);
 u64int c_uint_64bigunpack(char *);
 char *c_uint_64pack(char *, u64int);
 u64int c_uint_64unpack(char *);
+
+/* utf8 routines */
+int c_utf8_charntorune(ctype_rune *, char *, usize);
+int c_utf8_chartorune(ctype_rune *, char *);
+ctype_status c_utf8_checkrune(ctype_rune);
+int c_utf8_fullrune(char *, usize);
+int c_utf8_runelen(ctype_rune);
+usize c_utf8_runenlen(ctype_rune *, usize);
+int c_utf8_runetochar(char *, ctype_rune *);
+usize c_utf8_utflen(char *);
+usize c_utf8_utfnlen(char *, usize);
+char *c_utf8_utfrrune(char *, ctype_rune);
+char *c_utf8_utfrune(char *, ctype_rune);
 
 /* arr variables */
 extern ctype_arr *arr_zero;

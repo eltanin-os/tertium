@@ -222,7 +222,19 @@ LIBCSRC=\
 	src/uint/64bigpack.c\
 	src/uint/64bigunpack.c\
 	src/uint/64pack.c\
-	src/uint/64unpack.c
+	src/uint/64unpack.c\
+	src/utf8/charntorune.c\
+	src/utf8/chartorune.c\
+	src/utf8/checkrune.c\
+	src/utf8/fullrune.c\
+	src/utf8/mtab.c\
+	src/utf8/runelen.c\
+	src/utf8/runenlen.c\
+	src/utf8/runetochar.c\
+	src/utf8/utflen.c\
+	src/utf8/utfnlen.c\
+	src/utf8/utfrrune.c\
+	src/utf8/utfrune.c
 
 # LIB PATH
 LIBC= lib/libtertium.a

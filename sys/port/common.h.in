@@ -254,7 +254,7 @@ typedef long long intptr;
 typedef unsigned long long uintptr;
 typedef size_t usize;
 typedef ssize_t size;
-typedef int32_t Rune;
+typedef int32_t ctype_rune;
 typedef uint8_t u8int;
 typedef uint16_t u16int;
 typedef uint32_t u32int;

@@ -108,7 +108,7 @@ typedef unsigned long ulong;
 typedef unsigned int uint;
 typedef long long vlong;
 typedef unsigned long long uvlong;
-typedef unsigned Rune;
+typedef unsigned ctype_rune;
 
 typedef int ctype_fd;
 typedef int ctype_error;
