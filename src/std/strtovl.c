@@ -12,6 +12,7 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 {
 	uvlong v, o;
 	int a, c, m, n;
+	char *le;
 	uchar *s;
 
 	if ((uint)b > 36 || b == 1) {
@@ -69,13 +70,14 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 		v = (v * b) + c;
 	}
 
-	if (e) {
-		*e = v ? (char *)s : p;
-		if (**e) {
-			if (r)
-				*r = -1;
-			errno = (*e == p) ? C_ECANCELED : C_ENOTSUP;
-		}
+	if (!e)
+		e = &le;
+
+	*e = v ? (char *)s : p;
+	if (*e[0]) {
+		if (r)
+			*r = -1;
+		errno = (*e == p) ? C_ECANCELED : C_ENOTSUP;
 	}
 
 	if (a) {
