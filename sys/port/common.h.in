@@ -183,6 +183,7 @@
 #define C_OTRUNC O_TRUNC
 #define C_OCEXEC O_CLOEXEC
 #define C_OEXCL O_EXCL
+#define C_ODIRECTORY O_DIRECTORY
 
 /* stat macros */
 #define C_IFMT S_IFMT

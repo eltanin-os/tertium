@@ -139,6 +139,7 @@ LIBCSRC=\
 	src/std/exit.c\
 	src/std/free.c\
 	src/std/getsyserr.c\
+	src/std/mktemp.c\
 	src/std/pubrealloc.c\
 	src/std/realloc.c\
 	src/std/setalloc.c\

@@ -86,6 +86,7 @@
 #define C_OTRUNC 0x00200
 #define C_OCEXEC 0x80000
 #define C_OEXCL 0x00080
+#define C_ODIRECTORY 0200000
 
 /* others macros */
 #define MAP_ANON 0x20

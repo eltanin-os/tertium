@@ -408,6 +408,7 @@ void c_std_errstr(char *, usize);
 void c_std_exit(int);
 void *c_std_free_(void *);
 char *c_std_getsyserr(void);
+ctype_fd c_std_mktemp(char *, usize, int, uint);
 void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);
