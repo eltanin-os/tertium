@@ -58,22 +58,20 @@ c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 
 	a = 0;
 	v = 0;
-
 	for (; *s; s++) {
 		if ((c = debase(*s)) < 0)
 			break;
 		if (c >= b)
 			break;
-		if (a < 0)
-			continue;
-		a = rangeflow(v, o, c, m);
+		if ((a = rangeflow(v, o, c, m)))
+			break;
 		v = (v * b) + c;
 	}
 
 	if (!e)
 		e = &le;
 
-	*e = v ? (char *)s : p;
+	*e = (char *)s;
 	if (*e[0]) {
 		if (r)
 			*r = -1;
