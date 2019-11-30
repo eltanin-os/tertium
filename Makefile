@@ -104,6 +104,7 @@ LIBCSRC=\
 	src/ioq/getdelim.c\
 	src/ioq/getln.c\
 	src/ioq/init.c\
+	src/ioq/new.c\
 	src/ioq/nput.c\
 	src/ioq/peek.c\
 	src/ioq/put.c\

@@ -372,6 +372,7 @@ size c_ioq_getall(ctype_ioq *, char *, usize);
 ctype_status c_ioq_getdelim(ctype_ioq *, ctype_arr *, int);
 ctype_status c_ioq_getln(ctype_ioq *, ctype_arr *);
 void c_ioq_init(ctype_ioq *, ctype_fd, char *, usize, ctype_iofn);
+ctype_ioq *c_ioq_new(usize, ctype_fd, ctype_iofn);
 ctype_status c_ioq_nput(ctype_ioq *, char *, usize);
 void *c_ioq_peek(ctype_ioq *);
 ctype_status c_ioq_put(ctype_ioq *, char *);
