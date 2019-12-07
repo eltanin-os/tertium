@@ -12,10 +12,18 @@ c_dir_children(ctype_dir *p)
 	cur = p->ccur;
 
 	if (!cur) {
-		cur = p->child ? p->child : p->cur;
-		ep = cur->p;
-		p->ccur = cur;
-		return ep;
+		ep = p->cur->p;
+		switch (ep->info) {
+		case C_FSD:
+			p->child = p->ccur = __dir_builddir(p);
+			break;
+		case C_FSINT:
+			p->ccur = p->cur;
+			break;
+		default:
+			return nil;
+		}
+		return p->ccur->p;
 	}
 
 	cur = cur->next;

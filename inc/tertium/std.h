@@ -56,6 +56,7 @@ enum {
 	C_FSNS = 10,
 	C_FSSL = 11,
 	C_FSSLN = 12,
+	C_FSINT = 13,
 };
 
 /* dyn macros */

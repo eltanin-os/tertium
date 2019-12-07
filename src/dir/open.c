@@ -15,6 +15,8 @@ c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 	if (!(dummy = __dir_newfile("", ".", C_FSNOI)))
 		return -1;
 
+	ep = dummy->p;
+	ep->info = C_FSINT;
 	np = nil;
 
 	if (c_sys_stat(&st, ".") < 0)
