@@ -18,7 +18,7 @@ c_rand_genseed(char *s, usize n)
 
 	for (;;) {
 		n -= r = C_MIN(n, 4);
-		c_uint_32bigpack(buf, c_hsh_state0(&hs));
+		c_uint_32bigpack(buf, hs.st.x32[0]);
 		c_mem_cpy(s + n, r, buf);
 
 		if (!n)
@@ -27,7 +27,7 @@ c_rand_genseed(char *s, usize n)
 		for (r = 0; r < 9; r++) {
 			c_hsh_edf->update(&hs, buf, sizeof(buf));
 			c_hsh_edf->end(&hs);
-			c_uint_32bigpack(buf + (r << 2), c_hsh_state0(&hs));
+			c_uint_32bigpack(buf + (r << 2), hs.st.x32[0]);
 		}
 	}
 

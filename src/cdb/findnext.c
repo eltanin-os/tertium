@@ -31,7 +31,7 @@ c_cdb_findnext(ctype_cdb *p, char *k, usize n)
 
 	if (!p->loop) {
 		c_hsh_all(&hs, c_hsh_djb, k, n);
-		h = c_hsh_state0(&hs);
+		h = hs.st.x32[0];
 		if (c_cdb_read(p, buf, 8, (h << 3) & 2047) < 0)
 			return -1;
 		if (!(p->hslots = c_uint_32unpack(buf + 4)))

@@ -16,7 +16,7 @@ c_cdb_mkadd(ctype_cdbmk *p, char *k, usize klen, char *s, usize dlen)
 		goto fail;
 
 	c_hsh_all(&hs, c_hsh_djb, k, klen);
-	if (c_cdb_mkaddend(p, klen, dlen, c_hsh_state0(&hs)) < 0)
+	if (c_cdb_mkaddend(p, klen, dlen, hs.st.x32[0]) < 0)
 		goto fail;
 
 	return 0;

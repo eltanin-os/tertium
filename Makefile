@@ -92,7 +92,6 @@ LIBCSRC=\
 	src/hsh/sha1.c\
 	src/hsh/sha256.c\
 	src/hsh/sha512.c\
-	src/hsh/state0.c\
 	src/hsh/update.c\
 	src/hsh/whirlpool.c\
 	src/ioq/arr.c\
