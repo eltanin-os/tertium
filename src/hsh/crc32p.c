@@ -1,18 +1,18 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define CRCTAB(a) \
-(((a) << 4) ^ crctab[((a) >> 28) & 15])
+#define CRCTAB(a) (((a) << 4) ^ crctab[((a) >> 28) & 15])
 
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
 static void end(ctype_hst *);
+static void digest(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	nil,
+	&digest,
 };
 
 ctype_hmd *c_hsh_crc32p = &md;
@@ -57,4 +57,10 @@ end(ctype_hst *p)
 		p->st.x32[0] = CRCTAB(p->st.x32[0]);
 	}
 	p->st.x32[0] ^= 0xFFFFFFFF;
+}
+
+static void
+digest(ctype_hst *p, char *s)
+{
+	c_uint_32bigpack(s, p->st.x32[0]);
 }

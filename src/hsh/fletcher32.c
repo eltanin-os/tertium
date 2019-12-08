@@ -6,12 +6,13 @@
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
 static void end(ctype_hst *);
+static void digest(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	nil,
+	&digest,
 };
 
 ctype_hmd *c_hsh_fletcher32 = &md;
@@ -47,14 +48,17 @@ end(ctype_hst *p)
 {
 	uint r;
 
-	r = p->len % 2;
-
-	if (r) {
+	if ((r = p->len % 2)) {
 		c_mem_set(p->buf + r, 2 - r, 0);
 		compress(p, (char *)p->buf);
 	}
-
 	p->st.x32[0] = (p->st.x32[0] & 0xFFFF) + (p->st.x32[0] >> 16);
 	p->st.x32[1] = (p->st.x32[1] & 0xFFFF) + (p->st.x32[1] >> 16);
-	p->st.x32[0] = p->st.x32[0] | p->st.x32[1] << 16;
+	p->st.x32[0] |= p->st.x32[1] << 16;
+}
+
+static void
+digest(ctype_hst *p, char *s)
+{
+	c_uint_32bigpack(s, p->st.x32[0]);
 }

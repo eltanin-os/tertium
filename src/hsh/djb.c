@@ -4,12 +4,13 @@
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
 static void end(ctype_hst *);
+static void digest(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	nil,
+	&digest,
 };
 
 ctype_hmd *c_hsh_djb = &md;
@@ -37,4 +38,10 @@ static void
 end(ctype_hst *p)
 {
 	(void)p;
+}
+
+static void
+digest(ctype_hst *p, char *s)
+{
+	c_uint_32bigpack(s, p->st.x32[0]);
 }

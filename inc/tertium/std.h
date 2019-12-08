@@ -356,7 +356,6 @@ char *c_gen_basename(char *);
 char *c_gen_dirname(char *);
 
 /* hsh routines */
-u32int c_hsh_state0(ctype_hst *);
 void c_hsh_all(ctype_hst *, ctype_hmd *, char *, usize);
 void c_hsh_digest(ctype_hst *, ctype_hmd *, char *);
 ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);

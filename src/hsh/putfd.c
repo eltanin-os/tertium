@@ -1,8 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define MMAP(a, b) \
-c_sys_mmap(0, (b), PROT_READ, MAP_SHARED, (a), 0)
+#define MMAP(a, b) c_sys_mmap(0, (b), PROT_READ, MAP_SHARED, (a), 0)
 
 ctype_status
 c_hsh_putfd(ctype_hst *hs, ctype_hmd *p, ctype_fd fd, usize n)
