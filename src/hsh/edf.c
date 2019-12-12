@@ -48,5 +48,5 @@ end(ctype_hst *p)
 static void
 digest(ctype_hst *p, char *s)
 {
-	c_uint_32bigpack(s, p->st.x32[0]);
+	c_uint_32pack(s, p->st.x32[0]);
 }
