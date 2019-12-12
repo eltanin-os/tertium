@@ -93,6 +93,15 @@ enum {
 
 #define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
 
+/* hsh macros */
+enum {
+	C_H32GEN_DIGEST = 32,
+	C_HSHA1_DIGEST = 20,
+	C_HSHA256_DIGEST = 32,
+	C_HSHA512_DIGEST = 64,
+	C_HWHIRLPOOL_DIGEST = 64,
+}
+
 /* ioq macros */
 enum {
 	/* default file descriptors */
