@@ -100,7 +100,7 @@ enum {
 	C_HSHA256_DIGEST = 32,
 	C_HSHA512_DIGEST = 64,
 	C_HWHIRLPOOL_DIGEST = 64,
-}
+};
 
 /* ioq macros */
 enum {
@@ -113,9 +113,10 @@ enum {
 	C_BIOSIZ = 8192,
 	C_ERRSIZ = 512,
 
-	/* private flags */
-	__IOQ_ONOFLUSH = 1 << 0,
-	__IOQ_ODYNAMIC = 1 << 1,
+	/* flags */
+	C_IOQ_ONOFLUSH = 1 << 0,
+	C_IOQ_ODYNAMIC = 1 << 1,
+	__IOQ_OALL = 0x03,
 };
 
 #define c_ioq_INIT(a, b, c) { { sizeof((b)), 0, (b) }, (c), (a), 0 }
@@ -388,8 +389,7 @@ ctype_status c_ioq_put(ctype_ioq *, char *);
 ctype_status c_ioq_putfd(ctype_ioq *, ctype_fd, usize);
 ctype_status c_ioq_putfile(ctype_ioq *, char *);
 void c_ioq_seek(ctype_ioq *, usize);
-void c_ioq_setdynamic(ctype_ioq *);
-void c_ioq_setnoflush(ctype_ioq *);
+ctype_status c_ioq_set(ctype_ioq *, uint);
 size c_ioq_vfmt(ctype_ioq *, char *, va_list);
 
 /* mem routines */

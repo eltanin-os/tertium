@@ -7,8 +7,8 @@ c_ioq_nput(ctype_ioq *p, char *s, usize n)
 	size r;
 
 	if (n > c_arr_avail(&p->arr)) {
-		if (p->opts & __IOQ_ONOFLUSH) {
-			if (!(p->opts & __IOQ_ODYNAMIC)) {
+		if (p->opts & C_IOQ_ONOFLUSH) {
+			if (!(p->opts & C_IOQ_ODYNAMIC)) {
 				errno = C_ENOMEM;
 				return -1;
 			}

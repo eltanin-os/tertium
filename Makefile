@@ -111,8 +111,7 @@ LIBCSRC=\
 	src/ioq/putfd.c\
 	src/ioq/putfile.c\
 	src/ioq/seek.c\
-	src/ioq/setdynamic.c\
-	src/ioq/setnoflush.c\
+	src/ioq/set.c\
 	src/ioq/stderr.c\
 	src/ioq/stdin.c\
 	src/ioq/stdout.c\
