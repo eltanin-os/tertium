@@ -96,6 +96,7 @@ enum {
 /* hsh macros */
 enum {
 	C_H32GEN_DIGEST = 32,
+	C_HMD5_DIGEST = 16,
 	C_HSHA1_DIGEST = 20,
 	C_HSHA256_DIGEST = 32,
 	C_HSHA512_DIGEST = 64,
@@ -536,6 +537,7 @@ extern ctype_hmd *c_hsh_crc32p;
 extern ctype_hmd *c_hsh_djb;
 extern ctype_hmd *c_hsh_edf;
 extern ctype_hmd *c_hsh_fletcher32;
+extern ctype_hmd *c_hsh_md5;
 extern ctype_hmd *c_hsh_sha1;
 extern ctype_hmd *c_hsh_sha256;
 extern ctype_hmd *c_hsh_sha512;
