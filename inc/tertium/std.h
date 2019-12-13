@@ -368,8 +368,9 @@ char *c_gen_dirname(char *);
 /* hsh routines */
 void c_hsh_all(ctype_hst *, ctype_hmd *, char *, usize);
 void c_hsh_digest(ctype_hst *, ctype_hmd *, char *);
-ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
+usize c_hsh_len(ctype_hst *);
 ctype_status c_hsh_putfd(ctype_hst *, ctype_hmd *, ctype_fd, usize);
+ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
 
 /* ioq routines */
 ctype_arr *c_ioq_arr(ctype_ioq *);
