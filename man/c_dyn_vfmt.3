@@ -1,0 +1,38 @@
+.Dd December 20, 2019
+.Dt C_DYN_VFMT 3
+.Os
+.Sh NAME
+.Nm c_dyn_vfmt
+.Nd concatenate formatted strings in a dynamic array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_dyn_vfmt "ctype_arr *p" "char *fmt" "va_list args"
+.Sh DESCRIPTION
+The
+.Fn c_dyn_vfmt
+function appends a formatted string, as described in the format
+.Fa fmt ,
+in the array
+.Fa p .
+If not enough bytes are allocated,
+.Fn c_dyn_vfmt
+allocates more bytes.
+.Sh RETURN VALUES
+On success, the
+.Fn c_dyn_vfmt
+function returns the number of copied bytes;
+Otherwise, the value \-1 is returned and
+.Va errno
+is set to indicate the error.
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er ENOMEM
+Not enough space.
+.El
+.Sh SEE ALSO
+.Xr c_dyn_fmt 3 ,
+.Xr c_fmt_fmt 3
