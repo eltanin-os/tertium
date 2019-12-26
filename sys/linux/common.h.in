@@ -45,7 +45,10 @@
 #define MAP_PRIVATE 0x02
 #define PROT_READ 0x01
 #define PROT_WRITE 0x02
-#define SEEK_SET 0x00
+
+#define C_SEEKSET 0
+#define C_SEEKCUR 1
+#define C_SEEKEND 2
 
 #define _SC_ARG_MAX 0
 #define _SC_CHILD_MAX 1

@@ -10,7 +10,7 @@ c_cdb_mkstart(ctype_cdbmk *p, ctype_fd fd)
 	c_mem_set(&p->hplist, sizeof(p->hplist), 0);
 	c_ioq_init(&p->ioq, fd, p->buf, sizeof(p->buf), c_sys_write);
 
-	if (c_sys_seek(fd, p->off, SEEK_SET) < 0)
+	if (c_sys_seek(fd, p->off, C_SEEKSET) < 0)
 		return -1;
 
 	return 0;
