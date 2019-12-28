@@ -426,6 +426,7 @@ void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);
 char *c_std_strerror(int, char *, usize);
+uvlong c_std_strtouvl(char *, int, uvlong, uvlong, char **, int *);
 vlong c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 vlong c_std_syscall_(vlong, ...);
 void c_std_werrstr(char *, ...);

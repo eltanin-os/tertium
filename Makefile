@@ -148,6 +148,7 @@ LIBCSRC=\
 	src/std/setalloc.c\
 	src/std/sort.c\
 	src/std/strerror.c\
+	src/std/strtouvl.c\
 	src/std/strtovl.c\
 	src/std/syscall.c\
 	src/std/werrstr.c\
