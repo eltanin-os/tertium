@@ -418,6 +418,7 @@ void *c_std_bsearch(void *, void *, usize, usize, ctype_cmpfn);
 void *c_std_calloc(usize, usize);
 void c_std_errstr(char *, usize);
 void c_std_exit(int);
+ctype_status c_std_fdcat(ctype_fd, ctype_fd);
 void *c_std_free_(void *);
 char *c_std_getsyserr(void);
 ctype_fd c_std_mktemp(char *, usize, int, uint);
