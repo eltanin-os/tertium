@@ -15,26 +15,28 @@ c_utf8_charntorune(ctype_rune *p, char *s, usize len)
 {
 	ctype_rune r;
 	usize i, n;
+	uchar c;
 
-	if (*(uchar *)s <= 0x80) {
-		*p = *s;
+	c = *(uchar *)s;
+
+	if (c <= 0x80) {
+		*p = c;
 		return 1;
 	}
 
-	if (!(n = C_MIN(len, tab[*s & 0x3F])))
+	if (!(n = C_MIN(len, tab[c & 0x3F]))) {
+		n = 1;
 		goto bad;
+	}
 
-	if (n > len)
-		return 0;
-
-	r = *s & __utf8_mtab[n - 1];
+	r = c & __utf8_mtab[n - 1];
 
 	for (i = 1; i < n; ++i) {
-		if ((s[i] ^ 0x80) & 0xC0) {
-			len = i;
+		if (((uchar)s[i] ^ 0x80) & 0xC0) {
+			n = i;
 			goto bad;
 		}
-		r = (r << 6) | (s[i] & 0x3F);
+		r = (r << 6) | ((uchar)s[i] & 0x3F);
 	}
 
 	if (c_utf8_checkrune(r) < 0)
@@ -45,5 +47,5 @@ bad:
 	r = C_RUNEERROR;
 done:
 	*p = r;
-	return len;
+	return n;
 }
