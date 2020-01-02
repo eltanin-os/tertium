@@ -75,8 +75,7 @@ c_std_strtouvl(char *p, int b, uvlong l, uvlong h, char **e, int *r)
 		errno = (*e == p) ? C_ECANCELED : C_ENOTSUP;
 	}
 
-	a += l > v;
-	if (a) {
+	if (a || (!n && l > v)) {
 		if (r)
 			*r = -1;
 		errno = C_ERANGE;

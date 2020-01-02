@@ -4,5 +4,12 @@
 vlong
 c_std_strtovl(char *p, int b, vlong l, vlong h, char **e, int *r)
 {
-	return c_std_strtouvl(p, b, l, h, e, r);
+	vlong x;
+
+	if ((x = c_std_strtouvl(p, b, 0, h, e, r)) < l) {
+		if (r)
+			*r = -1;
+		errno = C_ERANGE;
+	}
+	return x;
 }
