@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 ctype_ioq *
-c_ioq_new(usize n, ctype_fd fd, ctype_iofn f)
+c_ioq_alloc(ctype_fd fd, usize n, ctype_iofn f)
 {
 	ctype_ioq *p;
 	char *buf;

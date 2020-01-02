@@ -96,6 +96,7 @@ LIBCSRC=\
 	src/hsh/sha512.c\
 	src/hsh/update.c\
 	src/hsh/whirlpool.c\
+	src/ioq/alloc.c\
 	src/ioq/arr.c\
 	src/ioq/fd.c\
 	src/ioq/feed.c\
@@ -106,7 +107,6 @@ LIBCSRC=\
 	src/ioq/getdelim.c\
 	src/ioq/getln.c\
 	src/ioq/init.c\
-	src/ioq/new.c\
 	src/ioq/nput.c\
 	src/ioq/peek.c\
 	src/ioq/put.c\
