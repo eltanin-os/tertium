@@ -1,0 +1,31 @@
+.Dd $Mdocdate: January 01 2020 $
+.Dt C_MEM_MEM 3
+.Os
+.Sh NAME
+.Nm c_mem_mem
+.Nd find substring in memory
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void *
+.Fn c_mem_mem "void *h" "usize hl" "void *n" "usize nl"
+.Sh DESCRIPTION
+The
+.Fn c_mem_mem
+function locates the first occurence of the binary string
+.Fa n
+of length
+.Fa nl
+in the initial
+.Fa hl
+bytes of
+.Fa h .
+.Sh RETURN VALUES
+The
+.Fn c_mem_mem
+function returns a pointer to the substring located,
+or nil if the substring is not found.
+.Sh SEE ALSO
+.Xr c_mem_chr 3

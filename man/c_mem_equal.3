@@ -1,0 +1,34 @@
+.Dd $Mdocdate: January 01 2020 $
+.Dt C_MEM_EQUAL 3
+.Os
+.Sh NAME
+.Nm c_mem_equal
+.Nd compare bytes in memory, in constant time
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_mem_equal "void *v1" "usize n" "void *v2"
+.Sh DESCRIPTION
+The
+.Fn c_mem_equal
+function compares the first
+.Fa n
+bytes of the memory areas
+.Fa v1
+and
+.Fa v2 .
+.Sh RETURN VALUES
+The
+.Fn c_mem_equal
+function returns zero or not zero if the first
+.Fa n
+bytes of the memory areas
+.Fa v1
+and
+.Fa v2 ,
+respectively, are equal or different.
+.Sh SEE ALSO
+.Xr c_mem_cmp 3

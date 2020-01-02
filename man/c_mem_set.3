@@ -1,0 +1,29 @@
+.Dd $Mdocdate: January 01 2019 $
+.Dt C_MEM_SET 3
+.Os
+.Sh NAME
+.Nm c_mem_set
+.Nd set bytes in memory
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void *
+.Fn c_mem_set "void *v" "usize n" "int c"
+.Sh DESCRIPTION
+The
+.Fn c_mem_set
+function fills the first
+.Fa n
+bytes of the memory area
+.Fa v
+with the byte
+.Fa c
+.Pq Li uchar .
+It is guaranteed not to be optimized away by the compiler.
+.Sh RETURN VALUES
+The
+.Fn c_mem_set
+function returns a pointer to the memory area
+.Fa v .

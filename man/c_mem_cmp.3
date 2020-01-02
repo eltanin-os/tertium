@@ -1,0 +1,43 @@
+.Dd $Mdocdate: January 01 2020 $
+.Dt C_MEM_CMP 3
+.Os
+.Sh NAME
+.Nm c_mem_cmp
+.Nd compare bytes in memory
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_mem_cmp "void *v1" "usize n" "void *v2"
+.Sh DESCRIPTION
+The
+.Fn c_mem_cmp
+function compares the first
+.Fa n
+bytes of the memory areas
+.Fa v1
+and
+.Fa v2 .
+.Sh RETURN VALUES
+The
+.Fn c_mem_cmp
+function returns an integer less than, equal to, or greater than zero
+if the first
+.Fa n
+bytes of
+.Fa v1
+is found, respectively, to less than, to match, or to be greater than
+the first
+.Fa n
+bytes of
+.Fa v2 .
+.Sh SEE ALSO
+.Xr c_mem_equal 3
+.Sh CAVEATS
+The function
+.Fn c_mem_cmp
+should not be used to compare security critical data;
+instead, use
+.Xr c_mem_equal 3 .
