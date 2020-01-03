@@ -102,6 +102,7 @@ LIBCSRC=\
 	src/ioq/feed.c\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\
+	src/ioq/free.c\
 	src/ioq/get.c\
 	src/ioq/getall.c\
 	src/ioq/getdelim.c\

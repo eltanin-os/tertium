@@ -380,6 +380,7 @@ ctype_fd c_ioq_fd(ctype_ioq *);
 size c_ioq_feed(ctype_ioq *);
 ctype_status c_ioq_flush(ctype_ioq *);
 size c_ioq_fmt(ctype_ioq *, char *, ...);
+void c_ioq_free(ctype_ioq *);
 size c_ioq_get(ctype_ioq *, char *, usize);
 size c_ioq_getall(ctype_ioq *, char *, usize);
 ctype_status c_ioq_getdelim(ctype_ioq *, ctype_arr *, int);
