@@ -155,6 +155,7 @@ LIBCSRC=\
 	src/std/werrstr.c\
 	src/str/chr.c\
 	src/str/cmp.c\
+	src/str/dup.c\
 	src/str/len.c\
 	src/str/rchr.c\
 	src/str/str.c\

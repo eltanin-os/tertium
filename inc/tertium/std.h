@@ -435,6 +435,7 @@ void c_std_werrstr(char *, ...);
 /* str routines */
 char *c_str_chr(char *, usize, int);
 int c_str_cmp(char *, usize, char *);
+char *c_str_dup(char *, usize);
 usize c_str_len(char *, usize);
 char *c_str_rchr(char *, usize, int);
 char *c_str_str(char *, usize, char *);
