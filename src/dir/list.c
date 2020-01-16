@@ -4,24 +4,24 @@
 #include "__int__.h"
 
 ctype_dent *
-c_dir_children(ctype_dir *p)
+c_dir_list(ctype_dir *p)
 {
 	ctype_dent *ep;
 	ctype_node *cur;
 
 	if (!(cur = p->ccur)) {
-		ep = p->cur->p;
-		if (ep->info != C_FSD)
-			return nil;
-		p->child = p->ccur = __dir_builddir(p);
-		return p->ccur->p;
+		p->ccur = p->cur;
+		if ((ep = p->ccur->p)->info == C_FSINT) {
+			p->ccur = p->ccur->next;
+			ep = p->ccur->p;
+		}
+		return ep;
 	}
 
 	cur = cur->next;
 	if (cur->prev) {
 		p->ccur = cur;
-		ep = cur->p;
-		return ep;
+		return cur->p;
 	}
 
 	p->ccur = nil;

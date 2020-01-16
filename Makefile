@@ -52,6 +52,7 @@ LIBCSRC=\
 	src/dir/children.c\
 	src/dir/close.c\
 	src/dir/info.c\
+	src/dir/list.c\
 	src/dir/newfile.c\
 	src/dir/open.c\
 	src/dir/read.c\

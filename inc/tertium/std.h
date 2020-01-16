@@ -329,6 +329,7 @@ ctype_status c_cdb_read(ctype_cdb *, char *, usize, u32int);
 /* dir routines */
 ctype_dent *c_dir_children(ctype_dir *);
 ctype_status c_dir_close(ctype_dir *);
+ctype_dent *c_dir_list(ctype_dir *);
 ctype_status c_dir_open(ctype_dir *, char **, uint, ctype_cmpfn);
 ctype_dent *c_dir_read(ctype_dir *);
 ctype_status c_dir_set(ctype_dir *, ctype_dent *, int);
