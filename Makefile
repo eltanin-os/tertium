@@ -142,6 +142,7 @@ LIBCSRC=\
 	src/std/errstr.c\
 	src/std/exit.c\
 	src/std/fdcat.c\
+	src/std/fmtnil.c\
 	src/std/free.c\
 	src/std/getsyserr.c\
 	src/std/mktemp.c\
