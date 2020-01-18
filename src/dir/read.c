@@ -70,6 +70,5 @@ c_dir_read(ctype_dir *p)
 		return ep;
 	}
 
-	p->cur = p->cur->next;
 	return nil;
 }
