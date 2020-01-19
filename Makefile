@@ -205,6 +205,7 @@ LIBCSRC=\
 	src/sys/write.c\
 	src/tai/add.c\
 	src/tai/approx.c\
+	src/tai/fromtime.c\
 	src/tai/less.c\
 	src/tai/now.c\
 	src/tai/pack.c\
@@ -213,6 +214,7 @@ LIBCSRC=\
 	src/taia/add.c\
 	src/taia/approx.c\
 	src/taia/frac.c\
+	src/taia/fromtime.c\
 	src/taia/half.c\
 	src/taia/less.c\
 	src/taia/now.c\

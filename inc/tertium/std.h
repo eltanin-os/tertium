@@ -489,6 +489,7 @@ size c_sys_write(ctype_fd, void *, usize);
 /* tai routines */
 void c_tai_add(ctype_tai *, ctype_tai *, ctype_tai *);
 double c_tai_approx(ctype_tai *);
+void c_tai_fromtime(ctype_tai *, ctype_time *);
 int c_tai_less(ctype_tai *, ctype_tai *);
 void c_tai_pack(char *, ctype_tai *);
 void c_tai_now(ctype_tai *);
@@ -499,6 +500,7 @@ void c_tai_unpack(char *, ctype_tai *);
 void c_taia_add(ctype_taia *, ctype_taia *, ctype_taia *);
 double c_taia_approx(ctype_taia *);
 double c_taia_frac(ctype_taia *);
+void c_taia_fromtime(ctype_taia *, ctype_time *);
 void c_taia_half(ctype_taia *, ctype_taia *);
 int c_taia_less(ctype_taia *, ctype_taia *);
 void c_taia_now(ctype_taia *);
