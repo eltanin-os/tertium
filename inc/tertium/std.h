@@ -116,8 +116,7 @@ enum {
 
 	/* flags */
 	C_IOQ_ONOFLUSH = 1 << 0,
-	C_IOQ_ODYNAMIC = 1 << 1,
-	__IOQ_OALL = 0x03,
+	__IOQ_OALL = 1 << 0,
 };
 
 #define c_ioq_INIT(a, b, c) { { sizeof((b)), 0, (b) }, (c), (a), 0 }
