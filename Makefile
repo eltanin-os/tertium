@@ -35,6 +35,11 @@ LIBCSRC=\
 	src/arr/total.c\
 	src/arr/trunc.c\
 	src/arr/vfmt.c\
+	src/cal/datefrommjd.c\
+	src/cal/datemjd.c\
+	src/cal/datenorm.c\
+	src/cal/timetai.c\
+	src/cal/timeutc.c\
 	src/cdb/datalen.c\
 	src/cdb/datapos.c\
 	src/cdb/find.c\
@@ -206,6 +211,9 @@ LIBCSRC=\
 	src/tai/add.c\
 	src/tai/approx.c\
 	src/tai/fromtime.c\
+	src/tai/leapadd.c\
+	src/tai/leapsub.c\
+	src/tai/leaptab.c\
 	src/tai/less.c\
 	src/tai/now.c\
 	src/tai/pack.c\

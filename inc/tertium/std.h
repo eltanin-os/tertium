@@ -148,6 +148,24 @@ struct ctype_arr {
 	uchar *p;
 };
 
+/* cal types */
+typedef struct ctype_caldate ctype_caldate;
+typedef struct ctype_caltime ctype_caltime;
+
+struct ctype_caldate {
+	long year;
+	int day;
+	int month;
+};
+
+struct ctype_caltime {
+	ctype_caldate date;
+	long offset;
+	int hour;
+	int minute;
+	int second;
+};
+
 /* adt types */
 typedef struct ctype_node ctype_node;
 typedef struct ctype_queue ctype_queue;
@@ -307,6 +325,13 @@ usize c_arr_len(ctype_arr *, usize);
 usize c_arr_total(ctype_arr *);
 ctype_status c_arr_trunc(ctype_arr *, usize, usize);
 size c_arr_vfmt(ctype_arr *, char *, va_list);
+
+/* cal routines */
+void c_cal_datefrommjd(ctype_caldate *, long);
+long c_cal_datemjd(ctype_caldate *);
+void c_cal_datenorm(ctype_caldate *);
+void c_cal_timetai(ctype_tai *, ctype_caltime *);
+void c_cal_timeutc(ctype_caltime *, ctype_tai *);
 
 /* cdb routines */
 u32int c_cdb_datalen(ctype_cdb *);
@@ -489,6 +514,8 @@ size c_sys_write(ctype_fd, void *, usize);
 void c_tai_add(ctype_tai *, ctype_tai *, ctype_tai *);
 double c_tai_approx(ctype_tai *);
 void c_tai_fromtime(ctype_tai *, ctype_time *);
+void c_tai_leapadd(ctype_tai *, int);
+int c_tai_leapsub(ctype_tai *);
 int c_tai_less(ctype_tai *, ctype_tai *);
 void c_tai_pack(char *, ctype_tai *);
 void c_tai_now(ctype_tai *);
