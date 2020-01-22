@@ -6,6 +6,7 @@ and secure environment that produces more reliable software.
 ### Modules
 * adt: abstract data types
 * arr: generic static array
+* cal: calendar dates
 * cdb: constant database
 * dir: directory recursion
 * dyn: generic dynamic array
