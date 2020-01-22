@@ -1,8 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-ctype_arr *
-c_ioq_arr(ctype_ioq *p)
+ctype_fd
+c_ioq_fileno(ctype_ioq *p)
 {
-	return &p->arr;
+	return p->fd;
 }

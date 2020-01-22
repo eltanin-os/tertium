@@ -104,9 +104,8 @@ LIBCSRC=\
 	src/hsh/update.c\
 	src/hsh/whirlpool.c\
 	src/ioq/alloc.c\
-	src/ioq/arr.c\
-	src/ioq/fd.c\
 	src/ioq/feed.c\
+	src/ioq/fileno.c\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\
 	src/ioq/free.c\

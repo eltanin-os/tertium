@@ -393,9 +393,8 @@ ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
 
 /* ioq routines */
 ctype_ioq *c_ioq_alloc(ctype_fd, usize, ctype_iofn);
-ctype_arr *c_ioq_arr(ctype_ioq *);
-ctype_fd c_ioq_fd(ctype_ioq *);
 size c_ioq_feed(ctype_ioq *);
+ctype_fd c_ioq_fileno(ctype_ioq *);
 ctype_status c_ioq_flush(ctype_ioq *);
 size c_ioq_fmt(ctype_ioq *, char *, ...);
 void c_ioq_free(ctype_ioq *);
