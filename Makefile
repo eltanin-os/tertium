@@ -15,14 +15,15 @@ ASMSRC=\
 
 LIBCSRC=\
 	src/adt/lfree.c\
+	src/adt/lnew.c\
 	src/adt/lpop.c\
 	src/adt/lpush.c\
 	src/adt/lsort.c\
 	src/adt/ltpush.c\
-	src/adt/qinit.c\
 	src/adt/qpop.c\
-	src/adt/qpops.c\
 	src/adt/qpush.c\
+	src/adt/spop.c\
+	src/adt/spush.c\
 	src/arr/arrzero.c\
 	src/arr/avail.c\
 	src/arr/bytes.c\

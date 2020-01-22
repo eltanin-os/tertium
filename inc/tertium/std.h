@@ -168,19 +168,11 @@ struct ctype_caltime {
 
 /* adt types */
 typedef struct ctype_node ctype_node;
-typedef struct ctype_queue ctype_queue;
 
 struct ctype_node {
 	ctype_node *next;
 	ctype_node *prev;
 	void *p;
-};
-
-struct ctype_queue {
-	usize a;
-	usize h;
-	usize t;
-	uchar *p;
 };
 
 /* dir types */
@@ -304,14 +296,15 @@ struct ctype_taia {
 
 /* adt routines */
 void c_adt_lfree(ctype_node *);
+ctype_node *c_adt_lnew(void *, usize);
 ctype_node *c_adt_lpop(ctype_node **);
 ctype_status c_adt_lpush(ctype_node **, ctype_node *);
 void c_adt_lsort(ctype_node **, ctype_cmpfn);
 ctype_status c_adt_ltpush(ctype_node **, ctype_node *);
-void c_adt_qinit(ctype_queue *, char *, usize);
-ctype_status c_adt_qpop(ctype_queue *, ctype_arr *, usize, usize);
-ctype_status c_adt_qpops(ctype_queue *, ctype_arr *);
-ctype_status c_adt_qpush(ctype_queue *, void *, usize, usize);
+void *c_adt_qpop(ctype_node **);
+ctype_status c_adt_qpush(ctype_node **, void *, usize);
+void *c_adt_spop(ctype_node **);
+ctype_status c_adt_spush(ctype_node **, void *, usize);
 
 /* arr routines */
 usize c_arr_avail(ctype_arr *);
