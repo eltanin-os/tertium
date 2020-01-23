@@ -87,13 +87,13 @@
 #define C_IFREG 0x8000
 #define C_IFSCK 0xC000
 
-#define C_ISBLK(a) (((a) & C_IFBLK) == C_IFBLK)
-#define C_ISCHR(a) (((a) & C_IFCHR) == C_IFCHR)
-#define C_ISDIR(a) (((a) & C_IFDIR) == C_IFDIR)
-#define C_ISFIFO(a) (((a) & C_IFIFO) == C_IFIFO)
-#define C_ISLNK(a) (((a) & C_IFLNK) == C_IFLNK)
-#define C_ISREG(a) (((a) & C_IFREG) == C_IFREG)
-#define C_ISSCK(a) (((a) & C_IFSCK) == C_IFSCK)
+#define C_ISBLK(a) (((a) & C_IFMT) == C_IFBLK)
+#define C_ISCHR(a) (((a) & C_IFMT) == C_IFCHR)
+#define C_ISDIR(a) (((a) & C_IFMT) == C_IFDIR)
+#define C_ISFIFO(a) (((a) & C_IFMT) == C_IFIFO)
+#define C_ISLNK(a) (((a) & C_IFMT) == C_IFLNK)
+#define C_ISREG(a) (((a) & C_IFMT) == C_IFREG)
+#define C_ISSCK(a) (((a) & C_IFMT) == C_IFSCK)
 
 #define C_ISUID 04000
 #define C_ISGID 02000
