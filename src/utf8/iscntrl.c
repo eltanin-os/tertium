@@ -1,0 +1,43 @@
+#include <tertium/cpu.h>
+#include <tertium/std.h>
+
+#include "__int__.h"
+
+static ctype_rune rangetab[] = {
+	0x00001, 0x00020,
+	0x0007F, 0x000A0,
+	0x00600, 0x00606,
+	0x0200B, 0x02010,
+	0x02028, 0x0202F,
+	0x02060, 0x02065,
+	0x02066, 0x02070,
+	0x0FFF9, 0x0FFFC,
+	0x13430, 0x13439,
+	0x1BCA0, 0x1BCA4,
+	0x1D173, 0x1D17B,
+	0xE0020, 0xE0080,
+};
+
+static ctype_rune tab[] = {
+	0x000AD,
+	0x0061C,
+	0x006DD,
+	0x0070F,
+	0x008E2,
+	0x0180E,
+	0x0FEFF,
+	0x110BD,
+	0x110CD,
+	0xE0001,
+};
+
+/* Cc, Cf, Zl, Zp */
+int
+c_utf8_iscntrl(ctype_rune r)
+{
+	if (__UTF8_RANGESEARCH(&r, rangetab))
+		return 1;
+	if (__UTF8_SEARCH(&r, tab))
+		return 1;
+	return 0;
+}

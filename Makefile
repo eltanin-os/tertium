@@ -246,7 +246,21 @@ LIBCSRC=\
 	src/utf8/chartorune.c\
 	src/utf8/checkrune.c\
 	src/utf8/fullrune.c\
+	src/utf8/isalnum.c\
+	src/utf8/isalpha.c\
+	src/utf8/isblank.c\
+	src/utf8/iscntrl.c\
+	src/utf8/isdigit.c\
+	src/utf8/isgraph.c\
+	src/utf8/islower.c\
+	src/utf8/isprint.c\
+	src/utf8/ispunct.c\
+	src/utf8/isspace.c\
+	src/utf8/istitle.c\
+	src/utf8/isupper.c\
+	src/utf8/isxdigit.c\
 	src/utf8/mtab.c\
+	src/utf8/runecmp.c\
 	src/utf8/runelen.c\
 	src/utf8/runenlen.c\
 	src/utf8/runetochar.c\
