@@ -301,10 +301,7 @@ ctype_node *c_adt_lpop(ctype_node **);
 ctype_status c_adt_lpush(ctype_node **, ctype_node *);
 void c_adt_lsort(ctype_node **, ctype_cmpfn);
 ctype_status c_adt_ltpush(ctype_node **, ctype_node *);
-void *c_adt_qpop(ctype_node **);
-ctype_status c_adt_qpush(ctype_node **, void *, usize);
-void *c_adt_spop(ctype_node **);
-ctype_status c_adt_spush(ctype_node **, void *, usize);
+ctype_node *c_adt_ltpop(ctype_node **);
 
 /* arr routines */
 usize c_arr_avail(ctype_arr *);
