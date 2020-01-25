@@ -54,6 +54,20 @@ hist(ctype_arr *hp, ulong dev, ulong ino)
 	return r;
 }
 
+static int
+dohist(ctype_dir *p, ctype_stat *stp, ushort c1, ushort c2)
+{
+	switch (hist(&p->hist, stp->dev, stp->ino)) {
+	case -1:
+		p->opts |= C_FSSTP;
+		return C_FSERR;
+	case 0:
+		return c1;
+	default:
+		return c2;
+	}
+}
+
 int
 __dir_info(ctype_dir *p, ctype_dent *ep)
 {
@@ -81,15 +95,9 @@ __dir_info(ctype_dir *p, ctype_dent *ep)
 		if (C_ISDOT(ep->name))
 			return C_FSDOT;
 
-		switch (hist(&p->hist, stp->dev, stp->ino)) {
-		case -1:
-			p->opts |= C_FSSTP;
-			return C_FSERR;
-		case 0:
-			return C_FSDC;
-		default:
-			return C_FSD;
-		}
+		if (FOLLOW(p->opts, ep->depth))
+			return dohist(p, stp, C_FSDC, C_FSD);
+		return C_FSD;
 	}
 
 	if (C_ISLNK(stp->mode))
@@ -97,15 +105,7 @@ __dir_info(ctype_dir *p, ctype_dent *ep)
 
 	if (C_ISREG(stp->mode)) {
 		if ((p->opts & C_FSFHT) && stp->nlink > 1)
-			switch (hist(&p->hist, stp->dev, stp->ino)) {
-			case -1:
-				p->opts |= C_FSSTP;
-				return C_FSERR;
-			case 0:
-				return C_FSFC;
-			default:
-				return C_FSF;
-			}
+			dohist(p, stp, C_FSFC, C_FSF);
 		return C_FSF;
 	}
 
