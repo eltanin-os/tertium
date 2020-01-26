@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 int
-c_sys_isatty(int fd)
+c_std_isatty(int fd)
 {
 	ctype_stat st;
 

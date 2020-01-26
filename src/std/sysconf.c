@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 long
-c_sys_conf(int v)
+c_std_sysconf(int v)
 {
 	switch (v) {
 	case _SC_ARG_MAX:

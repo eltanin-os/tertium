@@ -27,7 +27,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	if ((path = c_str_chr(prog, C_USIZEMAX, '/')))
 		return c_sys_exec(prog, argv, (char **)c_arr_data(&e));
 
-	if (!(path = c_sys_getenv("PATH")))
+	if (!(path = c_std_getenv("PATH")))
 		path = "/bin:/usr/bin:.";
 
 	sverr = 0;

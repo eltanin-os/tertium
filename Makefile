@@ -145,7 +145,9 @@ LIBCSRC=\
 	src/std/fdcat.c\
 	src/std/fmtnil.c\
 	src/std/free.c\
+	src/std/getenv.c\
 	src/std/getsyserr.c\
+	src/std/isatty.c\
 	src/std/mktemp.c\
 	src/std/pubrealloc.c\
 	src/std/realloc.c\
@@ -155,6 +157,7 @@ LIBCSRC=\
 	src/std/strtouvl.c\
 	src/std/strtovl.c\
 	src/std/syscall.c\
+	src/std/sysconf.c\
 	src/std/werrstr.c\
 	src/str/chr.c\
 	src/str/cmp.c\
@@ -166,7 +169,6 @@ LIBCSRC=\
 	src/sys/chmod.c\
 	src/sys/chown.c\
 	src/sys/close.c\
-	src/sys/conf.c\
 	src/sys/dup.c\
 	src/sys/exec.c\
 	src/sys/exit.c\
@@ -176,11 +178,9 @@ LIBCSRC=\
 	src/sys/fork.c\
 	src/sys/fstat.c\
 	src/sys/getcwd.c\
-	src/sys/getenv.c\
 	src/sys/getgid.c\
 	src/sys/getpid.c\
 	src/sys/getuid.c\
-	src/sys/isatty.c\
 	src/sys/lchown.c\
 	src/sys/link.c\
 	src/sys/llink.c\

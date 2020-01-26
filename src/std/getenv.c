@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 char *
-c_sys_getenv(char *s)
+c_std_getenv(char *s)
 {
 	usize n;
 	int i;
