@@ -15,21 +15,14 @@ c_rand_genseed(char *s, usize n)
 	c_uint_64bigpack(buf + 4 + C_TAIA_PACK, (uintptr)s);
 	c_uint_64bigpack(buf + 8 + C_TAIA_PACK, (uintptr)&n);
 	c_hsh_all(&hs, c_hsh_edf, buf, sizeof(buf));
-
-	for (;;) {
-		n -= r = C_MIN(n, 4);
-		c_uint_32bigpack(buf, hs.st.x32[0]);
-		c_mem_cpy(s + n, r, buf);
-
-		if (!n)
-			break;
-
+	while (n) {
 		for (r = 0; r < 9; r++) {
 			c_hsh_edf->update(&hs, buf, sizeof(buf));
 			c_hsh_edf->end(&hs);
-			c_uint_32bigpack(buf + (r << 2), hs.st.x32[0]);
+			c_hsh_digest(&hs, c_hsh_edf, buf + (r << 2));
 		}
+		n -= r = C_MIN(n, 4);
+		c_mem_cpy(s + n, r, &hs.st.x32[0]);
 	}
-
 	return s;
 }
