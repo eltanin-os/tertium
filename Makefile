@@ -169,8 +169,8 @@ LIBCSRC=\
 	src/sys/chmod.c\
 	src/sys/chown.c\
 	src/sys/close.c\
-	src/sys/dup.c\
-	src/sys/exec.c\
+	src/sys/dup2.c\
+	src/sys/execve.c\
 	src/sys/exit.c\
 	src/sys/fchdir.c\
 	src/sys/fchmod.c\

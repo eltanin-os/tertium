@@ -25,7 +25,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 		c_mem_set(e.p + e.n, sizeof(void *), 0);
 
 	if ((path = c_str_chr(prog, C_USIZEMAX, '/')))
-		return c_sys_exec(prog, argv, (char **)c_arr_data(&e));
+		return c_sys_execve(prog, argv, (char **)c_arr_data(&e));
 
 	if (!(path = c_std_getenv("PATH")))
 		path = "/bin:/usr/bin:.";
@@ -39,7 +39,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 		off = (s = c_str_chr(path, C_USIZEMAX, ':')) ? s - path : -1;
 		if (c_arr_fmt(&f, "%.*s/%s", off, path, prog) < 0)
 			return -1;
-		c_sys_exec(c_arr_data(&f), argv, (char **)c_arr_data(&e));
+		c_sys_execve(c_arr_data(&f), argv, (char **)c_arr_data(&e));
 		if (errno != C_ENOENT) {
 			sverr = errno;
 			if (!(errno == C_EACCES || errno == C_EPERM ||

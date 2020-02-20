@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 ctype_status
-c_sys_dup(ctype_fd ofd, ctype_fd nfd)
+c_sys_dup2(ctype_fd ofd, ctype_fd nfd)
 {
 	ctype_status r;
 

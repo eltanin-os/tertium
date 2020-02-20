@@ -16,7 +16,7 @@ c_hsh_putfile(ctype_hst *hs, ctype_hmd *p, char *s)
 
 	r = 0;
 
-	if (c_sys_fstat(&st, fd) < 0)
+	if (c_sys_fstat(fd, &st) < 0)
 		goto fail;
 
 	if (c_hsh_putfd(hs, p, fd, st.size) < 0)

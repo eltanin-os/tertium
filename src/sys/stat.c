@@ -2,10 +2,7 @@
 #include <tertium/std.h>
 
 ctype_status
-c_sys_stat(ctype_stat *p, char *s)
+c_sys_stat(char *s, ctype_stat *p)
 {
-	if (c_std_syscall(SYS_fstatat, AT_FDCWD, s, p, 0) < 0)
-		return -1;
-
-	return 0;
+	return c_std_syscall(SYS_fstatat, AT_FDCWD, s, p, 0);
 }
