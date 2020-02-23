@@ -77,6 +77,8 @@ LIBCSRC=\
 	src/exc/run.c\
 	src/exc/runenv.c\
 	src/exc/setenv.c\
+	src/exc/spawn0.c\
+	src/exc/spawn1.c\
 	src/fmt/fmt.c\
 	src/fmt/init.c\
 	src/fmt/install.c\
@@ -158,6 +160,7 @@ LIBCSRC=\
 	src/std/strtovl.c\
 	src/std/syscall.c\
 	src/std/sysconf.c\
+	src/std/vtoptr.c\
 	src/std/werrstr.c\
 	src/str/chr.c\
 	src/str/cmp.c\

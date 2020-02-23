@@ -371,6 +371,8 @@ int c_err_warnx(char *, ...);
 ctype_status c_exc_run(char *, char **);
 ctype_status c_exc_runenv(char *, char **, char **);
 ctype_status c_exc_setenv(char *, char *);
+ctype_id c_exc_spawn0(char *, char **, char **);
+ctype_id c_exc_spawn1(char *, char **, char **, ctype_fd *, int);
 
 /* fmt routines */
 void c_fmt_init(ctype_fmt *, void *, ctype_arr *, ctype_fmtopfn);
@@ -448,6 +450,7 @@ uvlong c_std_strtouvl(char *, int, uvlong, uvlong, char **, int *);
 vlong c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 vlong c_std_syscall_(vlong, ...);
 long c_std_sysconf(int);
+void *c_std_vtoptr(char *, ...);
 void c_std_werrstr(char *, ...);
 
 /* str routines */
