@@ -8,7 +8,7 @@ c_exc_spawn0(char *prog, char **argv, char **envp)
 	ctype_error sverr;
 	ctype_id id;
 
-	if (c_sys_pipe(sync) < 0)
+	if (c_sys_pipecoe(sync) < 0)
 		return 0;
 	if ((id = c_sys_fork()) < 0) {
 		c_sys_close(sync[0]);

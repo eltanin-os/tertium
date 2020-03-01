@@ -11,7 +11,7 @@ c_exc_spawn1(char *prog, char **argv, char **envp, ctype_fd *fd, int to)
 
 	if (c_sys_pipe(pipe) < 0)
 		return 0;
-	if (c_sys_pipe(sync) < 0) {
+	if (c_sys_coe(pipe[0]) < 0 || c_sys_pipecoe(sync) < 0) {
 		c_sys_close(pipe[0]);
 		c_sys_close(pipe[1]);
 		return 0;
@@ -21,12 +21,12 @@ c_exc_spawn1(char *prog, char **argv, char **envp, ctype_fd *fd, int to)
 		c_sys_close(sync[1]);
 		c_sys_close(pipe[0]);
 		c_sys_close(pipe[1]);
+		return 0;
 	}
 	if (!id) {
 		c_sys_close(sync[0]);
 		c_sys_close(pipe[!to]);
-		c_sys_dup2(pipe[to], to);
-		c_sys_close(pipe[to]);
+		c_sys_fdmove(to, pipe[to]);
 		c_exc_runenv(prog, argv, envp);
 		sverr = errno;
 		c_sys_write(sync[1], &sverr, sizeof(sverr));

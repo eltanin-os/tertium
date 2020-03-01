@@ -172,12 +172,16 @@ LIBCSRC=\
 	src/sys/chmod.c\
 	src/sys/chown.c\
 	src/sys/close.c\
+	src/sys/coe.c\
 	src/sys/dup2.c\
 	src/sys/execve.c\
 	src/sys/exit.c\
 	src/sys/fchdir.c\
 	src/sys/fchmod.c\
 	src/sys/fchown.c\
+	src/sys/fcntl.c\
+	src/sys/fdcopy.c\
+	src/sys/fdmove.c\
 	src/sys/fork.c\
 	src/sys/fstat.c\
 	src/sys/getcwd.c\
@@ -192,8 +196,13 @@ LIBCSRC=\
 	src/sys/mknod.c\
 	src/sys/mmap.c\
 	src/sys/munmap.c\
+	src/sys/nb.c\
 	src/sys/open.c\
 	src/sys/pipe.c\
+	src/sys/pipe2.c\
+	src/sys/pipecoe.c\
+	src/sys/pipenb.c\
+	src/sys/pipenbcoe.c\
 	src/sys/read.c\
 	src/sys/readlink.c\
 	src/sys/rename.c\

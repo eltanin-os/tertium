@@ -84,12 +84,24 @@
 #define C_OAPPEND 0x00400
 #define C_OCREATE 0x00040
 #define C_OTRUNC 0x00200
+#define C_ONONBLOCK 0x04000
 #define C_OCEXEC 0x80000
 #define C_OEXCL 0x00080
 #define C_ODIRECTORY 0200000
 
 /* others macros */
 #define MAP_ANON 0x20
+
+#define C_FDUPFD 0
+#define C_FGETFD 1
+#define C_FSETFD 2
+#define C_FGETFL 3
+#define C_FSETFL 4
+#define C_FGETLK 5
+#define C_FSETLK 6
+#define C_FSETLKW 7
+#define C_FSETOWN 8
+#define C_FGETOWN 9
 
 /* syscalls macros */
 #define SYS_read 0
@@ -109,6 +121,7 @@
 #define SYS_exit 60
 #define SYS_waitpid 61
 #define SYS_uname 63
+#define SYS_fcntl 72
 #define SYS_getcwd 79
 #define SYS_chdir 80
 #define SYS_fchdir 81
@@ -132,6 +145,7 @@
 #define SYS_clock_gettime 228
 #define SYS_fstatat 262
 #define SYS_linkat 265
+#define SYS_pipe2 293
 
 /* variadic macros */
 #define va_arg(a, b) __builtin_va_arg(a, b)

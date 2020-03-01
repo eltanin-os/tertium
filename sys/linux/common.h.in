@@ -61,6 +61,9 @@
 #define C_OWRITE 0x1
 #define C_ORDWR 0x2
 
+#define C_FDCLOEXEC 1
+#define C_FDUPFD_CEXEC 1030
+
 /* others macros
  * TODO: rename */
 #define CLOCK_REALTIME 0

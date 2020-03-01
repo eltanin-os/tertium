@@ -127,6 +127,7 @@ enum {
 #define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
 #define c_std_setprogname(a) argv0 = (a)
 #define c_std_syscall(...) c_std_syscall_(__VA_ARGS__, nil)
+#define c_std_vtoptr(...) c_std_vtoptr_(__VA_ARGS__, nil)
 
 /* tai macros */
 #define C_TAI_PACK 8
@@ -450,7 +451,7 @@ uvlong c_std_strtouvl(char *, int, uvlong, uvlong, char **, int *);
 vlong c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 vlong c_std_syscall_(vlong, ...);
 long c_std_sysconf(int);
-void *c_std_vtoptr(char *, ...);
+void *c_std_vtoptr_(char *, ...);
 void c_std_werrstr(char *, ...);
 
 /* str routines */
@@ -465,13 +466,17 @@ char *c_str_str(char *, usize, char *);
 ctype_status c_sys_chdir(char *);
 ctype_status c_sys_chmod(char *, uint);
 ctype_status c_sys_chown(char *, ctype_id, ctype_id);
-ctype_status c_sys_close(int);
+ctype_status c_sys_close(ctype_fd);
+ctype_status c_sys_coe(ctype_fd);
 ctype_status c_sys_dup2(ctype_fd, ctype_fd);
 ctype_status c_sys_execve(char *, char **, char **);
 void c_sys_exit(int);
 ctype_status c_sys_fchdir(ctype_fd);
 ctype_status c_sys_fchmod(int, uint);
 ctype_status c_sys_fchown(ctype_fd, ctype_id, ctype_id);
+ctype_status c_sys_fcntl(ctype_fd, int, ...);
+ctype_status c_sys_fdcopy(ctype_fd, ctype_fd);
+ctype_status c_sys_fdmove(ctype_fd, ctype_fd);
 ctype_id c_sys_fork(void);
 ctype_status c_sys_fstat(ctype_fd, ctype_stat *);
 char *c_sys_getcwd(char *, usize);
@@ -486,8 +491,13 @@ ctype_status c_sys_mkdir(char *, uint);
 ctype_status c_sys_mknod(char *, uint, ctype_fsid);
 void *c_sys_mmap(void *, usize, int, uint, ctype_fd, ctype_fssize);
 ctype_status c_sys_munmap(void *, usize);
+ctype_status c_sys_nb(ctype_fd);
 ctype_fd c_sys_open(char *, uint, uint);
 ctype_status c_sys_pipe(ctype_fd *);
+ctype_status c_sys_pipe2(ctype_fd *, uint);
+ctype_status c_sys_pipecoe(ctype_fd *);
+ctype_status c_sys_pipenb(ctype_fd *);
+ctype_status c_sys_pipenbcoe(ctype_fd *);
 size c_sys_read(ctype_fd, void *, usize);
 size c_sys_readlink(char *, char *, usize);
 ctype_status c_sys_rename(char *, char *);
