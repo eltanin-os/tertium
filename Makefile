@@ -74,6 +74,7 @@ LIBCSRC=\
 	src/err/vwarnx.c\
 	src/err/warn.c\
 	src/err/warnx.c\
+	src/exc/arglist.c\
 	src/exc/run.c\
 	src/exc/runenv.c\
 	src/exc/setenv.c\

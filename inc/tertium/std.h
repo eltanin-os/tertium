@@ -62,6 +62,9 @@ enum {
 /* dyn macros */
 #define C_DYNMINALLOC 64
 
+/* exc macros */
+#define c_exc_arglist(...) c_exc_arglist_(__VA_ARGS__, nil)
+
 /* fmt macros */
 enum {
 	C_FMTWIDTH = 1 << 0,
@@ -369,6 +372,7 @@ int c_err_warn(char *, ...);
 int c_err_warnx(char *, ...);
 
 /* exc routines */
+void *c_exc_arglist_(char *, ...);
 ctype_status c_exc_run(char *, char **);
 ctype_status c_exc_runenv(char *, char **, char **);
 ctype_status c_exc_setenv(char *, char *);

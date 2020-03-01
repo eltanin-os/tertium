@@ -19,7 +19,7 @@ c_sys_fcntl(ctype_fd fd, int cmd, ...)
 	case C_FGETFD:
 	case C_FGETFL:
 	case C_FGETOWN:
-		r = c_std_syscall(SYS_fcntl, fd);
+		r = c_std_syscall(SYS_fcntl, fd, 0);
 		break;
 	case C_FGETLK:
 	case C_FSETLK:
