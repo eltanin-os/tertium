@@ -203,9 +203,24 @@
 #define C_OWRITE O_WRONLY
 #define C_ORDWR O_RDWR
 #define C_OTRUNC O_TRUNC
+#define C_ONONBLOCK O_NONBLOCK
 #define C_OCEXEC O_CLOEXEC
 #define C_OEXCL O_EXCL
 #define C_ODIRECTORY O_DIRECTORY
+
+#define C_FDCEXEC FD_CLOEXEC
+#define C_FDUPFD_CEXEC F_DUPFD_CLOEXEC
+
+#define C_FDUPFD F_DUPFD
+#define C_FGETFD F_GETFD
+#define C_FSETFD F_SETFD
+#define C_FGETFL F_GETFL
+#define C_FSETFL F_SETFL
+#define C_FGETLK F_GETLK
+#define C_FSETLK F_SETLK
+#define C_FSETLKW F_SETLKW
+#define C_FSETOWN F_SETOWN
+#define C_FGETOWN F_GETOWN
 
 /* stat macros */
 #define C_IFMT S_IFMT
@@ -296,7 +311,7 @@ typedef int ctype_fd;
 typedef int ctype_error;
 typedef int ctype_status;
 typedef uvlong ctype_fsid; /* dev, ino, nlink */
-typedef id_t ctype_id; /* gid, pid, uid */
+typedef vlong ctype_id; /* gid, pid, uid */
 typedef vlong ctype_fssize; /* file size, block size, block count */
 
 typedef int (*ctype_cmpfn)(void *, void *);
