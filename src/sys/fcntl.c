@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-ctype_status
+int
 c_sys_fcntl(ctype_fd fd, int cmd, ...)
 {
-	ctype_status r;
+	int r;
 	va_list ap;
 
 	va_start(ap, cmd);
@@ -14,20 +14,19 @@ c_sys_fcntl(ctype_fd fd, int cmd, ...)
 	case C_FSETFD:
 	case C_FSETFL:
 	case C_FSETOWN:
-		r = c_std_syscall(SYS_fcntl, fd, va_arg(ap, int));
+		r = c_std_syscall(SYS_fcntl, cmd, fd, va_arg(ap, int));
 		break;
 	case C_FGETFD:
 	case C_FGETFL:
 	case C_FGETOWN:
-		r = c_std_syscall(SYS_fcntl, fd, 0);
+		r = c_std_syscall(SYS_fcntl, cmd, fd);
 		break;
 	case C_FGETLK:
 	case C_FSETLK:
 	case C_FSETLKW:
-		r = c_std_syscall(SYS_fcntl, fd, va_arg(ap, void *)); /* XXX */
-		break;
+		/* FALLTHROUGH (XXX) */
 	default:
-		r = c_std_syscall(SYS_fcntl, fd, va_arg(ap, void *));
+		r = c_std_syscall(SYS_fcntl, cmd, fd, va_arg(ap, void *));
 		break;
 	}
 	va_end(ap);

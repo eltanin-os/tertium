@@ -12,10 +12,8 @@ c_std_syscall_(vlong num, ...)
 	int i;
 	void *args[8];
 
-	c_mem_set(&args, sizeof(args), 0);
-
 	va_start(ap, num);
-	for (i = 0; i < 8; i++)
+	for (i = 0; i < 8; ++i)
 		args[i] = va_arg(ap, uintptr *);
 	va_end(ap);
 

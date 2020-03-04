@@ -478,7 +478,7 @@ void c_sys_exit(int);
 ctype_status c_sys_fchdir(ctype_fd);
 ctype_status c_sys_fchmod(int, uint);
 ctype_status c_sys_fchown(ctype_fd, ctype_id, ctype_id);
-ctype_status c_sys_fcntl(ctype_fd, int, ...);
+int c_sys_fcntl(ctype_fd, int, ...);
 ctype_status c_sys_fdcopy(ctype_fd, ctype_fd);
 ctype_status c_sys_fdmove(ctype_fd, ctype_fd);
 ctype_id c_sys_fork(void);
