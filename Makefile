@@ -210,6 +210,7 @@ LIBCSRC=\
 	src/sys/rename.c\
 	src/sys/rmdir.c\
 	src/sys/seek.c\
+	src/sys/sethostname.c\
 	src/sys/stat.c\
 	src/sys/symlink.c\
 	src/sys/umask.c\

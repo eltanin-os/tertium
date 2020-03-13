@@ -508,6 +508,7 @@ size c_sys_readlink(char *, char *, usize);
 ctype_status c_sys_rename(char *, char *);
 ctype_status c_sys_rmdir(char *);
 ctype_fssize c_sys_seek(ctype_fd, ctype_fssize, int);
+ctype_status c_sys_sethostname(char *, usize);
 ctype_status c_sys_stat(char *, ctype_stat *);
 ctype_status c_sys_symlink(char *, char *);
 uint c_sys_umask(uint);

@@ -142,6 +142,7 @@
 #define SYS_getgid 104
 #define SYS_geteuid 107
 #define SYS_mknod 133
+#define SYS_sethostname 170
 #define SYS_getdents 217
 #define SYS_clock_gettime 228
 #define SYS_fstatat 262
