@@ -186,6 +186,7 @@ LIBCSRC=\
 	src/sys/fork.c\
 	src/sys/fstat.c\
 	src/sys/getcwd.c\
+	src/sys/geteuid.c\
 	src/sys/getgid.c\
 	src/sys/getpid.c\
 	src/sys/getuid.c\

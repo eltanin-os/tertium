@@ -484,6 +484,7 @@ ctype_status c_sys_fdmove(ctype_fd, ctype_fd);
 ctype_id c_sys_fork(void);
 ctype_status c_sys_fstat(ctype_fd, ctype_stat *);
 char *c_sys_getcwd(char *, usize);
+ctype_id c_sys_geteuid(void);
 ctype_id c_sys_getgid(void);
 ctype_id c_sys_getpid(void);
 ctype_id c_sys_getuid(void);
