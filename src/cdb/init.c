@@ -10,8 +10,7 @@ c_cdb_init(ctype_cdb *p, ctype_fd fd)
 	c_cdb_free(p);
 	c_cdb_findstart(p);
 	p->fd = fd;
-
-	if (c_sys_fstat(fd, &st) < 0)
+	if (c_sys_fstat(&st, fd) < 0)
 		return -1;
 
 	if (st.size <= 0xFFFFFFFF) {
@@ -25,6 +24,5 @@ c_cdb_init(ctype_cdb *p, ctype_fd fd)
 
 	p->size = st.size;
 	p->map = x;
-
 	return 0;
 }

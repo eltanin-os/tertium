@@ -2,9 +2,9 @@
 #include <tertium/std.h>
 
 ctype_status
-c_sys_fchmod(int fd, uint mode)
+c_sys_fchmod(ctype_fd fd, uint mode)
 {
-	int r;
+	ctype_status r;
 
 	do {
 		r = c_std_syscall(SYS_fchmod, fd, mode);

@@ -174,7 +174,6 @@ LIBCSRC=\
 	src/sys/chown.c\
 	src/sys/close.c\
 	src/sys/coe.c\
-	src/sys/dup2.c\
 	src/sys/execve.c\
 	src/sys/exit.c\
 	src/sys/fchdir.c\
@@ -201,7 +200,6 @@ LIBCSRC=\
 	src/sys/nb.c\
 	src/sys/open.c\
 	src/sys/pipe.c\
-	src/sys/pipe2.c\
 	src/sys/pipecoe.c\
 	src/sys/pipenb.c\
 	src/sys/pipenbcoe.c\

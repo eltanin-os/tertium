@@ -6,7 +6,7 @@ c_std_isatty(int fd)
 {
 	ctype_stat st;
 
-	if (c_sys_fstat(fd, &st) < 0)
+	if (c_sys_fstat(&st, fd) < 0)
 		return -1;
 
 	return C_ISCHR(st.mode);

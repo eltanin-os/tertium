@@ -4,7 +4,7 @@
 ctype_status
 c_sys_chmod(char *s, uint mode)
 {
-	int r;
+	ctype_status r;
 
 	do {
 		r = c_std_syscall(SYS_chmod, s, mode);

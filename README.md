@@ -20,7 +20,7 @@ and secure environment that produces more reliable software.
 * rand: random data, numbers and strings
 * std: general routines
 * str: operations on C string
-* sys: typed system calls
+* sys: system interaction
 * tai: tai time
 * taia: atto-second precision tai time
 * uint: portable unsigned integer storage

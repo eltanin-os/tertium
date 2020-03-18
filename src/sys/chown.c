@@ -4,7 +4,7 @@
 ctype_status
 c_sys_chown(char *s, ctype_id uid, ctype_id gid)
 {
-	int r;
+	ctype_status r;
 
 	do {
 		r = c_std_syscall(SYS_chown, s, uid, gid);
