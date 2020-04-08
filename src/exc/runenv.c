@@ -33,7 +33,6 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	sverr = 0;
 	s = path;
 	c_arr_init(&f, buf, sizeof(buf));
-
 	while (s) {
 		c_arr_trunc(&f, 0, sizeof(uchar));
 		off = (s = c_str_chr(path, C_USIZEMAX, ':')) ? s - path : -1;

@@ -26,7 +26,6 @@ __dir_builddir(ctype_dir *p)
 	char rp[C_PATHMAX];
 
 	cur = p->cur->p;
-
 	if ((fd = c_sys_open(cur->path, C_OREAD | C_OCEXEC, 0)) < 0)
 		return (void *)-1;
 
@@ -35,7 +34,6 @@ __dir_builddir(ctype_dir *p)
 
 	c_mem_set(&dir, sizeof(dir), 0);
 	np = nil;
-
 	for (;;) {
 		if (dir.n >= dir.a) {
 			if ((r = c_std_syscall(SYS_getdents, fd,
@@ -48,10 +46,8 @@ __dir_builddir(ctype_dir *p)
 		}
 		d = (void *)(dir.buf + dir.n);
 		dir.n += RECLEN(d);
-
 		if (!(p->opts & C_FSVDT) && C_ISDOT(d->d_name))
 			continue;
-
 		if (c_adt_lpush(&np, __dir_newfile(rp, d->d_name, p->opts)) < 0)
 			goto err;
 
@@ -61,7 +57,6 @@ __dir_builddir(ctype_dir *p)
 		ep->depth = cur->depth + 1;
 		ep->__p = p->cur;
 	}
-
 	c_sys_close(fd);
 
 	if (p->f)

@@ -54,9 +54,7 @@ fmtpad(ctype_fmt *p, usize n)
 {
 	int w;
 
-	w = p->width - n;
-
-	for (; w > 0; w--)
+	for (w = p->width - n; w > 0; --w)
 		if (__fmt_trycat(p, " ", 1) < 0)
 			return -1;
 
@@ -164,7 +162,7 @@ Vint(ctype_fmt *p)
 	l = va_arg(p->args, uvlong);
 
 	if (!(p->flags & C_FMTUNSIGNED) && (vlong)l < 0) {
-		n++;
+		++n;
 		l = -(vlong)l;
 	}
 
@@ -176,11 +174,11 @@ Vint(ctype_fmt *p)
 	if (!l)
 		buf[--i] = '0';
 
-	for (; l; j++) {
+	for (; l; ++j) {
 		d = (l % b);
 		if ((p->flags & C_FMTCOMMA) && j % 4 == 3) {
 			buf[--i] = ',';
-			j++;
+			++j;
 		}
 		buf[--i] = (d < 10) ? d + '0' : u + d - 10;
 		l /= b;

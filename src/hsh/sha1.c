@@ -52,10 +52,10 @@ compress(ctype_hst *p, char *data)
 	u32int t;
 	int i;
 
-	for (i = 0; i < 16; i++)
+	for (i = 0; i < 16; ++i)
 		w[i] = c_uint_32bigunpack(data + (i << 2));
 
-	for (i = 16; i < 80; i++)
+	for (i = 16; i < 80; ++i)
 		w[i] = ROL(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
 
 	st[0] = p->st.x32[0];
@@ -63,27 +63,22 @@ compress(ctype_hst *p, char *data)
 	st[2] = p->st.x32[2];
 	st[3] = p->st.x32[3];
 	st[4] = p->st.x32[4];
-
-	for (i = 0; i < 20; i++) {
+	for (i = 0; i < 20; ++i) {
 		FF0(st[0], st[1], st[2], st[3], st[4], i);
 		REV(st[0], st[1], st[2], st[3], st[4], t);
 	}
-
-	for (; i < 40; i++) {
+	for (; i < 40; ++i) {
 		FF1(st[0], st[1], st[2], st[3], st[4], i);
 		REV(st[0], st[1], st[2], st[3], st[4], t);
 	}
-
-	for (; i < 60; i++) {
+	for (; i < 60; ++i) {
 		FF2(st[0], st[1], st[2], st[3], st[4], i);
 		REV(st[0], st[1], st[2], st[3], st[4], t);
 	}
-
-	for (; i < 80; i++) {
+	for (; i < 80; ++i) {
 		FF3(st[0], st[1], st[2], st[3], st[4], i);
 		REV(st[0], st[1], st[2], st[3], st[4], t);
 	}
-
 	p->st.x32[0] += st[0];
 	p->st.x32[1] += st[1];
 	p->st.x32[2] += st[2];
@@ -104,13 +99,11 @@ end(ctype_hst *p)
 
 	r = p->len % 64;
 	p->buf[r++] = 0x80;
-
 	if (r > 56) {
 		c_mem_set(p->buf + r, 64 - r, 0);
 		compress(p, (char *)p->buf);
 		r = 0;
 	}
-
 	c_mem_set(p->buf + r, 56 - r, 0);
 	c_uint_64bigpack((char *)p->buf + 56, p->len << 3);
 	compress(p, (char *)p->buf);
@@ -121,6 +114,6 @@ digest(ctype_hst *p, char *s)
 {
 	int i;
 
-	for (i = 0; i < 5; i++)
+	for (i = 0; i < 5; ++i)
 		c_uint_32bigpack(s + (i << 2), p->st.x32[i]);
 }

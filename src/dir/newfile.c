@@ -38,11 +38,9 @@ __dir_newfile(char *path, char *name, uint opts)
 
 	p = (void *)sp;
 	sp += sizeof(*p);
-
 	ep = p->p = (void *)sp;
 	sp += sizeof(*ep);
 	c_mem_set(ep, sizeof(*ep), 0);
-
 	ep->path = (void *)sp;
 	sp += plen + nlen + 2;
 
@@ -51,15 +49,15 @@ __dir_newfile(char *path, char *name, uint opts)
 
 	if (plen) {
 		c_mem_cpy(ep->path, plen, path);
-		if (ep->path[plen - 1] != '/')
-			ep->path[plen++] = '/';
+		if (ep->path[plen - 1] != '/') {
+			ep->path[plen] = '/';
+			++plen;
+		}
 	}
-
 	ep->name = ep->path + plen;
 	c_mem_cpy(ep->name, nlen, name);
 	ep->name[nlen] = 0;
 	ep->len = plen + nlen;
 	ep->nlen = nlen;
-
 	return p;
 }

@@ -14,6 +14,5 @@ c_dyn_cat(ctype_arr *p, void *v, usize m, usize n)
 	c_mem_cpy(p->p + p->n, m, v);
 	p->n += m;
 	p->p[p->n] = 0;
-
 	return 0;
 }

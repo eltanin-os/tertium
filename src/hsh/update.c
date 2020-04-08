@@ -11,7 +11,6 @@ __hsh_update(void (*f)(ctype_hst *, char *), int b,
 
 	r = p->len % b;
 	p->len += n;
-
 	if (r) {
 		if (n < b - r) {
 			c_mem_cpy(p->buf + r, n, data);
@@ -22,9 +21,10 @@ __hsh_update(void (*f)(ctype_hst *, char *), int b,
 		data += b - r;
 		f(p, (char *)p->buf);
 	}
-
-	for (; n >= (usize)b; n -= b, data += b)
+	while (n >= (usize)b) {
 		f(p, data);
-
+		n -= b;
+		data += b;
+	}
 	c_mem_cpy(p->buf, n, data);
 }

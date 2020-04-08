@@ -17,16 +17,14 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 	char buf[8];
 	char final[2048];
 
+	c_mem_set(count, sizeof(count), 0);
 	hp = c_arr_data(&p->hplist);
 	n = c_arr_len(&p->hplist, sizeof(*hp));
-
-	c_mem_set(count, sizeof(count), 0);
-
-	for (i = 0; i < n; i++)
-		count[hp[i].h & 255]++;
+	for (i = 0; i < n; ++i)
+		++count[hp[i].h & 255];
 
 	msiz = 1;
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < 256; ++i)
 		if ((u = count[i] << 1) > msiz)
 			msiz = u;
 
@@ -41,34 +39,31 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 		return -1;
 
 	u = 0;
-	for (i = 0; i < 256; i++) {
+	for (i = 0; i < 256; ++i) {
 		u += count[i];
 		start[i] = u;
 	}
 
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; ++i)
 		split[start[hp[i].h & 255]--] = hp[i];
 
 	hp = split + n;
 	c_dyn_free(&p->hplist);
-
-	for (i = 0; i < 256; i++) {
+	for (i = 0; i < 256; ++i) {
 		k = count[i];
 		len = k << 1;
 		c_uint_32pack(final + (i << 3), p->off);
 		c_uint_32pack(final + (i << 3) + 4, len);
-
 		c_mem_set(hp, sizeof(*hp) * len, 0);
 		pp = split + start[i];
-		for (j = 0; j < k; j++) {
+		for (j = 0; j < k; ++j) {
 			where = (pp->h >> 8) % len;
 			while (hp[where].p)
 				if (++where == len)
 					where = 0;
 			hp[where] = *pp++;
 		}
-
-		for (j = 0; j < len; j++) {
+		for (j = 0; j < len; ++j) {
 			c_uint_32pack(buf, hp[j].h);
 			c_uint_32pack(buf + 4, hp[j].p);
 			if (c_ioq_nput(&p->ioq, buf, 8) < 0)

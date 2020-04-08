@@ -22,7 +22,6 @@ c_ioq_nput(ctype_ioq *p, char *s, usize n)
 			}
 		}
 	}
-
 	c_mem_cpy(p->arr.p + p->arr.n, n, s);
 	p->arr.n += n;
 	return 0;

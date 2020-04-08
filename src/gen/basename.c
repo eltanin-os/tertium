@@ -15,7 +15,6 @@ c_gen_basename(char *s)
 		return s;
 
 	for (; s[n] == '/'; --n) ;
-
 	s[n + 1] = 0;
 
 	if (!(p = c_mem_rchr(s, n, '/')))

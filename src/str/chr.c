@@ -7,10 +7,10 @@ c_str_chr(char *v, usize n, int c)
 	uchar *s;
 
 	s = (uchar *)v;
-
-	for (; *s && n; n--, s++)
+	for (; n && *s; --n) {
 		if (*s == c)
 			return (char *)s;
-
+		++s;
+	}
 	return nil;
 }

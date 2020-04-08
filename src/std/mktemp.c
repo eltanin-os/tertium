@@ -35,13 +35,11 @@ c_std_mktemp(char *s, usize n, int ghost, uint opts)
 		}
 		break;
 	}
-
 	if (ghost) {
 		if (opts & C_ODIRECTORY)
 			c_sys_rmdir(s);
 		else
 			c_sys_unlink(s);
 	}
-
 	return fd;
 }

@@ -9,9 +9,7 @@ c_arr_trunc(ctype_arr *p, usize m, usize n)
 		return -1;
 	}
 
-	m *= n;
-
-	if (m > c_arr_bytes(p))
+	if ((m *= n) > c_arr_bytes(p))
 		return 0;
 
 	p->n = m;

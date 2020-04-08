@@ -10,29 +10,25 @@ c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 	ctype_node *np, *dummy;
 	ctype_stat st;
 
-	c_mem_set(p, sizeof(*p), 0);
-
 	if (!(dummy = __dir_newfile("", ".", C_FSNOI)))
 		return -1;
-
 	ep = dummy->p;
 	ep->info = C_FSINT;
-	np = nil;
 
+	np = nil;
 	if (c_sys_stat(&st, ".") < 0)
 		goto err;
 
+	c_mem_set(p, sizeof(*p), 0);
 	p->dev = st.dev;
 	p->opts = opts;
-
-	for (; *argv; argv++) {
+	for (; *argv; ++argv) {
 		if (c_adt_lpush(&np, __dir_newfile("", *argv, opts)) < 0)
 			goto err;
 
 		ep = np->p;
 		ep->info = __dir_info(p, ep);
 		ep->parent = dummy->p;
-
 		if (ep->info == C_FSDOT)
 			ep->info = C_FSD;
 
@@ -48,11 +44,11 @@ c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 
 	p->f = f;
 	p->cur = np->next;
-
 	return 0;
 err:
 	if (dummy)
 		c_adt_lfree(dummy);
+
 	while (np)
 		c_adt_lfree(c_adt_lpop(&np));
 

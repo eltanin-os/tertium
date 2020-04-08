@@ -16,7 +16,7 @@ c_rand_genseed(char *s, usize n)
 	c_uint_64bigpack(buf + 8 + C_TAIA_PACK, (uintptr)&n);
 	c_hsh_all(&hs, c_hsh_edf, buf, sizeof(buf));
 	while (n) {
-		for (r = 0; r < 9; r++) {
+		for (r = 0; r < 9; ++r) {
 			c_hsh_edf->update(&hs, buf, sizeof(buf));
 			c_hsh_edf->end(&hs);
 			c_hsh_digest(&hs, c_hsh_edf, buf + (r << 2));

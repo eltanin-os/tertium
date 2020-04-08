@@ -10,6 +10,5 @@ c_arr_fmt(ctype_arr *p, char *fmt, ...)
 	va_start(ap, fmt);
 	n = c_arr_vfmt(p, fmt, ap);
 	va_end(ap);
-
 	return n;
 }

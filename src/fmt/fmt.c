@@ -9,44 +9,42 @@ fmtfmt(ctype_fmt *f, uchar *s)
 	struct fmtverb *p;
 	int i, n;
 
+	f->r = *s;
 	n = c_arr_len(&__fmt_Fmts, sizeof(*p));
-
-	for (;;) {
-		i = 0;
-		f->r = *s;
-		for (; i <= n; i++) {
-			p = c_arr_get(&__fmt_Fmts, i, sizeof(*p));
-			if (p->c == *s) {
-				for (; !(p->f);) ;
-				return (p->f)(f);
-			}
-		}
-
-		i = 0;
-		for (;;) {
-			if (!(p = &__fmt_VFmts[i++]))
-				break;
-			if (p->c == *s) {
-				c_fmt_install(p->c, p->f);
-				return (p->f)(f);
-			}
+	for (i = 0; i <= n; ++i) {
+		p = c_arr_get(&__fmt_Fmts, i, sizeof(*p));
+		if (p->c == *s) {
+			for (; !(p->f);) ;
+			return (p->f)(f);
 		}
 	}
+
+	n = c_arr_total(&__fmt_Fmts) / sizeof(*p);
+	for (i = 0; i <= n; ++i) {
+		if (!(p = &__fmt_VFmts[i]))
+			break;
+		if (p->c == *s) {
+			c_fmt_install(p->c, p->f);
+			return (p->f)(f);
+		}
+	}
+	errno = C_EINVAL;
+	return -1;
 }
 
-static ctype_status
+static size
 fmtflag(ctype_fmt *f, uchar *s)
 {
-	int i, r, nfmt;
+	ctype_status r;
+	size nfmt;
+	int i;
 
 	f->flags = 0;
 	f->width = 0;
 	f->prec = 0;
-
 	nfmt = 0;
-
 	for (;;) {
-		nfmt++;
+		++nfmt;
 		if (!(f->r = *++s))
 			return -1;
 
@@ -70,10 +68,13 @@ fmtflag(ctype_fmt *f, uchar *s)
 		case '8':
 		case '9':
 			i = 0;
-			for (; *s >= '0' && *s <= '9'; nfmt++, s++)
+			while (*s >= '0' && *s <= '9') {
 				i = i * 10 + *s - '0';
-			s--;
-			nfmt--;
+				++s;
+				++nfmt;
+			}
+			--s;
+			--nfmt;
 numflag:
 			if (f->flags & C_FMTWIDTH) {
 				f->flags |= C_FMTPREC;
@@ -95,7 +96,6 @@ numflag:
 			}
 			goto numflag;
 		}
-
 		if ((r = fmtfmt(f, s)) < 0)
 			return -1;
 		if (!r)
@@ -106,23 +106,20 @@ numflag:
 size
 c_fmt_fmt(ctype_fmt *p, char *fmt)
 {
+	size n;
 	usize nfmt;
-	int n;
 	uchar *s;
 
 	s = (uchar *)fmt;
 	nfmt = p->nfmt;
-
-	for (; *s; s++) {
+	for (; *s; ++s) {
 		if (*s == '%') {
 			if ((n = fmtflag(p, s)) < 0)
 				return -1;
 			s += n;
 			continue;
 		}
-
 		__fmt_trycat(p, (char *)s, 1);
 	}
-
 	return p->nfmt - nfmt;
 }

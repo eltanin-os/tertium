@@ -16,7 +16,6 @@ c_exc_setenv(char *s, char *v)
 		*p = 0;
 
 	c_mem_set(&e, sizeof(e), 0);
-
 	if (c_dyn_fmt(&e, "%s", s) < 0)
 		goto fail;
 

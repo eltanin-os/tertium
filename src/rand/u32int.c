@@ -10,12 +10,10 @@ c_rand_u32int(u32int n)
 		return 0;
 
 	min = -n % n;
-
 	for (;;) {
 		c_rand_data((void *)(uintptr)&x, sizeof(x));
 		if (x >= min)
 			break;
 	}
-
 	return x % n;
 }

@@ -8,18 +8,16 @@ c_mem_ccpy(void *d, usize n, void *s, int c)
 
 	s1 = d;
 	s2 = s;
-
 	if (s > d) {
-		for (; n; n--)
+		for (; n; --n)
 			if ((*s1++ = *s2++) == c)
 				return s1;
 	} else {
 		s1 += n - 1;
 		s2 += n - 1;
-		for (; n; n--)
+		for (; n; --n)
 			if ((*s1-- = *s2--) == c)
 				return s1;
 	}
-
 	return nil;
 }

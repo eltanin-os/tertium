@@ -93,11 +93,10 @@ c_std_strerror(int e, char *s, usize n)
 	int i;
 
 	*s = 0;
-
 	if (!e)
 		return nil;
 
-	for (i = 0; i < (int)C_NELEM(errlist); i++)
+	for (i = 0; i < (int)C_NELEM(errlist); ++i)
 		if (e == errlist[i].e) {
 			c_mem_cpy(s, C_MIN(n, errlist[i].n), errlist[i].s);
 			break;

@@ -7,11 +7,9 @@ c_mem_set(void *v, usize n, int c)
 	uchar *s;
 
 	s = v;
-
-	for (; n; n--)
+	for (; n; --n)
 		*s++ = c;
 
 	__asm__ __volatile__(""::"r"(v):"memory");
-
 	return v;
 }

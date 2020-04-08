@@ -16,6 +16,5 @@ c_ioq_getall(ctype_ioq *p, char *b, usize n)
 		s += r;
 		n -= r;
 	}
-
 	return s - (uchar *)b;
 }

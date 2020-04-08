@@ -10,9 +10,7 @@ c_dyn_alloc(ctype_arr *p, usize m, usize n)
 		return nil;
 
 	m *= n;
-	t = m + n;
-
-	if (t > c_arr_bytes(p))
+	if ((t = m + n) > c_arr_bytes(p))
 		p->n = t;
 
 	return p->p + m;

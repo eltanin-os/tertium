@@ -14,6 +14,5 @@ c_adt_lpush(ctype_node **sp, ctype_node *p)
 		p->next = p;
 	}
 	*sp = p;
-
 	return 0;
 }

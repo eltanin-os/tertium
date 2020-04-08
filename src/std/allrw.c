@@ -16,6 +16,5 @@ c_std_allrw(ctype_iofn op, ctype_fd fd, void *p, usize n)
 		s += r;
 		n -= r;
 	}
-
 	return s - (uchar *)p;
 }

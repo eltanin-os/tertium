@@ -38,8 +38,7 @@ update(ctype_hst *p, char *data, usize n)
 
 	p->len += n;
 	s = (uchar *)data;
-
-	for (; n; n--) {
+	for (; n; --n) {
 		p->st.x32[0] ^= *s++;
 		p->st.x32[0] = CRCTAB(p->st.x32[0]);
 		p->st.x32[0] = CRCTAB(p->st.x32[0]);

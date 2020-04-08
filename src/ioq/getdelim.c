@@ -21,6 +21,5 @@ c_ioq_getdelim(ctype_ioq *p, ctype_arr *b, int delim)
 
 		c_ioq_seek(p, r);
 	}
-
 	return 1;
 }

@@ -96,27 +96,22 @@ compress(ctype_hst *p, char *data)
 	st[1] = p->st.x32[1];
 	st[2] = p->st.x32[2];
 	st[3] = p->st.x32[3];
-
 	for (i = 0; i < 16; ++i) {
 		FF(st[0], st[1], st[2], st[3], w[wtab[i]], rtab[i], ktab[i]);
 		REV(st[0], st[1], st[2], st[3], t);
 	}
-
 	for (; i < 32; ++i) {
 		GG(st[0], st[1], st[2], st[3], w[wtab[i]], rtab[i], ktab[i]);
 		REV(st[0], st[1], st[2], st[3], t);
 	}
-
 	for (; i < 48; ++i) {
 		HH(st[0], st[1], st[2], st[3], w[wtab[i]], rtab[i], ktab[i]);
 		REV(st[0], st[1], st[2], st[3], t);
 	}
-
 	for (; i < 64; ++i) {
 		II(st[0], st[1], st[2], st[3], w[wtab[i]], rtab[i], ktab[i]);
 		REV(st[0], st[1], st[2], st[3], t);
 	}
-
 	p->st.x32[0] += st[0];
 	p->st.x32[1] += st[1];
 	p->st.x32[2] += st[2];
@@ -142,7 +137,6 @@ end(ctype_hst *p)
 		compress(p, (char *)p->buf);
 		r = 0;
 	}
-
 	c_mem_set(p->buf + r, 56 - r, 0);
 	c_uint_64pack((char *)p->buf + 56, p->len << 3);
 	compress(p, (char *)p->buf);

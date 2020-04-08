@@ -8,9 +8,5 @@ c_cdb_mkaddbegin(ctype_cdbmk *p, usize klen, usize dlen)
 
 	c_uint_32pack(buf, klen);
 	c_uint_32pack(buf + 4, dlen);
-
-	if (c_ioq_nput(&p->ioq, buf, 8) < 0)
-		return -1;
-
-	return 0;
+	return c_ioq_nput(&p->ioq, buf, 8) < 0 ? -1 : 0;
 }

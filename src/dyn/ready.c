@@ -15,7 +15,6 @@ c_dyn_ready(ctype_arr *p, usize m, usize n)
 	m *= n;
 	m += n;
 	a = p->a ? p->a : m;
-
 	while (m > c_arr_avail(p)) {
 		a <<= 1;
 		if (!(tmp = c_std_realloc(p->p, a, sizeof(uchar))))
@@ -23,6 +22,5 @@ c_dyn_ready(ctype_arr *p, usize m, usize n)
 		p->p = tmp;
 		p->a = a;
 	}
-
 	return 0;
 }

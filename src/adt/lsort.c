@@ -6,25 +6,24 @@ c_adt_lsort(ctype_node **np, ctype_cmpfn f)
 {
 	ctype_node *p, *q;
 	ctype_node *e, *h, *t;
-	int i, k, nm, ps, qs;
+	usize i, k;
+	usize nm, ps, qs;
 
 	if (!*np || !(*np)->prev)
 		return;
 
 	*np = (*np)->next;
 	k = 1;
-
 	for (;;) {
 		h = p = *np;
 		*np = t = nil;
 		nm = 0;
-
 		while (p) {
-			nm++;
+			++nm;
 			q = p;
 			ps = 0;
-			for (i = 0; i < k; i++) {
-				ps++;
+			for (i = 0; i < k; ++i) {
+				++ps;
 				if (!(q = (q->next == h) ? nil : q->next))
 					break;
 			}
@@ -36,11 +35,11 @@ c_adt_lsort(ctype_node **np, ctype_cmpfn f)
 				if (i) {
 					e = p;
 					p = (p->next == h) ? nil : p->next;
-					ps--;
+					--ps;
 				} else {
 					e = q;
 					q = (q->next == h) ? nil : q->next;
-					qs--;
+					--qs;
 				}
 				if (t)
 					t->next = e;

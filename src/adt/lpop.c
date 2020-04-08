@@ -10,7 +10,6 @@ c_adt_lpop(ctype_node **sp)
 		return nil;
 
 	o = *sp;
-
 	if ((*sp = o->prev))
 		(*sp)->next = o->next;
 

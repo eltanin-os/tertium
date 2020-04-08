@@ -11,12 +11,10 @@ c_mem_mem(void *h, usize hl, void *n, usize nl)
 		return nil;
 
 	s = h;
-
-	i = hl - nl + 1;
-
-	for (; i; i--, s++)
+	for (i = hl - nl + 1; i; --i) {
 		if (!c_mem_cmp(s, nl, n))
 			return s;
-
+		++s;
+	}
 	return nil;
 }

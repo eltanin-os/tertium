@@ -204,33 +204,30 @@ compress(ctype_hst *p, char *data)
 	k[0][5] = p->st.x64[5];
 	k[0][6] = p->st.x64[6];
 	k[0][7] = p->st.x64[7];
-
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < 8; ++i) {
 		t[0][i] = c_uint_64bigunpack(data + (i << 3));
 		t[2][i] = t[0][i];
 		t[0][i] ^= k[0][i];
 	}
-
 	for (i = 0; i < 10; i += 2) {
 		/* odd round */
-		for (j = 0; j < 8; j++)
+		for (j = 0; j < 8; ++j)
 			k[1][j] = THETA_PI_GAMMA(k[0], j);
 
 		k[1][0] ^= cont[i];
 
-		for (j = 0; j < 8; j++)
+		for (j = 0; j < 8; ++j)
 			t[1][j] = THETA_PI_GAMMA(t[0], j) ^ k[1][j];
 
 		/* even round */
-		for (j = 0; j < 8; j++)
+		for (j = 0; j < 8; ++j)
 			k[0][j] = THETA_PI_GAMMA(k[1], j);
 
 		k[0][0] ^= cont[i + 1];
 
-		for (j = 0; j < 8; j++)
+		for (j = 0; j < 8; ++j)
 			t[0][j] = THETA_PI_GAMMA(t[1], j) ^ k[0][j];
 	}
-
 	p->st.x64[0] ^= t[0][0] ^ t[2][0];
 	p->st.x64[1] ^= t[0][1] ^ t[2][1];
 	p->st.x64[2] ^= t[0][2] ^ t[2][2];
@@ -259,7 +256,6 @@ end(ctype_hst *p)
 		compress(p, (char *)p->buf);
 		r = 0;
 	}
-
 	c_mem_set(p->buf + r, 56 - r, 0);
 	c_uint_64bigpack((char *)p->buf + 56, p->len << 3);
 	compress(p, (char *)p->buf);
@@ -270,6 +266,6 @@ digest(ctype_hst *p, char *s)
 {
 	int i;
 
-	for (i = 0; i < 8; i++)
+	for (i = 0; i < 8; ++i)
 		c_uint_64bigpack(s + (i << 3), p->st.x64[i]);
 }

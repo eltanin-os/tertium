@@ -11,5 +11,5 @@ c_std_fdcat(ctype_fd target, ctype_fd source)
 		if (c_std_allrw(c_sys_write, target, buf, r) < 0)
 			return -1;
 
-	return -(r < 0);
+	return r < 0 ? -1 : 0;
 }

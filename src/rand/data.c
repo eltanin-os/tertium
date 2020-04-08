@@ -35,7 +35,6 @@ c_rand_data(char *s, usize n)
 		rst.inc = seed[1];
 		++haveseed;
 	}
-
 	while (n) {
 		n -= r = C_MIN(n, 4);
 		x = rng(&rst);

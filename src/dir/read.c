@@ -12,13 +12,11 @@ c_dir_read(ctype_dir *p)
 
 	cur = p->cur;
 	ep = cur->p;
-
 	if (!cur || (p->opts & C_FSSTP))
 		return nil;
 
 	instr = ep->instr;
 	ep->instr = 0;
-
 	if (instr == C_FSAGN) {
 		ep->info = __dir_info(p, ep);
 		return ep;
@@ -69,6 +67,5 @@ c_dir_read(ctype_dir *p)
 		ep->info = C_FSDP;
 		return ep;
 	}
-
 	return nil;
 }

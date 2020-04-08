@@ -8,19 +8,16 @@ c_mem_cpy(void *d, usize n, void *s)
 
 	s1 = d;
 	s2 = s;
-
 	if (s == d)
 		return d;
-
 	if (s > d) {
-		for (; n; n--)
+		for (; n; --n)
 			*s1++ = *s2++;
 	} else {
 		s1 += n - 1;
 		s2 += n - 1;
-		for (; n; n--)
+		for (; n; --n)
 			*s1-- = *s2--;
 	}
-
 	return d;
 }

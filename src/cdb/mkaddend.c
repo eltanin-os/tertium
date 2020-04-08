@@ -15,13 +15,10 @@ c_cdb_mkaddend(ctype_cdbmk *p, usize klen, usize dlen, u32int h)
 		return -1;
 
 	newoff = dlen + klen + 8;
-
 	if (C_OFLW_UA(u32int, p->off, newoff)) {
 		errno = C_ENOMEM;
 		return -1;
 	}
-
 	p->off += newoff;
-
 	return 0;
 }

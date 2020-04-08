@@ -14,7 +14,6 @@ c_ioq_alloc(ctype_fd fd, usize n, ctype_iofn f)
 		c_std_free(p);
 		return nil;
 	}
-
 	c_ioq_init(p, fd, buf, n, f);
 	return p;
 }

@@ -46,7 +46,7 @@ c_cdb_findnext(ctype_cdb *p, char *k, usize n)
 			return -1;
 		if (!(off = c_uint_32unpack(buf + 4)))
 			return 0;
-		p->loop++;
+		++p->loop;
 		p->kpos += 8;
 		if (p->kpos == p->hpos + (p->hslots << 3))
 			p->kpos = p->hpos;
@@ -65,6 +65,5 @@ c_cdb_findnext(ctype_cdb *p, char *k, usize n)
 			}
 		}
 	}
-
 	return 0;
 }

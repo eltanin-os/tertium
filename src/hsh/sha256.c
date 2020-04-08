@@ -66,10 +66,10 @@ compress(ctype_hst *p, char *data)
 	u32int t;
 	int i;
 
-	for (i = 0; i < 16; i++)
+	for (i = 0; i < 16; ++i)
 		w[i] = c_uint_32bigunpack(data + (i << 2));
 
-	for (i = 16; i < 64; i++)
+	for (i = 16; i < 64; ++i)
 		w[i] = G1(w[i - 2]) + w[i - 7] + G0(w[i - 15]) + w[i - 16];
 
 	st[0] = p->st.x32[0];
@@ -80,15 +80,13 @@ compress(ctype_hst *p, char *data)
 	st[5] = p->st.x32[5];
 	st[6] = p->st.x32[6];
 	st[7] = p->st.x32[7];
-
-	for (i = 0; i < 64; i++) {
+	for (i = 0; i < 64; ++i) {
 		t0 = st[7] + S1(st[4]) + Ch(st[4], st[5], st[6]) + K[i] + w[i];
 		t1 = S0(st[0]) + Maj(st[0], st[1], st[2]);
 		st[3] += t0;
 		st[7] = t0 + t1;
 		REV(st[0], st[1], st[2], st[3], st[4], st[5], st[6], st[7], t);
 	}
-
 	p->st.x32[0] += st[0];
 	p->st.x32[1] += st[1];
 	p->st.x32[2] += st[2];
@@ -112,13 +110,11 @@ end(ctype_hst *p)
 
 	r = p->len % 64;
 	p->buf[r++] = 0x80;
-
 	if (r > 56) {
 		c_mem_set(p->buf + r, 64 - r, 0);
 		compress(p, (char *)p->buf);
 		r = 0;
 	}
-
 	c_mem_set(p->buf + r, 56 - r, 0);
 	c_uint_64bigpack((char *)p->buf + 56, p->len << 3);
 	compress(p, (char *)p->buf);
@@ -129,6 +125,6 @@ digest(ctype_hst *p, char *s)
 {
 	int i;
 
-	for (i = 0; i < 8; i++)
+	for (i = 0; i < 8; ++i)
 		c_uint_32bigpack(s + (i << 2), p->st.x32[i]);
 }

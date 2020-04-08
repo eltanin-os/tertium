@@ -12,9 +12,7 @@ c_arr_get(ctype_arr *p, usize m, usize n)
 	}
 
 	m *= n;
-	t = m + n;
-
-	if (t > c_arr_total(p)) {
+	if ((t = m + n) > c_arr_total(p)) {
 		errno = C_ENOMEM;
 		return nil;
 	}

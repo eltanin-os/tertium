@@ -73,7 +73,7 @@ __dir_info(ctype_dir *p, ctype_dent *ep)
 {
 	ctype_stat *stp;
 	ctype_stat st;
-	int sverr;
+	ctype_error sverr;
 
 	stp = (p->opts & C_FSNOI) ? &st : ep->stp;
 	if (FOLLOW(p->opts, ep->depth)) {
@@ -89,25 +89,20 @@ __dir_info(ctype_dir *p, ctype_dent *ep)
 		return C_FSNS;
 	}
 
-	if (C_ISDIR(stp->mode)) {
+	switch (stp->mode & C_IFMT) {
+	case C_IFDIR:
 		ep->dev = stp->dev;
-
 		if (C_ISDOT(ep->name))
 			return C_FSDOT;
-
 		if (FOLLOW(p->opts, ep->depth))
 			return dohist(p, stp, C_FSDC, C_FSD);
 		return C_FSD;
-	}
-
-	if (C_ISLNK(stp->mode))
+	case C_IFLNK:
 		return C_FSSL;
-
-	if (C_ISREG(stp->mode)) {
+	case C_IFREG:
 		if ((p->opts & C_FSFHT) && stp->nlink > 1)
 			dohist(p, stp, C_FSFC, C_FSF);
 		return C_FSF;
 	}
-
 	return C_FSDEF;
 }

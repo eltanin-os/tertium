@@ -18,7 +18,6 @@ c_utf8_charntorune(ctype_rune *p, char *s, usize len)
 	uchar c;
 
 	c = *(uchar *)s;
-
 	if (c <= 0x80) {
 		*p = c;
 		return 1;
@@ -30,7 +29,6 @@ c_utf8_charntorune(ctype_rune *p, char *s, usize len)
 	}
 
 	r = c & __utf8_mtab[n - 1];
-
 	for (i = 1; i < n; ++i) {
 		if (((uchar)s[i] ^ 0x80) & 0xC0) {
 			n = i;
