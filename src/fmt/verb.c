@@ -100,12 +100,13 @@ Vchar(ctype_fmt *p)
 static ctype_status
 Verr(ctype_fmt *p)
 {
+	ctype_error errnum;
 	char buf[C_ERRSIZ];
 
-	if (errno == C_ECSTM)
+	if ((errnum = va_arg(p->args, ctype_error)) == C_ECSTM)
 		c_std_errstr(buf, sizeof(buf));
 	else
-		c_std_strerror(errno, buf, sizeof(buf));
+		c_std_strerror(errnum, buf, sizeof(buf));
 
 	return fmtcat(p, buf, 0);
 }
