@@ -9,6 +9,7 @@ c_adt_lnew(void *v, usize n)
 	if (!(p = c_std_alloc(n + sizeof(*p), sizeof(uchar))))
 		return nil;
 	p->prev = p->next = nil;
+	p->p = (void *)((uchar *)p + sizeof(*p));
 	c_mem_cpy(p->p, n, v);
 	return p;
 }
