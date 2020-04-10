@@ -125,6 +125,11 @@ enum {
 #define c_ioq_INIT(a, b, c) { { sizeof((b)), 0, (b) }, (c), (a), 0 }
 
 /* std macros */
+enum {
+	C_OTMPDIR = 1 << 0,
+	C_OTMPANON = 1 << 1,
+};
+
 #define c_std_free(a) a = c_std_free_((a))
 #define c_std_getprogname( ) argv0
 #define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
@@ -446,7 +451,7 @@ void *c_std_free_(void *);
 char *c_std_getenv(char *);
 char *c_std_getsyserr(void);
 int c_std_isatty(int);
-ctype_fd c_std_mktemp(char *, usize, int, uint);
+ctype_fd c_std_mktemp(char *, usize);
 void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);
