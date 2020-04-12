@@ -333,21 +333,19 @@ void c_cal_timetai(ctype_tai *, ctype_caltime *);
 void c_cal_timeutc(ctype_caltime *, ctype_tai *);
 
 /* cdb routines */
-u32int c_cdb_datalen(ctype_cdb *);
-u32int c_cdb_datapos(ctype_cdb *);
+usize c_cdb_datalen(ctype_cdb *);
+usize c_cdb_datapos(ctype_cdb *);
 ctype_status c_cdb_find(ctype_cdb *, char *, usize);
 ctype_status c_cdb_findnext(ctype_cdb *, char *, usize);
 void c_cdb_findstart(ctype_cdb *);
 void c_cdb_free(ctype_cdb *);
-u32int c_cdb_hash(char *, usize);
-u32int c_cdb_hashadd(u32int, uchar);
 ctype_status c_cdb_init(ctype_cdb *, ctype_fd);
 ctype_status c_cdb_mkadd(ctype_cdbmk *, char *, usize, char *, usize);
 ctype_status c_cdb_mkaddbegin(ctype_cdbmk *, usize, usize);
-ctype_status c_cdb_mkaddend(ctype_cdbmk *, usize, usize, u32int);
+ctype_status c_cdb_mkaddend(ctype_cdbmk *, usize, usize, u64int);
 ctype_status c_cdb_mkfinish(ctype_cdbmk *);
 ctype_status c_cdb_mkstart(ctype_cdbmk *, ctype_fd);
-ctype_status c_cdb_read(ctype_cdb *, char *, usize, u32int);
+ctype_status c_cdb_read(ctype_cdb *, char *, usize, ctype_fssize);
 
 /* dir routines */
 ctype_dent *c_dir_children(ctype_dir *);
@@ -451,7 +449,7 @@ void *c_std_free_(void *);
 char *c_std_getenv(char *);
 char *c_std_getsyserr(void);
 int c_std_isatty(int);
-ctype_fd c_std_mktemp(char *, usize);
+ctype_fd c_std_mktemp(char *, usize, uint);
 void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);

@@ -1,20 +1,30 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "cdb.h"
+#include "__int__.h"
 
 ctype_status
-c_cdb_mkaddend(ctype_cdbmk *p, usize klen, usize dlen, u32int h)
+c_cdb_mkaddend(ctype_cdbmk *p, usize klen, usize dlen, u64int h)
 {
 	struct hp hp;
-	vlong newoff;
+	usize newoff;
 
-	hp.h = h;
+	hp.h = (u32int)h;
 	hp.p = p->off;
 	if (c_dyn_cat(&p->hplist, &hp, 1, sizeof(hp)) < 0)
 		return -1;
 
-	newoff = dlen + klen + 8;
+	newoff = 8;
+	if (C_OFLW_UA(usize, newoff, klen)) {
+		errno = C_ENOMEM;
+		return -1;
+	}
+	newoff += dlen;
+	if (C_OFLW_UA(usize, newoff, dlen)) {
+		errno = C_ENOMEM;
+		return -1;
+	}
+	newoff += klen;
 	if (C_OFLW_UA(u32int, p->off, newoff)) {
 		errno = C_ENOMEM;
 		return -1;

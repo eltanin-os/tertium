@@ -1,14 +1,14 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "cdb.h"
+#include "__int__.h"
 
 ctype_status
 c_cdb_mkfinish(ctype_cdbmk *p)
 {
 	struct hp *hp;
 	struct hp *split;
-	struct hp *pp;
+	struct hp *hash;
 	u32int count[256];
 	u32int start[256];
 	u32int k, len, u, where;
@@ -19,7 +19,7 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 
 	c_mem_set(count, sizeof(count), 0);
 	hp = c_arr_data(&p->hplist);
-	n = c_arr_len(&p->hplist, sizeof(*hp));
+	n = c_arr_len(&p->hplist, sizeof(struct hp));
 	for (i = 0; i < n; ++i)
 		++count[hp[i].h & 255];
 
@@ -27,65 +27,54 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 	for (i = 0; i < 256; ++i)
 		if ((u = count[i] << 1) > msiz)
 			msiz = u;
-
 	msiz += n;
-	u = 0xFFFFFFFFUL / sizeof(*hp);
+	u = ((u32int)-1) / sizeof(struct hp);
 	if (msiz > u) {
 		errno = C_ENOMEM;
 		return -1;
 	}
 
-	if (!(split = c_std_alloc(msiz, sizeof(*split))))
+	if (!(split = c_std_alloc(msiz, sizeof(struct hp))))
 		return -1;
-
 	u = 0;
-	for (i = 0; i < 256; ++i) {
-		u += count[i];
-		start[i] = u;
-	}
-
-	for (i = 0; i < n; ++i)
-		split[start[hp[i].h & 255]--] = hp[i];
-
-	hp = split + n;
+	for (i = 0; i < 256; ++i)
+		start[i] = u += count[i];
+	for (i = n - 1; i; --i)
+		split[--start[hp[i].h & 255]] = hp[i];
 	c_dyn_free(&p->hplist);
+	hp = split + n;
 	for (i = 0; i < 256; ++i) {
 		k = count[i];
 		len = k << 1;
 		c_uint_32pack(final + (i << 3), p->off);
 		c_uint_32pack(final + (i << 3) + 4, len);
-		c_mem_set(hp, sizeof(*hp) * len, 0);
-		pp = split + start[i];
+		c_mem_set(hp, len * sizeof(*hp), 0);
+		hash = split + start[i];
 		for (j = 0; j < k; ++j) {
-			where = (pp->h >> 8) % len;
+			where = (hash->h >> 8) % len;
 			while (hp[where].p)
 				if (++where == len)
 					where = 0;
-			hp[where] = *pp++;
+			hp[where] = *hash++;
 		}
 		for (j = 0; j < len; ++j) {
 			c_uint_32pack(buf, hp[j].h);
 			c_uint_32pack(buf + 4, hp[j].p);
 			if (c_ioq_nput(&p->ioq, buf, 8) < 0)
-				goto error_palloc;
+				goto fail;
 			if (C_OFLW_UA(u32int, p->off, 8)) {
 				errno = C_ENOMEM;
-				goto error_palloc;
+				goto fail;
 			}
 			p->off += 8;
 		}
 	}
-
 	c_ioq_flush(&p->ioq);
-
-	if (c_sys_seek(p->fd, 0, C_SEEKSET) < 0)
-		goto error_palloc;
-
-	if (c_std_allrw(c_sys_write, p->fd, final, sizeof(final)) < 0)
-		goto error_palloc;
-
+	if (c_sys_seek(p->fd, 0, C_SEEKSET) < 0 ||
+	    c_std_allrw(&c_sys_write, p->fd, final, sizeof(final)) < 0)
+		goto fail;
 	return 0;
-error_palloc:
+fail:
 	c_std_free(split);
 	return -1;
 }
