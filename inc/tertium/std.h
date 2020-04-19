@@ -386,6 +386,10 @@ ctype_id c_exc_spawn1(char *, char **, char **, ctype_fd *, int);
 void c_fmt_init(ctype_fmt *, void *, ctype_arr *, ctype_fmtopfn);
 size c_fmt_fmt(ctype_fmt *, char *);
 ctype_status c_fmt_install(int, ctype_fmtfn);
+ctype_status c_fmt_nput(ctype_fmt *, char *, usize);
+ctype_status c_fmt_print(ctype_fmt *, char *, ...);
+ctype_status c_fmt_put(ctype_fmt *, char *);
+ctype_status c_fmt_vprint(ctype_fmt *, char *, va_list);
 
 /* gen routines */
 char *c_gen_basename(char *);

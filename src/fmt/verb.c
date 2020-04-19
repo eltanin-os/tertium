@@ -39,52 +39,6 @@ struct fmtverb __fmt_VFmts[] = {
 	{   0, nil   },
 };
 
-ctype_status
-__fmt_trycat(ctype_fmt *p, char *s, usize n)
-{
-	if (p->func(p, s, n) < 0)
-		return -1;
-
-	p->nfmt += n;
-	return 0;
-}
-
-static ctype_status
-fmtpad(ctype_fmt *p, usize n)
-{
-	int w;
-
-	for (w = p->width - n; w > 0; --w)
-		if (__fmt_trycat(p, " ", 1) < 0)
-			return -1;
-
-	return 0;
-}
-
-static ctype_status
-fmtcat(ctype_fmt *p, char *s, usize n)
-{
-	if (!s)
-		s = "<nil>";
-
-	if (!n)
-		n = c_str_len(s, C_USIZEMAX);
-
-	if ((p->flags & C_FMTPREC) && n > (usize)p->prec)
-		n = p->prec;
-
-	if (!(p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
-		return -1;
-
-	if (__fmt_trycat(p, s, n) < 0)
-		return -1;
-
-	if ((p->flags & C_FMTLEFT) && fmtpad(p, n) < 0)
-		return -1;
-
-	return 0;
-}
-
 static ctype_status
 Vchar(ctype_fmt *p)
 {
@@ -94,7 +48,7 @@ Vchar(ctype_fmt *p)
 	x = va_arg(p->args, int);
 	c_mem_cpy(buf, sizeof(x), &x);
 	buf[sizeof(x) - 1] = 0;
-	return fmtcat(p, buf, sizeof(x));
+	return c_fmt_nput(p, buf, sizeof(x));
 }
 
 static ctype_status
@@ -108,7 +62,7 @@ Verr(ctype_fmt *p)
 	else
 		c_std_strerror(errnum, buf, sizeof(buf));
 
-	return fmtcat(p, buf, 0);
+	return c_fmt_put(p, buf);
 }
 
 static ctype_status
@@ -149,7 +103,7 @@ Vflag(ctype_fmt *p)
 			p->flags |= C_FMTVLONG;
 		break;
 	}
-	return 1;
+	return 0;
 }
 
 static ctype_status
@@ -206,14 +160,14 @@ Vint(ctype_fmt *p)
 	else if (p->flags & C_FMTSPACE)
 		buf[--i] = ' ';
 
-	return fmtcat(p, buf + i, sizeof(buf) - (i + 1));
+	return c_fmt_nput(p, buf + i, sizeof(buf) - (i + 1));
 }
 
 static ctype_status
 Vperc(ctype_fmt *p)
 {
 	p->prec = 1;
-	return fmtcat(p, "%", 1);;
+	return c_fmt_nput(p, "%", 1);;
 }
 
 static ctype_status
@@ -222,5 +176,5 @@ Vstr(ctype_fmt *p)
 	char *s;
 
 	s = va_arg(p->args, char *);
-	return fmtcat(p, s, 0);
+	return c_fmt_put(p, s);
 }

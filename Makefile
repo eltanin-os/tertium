@@ -82,7 +82,11 @@ LIBCSRC=\
 	src/fmt/fmt.c\
 	src/fmt/init.c\
 	src/fmt/install.c\
+	src/fmt/nput.c\
+	src/fmt/print.c\
+	src/fmt/put.c\
 	src/fmt/verb.c\
+	src/fmt/vprint.c\
 	src/gen/basename.c\
 	src/gen/dirname.c\
 	src/hsh/all.c\
