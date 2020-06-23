@@ -26,8 +26,10 @@ pad(ctype_fmt *p, usize n)
 ctype_status
 c_fmt_nput(ctype_fmt *p, char *s, usize n)
 {
-	if (!s)
+	if (!s) {
 		s = "<nil>";
+		n = 5;
+	}
 
 	if ((p->flags & C_FMTPREC) && n > (usize)p->prec)
 		n = p->prec;
