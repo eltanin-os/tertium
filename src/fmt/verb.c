@@ -103,7 +103,7 @@ Vflag(ctype_fmt *p)
 			p->flags |= C_FMTVLONG;
 		break;
 	}
-	return 0;
+	return 1;
 }
 
 static ctype_status
