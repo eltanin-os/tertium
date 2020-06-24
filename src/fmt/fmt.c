@@ -108,18 +108,26 @@ c_fmt_fmt(ctype_fmt *p, char *fmt)
 {
 	size n;
 	usize nfmt;
+	int ch;
 	uchar *s;
 
 	s = (uchar *)fmt;
 	nfmt = p->nfmt;
-	for (; *s; ++s) {
-		if (*s == '%') {
+	while (*s) {
+		n = 0;
+		for (;;) {
+			ch = *(s + n);
+			if (ch == '%' || ch == '\0')
+				break;
+			++n;
+		}
+		__fmt_trycat(p, (char *)s, n);
+		s += n;
+		if (ch == '%') {
 			if ((n = fmtflag(p, s)) < 0)
 				return -1;
-			s += n;
-			continue;
+			s += n + 1;
 		}
-		__fmt_trycat(p, (char *)s, 1);
 	}
 	return p->nfmt - nfmt;
 }

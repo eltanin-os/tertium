@@ -4,6 +4,9 @@
 ctype_status
 __fmt_trycat(ctype_fmt *p, char *s, usize n)
 {
+	if (!n)
+		return 0;
+
 	if (p->func(p, s, n) < 0)
 		return -1;
 
