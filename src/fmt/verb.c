@@ -42,13 +42,12 @@ struct fmtverb __fmt_VFmts[] = {
 static ctype_status
 Vchar(ctype_fmt *p)
 {
+	ctype_rune r;
 	char buf[8];
-	int x;
 
-	x = va_arg(p->args, int);
-	c_mem_cpy(buf, sizeof(x), &x);
-	buf[sizeof(x) - 1] = 0;
-	return c_fmt_nput(p, buf, sizeof(x));
+	r = va_arg(p->args, ctype_rune);
+	c_mem_cpy(buf, sizeof(r), &r);
+	return c_fmt_nput(p, buf, c_utf8_chartorune(&r, buf));
 }
 
 static ctype_status
