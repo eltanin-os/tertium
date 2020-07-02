@@ -466,6 +466,10 @@ void *c_std_vtoptr_(char *, ...);
 void c_std_werrstr(char *, ...);
 
 /* str routines */
+char *c_str_casechr(char *, usize, int);
+int c_str_casecmp(char *, usize, char *);
+char *c_str_caserchr(char *, usize, int);
+char *c_str_casestr(char *, usize, char *);
 char *c_str_chr(char *, usize, int);
 int c_str_cmp(char *, usize, char *);
 char *c_str_dup(char *, usize);
