@@ -4,17 +4,16 @@
 void *
 c_mem_mem(void *h, usize hl, void *n, usize nl)
 {
-	uint i;
-	uchar *s;
+	uchar *p;
 
 	if (nl > hl)
 		return nil;
 
-	s = h;
-	for (i = hl - nl + 1; i; --i) {
-		if (!c_mem_cmp(s, nl, n))
-			return s;
-		++s;
+	while ((p = c_mem_chr(h, hl, *(uchar *)n))) {
+		if (!c_mem_cmp(p, nl, n))
+			break;
+		hl -= (p - (uchar *)h) + 1;
+		h = p + 1;
 	}
-	return nil;
+	return p;
 }
