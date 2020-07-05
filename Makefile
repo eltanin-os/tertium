@@ -166,6 +166,10 @@ LIBCSRC=\
 	src/std/sysconf.c\
 	src/std/vtoptr.c\
 	src/std/werrstr.c\
+	src/str/casechr.c\
+	src/str/casecmp.c\
+	src/str/caserchr.c\
+	src/str/casestr.c\
 	src/str/chr.c\
 	src/str/cmp.c\
 	src/str/dup.c\
