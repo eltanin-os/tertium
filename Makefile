@@ -172,9 +172,11 @@ LIBCSRC=\
 	src/str/casestr.c\
 	src/str/chr.c\
 	src/str/cmp.c\
+	src/str/cspn.c\
 	src/str/dup.c\
 	src/str/len.c\
 	src/str/rchr.c\
+	src/str/spn.c\
 	src/str/str.c\
 	src/sys/chdir.c\
 	src/sys/chmod.c\

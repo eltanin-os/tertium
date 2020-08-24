@@ -167,9 +167,11 @@ char *c_str_caserchr(char *, usize, int);
 char *c_str_casestr(char *, usize, char *);
 char *c_str_chr(char *, usize, int);
 int c_str_cmp(char *, usize, char *);
+usize c_str_cspn(char *, usize, char *);
 char *c_str_dup(char *, usize);
 usize c_str_len(char *, usize);
 char *c_str_rchr(char *, usize, int);
+usize c_str_spn(char *, usize, char *);
 char *c_str_str(char *, usize, char *);
 
 /* sys routines */
