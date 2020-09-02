@@ -289,31 +289,3 @@ usize c_utf8_utflen(char *);
 usize c_utf8_utfnlen(char *, usize);
 char *c_utf8_utfrrune(char *, ctype_rune);
 char *c_utf8_utfrune(char *, ctype_rune);
-
-/* arr variables */
-extern ctype_arr *arr_zero;
-
-/* hsh variables */
-extern ctype_hmd *c_hsh_crc32b;
-extern ctype_hmd *c_hsh_crc32p;
-extern ctype_hmd *c_hsh_djb;
-extern ctype_hmd *c_hsh_edf;
-extern ctype_hmd *c_hsh_fletcher32;
-extern ctype_hmd *c_hsh_md5;
-extern ctype_hmd *c_hsh_sha1;
-extern ctype_hmd *c_hsh_sha256;
-extern ctype_hmd *c_hsh_sha512;
-extern ctype_hmd *c_hsh_whirlpool;
-
-/* ioq variables */
-extern ctype_ioq *ioq0;
-extern ctype_ioq *ioq1;
-extern ctype_ioq *ioq2;
-
-/* std variables */
-extern ctype_arg *argmain;
-extern char *argv0;
-extern char **environ;
-
-/* sys variables */
-extern int errno;
