@@ -1,24 +1,3 @@
-/* arg macros */
-#define C_ARGBEGIN \
-for (argc--, argv++;\
-     *argv && (*argv)[0] == '-' && (*argv)[1]; argc--, argv++) {\
-	char _argc, _brk;\
-	if ((*argv)[1] == '-' && (*argv)[2] == '\0') {\
-		argc -= 1, argv += 1;\
-		break;\
-	}\
-	for (_brk = 0, argv[0]++; (*argv)[0] && !_brk; argv[0]++) {\
-		_argc = (*argv)[0];\
-		switch (_argc)
-#define C_ARGF() \
-((!((*argv)[1]) && !(argv[1])) ? nil :\
-(_brk = 1, ((*argv)[1]) ? (&(*argv)[1]) : (argc--, argv++, *argv)))
-#define C_EARGF(x) \
-((!((*argv)[1]) && !(argv[1])) ? ((x), c_std_abort(), nil) :\
-(_brk = 1, ((*argv)[1]) ? (&(*argv)[1]) : (argc--, argv++, *argv)))
-#define C_ARGC() _argc
-#define C_ARGEND } }
-
 /* arr macros */
 #define c_arr_INIT(a) { sizeof((a)), 0, (a) }
 
@@ -83,19 +62,6 @@ enum {
 	C_FMTFLAG = 1 << 13,
 };
 
-/* general macros */
-#define C_MIN(a, b) (((a) > (b)) ? (b) : (a))
-#define C_MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define C_NELEM(a)  (sizeof((a))/sizeof((a)[0]))
-
-#define C_ISDOT(a)  ((a)[0]=='.' && ((a)[1]==0 || ((a)[1]=='.' && (a)[2]==0)))
-#define C_ISDASH(a) ((a)[0]=='-' && (a)[1]=='\0')
-
-#define C_OFLW_UM(a, b, c) ((b) && (c) > (((a)-1)/(b)))
-#define C_OFLW_UA(a, b, c) ((c) > (((a)-1)-(b)))
-
-#define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
-
 /* hsh macros */
 enum {
 	C_H32GEN_DIGEST = 32,
@@ -137,6 +103,18 @@ enum {
 #define c_std_setprogname(a) argv0 = (a)
 #define c_std_syscall(...) c_std_syscall_(__VA_ARGS__, nil)
 #define c_std_vtoptr(...) c_std_vtoptr_(__VA_ARGS__, nil)
+
+#define C_MIN(a, b) (((a) > (b)) ? (b) : (a))
+#define C_MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define C_NELEM(a)  (sizeof((a))/sizeof((a)[0]))
+
+#define C_ISDOT(a)  ((a)[0]=='.' && ((a)[1]==0 || ((a)[1]=='.' && (a)[2]==0)))
+#define C_ISDASH(a) ((a)[0]=='-' && (a)[1]=='\0')
+
+#define C_OFLW_UM(a, b, c) ((b) && (c) > (((a)-1)/(b)))
+#define C_OFLW_UA(a, b, c) ((c) > (((a)-1)-(b)))
+
+#define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
 
 /* tai macros */
 #define C_TAI_PACK 8
@@ -286,6 +264,16 @@ struct ctype_cdbmk {
 	u32int off;
 	ctype_fd fd;
 	char buf[C_BIOSIZ];
+};
+
+/* std types */
+typedef struct ctype_arg ctype_arg;
+
+struct ctype_arg {
+	usize pos;
+	int opt;
+	int idx;
+	char *arg;
 };
 
 /* tai types */

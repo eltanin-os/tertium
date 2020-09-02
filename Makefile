@@ -142,6 +142,7 @@ LIBCSRC=\
 	src/std/abort.c\
 	src/std/alloc.c\
 	src/std/allrw.c\
+	src/std/argmain.c\
 	src/std/argv0.c\
 	src/std/bsearch.c\
 	src/std/calloc.c\
@@ -152,6 +153,7 @@ LIBCSRC=\
 	src/std/fmtnil.c\
 	src/std/free.c\
 	src/std/getenv.c\
+	src/std/getopt.c\
 	src/std/getsyserr.c\
 	src/std/isatty.c\
 	src/std/mktemp.c\

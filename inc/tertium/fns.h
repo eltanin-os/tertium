@@ -146,6 +146,7 @@ ctype_status c_std_fdcat(ctype_fd, ctype_fd);
 usize c_std_fmtnil(char *, ...);
 void *c_std_free_(void *);
 char *c_std_getenv(char *);
+int c_std_getopt(ctype_arg *, int, char **, char *);
 char *c_std_getsyserr(void);
 int c_std_isatty(int);
 ctype_fd c_std_mktemp(char *, usize, uint);
@@ -310,6 +311,7 @@ extern ctype_ioq *ioq1;
 extern ctype_ioq *ioq2;
 
 /* std variables */
+extern ctype_arg *argmain;
 extern char *argv0;
 extern char **environ;
 
