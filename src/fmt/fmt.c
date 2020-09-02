@@ -18,9 +18,7 @@ fmtfmt(ctype_fmt *f, uchar *s)
 			return (p->f)(f);
 		}
 	}
-
-	n = c_arr_total(&__fmt_Fmts) / sizeof(*p);
-	for (i = 0; i <= n; ++i) {
+	for (;;) {
 		if (!(p = &__fmt_VFmts[i]))
 			break;
 		if (p->c == *s) {
