@@ -26,6 +26,7 @@ LIBCSRC=\
 	src/arr/data.c\
 	src/arr/fmt.c\
 	src/arr/get.c\
+	src/arr/icat.c\
 	src/arr/init.c\
 	src/arr/len.c\
 	src/arr/total.c\
@@ -62,6 +63,7 @@ LIBCSRC=\
 	src/dyn/cat.c\
 	src/dyn/fmt.c\
 	src/dyn/free.c\
+	src/dyn/icat.c\
 	src/dyn/ready.c\
 	src/dyn/shrink.c\
 	src/dyn/vfmt.c\
