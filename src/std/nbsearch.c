@@ -18,5 +18,5 @@ c_std_nbsearch(void *k, void *buf, usize m, usize n, ctype_cmpfn f)
 		}
 		m >>= 1;
 	}
-	return p;
+	return r > 0 ? p : p - n;
 }
