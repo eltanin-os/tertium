@@ -150,6 +150,7 @@ int c_std_getopt(ctype_arg *, int, char **, char *);
 char *c_std_getsyserr(void);
 int c_std_isatty(int);
 ctype_fd c_std_mktemp(char *, usize, uint);
+void *c_std_nbsearch(void *, void *, usize, usize, ctype_cmpfn);
 void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);

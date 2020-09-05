@@ -157,6 +157,7 @@ LIBCSRC=\
 	src/std/getsyserr.c\
 	src/std/isatty.c\
 	src/std/mktemp.c\
+	src/std/nbsearch.c\
 	src/std/pubrealloc.c\
 	src/std/realloc.c\
 	src/std/setalloc.c\
