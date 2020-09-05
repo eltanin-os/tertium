@@ -3,28 +3,26 @@
 
 #include "__int__.h"
 
+static int
+cmp(void *a, void *b)
+{
+	return (*(char *)a - ((struct fmtverb *)b)->c);
+}
+
 static ctype_status
 fmtfmt(ctype_fmt *f, uchar *s)
 {
 	struct fmtverb *p;
-	int i, n;
 
 	f->r = *s;
-	n = c_arr_len(&__fmt_Fmts, sizeof(*p));
-	for (i = 0; i <= n; ++i) {
-		p = c_arr_get(&__fmt_Fmts, i, sizeof(*p));
-		if (p->c == *s) {
-			for (; !(p->f);) ;
-			return (p->f)(f);
-		}
+	if ((p = c_std_bsearch(s, c_arr_data(&__fmt_Fmts),
+	    c_arr_len(&__fmt_Fmts, sizeof(*p)), sizeof(*p), &cmp))) {
+		for (; !(p->f);) ;
+		return (p->f)(f);
 	}
-	for (;;) {
-		if (!(p = &__fmt_VFmts[i]))
-			break;
-		if (p->c == *s) {
-			c_fmt_install(p->c, p->f);
+	if ((p = c_std_bsearch(s, __fmt_VFmts, VFMTLEN, sizeof(*p), &cmp))) {
+		if (!c_fmt_install(p->c, p->f))
 			return (p->f)(f);
-		}
 	}
 	errno = C_EINVAL;
 	return -1;

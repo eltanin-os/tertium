@@ -7,51 +7,30 @@
 #define PACK(a, b) ((a) << 32 | (b))
 
 static int
-insert(uvlong *sp, usize n, uvlong k)
+cmp(void *a, void *b)
 {
-	uvlong *p, *l;
-
-	if (!n) {
-		sp[0] = k;
-		return 1;
-	}
-
-	l = sp + n;
-
-	while (n) {
-		p = sp + (n >> 1);
-		if (*p == k) {
-			return 0;
-		} else if (*p < k) {
-			sp = p + 1;
-			n--;
-		}
-		n >>= 1;
-	}
-
-	if (*p < k)
-		++p;
-
-	c_mem_cpy(p + 1, (uchar *)l - (uchar *)p, p);
-	*p = k;
-	return 1;
+	return (*(uvlong *)a - *(uvlong *)b);
 }
 
 static int
 hist(ctype_arr *hp, ulong dev, ulong ino)
 {
 	uvlong k;
+	uvlong *l, *p;
 	usize n;
-	int r;
 
-	n = c_arr_len(hp, sizeof(k));
-	if (c_dyn_ready(hp, n + 1, sizeof(k)) < 0)
-		return -1;
-
+	if (!(n = c_arr_len(hp, sizeof(k))))
+		return c_dyn_cat(hp, &k, 1, sizeof(k)) < 0 ? -1 : 0;
+	l = c_arr_data(hp);
 	k = PACK(dev, ino);
-	r = insert(c_arr_data(hp), n, k);
-	hp->n += r * sizeof(k);
-	return r;
+	if (*l > k) {
+		c_dyn_icat(hp, &k, 1, sizeof(k), 0);
+		return 1;
+	} else if (*(p = c_std_nbsearch(&k, l, n, sizeof(l), &cmp)) != k) {
+		c_dyn_icat(hp, &k, 1, sizeof(k), (p + 1) - l);
+		return 1;
+	}
+	return 0;
 }
 
 static int

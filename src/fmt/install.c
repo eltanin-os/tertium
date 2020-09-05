@@ -3,22 +3,29 @@
 
 #include "__int__.h"
 
+static int
+cmp(void *a, void *b)
+{
+	return (*(char *)a - ((struct fmtverb *)b)->c);
+}
+
 ctype_status
 c_fmt_install(int c, ctype_fmtfn f)
 {
-	struct fmtverb *p;
+	struct fmtverb *l, *p;
 	struct fmtverb nf;
-	int i, n;
+	usize n;
 
-	n = c_arr_len(&__fmt_Fmts, sizeof(*p));
-	for (i = 0; i < n; ++i) {
-		p = c_arr_get(&__fmt_Fmts, i, sizeof(*p));
-		if (p->c == c) {
-			p->f = f;
-			return 0;
-		}
+	nf = (struct fmtverb){ c, f };
+	if (!(n = c_arr_bytes(&__fmt_Fmts)))
+		return c_dyn_cat(&__fmt_Fmts, &nf, 1, sizeof(nf));
+	if ((l = c_arr_data(&__fmt_Fmts))->c > c)
+		return c_dyn_icat(&__fmt_Fmts, &nf, 1, sizeof(nf), 0);
+	n /= sizeof(*p);
+	p = c_std_nbsearch(&c, l, n, sizeof(*l), &cmp);
+	if (p->c == c) {
+		p->f = f;
+		return 0;
 	}
-	nf.c = c;
-	nf.f = f;
-	return c_arr_cat(&__fmt_Fmts, &nf, 1, sizeof(nf)) < 0 ? -1 : 0;
+	return c_dyn_icat(&__fmt_Fmts, &nf, 1, sizeof(nf), (p + 1) - l);
 }

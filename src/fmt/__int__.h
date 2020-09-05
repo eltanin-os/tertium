@@ -1,3 +1,5 @@
+#define VFMTLEN 20
+
 struct fmtverb {
 	int c;
 	ctype_status (*f)(ctype_fmt *);

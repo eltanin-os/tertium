@@ -17,12 +17,12 @@ static uchar buf[64 * sizeof(struct fmtverb)];
 ctype_arr __fmt_Fmts = c_arr_INIT(buf);
 
 struct fmtverb __fmt_VFmts[] = {
-	{ ',', Vflag },
-	{ '-', Vflag },
-	{ '+', Vflag },
+	{ ' ', Vflag },
 	{ '#', Vflag },
 	{ '%', Vperc },
-	{ ' ', Vflag },
+	{ '+', Vflag },
+	{ ',', Vflag },
+	{ '-', Vflag },
 	{ 'X', Vint  },
 	{ 'b', Vint  },
 	{ 'c', Vchar },
@@ -31,12 +31,11 @@ struct fmtverb __fmt_VFmts[] = {
 	{ 'l', Vflag },
 	{ 'o', Vint  },
 	{ 'p', Vint  },
-	{ 'u', Vflag },
 	{ 'r', Verr  },
 	{ 's', Vstr  },
+	{ 'u', Vflag },
 	{ 'x', Vint  },
 	{ 'z', Vflag },
-	{   0, nil   },
 };
 
 static ctype_status
