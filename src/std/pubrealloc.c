@@ -322,14 +322,13 @@ allocpages(usize n)
 	}
 
 	n >>= mpageshift;
+	if (!p)
+		p = mappages(n);
 	if (p) {
 		idx = ptr2idx(p);
 		pagedir[idx] = MFIRST;
 		for (i = 1; i < n; ++i)
 			pagedir[idx + i] = MFOLLOW;
-
-	} else {
-		p = mappages(n);
 	}
 	if (df) {
 		if (!px)
@@ -426,7 +425,6 @@ imalloc(usize n)
 {
 	if ((n + mpagesize) < n || (n + mpagesize) >= (uintptr)pagedir)
 		return nil;
-
 	if (n <= mmaxsize)
 		return allocbytes(n);
 	return allocpages(n);
@@ -462,7 +460,7 @@ irealloc(void *p, usize n)
 			return nil;
 
 		o = (*mp)->size;
-		if (n <= o && (n > o / 2 || o == mminsize))
+		if (n <= o && (n > (o >> 1) || o == mminsize))
 			return p;
 	} else {
 		/* pointer to wrong place */
