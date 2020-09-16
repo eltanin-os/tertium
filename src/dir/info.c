@@ -20,7 +20,7 @@ hist(ctype_arr *hp, ulong dev, ulong ino)
 	usize n;
 
 	if (!(n = c_arr_len(hp, sizeof(k))))
-		return c_dyn_cat(hp, &k, 1, sizeof(k)) < 0 ? -1 : 0;
+		return c_dyn_cat(hp, &k, 1, sizeof(k)) < 0 ? -1 : 1;
 	l = c_arr_data(hp);
 	k = PACK(dev, ino);
 	if (*l > k) {
