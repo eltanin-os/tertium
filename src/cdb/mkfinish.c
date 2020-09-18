@@ -27,19 +27,16 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 	for (i = 0; i < 256; ++i)
 		if ((u = count[i] << 1) > msiz)
 			msiz = u;
-	msiz += n;
-	u = ((u32int)-1) / sizeof(struct hp);
-	if (msiz > u) {
-		errno = C_ENOMEM;
-		return -1;
-	}
+	if ((msiz += n) > ((u32int)-1) / sizeof(struct hp))
+		return (errno = C_ENOMEM, -1);
 
 	if (!(split = c_std_alloc(msiz, sizeof(struct hp))))
 		return -1;
 	u = 0;
 	for (i = 0; i < 256; ++i)
 		start[i] = u += count[i];
-	for (i = n - 1; i; --i)
+	i = n;
+	while (i--)
 		split[--start[hp[i].h & 255]] = hp[i];
 	c_dyn_free(&p->hplist);
 	hp = split + n;
@@ -69,10 +66,11 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 			p->off += 8;
 		}
 	}
-	c_ioq_flush(&p->ioq);
-	if (c_sys_seek(p->fd, 0, C_SEEKSET) < 0 ||
+	if (c_ioq_flush(&p->ioq) < 0 ||
+	    c_sys_seek(p->fd, 0, C_SEEKSET) < 0 ||
 	    c_std_allrw(&c_sys_write, p->fd, final, sizeof(final)) < 0)
 		goto fail;
+	c_std_free(split);
 	return 0;
 fail:
 	c_std_free(split);
