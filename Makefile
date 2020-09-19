@@ -7,7 +7,9 @@ INC= -I inc -I oss/$(OSNAME) -I oss/$(OSNAME)/$(OBJTYPE)
 
 HDR=\
 	inc/tertium/std.h\
-	inc/tertium/cpu.h
+	inc/tertium/cpu.h\
+	inc/tertiun/dat.h\
+	inc/tertiun/fns.h
 
 # LIB SOURCE
 ASMSRC=\
