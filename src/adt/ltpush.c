@@ -4,17 +4,18 @@
 ctype_status
 c_adt_ltpush(ctype_node **sp, ctype_node *p)
 {
+	ctype_node *head;
+
 	if (!p)
 		return -1;
 
-	p->prev = nil;
 	if (*sp) {
-		if (!(p->next = (*sp)->next)->prev)
-			p->next->prev = p;
-		(*sp)->next = p;
+		head = p->next;
+		p->next = (*sp)->next;
+		p->next->prev = p;
+		(*sp)->next = head;
 	} else {
 		*sp = p;
-		p->next = p;
 	}
 	return 0;
 }

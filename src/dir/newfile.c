@@ -37,6 +37,7 @@ __dir_newfile(char *path, char *name, uint opts)
 		return nil;
 
 	p = (void *)sp;
+	p->next = p;
 	sp += sizeof(*p);
 	ep = p->p = (void *)sp;
 	sp += sizeof(*ep);
