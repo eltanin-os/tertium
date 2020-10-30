@@ -147,7 +147,14 @@ typedef int ctype_status;
 typedef __builtin_va_list va_list;
 
 /* struct */
+typedef struct ctype_iopause ctype_iopause;
 typedef struct ctype_uts ctype_utsname;
+
+struct ctype_iopause {
+	int fd;
+	short events;
+	short revents;
+};
 
 struct ctype_uts {
 	char sysname[65];

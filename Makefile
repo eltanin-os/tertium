@@ -151,6 +151,7 @@ LIBCSRC=\
 	src/std/argv0.c\
 	src/std/bsearch.c\
 	src/std/calloc.c\
+	src/std/deepsleep.c\
 	src/std/errno.c\
 	src/std/errstr.c\
 	src/std/exit.c\
@@ -160,6 +161,7 @@ LIBCSRC=\
 	src/std/getenv.c\
 	src/std/getopt.c\
 	src/std/getsyserr.c\
+	src/std/iopause.c\
 	src/std/isatty.c\
 	src/std/mktemp.c\
 	src/std/nbsearch.c\
@@ -189,6 +191,7 @@ LIBCSRC=\
 	src/sys/chdir.c\
 	src/sys/chmod.c\
 	src/sys/chown.c\
+	src/sys/clockgettime.c\
 	src/sys/close.c\
 	src/sys/coe.c\
 	src/sys/execve.c\
@@ -220,6 +223,7 @@ LIBCSRC=\
 	src/sys/pipecoe.c\
 	src/sys/pipenb.c\
 	src/sys/pipenbcoe.c\
+	src/sys/poll.c\
 	src/sys/read.c\
 	src/sys/readlink.c\
 	src/sys/rename.c\
@@ -244,6 +248,7 @@ LIBCSRC=\
 	src/tai/now.c\
 	src/tai/pack.c\
 	src/tai/sub.c\
+	src/tai/u64.c\
 	src/tai/unpack.c\
 	src/taia/add.c\
 	src/taia/approx.c\
@@ -255,6 +260,7 @@ LIBCSRC=\
 	src/taia/pack.c\
 	src/taia/sub.c\
 	src/taia/tai.c\
+	src/taia/u64.c\
 	src/taia/unpack.c\
 	src/uint/16bigpack.c\
 	src/uint/16bigunpack.c\

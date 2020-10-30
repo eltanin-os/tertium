@@ -142,6 +142,7 @@ void *c_std_alloc(usize, usize);
 size c_std_allrw(ctype_iofn, ctype_fd, void *, usize);
 void *c_std_bsearch(void *, void *, usize, usize, ctype_cmpfn);
 void *c_std_calloc(usize, usize);
+void c_std_deepsleep(ctype_taia *, ctype_taia *);
 void c_std_errstr(char *, usize);
 void c_std_exit(int);
 ctype_status c_std_fdcat(ctype_fd, ctype_fd);
@@ -150,6 +151,7 @@ void *c_std_free_(void *);
 char *c_std_getenv(char *);
 int c_std_getopt(ctype_arg *, int, char **, char *);
 char *c_std_getsyserr(void);
+ctype_status c_std_iopause(ctype_iopause *, uint, ctype_taia *, ctype_taia *);
 int c_std_isatty(int);
 ctype_fd c_std_mktemp(char *, usize, uint);
 void *c_std_nbsearch(void *, void *, usize, usize, ctype_cmpfn);
@@ -182,6 +184,7 @@ char *c_str_str(char *, usize, char *);
 ctype_status c_sys_chdir(char *);
 ctype_status c_sys_chmod(char *, uint);
 ctype_status c_sys_chown(char *, ctype_id, ctype_id);
+ctype_status c_sys_clockgettime(ctype_id, ctype_time *);
 ctype_status c_sys_close(ctype_fd);
 ctype_status c_sys_coe(ctype_fd);
 ctype_status c_sys_execve(char *, char **, char **);
@@ -213,6 +216,7 @@ ctype_status c_sys_pipe(ctype_fd *);
 ctype_status c_sys_pipecoe(ctype_fd *);
 ctype_status c_sys_pipenb(ctype_fd *);
 ctype_status c_sys_pipenbcoe(ctype_fd *);
+ctype_status c_sys_poll(ctype_iopause *, uint, int);
 size c_sys_read(ctype_fd, void *, usize);
 size c_sys_readlink(char *, char *, usize);
 ctype_status c_sys_rename(char *, char *);
@@ -238,6 +242,7 @@ int c_tai_less(ctype_tai *, ctype_tai *);
 void c_tai_pack(char *, ctype_tai *);
 void c_tai_now(ctype_tai *);
 void c_tai_sub(ctype_tai *, ctype_tai *, ctype_tai *);
+void c_tai_u64(ctype_tai *, u64int);
 void c_tai_unpack(char *, ctype_tai *);
 
 /* taia routines */
@@ -251,6 +256,7 @@ void c_taia_now(ctype_taia *);
 void c_taia_pack(char *, ctype_taia *);
 void c_taia_sub(ctype_taia *, ctype_taia *, ctype_taia *);
 void c_taia_tai(ctype_taia *, ctype_tai *);
+void c_taia_u64(ctype_taia *, u64int);
 void c_taia_unpack(char *, ctype_taia *);
 
 /* uint routines */
