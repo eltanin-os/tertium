@@ -155,6 +155,7 @@ ctype_status c_std_iopause(ctype_iopause *, uint, ctype_taia *, ctype_taia *);
 int c_std_isatty(int);
 ctype_fd c_std_mktemp(char *, usize, uint);
 void *c_std_nbsearch(void *, void *, usize, usize, ctype_cmpfn);
+int c_std_noopt(ctype_arg *, char *);
 void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);
