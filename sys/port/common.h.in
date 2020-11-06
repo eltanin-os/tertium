@@ -31,6 +31,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <poll.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -325,3 +326,4 @@ typedef struct dirent __fb_dirent;
 typedef struct timespec ctype_time;
 typedef struct stat ctype_stat;
 typedef struct utsname ctype_utsname;
+typedef struct pollfd ctype_iopause;
