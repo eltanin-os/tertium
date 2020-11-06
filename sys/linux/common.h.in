@@ -165,5 +165,11 @@ struct ctype_uts {
 	char domainname[65];
 };
 
+/* variadic macros */
+#define va_arg(a, b) __builtin_va_arg(a, b)
+#define va_copy(a, b) __builtin_va_copy(a, b)
+#define va_end(a) __builtin_va_end(a)
+#define va_start(a, b) __builtin_va_start(a, b)
+
 /* */
 long __asm_syscall(long, ...);
