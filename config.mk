@@ -12,9 +12,10 @@ RANLIB = ranlib
 CFLAGS   = -O0 -g -std=c99 -Wall -Wextra -Werror -pedantic
 LDFLAGS  =
 
-# OSes:
-# port (system libc)
-OSNAME  = port
 # Arch:
-# port (system libc)
-OBJTYPE = port
+# x86_64
+OBJTYPE = x86_64
+
+# OSes:
+# linux
+OSNAME  = linux
