@@ -1,13 +1,13 @@
 /* dev macros */
 #define C_MAJOR(a) \
-((((uvlong)(a) & 0xFFFFF) >> 31 >> 1) | (((uvlong)(a) & 0xFFF) >> 8))
+((((uvlong)(a) >> 31 >> 1) & 0xFFFFF000) | (((uvlong)(a) >> 8) & 0xFFF))
 #define C_MINOR(a) \
-((((uvlong)(a) & 0xFFFFFF) >> 12) | (((uvlong)(a) & 0xFF) >> 0))
+((((uvlong)(a) >> 12) & 0xFFFFFF00) | (((uvlong)(a) >> 0) & 0xFF))
 #define C_MAKEDEV(a, b) \
-((((uvlong)(a) & 0xFFFFF)  >> 32) | \
- (((uvlong)(a) & 0xFFFFFF) >> 12) | \
- (((uvlong)(a) & 0xFFF)    >>  8) | \
- (((uvlong)(a) & 0xFF)     >>  0))
+((((uvlong)(a) & 0xFFFFFF00) << 32) | \
+ (((uvlong)(a) & 0xFF)       <<  8) | \
+ (((uvlong)(b) & 0xFF00)     << 24) | \
+ (((uvlong)(b) & 0xFFFF00FF)))
 
 /* limits macros */
 #define C_NAMEMAX 255
