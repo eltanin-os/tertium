@@ -5,7 +5,7 @@ void
 c_dyn_shrink(ctype_arr *p)
 {
 	if (p->a > p->n) {
-		c_std_realloc(p->p, p->n, sizeof(uchar));
+		p->p = c_std_realloc(p->p, p->n, sizeof(uchar));
 		p->a = p->n;
 	}
 }
