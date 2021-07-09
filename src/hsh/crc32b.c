@@ -5,14 +5,12 @@
 
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
-static void end(ctype_hst *);
-static void digest(ctype_hst *, char *);
+static void end(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	&digest,
 };
 
 ctype_hmd *c_hsh_crc32b = &md;
@@ -36,8 +34,8 @@ update(ctype_hst *p, char *data, usize n)
 {
 	uchar *s;
 
-	p->len += n;
 	s = (uchar *)data;
+	p->len += n;
 	for (; n; --n) {
 		p->st.x32[0] ^= *s++;
 		p->st.x32[0] = CRCTAB(p->st.x32[0]);
@@ -46,13 +44,9 @@ update(ctype_hst *p, char *data, usize n)
 }
 
 static void
-end(ctype_hst *p)
+end(ctype_hst *p, char *s)
 {
 	p->st.x32[0] ^= 0xFFFFFFFF;
-}
-
-static void
-digest(ctype_hst *p, char *s)
-{
 	c_uint_32pack(s, p->st.x32[0]);
+	p->len <<= 3;
 }

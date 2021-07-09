@@ -13,7 +13,6 @@ c_hsh_putfd(ctype_hst *hs, ctype_hmd *p, ctype_fd fd, usize n)
 	if (!n || (mp = MMAP(fd, n)) == (void *)-1) {
 		while ((r = c_sys_read(fd, buf, sizeof(buf))) > 0)
 			p->update(hs, buf, r);
-		p->end(hs);
 		return r < 0 ? -1 : 0;
 	}
 	p->update(hs, (char *)mp, n);

@@ -61,14 +61,12 @@ static u32int ktab[64] = {
 
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
-static void end(ctype_hst *);
-static void digest(ctype_hst *, char *);
+static void end(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	&digest,
 };
 
 ctype_hmd *c_hsh_md5 = &md;
@@ -76,6 +74,7 @@ ctype_hmd *c_hsh_md5 = &md;
 static void
 init(ctype_hst *p)
 {
+	p->curlen = 0;
 	p->len = 0;
 	p->st.x32[0] = 0x67452301UL;
 	p->st.x32[1] = 0xEFCDAB89UL;
@@ -92,10 +91,9 @@ compress(ctype_hst *p, char *data)
 	for (i = 0; i < 16; ++i)
 		w[i] = c_uint_32unpack(data + (i << 2));
 
-	st[0] = p->st.x32[0];
-	st[1] = p->st.x32[1];
-	st[2] = p->st.x32[2];
-	st[3] = p->st.x32[3];
+	for (i = 0; i < 4; ++i)
+		st[i] = p->st.x32[i];
+
 	for (i = 0; i < 16; ++i) {
 		FF(st[0], st[1], st[2], st[3], w[wtab[i]], rtab[i], ktab[i]);
 		REV(st[0], st[1], st[2], st[3], t);
@@ -112,40 +110,32 @@ compress(ctype_hst *p, char *data)
 		II(st[0], st[1], st[2], st[3], w[wtab[i]], rtab[i], ktab[i]);
 		REV(st[0], st[1], st[2], st[3], t);
 	}
-	p->st.x32[0] += st[0];
-	p->st.x32[1] += st[1];
-	p->st.x32[2] += st[2];
-	p->st.x32[3] += st[3];
+
+	for (i = 0; i < 4; ++i)
+		p->st.x32[i] += st[i];
 }
 
 static void
 update(ctype_hst *p, char *data, usize n)
 {
-	__hsh_update(compress, 64, p, data, n);
+	c_hsh_update(compress, 64, p, data, n);
 }
 
 static void
-end(ctype_hst *p)
-{
-	uint r;
-
-	r = p->len % 64;
-	p->buf[r++] = 0x80;
-
-	if (r > 56) {
-		c_mem_set(p->buf + r, 64 - r, 0);
-		compress(p, (char *)p->buf);
-		r = 0;
-	}
-	c_mem_set(p->buf + r, 56 - r, 0);
-	c_uint_64pack((char *)p->buf + 56, p->len << 3);
-	compress(p, (char *)p->buf);
-}
-
-static void
-digest(ctype_hst *p, char *s)
+end(ctype_hst *p, char *s)
 {
 	int i;
+
+	p->len += p->curlen << 3;
+	p->buf[p->curlen++] = 0x80;
+	if (p->curlen > 56) {
+		c_mem_set(p->buf + p->curlen, 64 - p->curlen, 0);
+		compress(p, (char *)p->buf);
+		p->curlen = 0;
+	}
+	c_mem_set(p->buf + p->curlen, 56 - p->curlen, 0);
+	c_uint_64pack((char *)p->buf + 56, p->len);
+	compress(p, (char *)p->buf);
 
 	for (i = 0; i < 4; i++)
 		c_uint_32pack(s + (i << 2), p->st.x32[i]);

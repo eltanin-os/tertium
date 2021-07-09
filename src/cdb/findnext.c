@@ -23,14 +23,12 @@ match(ctype_cdb *p, char *k, usize n, u32int off)
 ctype_status
 c_cdb_findnext(ctype_cdb *p, char *k, usize n)
 {
-	ctype_hst hs;
 	u32int h;
 	u32int off;
 	char buf[8];
 
 	if (!p->loop) {
-		c_hsh_all(&hs, c_hsh_djb, k, n);
-		c_hsh_digest(&hs, c_hsh_djb, buf);
+		c_hsh_str(c_hsh_edf, k, n, buf);
 		h = c_uint_32unpack(buf);
 		if (c_cdb_read(p, buf, sizeof(buf), (h << 3) & 2047) < 0)
 			return -1;

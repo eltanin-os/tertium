@@ -64,7 +64,7 @@ enum {
 
 /* hsh macros */
 enum {
-	C_H32GEN_DIGEST = 32,
+	C_H32GEN_DIGEST = 4,
 	C_HMD5_DIGEST = 16,
 	C_HSHA1_DIGEST = 20,
 	C_HSHA256_DIGEST = 32,
@@ -218,8 +218,7 @@ typedef struct ctype_hst ctype_hst;
 struct ctype_hmd {
 	void (*init)(ctype_hst *);
 	void (*update)(ctype_hst *, char *, usize);
-	void (*end)(ctype_hst *);
-	void (*digest)(ctype_hst *, char *);
+	void (*end)(ctype_hst *, char *);
 };
 
 struct ctype_hst {
@@ -228,6 +227,7 @@ struct ctype_hst {
 		u64int x64[8];
 	} st;
 	uchar buf[128];
+	usize curlen;
 	usize len;
 };
 
@@ -298,7 +298,6 @@ extern ctype_arr *arr_zero;
 /* hsh variables */
 extern ctype_hmd *c_hsh_crc32b;
 extern ctype_hmd *c_hsh_crc32p;
-extern ctype_hmd *c_hsh_djb;
 extern ctype_hmd *c_hsh_edf;
 extern ctype_hmd *c_hsh_fletcher32;
 extern ctype_hmd *c_hsh_md5;

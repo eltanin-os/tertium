@@ -93,11 +93,11 @@ char *c_gen_basename(char *);
 char *c_gen_dirname(char *);
 
 /* hsh routines */
-void c_hsh_all(ctype_hst *, ctype_hmd *, char *, usize);
-void c_hsh_digest(ctype_hst *, ctype_hmd *, char *);
-usize c_hsh_len(ctype_hst *);
+usize c_hsh_octets(ctype_hst *p)
 ctype_status c_hsh_putfd(ctype_hst *, ctype_hmd *, ctype_fd, usize);
 ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
+void c_hsh_str(ctype_hmd *, char *, usize, char *);
+void c_hsh_update(void (*)(ctype_hst *, char *), int, ctype_hst *, char *, usize);
 
 /* ioq routines */
 ctype_ioq *c_ioq_alloc(ctype_fd, usize, ctype_iofn);

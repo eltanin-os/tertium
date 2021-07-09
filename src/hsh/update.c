@@ -3,28 +3,30 @@
 
 #include "__int__.h"
 
-void
-__hsh_update(void (*f)(ctype_hst *, char *), int b,
-    ctype_hst *p, char *data, usize n)
-{
-	uint r;
+typedef void (*hfunc)(ctype_hst *, char *);
 
-	r = p->len % b;
-	p->len += n;
-	if (r) {
-		if (n < b - r) {
-			c_mem_cpy(p->buf + r, n, data);
-			return;
+void
+c_hsh_update(hfunc f, int b, ctype_hst *p, char *data, usize n)
+{
+	usize len;
+
+	while (n) {
+		if (!p->curlen && n >= (uint)b) {
+			f(p, data);
+			p->len += b << 3;
+			data += b;
+			n -= b;
+		} else {
+			len = C_MIN(n, b - p->curlen);
+			c_mem_cpy(p->buf + p->curlen, len, data);
+			p->curlen += len;
+			data += len;
+			n -= len;
+			if (p->curlen == (uint)b) {
+				f(p, data);
+				p->len += b << 3;
+				p->curlen = 0;
+			}
 		}
-		c_mem_cpy(p->buf + r, b - r, data);
-		n -= b - r;
-		data += b - r;
-		f(p, (char *)p->buf);
 	}
-	while (n >= (usize)b) {
-		f(p, data);
-		n -= b;
-		data += b;
-	}
-	c_mem_cpy(p->buf, n, data);
 }

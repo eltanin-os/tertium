@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 usize
-c_hsh_len(ctype_hst *p)
+c_hsh_octets(ctype_hst *p)
 {
-	return p->len;
+	return p->len >> 3;
 }

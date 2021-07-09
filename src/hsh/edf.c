@@ -3,14 +3,12 @@
 
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
-static void end(ctype_hst *);
-static void digest(ctype_hst *, char *);
+static void end(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	&digest,
 };
 
 ctype_hmd *c_hsh_edf = &md;
@@ -27,14 +25,14 @@ update(ctype_hst *p, char *data, usize n)
 {
 	uchar *s;
 
-	p->len += n;
 	s = (uchar *)data;
+	p->len += n;
 	for (; n; --n)
 		p->st.x32[0] = (p->st.x32[0] + (*s++ - ' ')) * 2521;
 }
 
 static void
-end(ctype_hst *p)
+end(ctype_hst *p, char *s)
 {
 	p->st.x32[0] ^= p->st.x32[0] << 16;
 	p->st.x32[0] += p->st.x32[0] << 13;
@@ -42,10 +40,6 @@ end(ctype_hst *p)
 	p->st.x32[0] += p->st.x32[0] << 9;
 	p->st.x32[0] ^= p->st.x32[0] >> 8;
 	p->st.x32[0] += p->st.x32[0] << 2;
-}
-
-static void
-digest(ctype_hst *p, char *s)
-{
 	c_uint_32pack(s, p->st.x32[0]);
+	p->len <<= 3;
 }

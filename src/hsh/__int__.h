@@ -1,6 +1,3 @@
-void __hsh_update(void (*)(ctype_hst *, char *), int,
-    ctype_hst *, char *, usize);
-
 static inline u32int
 __hsh_rol32(u32int n, int k)
 {

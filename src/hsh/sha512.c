@@ -16,14 +16,12 @@
 
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
-static void end(ctype_hst *);
-static void digest(ctype_hst *, char *);
+static void end(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	&digest,
 };
 
 ctype_hmd *c_hsh_sha512 = &md;
@@ -74,6 +72,7 @@ static u64int K[] = {
 static void
 init(ctype_hst *p)
 {
+	p->curlen = 0;
 	p->len = 0;
 	p->st.x64[0] = 0x6a09e667f3bcc908ULL;
 	p->st.x64[1] = 0xbb67ae8584caa73bULL;
@@ -98,56 +97,40 @@ compress(ctype_hst *p, char *data)
 	for (i = 16; i < 80; ++i)
 		w[i] = G1(w[i - 2]) + w[i - 7] + G0(w[i - 15]) + w[i - 16];
 
-	st[0] = p->st.x64[0];
-	st[1] = p->st.x64[1];
-	st[2] = p->st.x64[2];
-	st[3] = p->st.x64[3];
-	st[4] = p->st.x64[4];
-	st[5] = p->st.x64[5];
-	st[6] = p->st.x64[6];
-	st[7] = p->st.x64[7];
+	for (i = 0; i < 8; ++i)
+		st[i] = p->st.x64[i];
+
 	for (i = 0; i < 80; ++i) {
 		t0 = st[7] + S1(st[4]) + Ch(st[4], st[5], st[6]) + K[i] + w[i];
 		t1 = S0(st[0]) + Maj(st[0], st[1], st[2]);
 		REV(st[0], st[1], st[2], st[3], st[4], st[5], st[6], st[7]);
 	}
-	p->st.x64[0] += st[0];
-	p->st.x64[1] += st[1];
-	p->st.x64[2] += st[2];
-	p->st.x64[3] += st[3];
-	p->st.x64[4] += st[4];
-	p->st.x64[5] += st[5];
-	p->st.x64[6] += st[6];
-	p->st.x64[7] += st[7];
+
+	for (i = 0; i < 8; ++i)
+		p->st.x64[i] += st[i];
 }
 
 static void
 update(ctype_hst *p, char *data, usize n)
 {
-	__hsh_update(compress, 128, p, data, n);
+	c_hsh_update(compress, 128, p, data, n);
 }
 
 static void
-end(ctype_hst *p)
-{
-	uint r;
-
-	r = p->len % 128;
-	p->buf[r++] = 0x80;
-	if (r > 112) {
-		c_mem_set(p->buf + r, 128 - r, 0);
-		compress(p, (char *)p->buf);
-		r = 0;
-	}
-	c_mem_set(p->buf + r, 120 - r, 0);
-	c_uint_64bigpack((char *)p->buf + 120, p->len << 3);
-	compress(p, (char *)p->buf);
-}
-
-static void
-digest(ctype_hst *p, char *s)
+end(ctype_hst *p, char *s)
 {
 	int i;
+
+	p->len += p->curlen << 3;
+	p->buf[p->curlen++] = 0x80;
+	if (p->curlen > 112) {
+		c_mem_set(p->buf + p->curlen, 128 - p->curlen, 0);
+		compress(p, (char *)p->buf);
+		p->curlen = 0;
+	}
+	c_mem_set(p->buf + p->curlen, 120 - p->curlen, 0);
+	c_uint_64bigpack((char *)p->buf + 120, p->len);
+	compress(p, (char *)p->buf);
 
 	for (i = 0; i < 8; ++i)
 		c_uint_64bigpack(s + (i << 3), p->st.x64[i]);

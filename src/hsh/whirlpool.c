@@ -161,9 +161,9 @@ static u64int cont[] = {
 
 #define THETA_PI_GAMMA(a, i) \
 (SB0(GB(a, i-0, 7)) ^        \
+ SB1(GB(a, i-1, 6)) ^        \
  SB2(GB(a, i-2, 5)) ^        \
  SB3(GB(a, i-3, 4)) ^        \
- SB1(GB(a, i-1, 6)) ^        \
  SB4(GB(a, i-4, 3)) ^        \
  SB5(GB(a, i-5, 2)) ^        \
  SB6(GB(a, i-6, 1)) ^        \
@@ -171,14 +171,12 @@ static u64int cont[] = {
 
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
-static void end(ctype_hst *);
-static void digest(ctype_hst *, char *);
+static void end(ctype_hst *, char *);
 
 static ctype_hmd md = {
 	&init,
 	&update,
 	&end,
-	&digest,
 };
 
 ctype_hmd *c_hsh_whirlpool = &md;
@@ -186,6 +184,7 @@ ctype_hmd *c_hsh_whirlpool = &md;
 static void
 init(ctype_hst *p)
 {
+	p->curlen = 0;
 	p->len = 0;
 	c_mem_set(p->st.x64, sizeof(p->st.x64), 0);
 }
@@ -196,15 +195,8 @@ compress(ctype_hst *p, char *data)
 	u64int k[2][8], t[3][8];
 	int i, j;
 
-	k[0][0] = p->st.x64[0];
-	k[0][1] = p->st.x64[1];
-	k[0][2] = p->st.x64[2];
-	k[0][3] = p->st.x64[3];
-	k[0][4] = p->st.x64[4];
-	k[0][5] = p->st.x64[5];
-	k[0][6] = p->st.x64[6];
-	k[0][7] = p->st.x64[7];
 	for (i = 0; i < 8; ++i) {
+		k[0][i] = p->st.x64[i];
 		t[0][i] = c_uint_64bigunpack(data + (i << 3));
 		t[2][i] = t[0][i];
 		t[0][i] ^= k[0][i];
@@ -228,43 +220,31 @@ compress(ctype_hst *p, char *data)
 		for (j = 0; j < 8; ++j)
 			t[0][j] = THETA_PI_GAMMA(t[1], j) ^ k[0][j];
 	}
-	p->st.x64[0] ^= t[0][0] ^ t[2][0];
-	p->st.x64[1] ^= t[0][1] ^ t[2][1];
-	p->st.x64[2] ^= t[0][2] ^ t[2][2];
-	p->st.x64[3] ^= t[0][3] ^ t[2][3];
-	p->st.x64[4] ^= t[0][4] ^ t[2][4];
-	p->st.x64[5] ^= t[0][5] ^ t[2][5];
-	p->st.x64[6] ^= t[0][6] ^ t[2][6];
-	p->st.x64[7] ^= t[0][7] ^ t[2][7];
+	for (i = 0; i < 8; ++i)
+		p->st.x64[i] ^= t[0][i] ^ t[2][i];
 }
 
 static void
 update(ctype_hst *p, char *data, usize n)
 {
-	__hsh_update(compress, 64, p, data, n);
+	c_hsh_update(compress, 64, p, data, n);
 }
 
 static void
-end(ctype_hst *p)
-{
-	uint r;
-
-	r = p->len % 64;
-	p->buf[r++] = 0x80;
-	if (r > 32) {
-		c_mem_set(p->buf + r, 64 - r, 0);
-		compress(p, (char *)p->buf);
-		r = 0;
-	}
-	c_mem_set(p->buf + r, 56 - r, 0);
-	c_uint_64bigpack((char *)p->buf + 56, p->len << 3);
-	compress(p, (char *)p->buf);
-}
-
-static void
-digest(ctype_hst *p, char *s)
+end(ctype_hst *p, char *s)
 {
 	int i;
+
+	p->len += p->curlen << 3;
+	p->buf[p->curlen++] = 0x80;
+	if (p->curlen > 32) {
+		c_mem_set(p->buf + p->curlen, 64 - p->curlen, 0);
+		compress(p, (char *)p->buf);
+		p->curlen = 0;
+	}
+	c_mem_set(p->buf + p->curlen, 56 - p->curlen, 0);
+	c_uint_64bigpack((char *)p->buf + 56, p->len);
+	compress(p, (char *)p->buf);
 
 	for (i = 0; i < 8; ++i)
 		c_uint_64bigpack(s + (i << 3), p->st.x64[i]);
