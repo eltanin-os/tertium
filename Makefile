@@ -29,7 +29,7 @@ LIBCSRC=\
 	src/arr/data.c\
 	src/arr/fmt.c\
 	src/arr/get.c\
-	src/arr/icat.c\
+	src/arr/idxcat.c\
 	src/arr/init.c\
 	src/arr/len.c\
 	src/arr/total.c\
@@ -66,7 +66,7 @@ LIBCSRC=\
 	src/dyn/cat.c\
 	src/dyn/fmt.c\
 	src/dyn/free.c\
-	src/dyn/icat.c\
+	src/dyn/idxcat.c\
 	src/dyn/ready.c\
 	src/dyn/shrink.c\
 	src/dyn/vfmt.c\
@@ -94,17 +94,18 @@ LIBCSRC=\
 	src/fmt/vprint.c\
 	src/gen/basename.c\
 	src/gen/dirname.c\
-	src/hsh/all.c\
 	src/hsh/crc32b.c\
 	src/hsh/crc32p.c\
 	src/hsh/edf.c\
 	src/hsh/fletcher32.c\
 	src/hsh/md5.c\
+	src/hsh/octets.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
 	src/hsh/sha1.c\
 	src/hsh/sha256.c\
 	src/hsh/sha512.c\
+	src/hsh/str.c\
 	src/hsh/update.c\
 	src/hsh/whirlpool.c\
 	src/ioq/alloc.c\

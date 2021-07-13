@@ -14,7 +14,7 @@ ctype_status c_arr_cat(ctype_arr *, void *, usize, usize);
 void *c_arr_data(ctype_arr *);
 size c_arr_fmt(ctype_arr *, char *, ...);
 void *c_arr_get(ctype_arr *, usize, usize);
-ctype_status c_arr_icat(ctype_arr *, void *, usize, usize, usize);
+ctype_status c_arr_idxcat(ctype_arr *, usize, void *, usize, usize);
 void c_arr_init(ctype_arr *, char *, usize);
 usize c_arr_len(ctype_arr *, usize);
 usize c_arr_total(ctype_arr *);
@@ -56,7 +56,7 @@ void *c_dyn_alloc(ctype_arr *, usize, usize);
 ctype_status c_dyn_cat(ctype_arr *, void *, usize, usize);
 size c_dyn_fmt(ctype_arr *, char *, ...);
 void c_dyn_free(ctype_arr *);
-ctype_status c_dyn_icat(ctype_arr *, void *, usize, usize, usize);
+ctype_status c_dyn_idxcat(ctype_arr *, usize, void *, usize, usize);
 ctype_status c_dyn_ready(ctype_arr *, usize, usize);
 void c_dyn_shrink(ctype_arr *);
 size c_dyn_vfmt(ctype_arr *, char *, va_list);
@@ -93,7 +93,7 @@ char *c_gen_basename(char *);
 char *c_gen_dirname(char *);
 
 /* hsh routines */
-usize c_hsh_octets(ctype_hst *p)
+usize c_hsh_octets(ctype_hst *p);
 ctype_status c_hsh_putfd(ctype_hst *, ctype_hmd *, ctype_fd, usize);
 ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
 void c_hsh_str(ctype_hmd *, char *, usize, char *);

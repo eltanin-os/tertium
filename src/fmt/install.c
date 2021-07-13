@@ -20,12 +20,12 @@ c_fmt_install(int c, ctype_fmtfn f)
 	if (!(n = c_arr_bytes(&__fmt_Fmts)))
 		return c_dyn_cat(&__fmt_Fmts, &nf, 1, sizeof(nf));
 	if ((l = c_arr_data(&__fmt_Fmts))->c > c)
-		return c_dyn_icat(&__fmt_Fmts, &nf, 1, sizeof(nf), 0);
+		return c_dyn_idxcat(&__fmt_Fmts, 0, &nf, 1, sizeof(nf));
 	n /= sizeof(*p);
 	p = c_std_nbsearch(&c, l, n, sizeof(*l), &cmp);
 	if (p->c == c) {
 		p->f = f;
 		return 0;
 	}
-	return c_dyn_icat(&__fmt_Fmts, &nf, 1, sizeof(nf), (p + 1) - l);
+	return c_dyn_idxcat(&__fmt_Fmts, (p + 1) - l, &nf, 1, sizeof(nf));
 }

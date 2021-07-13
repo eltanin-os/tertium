@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 ctype_status
-c_arr_icat(ctype_arr *p, void *v, usize m, usize n, usize pos)
+c_arr_idxcat(ctype_arr *p, usize pos, void *v, usize m, usize n)
 {
 	usize len;
 	uchar *target;

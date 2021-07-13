@@ -24,10 +24,10 @@ hist(ctype_arr *hp, ulong dev, ulong ino)
 	l = c_arr_data(hp);
 	k = PACK(dev, ino);
 	if (*l > k) {
-		c_dyn_icat(hp, &k, 1, sizeof(k), 0);
+		c_dyn_idxcat(hp, 0, &k, 1, sizeof(k));
 		return 1;
 	} else if (*(p = c_std_nbsearch(&k, l, n, sizeof(l), &cmp)) != k) {
-		c_dyn_icat(hp, &k, 1, sizeof(k), (p + 1) - l);
+		c_dyn_idxcat(hp, (p + 1) - l, &k, 1, sizeof(k));
 		return 1;
 	}
 	return 0;
