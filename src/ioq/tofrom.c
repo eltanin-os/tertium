@@ -2,23 +2,23 @@
 #include <tertium/std.h>
 
 size
-c_ioq_get(ctype_ioq *p, char *b, usize n)
+c_ioq_tofrom(ctype_ioq *dest, ctype_ioq *src, usize n)
 {
 	usize len, min;
 	size r;
 
 	len = n;
 	while (len) {
-		if ((r = c_ioq_feed(p)) < 0)
+		if ((r = c_ioq_feed(src)) < 0)
 			return -1;
 		if (!r)
 			break;
 		min = C_MIN((usize)r, len);
-		c_mem_cpy(b, min, p->arr.p + p->arr.a);
-		p->arr.n -= min;
-		p->arr.a += min;
+		if (c_ioq_nput(dest, (char *)src->arr.p + src->arr.a, min) < 0)
+			return -1;
+		src->arr.n -= min;
+		src->arr.a += min;
 		len -= min;
-		b += min;
 	}
 	return len ? n - len : n;
 }

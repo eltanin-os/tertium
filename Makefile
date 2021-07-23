@@ -113,9 +113,7 @@ LIBCSRC=\
 	src/ioq/fileno.c\
 	src/ioq/flush.c\
 	src/ioq/fmt.c\
-	src/ioq/free.c\
 	src/ioq/get.c\
-	src/ioq/getall.c\
 	src/ioq/getdelim.c\
 	src/ioq/getln.c\
 	src/ioq/init.c\
@@ -125,10 +123,10 @@ LIBCSRC=\
 	src/ioq/putfd.c\
 	src/ioq/putfile.c\
 	src/ioq/seek.c\
-	src/ioq/set.c\
 	src/ioq/stderr.c\
 	src/ioq/stdin.c\
 	src/ioq/stdout.c\
+	src/ioq/tofrom.c\
 	src/ioq/vfmt.c\
 	src/mem/ccpy.c\
 	src/mem/chr.c\

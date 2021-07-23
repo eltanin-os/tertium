@@ -89,7 +89,7 @@ enum {
 	__IOQ_OALL = 1 << 0,
 };
 
-#define c_ioq_INIT(a, b, c) { { sizeof((b)), 0, (b) }, (c), (a), 0 }
+#define c_ioq_INIT(a, b, c) { { sizeof((b)), 0, (b) }, (c), (a) }
 
 /* std macros */
 enum {
@@ -238,7 +238,6 @@ struct ctype_ioq {
 	ctype_arr arr;
 	ctype_iofn op;
 	ctype_fd fd;
-	uchar opts;
 };
 
 /* cdb types */
