@@ -508,18 +508,21 @@ pubrealloc(void *p, usize m, usize n)
 		minit();
 		++mstt;
 	}
+
 	if (p == alloc0)
 		goto invalid;
 
-	if (!n) {
-		if (p)
+	if (!m) {
+		if (p) {
 			ifree(p);
+			return nil;
+		}
 		r = alloc0;
 	} else {
-		r = p ? irealloc(p, m * n) : imalloc(m * n);
+		m *= n;
+		if (!(r = p ? irealloc(p, m) : imalloc(m)))
+			errno = C_ENOMEM;
 	}
-	if (!r)
-		errno = C_ENOMEM;
 
 	return r;
 invalid:
