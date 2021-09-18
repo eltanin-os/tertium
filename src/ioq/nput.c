@@ -12,7 +12,7 @@ c_ioq_nput(ctype_ioq *p, char *s, usize n)
 		if (c_ioq_flush(p) < 0)
 			return -1;
 		while (n > c_arr_avail(&p->arr)) {
-			if ((r = c_std_allrw(p->op, p->fd, s, BLK(n))) < 0)
+			if ((r = c_nix_allrw(p->op, p->fd, s, BLK(n))) < 0)
 				return -1;
 			n -= r;
 			s += r;

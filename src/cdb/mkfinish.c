@@ -67,8 +67,8 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 		}
 	}
 	if (c_ioq_flush(&p->ioq) < 0 ||
-	    c_sys_seek(p->fd, 0, C_SEEKSET) < 0 ||
-	    c_std_allrw(&c_sys_write, p->fd, final, sizeof(final)) < 0)
+	    c_nix_seek(p->fd, 0, C_SEEKSET) < 0 ||
+	    c_nix_allrw(&c_nix_fdwrite, p->fd, final, sizeof(final)) < 0)
 		goto fail;
 	c_std_free(split);
 	return 0;

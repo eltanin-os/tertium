@@ -56,14 +56,14 @@ __dir_info(ctype_dir *p, ctype_dent *ep)
 
 	stp = (p->opts & C_FSNOI) ? &st : ep->stp;
 	if (FOLLOW(p->opts, ep->depth)) {
-		if (c_sys_stat(stp, ep->path) < 0) {
+		if (c_nix_stat(stp, ep->path) < 0) {
 			sverr = errno;
-			if (!c_sys_lstat(stp, ep->path))
+			if (!c_nix_lstat(stp, ep->path))
 				return C_FSSLN;
 			ep->err = sverr;
 			return C_FSNS;
 		}
-	} else if (c_sys_lstat(stp, ep->path) < 0) {
+	} else if (c_nix_lstat(stp, ep->path) < 0) {
 		ep->err = errno;
 		return C_FSNS;
 	}

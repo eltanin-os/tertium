@@ -101,7 +101,6 @@ enum {
 #define c_std_getprogname( ) argv0
 #define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
 #define c_std_setprogname(a) argv0 = (a)
-#define c_std_syscall(...) c_std_syscall_(__VA_ARGS__, nil)
 #define c_std_vtoptr(...) c_std_vtoptr_(__VA_ARGS__, nil)
 
 #define C_MIN(a, b) (((a) > (b)) ? (b) : (a))
@@ -115,6 +114,10 @@ enum {
 #define C_OFLW_UA(a, b, c) ((c) > (((a)-1)-(b)))
 
 #define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
+
+/* nix macros */
+#define c_nix_abort() { while (*(volatile int *)0); }
+#define c_nix_syscall(...) c_nix_syscall_(__VA_ARGS__, nil)
 
 /* tai macros */
 #define C_TAI_PACK 8

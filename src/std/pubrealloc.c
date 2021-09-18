@@ -11,8 +11,10 @@
 
 #include "__int__.h"
 
+#define EMSG(a) c_nix_fdwrite(2, (a), sizeof((a)))
+
 #define MMAP(a) \
-c_sys_mmap(0, (a), PROT_READ|PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0)
+c_nix_mmap(0, (a), C_PROT_READ|C_PROT_WRITE, C_MAP_ANON|C_MAP_PRIVATE, -1, 0)
 
 #define MNOTMINE ((struct pginfo *)0)
 #define MFREE    ((struct pginfo *)1)
@@ -72,7 +74,7 @@ static void ifree(void *);
 static int
 _brk(void *p)
 {
-	cbrk = (void *)(uintptr)c_std_syscall(SYS_brk, p);
+	cbrk = (void *)(uintptr)c_nix_syscall(SYS_brk, p);
 	return ((cbrk == (void *)-1) ? -1 : 0);
 }
 
@@ -152,8 +154,8 @@ freepages(void *p, usize idx, struct pginfo *info)
 			pf = px;
 			px = nil;
 		} else {
-			c_sys_write(2, "freelist is destroyed\n", 22);
-			c_std_abort();
+			EMSG("freelist is destroyed\n");
+			c_nix_abort();
 		}
 	}
 	if (!pf->next &&
@@ -242,7 +244,7 @@ extendpgdir(usize idx)
 	}
 
 	nl = pageround(idx * sizeof(*pagedir)) + mpagesize;
-	if ((p = MMAP(nl)) == MAP_FAILED)
+	if ((p = MMAP(nl)) == C_MAP_FAILED)
 		return 0;
 
 	ol = minfo * sizeof(*pagedir);
@@ -251,7 +253,7 @@ extendpgdir(usize idx)
 	minfo = nl / sizeof(*pagedir);
 	o = pagedir;
 	pagedir = p;
-	c_sys_munmap(o, ol);
+	c_nix_munmap(o, ol);
 	return 1;
 }
 
@@ -271,8 +273,8 @@ mappages(usize pages)
 		return nil;
 	if ((rr = (void *)pageround((usize)(uintptr)r)) > r) {
 		if (segbrk((uchar *)rr - (uchar *)r) == (void *)-1 && _brk(r)) {
-			c_sys_write(2, "brk(2) failed [internal error]\n", 31);
-			c_std_abort();
+			EMSG("brk(2) failed [internal error]\n");
+			c_nix_abort();
 		}
 	}
 
@@ -282,8 +284,8 @@ mappages(usize pages)
 	if ((lastidx + 1) >= minfo && !extendpgdir(lastidx)) {
 		lastidx = ptr2idx((mbrk = r)) - 1;
 		if (_brk(mbrk)) {
-			c_sys_write(2, "brk(2) failed [internal error]\n", 31);
-			c_std_abort();
+			EMSG("brk(2) failed [internal error]\n");
+			c_nix_abort();
 		}
 		return nil;
 	}
@@ -480,9 +482,9 @@ minit(void)
 	mpagesize = C_PAGESIZE;
 	for (mpageshift = 0; (1UL << mpageshift) != mpagesize; ++mpageshift) ;
 	mpagemask = mpagesize - 1;
-	if ((pagedir = MMAP(mpagesize)) == MAP_FAILED) {
-		c_sys_write(2, "mmap(2) failed, check limits\n", 29);
-		c_std_abort();
+	if ((pagedir = MMAP(mpagesize)) == C_MAP_FAILED) {
+		EMSG("mmap(2) failed, check limits\n");
+		c_nix_abort();
 	}
 	minfo = mpagesize / sizeof(*pagedir);
 	mcache <<= mpageshift;

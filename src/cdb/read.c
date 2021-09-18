@@ -12,8 +12,8 @@ c_cdb_read(ctype_cdb *p, char *s, usize n, ctype_fssize off)
 		c_mem_cpy(s, n, p->map + off);
 		return 0;
 	}
-	if (c_sys_seek(p->fd, off, C_SEEKSET) < 0 ||
-	    c_std_allrw(&c_sys_read, p->fd, s, n) < 0)
+	if (c_nix_seek(p->fd, off, C_SEEKSET) < 0 ||
+	    c_nix_allrw(&c_nix_fdread, p->fd, s, n) < 0)
 		return -1;
 	return 0;
 }

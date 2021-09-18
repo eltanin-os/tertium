@@ -1,0 +1,72 @@
+# SYSCALL NUM - TYPE - NAME - ( ARGS ) - { CODE }
+
+#
+# DEFAULT
+#
+SYS_chdir ctype_status chdir (char *)
+SYS_chmod ctype_status chmod (char *, uint)
+SYS_chown ctype_status chown (char *, ctype_id, ctype_id)
+SYS_clock_gettime ctype_status clockgettime (ctype_id, ctype_time *)
+SYS_close ctype_status close (ctype_fd)
+SYS_dup2 ctype_status dup2 (int, int)
+SYS_execve ctype_status execve (char *, char **, char **)
+SYS_exit void exit (int)
+SYS_fchdir ctype_status fchdir (ctype_fd)
+SYS_fchmod ctype_status fchmod (ctype_fd, uint)
+SYS_fchown ctype_status fchown (ctype_fd, ctype_id, ctype_id)
+SYS_fork ctype_id fork ()
+SYS_fstat ctype_status fstat (ctype_fd, ctype_stat *)
+SYS_geteuid ctype_id geteuid ()
+SYS_getgid ctype_id getgid ()
+SYS_getpid ctype_id getpid ()
+SYS_getuid ctype_id getuid ()
+SYS_lchown ctype_status lchown (char *, ctype_id, ctype_id)
+SYS_link ctype_status link (char *, char *)
+SYS_linkat ctype_status linkat (int, char *, int, char *, int)
+SYS_lstat ctype_status lstat (char *, ctype_stat *)
+SYS_mkdir ctype_status mkdir (char *, uint)
+SYS_mknod ctype_status mknod (char *, uint, ctype_fsid)
+SYS_mmap void* mmap (void *, usize, int, uint, ctype_fd, ctype_fssize)
+SYS_munmap ctype_status munmap (void *, usize)
+SYS_open ctype_fd open (char *, uint, uint)
+SYS_pipe ctype_status pipe (ctype_fd *)
+SYS_pipe2 ctype_status pipe2 (ctype_fd *, uint)
+SYS_poll ctype_status poll (ctype_iopause *, uint, int)
+SYS_read size read (ctype_fd, void *, usize)
+SYS_readlink size readlink (char *, char *, usize)
+SYS_rename ctype_status rename (char *, char *)
+SYS_rmdir ctype_status rmdir (char *)
+SYS_lseek ctype_fssize lseek (ctype_fd, ctype_fssize, int)
+SYS_sethostname ctype_status sethostname (char *, usize)
+SYS_stat ctype_status stat (char *, ctype_stat *)
+SYS_symlink ctype_status symlink (char *, char *)
+SYS_umask uint umask (uint)
+SYS_uname ctype_status uname (ctype_utsname *)
+SYS_unlink ctype_status unlink (char *)
+SYS_waitpid ctype_id waitpid (ctype_id, int *, uint)
+SYS_write size write (ctype_fd, void *, usize)
+
+#
+# CUSTOM
+#
+DUMMY char* getcwd (char* s, usize n) {
+	return (c_nix_syscall(SYS_getcwd, s, n) < 0) ? nil : s;
+}
+
+DUMMY int fcntl (ctype_fd fd, int cmd, ...) {
+	ulong arg;
+	va_list ap;
+
+	va_start(ap, cmd);
+	arg = va_arg(ap, ulong);
+	va_end(ap);
+	switch (cmd) {
+	case C_FGETLK:
+	case C_FSETLK:
+	case C_FSETLKW:
+		/* XXX */
+		return c_nix_syscall(SYS_fcntl, fd, cmd, (void *)arg);
+	default:
+		return c_nix_syscall(SYS_fcntl, fd, cmd, arg);
+	}
+}

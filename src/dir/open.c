@@ -16,7 +16,7 @@ c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 	ep->info = C_FSINT;
 
 	np = nil;
-	if (c_sys_stat(&st, ".") < 0)
+	if (c_nix_stat(&st, ".") < 0)
 		goto err;
 
 	c_mem_set(p, sizeof(*p), 0);

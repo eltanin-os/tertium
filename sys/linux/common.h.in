@@ -1,3 +1,6 @@
+/* HAS macros */
+#define C_HAS_PIPE2 1
+
 /* dev macros */
 #define C_MAJOR(a) \
 ((((uvlong)(a) >> 31 >> 1) & 0xFFFFF000) | (((uvlong)(a) >> 8) & 0xFFF))
@@ -66,12 +69,13 @@
 
 /* others macros
  * TODO: rename */
-#define CLOCK_REALTIME 0
-#define MAP_FAILED ((void *)-1)
-#define MAP_SHARED 0x01
-#define MAP_PRIVATE 0x02
-#define PROT_READ 0x01
-#define PROT_WRITE 0x02
+#define C_CLOCK_REALTIME 0
+#define C_CLOCK_MONOTONIC 1
+#define C_MAP_FAILED ((void *)-1)
+#define C_MAP_SHARED 0x01
+#define C_MAP_PRIVATE 0x02
+#define C_PROT_READ 0x01
+#define C_PROT_WRITE 0x02
 
 #define C_SEEKSET 0
 #define C_SEEKCUR 1
@@ -89,9 +93,9 @@
 #define _SC_VERSION 29
 #define _POSIX_VERSION 200809L
 
-#define AT_FDCWD -100
-#define AT_SYMLINK_NOFOLLOW 0x100
-#define AT_SYMLINK_FOLLOW 0x400
+#define C_AT_FDCWD -100
+#define C_AT_SYMLINK_NOFOLLOW 0x100
+#define C_AT_SYMLINK_FOLLOW 0x400
 
 /* stat macros */
 #define C_IFMT 0xF000

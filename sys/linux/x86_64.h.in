@@ -90,7 +90,7 @@
 #define C_ODIRECTORY 0200000
 
 /* others macros */
-#define MAP_ANON 0x20
+#define C_MAP_ANON 0x20
 
 #define C_FDUPFD 0
 #define C_FGETFD 1
@@ -108,7 +108,9 @@
 #define SYS_write 1
 #define SYS_open 2
 #define SYS_close 3
+#define SYS_stat 4
 #define SYS_fstat 5
+#define SYS_lstat 6
 #define SYS_poll 7
 #define SYS_lseek 8
 #define SYS_mmap 9
@@ -146,7 +148,6 @@
 #define SYS_sethostname 170
 #define SYS_getdents 217
 #define SYS_clock_gettime 228
-#define SYS_fstatat 262
 #define SYS_linkat 265
 #define SYS_pipe2 293
 

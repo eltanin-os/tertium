@@ -26,7 +26,7 @@ __dir_builddir(ctype_dir *p)
 	char rp[C_PATHMAX];
 
 	cur = p->cur->p;
-	if ((fd = c_sys_open(cur->path, C_OREAD | C_OCEXEC, 0)) < 0)
+	if ((fd = c_nix_fdopen2(cur->path, C_OREAD | C_OCEXEC)) < 0)
 		return (void *)-1;
 
 	c_mem_cpy(rp, cur->len, cur->path);
@@ -36,7 +36,7 @@ __dir_builddir(ctype_dir *p)
 	np = nil;
 	for (;;) {
 		if (dir.n >= dir.a) {
-			if ((r = c_std_syscall(SYS_getdents, fd,
+			if ((r = c_nix_syscall(SYS_getdents, fd,
 			    dir.buf, sizeof(dir.buf))) < 0)
 				goto err;
 			if (!r)
@@ -57,14 +57,14 @@ __dir_builddir(ctype_dir *p)
 		ep->depth = cur->depth + 1;
 		ep->__p = p->cur;
 	}
-	c_sys_close(fd);
+	c_nix_fdclose(fd);
 
 	if (p->f)
 		c_adt_lsort(&np, p->f);
 
 	return np ? np->next : nil;
 err:
-	c_sys_close(fd);
+	c_nix_fdclose(fd);
 
 	while (np)
 		c_adt_lfree(c_adt_lpop(&np));

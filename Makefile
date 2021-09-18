@@ -136,30 +136,70 @@ LIBCSRC=\
 	src/mem/mem.c\
 	src/mem/rchr.c\
 	src/mem/set.c\
+	src/nix/allrw.c\
+	src/nix/chdir.c\
+	src/nix/chmod.c\
+	src/nix/chown.c\
+	src/nix/deepsleep.c\
+	src/nix/fdcat.c\
+	src/nix/fdchdir.c\
+	src/nix/fdchmod.c\
+	src/nix/fdchown.c\
+	src/nix/fdclose.c\
+	src/nix/fdcopy.c\
+	src/nix/fdmove.c\
+	src/nix/fdopen2.c\
+	src/nix/fdopen3.c\
+	src/nix/fdset.c\
+	src/nix/fdunset.c\
+	src/nix/fdwrite.c\
+	src/nix/fork.c\
+	src/nix/fstat.c\
+	src/nix/getcwd.c\
+	src/nix/gettime.c\
+	src/nix/getumask.c\
+	src/nix/iopause.c\
+	src/nix/lchown.c\
+	src/nix/link.c\
+	src/nix/lstat.c\
+	src/nix/mkdir.c\
+	src/nix/mkpath.c\
+	src/nix/mktemp.c\
+	src/nix/mmap.c\
+	src/nix/monotonetime.c\
+	src/nix/munmap.c\
+	src/nix/pipe.c\
+	src/nix/pipe2.c\
+	src/nix/read.c\
+	src/nix/readlink.c\
+	src/nix/rename.c\
+	src/nix/rmdir.c\
+	src/nix/seek.c\
+	src/nix/stat.c\
+	src/nix/strtomode.c\
+	src/nix/symlink.c\
+	src/nix/syscall.c\
+	src/nix/umask.c\
+	src/nix/uname.c\
+	src/nix/unlink.c\
+	src/nix/waitpid.c\
 	src/rand/data.c\
 	src/rand/genseed.c\
 	src/rand/name.c\
 	src/rand/u32int.c\
-	src/std/abort.c\
 	src/std/alloc.c\
-	src/std/allrw.c\
 	src/std/argmain.c\
 	src/std/argv0.c\
 	src/std/bsearch.c\
 	src/std/calloc.c\
-	src/std/deepsleep.c\
 	src/std/errno.c\
 	src/std/errstr.c\
 	src/std/exit.c\
-	src/std/fdcat.c\
 	src/std/fmtnil.c\
 	src/std/free.c\
 	src/std/getenv.c\
 	src/std/getopt.c\
 	src/std/getsyserr.c\
-	src/std/iopause.c\
-	src/std/isatty.c\
-	src/std/mktemp.c\
 	src/std/nbsearch.c\
 	src/std/noopt.c\
 	src/std/pubrealloc.c\
@@ -169,7 +209,6 @@ LIBCSRC=\
 	src/std/strerror.c\
 	src/std/strtouvl.c\
 	src/std/strtovl.c\
-	src/std/syscall.c\
 	src/std/sysconf.c\
 	src/std/vtoptr.c\
 	src/std/werrstr.c\
@@ -178,63 +217,17 @@ LIBCSRC=\
 	src/str/caserchr.c\
 	src/str/casestr.c\
 	src/str/chr.c\
+	src/str/cpy.c\
 	src/str/cmp.c\
 	src/str/cspn.c\
 	src/str/dup.c\
 	src/str/len.c\
+	src/str/ltrim.c\
 	src/str/rchr.c\
+	src/str/rtrim.c\
 	src/str/spn.c\
 	src/str/str.c\
-	src/sys/chdir.c\
-	src/sys/chmod.c\
-	src/sys/chown.c\
-	src/sys/clockgettime.c\
-	src/sys/close.c\
-	src/sys/coe.c\
-	src/sys/execve.c\
-	src/sys/exit.c\
-	src/sys/fchdir.c\
-	src/sys/fchmod.c\
-	src/sys/fchown.c\
-	src/sys/fcntl.c\
-	src/sys/fdcopy.c\
-	src/sys/fdmove.c\
-	src/sys/fork.c\
-	src/sys/fstat.c\
-	src/sys/getcwd.c\
-	src/sys/geteuid.c\
-	src/sys/getgid.c\
-	src/sys/getpid.c\
-	src/sys/getuid.c\
-	src/sys/lchown.c\
-	src/sys/link.c\
-	src/sys/llink.c\
-	src/sys/lstat.c\
-	src/sys/mkdir.c\
-	src/sys/mknod.c\
-	src/sys/mmap.c\
-	src/sys/munmap.c\
-	src/sys/nb.c\
-	src/sys/open.c\
-	src/sys/pipe.c\
-	src/sys/pipecoe.c\
-	src/sys/pipenb.c\
-	src/sys/pipenbcoe.c\
-	src/sys/poll.c\
-	src/sys/read.c\
-	src/sys/readlink.c\
-	src/sys/rename.c\
-	src/sys/rmdir.c\
-	src/sys/seek.c\
-	src/sys/sethostname.c\
-	src/sys/stat.c\
-	src/sys/symlink.c\
-	src/sys/umask.c\
-	src/sys/uname.c\
-	src/sys/unlink.c\
-	src/sys/wait.c\
-	src/sys/waitpid.c\
-	src/sys/write.c\
+	src/str/trim.c\
 	src/tai/add.c\
 	src/tai/approx.c\
 	src/tai/fromtime.c\
@@ -296,7 +289,51 @@ LIBCSRC=\
 	src/utf8/utflen.c\
 	src/utf8/utfnlen.c\
 	src/utf8/utfrrune.c\
-	src/utf8/utfrune.c
+	src/utf8/utfrune.c\
+	src/sys/chdir.c\
+	src/sys/chmod.c\
+	src/sys/chown.c\
+	src/sys/clockgettime.c\
+	src/sys/close.c\
+	src/sys/dup2.c\
+	src/sys/execve.c\
+	src/sys/exit.c\
+	src/sys/fchdir.c\
+	src/sys/fchmod.c\
+	src/sys/fchown.c\
+	src/sys/fcntl.c\
+	src/sys/fork.c\
+	src/sys/fstat.c\
+	src/sys/getcwd.c\
+	src/sys/geteuid.c\
+	src/sys/getgid.c\
+	src/sys/getpid.c\
+	src/sys/getuid.c\
+	src/sys/lchown.c\
+	src/sys/link.c\
+	src/sys/linkat.c\
+	src/sys/lseek.c\
+	src/sys/lstat.c\
+	src/sys/mkdir.c\
+	src/sys/mknod.c\
+	src/sys/mmap.c\
+	src/sys/munmap.c\
+	src/sys/open.c\
+	src/sys/pipe.c\
+	src/sys/pipe2.c\
+	src/sys/poll.c\
+	src/sys/read.c\
+	src/sys/readlink.c\
+	src/sys/rename.c\
+	src/sys/rmdir.c\
+	src/sys/sethostname.c\
+	src/sys/stat.c\
+	src/sys/symlink.c\
+	src/sys/umask.c\
+	src/sys/uname.c\
+	src/sys/unlink.c\
+	src/sys/waitpid.c\
+	src/sys/write.c
 
 # LIB PATH
 LIBC= lib/libtertium.a
@@ -311,7 +348,7 @@ OBJ= $(LIBCOBJ)
 # VAR RULES
 all: $(LIB)
 
-$(OBJ): $(HDR) config.mk
+$(OBJ): $(HDR) src/sys/dummy config.mk
 
 # SUFFIX RULES
 .c.o:
@@ -321,10 +358,20 @@ $(OBJ): $(HDR) config.mk
 	$(CC) $(CPPFLAGS) $(INC) -o $@ -c $<
 
 # HEADERS RULES
-inc/tertium/cpu.h: config.mk sys/$(OSNAME)/common.h.in sys/$(OSNAME)/$(OBJTYPE).h.in
-	@cat sys/$(OSNAME)/common.h.in     1> $@
-	@echo                              1>> $@
-	@cat sys/$(OSNAME)/$(OBJTYPE).h.in 1>> $@
+inc/tertium/cpu.h: config.mk sys/$(OSNAME)/common.h.in sys/$(OSNAME)/$(OBJTYPE).h.in  sys/$(OSNAME)/common.sys.in sys/$(OSNAME)/$(OBJTYPE).sys.in
+	@cat sys/$(OSNAME)/common.h.in                  1>  $@
+	@echo                                           1>> $@
+	@cat sys/$(OSNAME)/$(OBJTYPE).h.in              1>> $@
+	@echo                                           1>> $@
+	@mk/headgen.sh <sys/$(OSNAME)/common.sys.in     1>> $@
+	@mk/headgen.sh <sys/$(OSNAME)/$(OBJTYPE).sys.in 1>> $@
+
+src/sys/dummy: sys/$(OSNAME)/common.sys.in sys/$(OSNAME)/$(OBJTYPE).sys.in
+	@rm -Rf src/sys
+	@mkdir src/sys
+	mk/sysgen.sh < sys/$(OSNAME)/common.sys.in
+	mk/sysgen.sh < sys/$(OSNAME)/$(OBJTYPE).sys.in
+	@echo '# DUMMY FILE' > src/sys/dummy
 
 # LIBRARIES RULES
 # 'ar' is retarded and cannot update an object with same name
@@ -342,8 +389,8 @@ install: all
 	$(INSTALL) -cm 644 $(LIB) $(DESTDIR)$(LIBDIR)
 
 clean:
-	rm -f $(BIN) $(OBJ) $(LIB)
-	rm -f inc/tertium/cpu.h
+	rm -f inc/tertium/cpu.h $(BIN) $(OBJ) $(LIB)
+	rm -Rf src/sys
 
 .PHONY:
 	all install clean

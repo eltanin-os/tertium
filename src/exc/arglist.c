@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define PTRSIZ(a) ((a) * sizeof(char **))
+#define PTRSIZ(a) ((a) * sizeof(char *))
 
 void *
 c_exc_arglist_(char *prog, ...)

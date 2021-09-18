@@ -17,10 +17,11 @@ and secure environment that produces more reliable software.
 * hsh: checksum and cryptographic hashes
 * ioq: buffered i/o
 * mem: operations on memory
+* nix: \*nix routines and utilities
 * rand: random data, numbers and strings
 * std: general routines
 * str: operations on C string
-* sys: system interaction
+* sys: typed syscalls
 * tai: tai time
 * taia: atto-second precision tai time
 * uint: portable unsigned integer storage
