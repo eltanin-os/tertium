@@ -348,7 +348,8 @@ OBJ= $(LIBCOBJ)
 # VAR RULES
 all: $(LIB)
 
-$(OBJ): $(HDR) src/sys/dummy config.mk
+$(LIBCSRC): src/sys/dummy
+$(OBJ): $(HDR) config.mk
 
 # SUFFIX RULES
 .c.o:
