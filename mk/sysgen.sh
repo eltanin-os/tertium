@@ -9,7 +9,7 @@ setvars() {
 		args="void"
 		nargs="void"
 	else
-		a=$(printf -- '-e s;,;a%s;\n' $(seq 1 7))
+		a=$(printf -- '-e s;,;a%s;\n' 1 2 3 4 5 6 7)
 		nargs=$(echo "$args," | sed $a -e 's;a\([0-9]\); a\1,;g' -e 's;,$;;')
 	fi
 }
