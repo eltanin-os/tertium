@@ -34,7 +34,7 @@ c_nix_mkpath(char *dir, uint dmode, uint mode)
 	}
 
 	len = c_str_cpy(buf, sizeof(buf), dir) - buf;
-	s = dir = buf;
+	s = buf;
 	if (*s == '/')
 		++s;
 
@@ -42,11 +42,11 @@ c_nix_mkpath(char *dir, uint dmode, uint mode)
 		if (!(s = c_mem_chr(s, len, '/')))
 			break;
 		*s = 0;
-		if (makedir(dir, dmode) < 0)
+		if (makedir(buf, dmode) < 0)
 			return -1;
 		*s++ = '/';
 	}
-	if (makedir(dir, mode) < 0)
+	if (makedir(buf, mode) < 0)
 		return -1;
 	return 0;
 }
