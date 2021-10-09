@@ -4,14 +4,15 @@
 char *
 c_str_ltrim(char *str, usize n, char *t)
 {
-	usize i, len, tlen;
+	usize tlen;
+	uchar *s;
 
-	len = c_str_len(str, n);
 	tlen = c_str_len(t, -1);
-	for (i = 0; i < len; ++i) {
-		if (!c_mem_chr(t, tlen, str[i]))
+	s = (uchar *)str;
+	for (; n && *s; --n, ++s) {
+		if (!c_mem_chr(t, tlen, *s))
 			break;
-		str[i] = 0;
+		*s = 0;
 	}
 	return str;
 }
