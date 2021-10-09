@@ -167,6 +167,7 @@ size c_nix_fdread(ctype_fd, void *, usize);
 size c_nix_readlink(char *, usize, char *);
 ctype_status c_nix_rename(char *, char *);
 ctype_status c_nix_rmdir(char *);
+ctype_status c_nix_rmpath(char *);
 ctype_status c_nix_seek(ctype_fd, ctype_fssize, int);
 ctype_status c_nix_stat(ctype_stat *, char *);
 uint c_nix_strtomode(char *, uint, uint);

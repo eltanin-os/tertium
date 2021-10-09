@@ -174,6 +174,7 @@ LIBCSRC=\
 	src/nix/readlink.c\
 	src/nix/rename.c\
 	src/nix/rmdir.c\
+	src/nix/rmpath.c\
 	src/nix/seek.c\
 	src/nix/stat.c\
 	src/nix/strtomode.c\
