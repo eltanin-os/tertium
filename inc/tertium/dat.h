@@ -115,6 +115,10 @@ enum {
 
 #define C_HOWMANY(a, b) (((a)+((b)-1))/(b))
 
+/* str macros */
+#define C_CSTRCMP(a, b) c_mem_cmp((a), sizeof((a)), (b))
+#define C_STRCMP(a, b) c_mem_cmp((a), sizeof((a)) - 1, (b))
+
 /* nix macros */
 #define c_nix_abort() { while (*(volatile int *)0); }
 #define c_nix_syscall(...) c_nix_syscall_(__VA_ARGS__, nil)
