@@ -59,6 +59,10 @@
 #define C_UINT32MAX 0xFFFFFFFFU
 #define C_UINT64MAX 0xFFFFFFFFFFFFFFFFU
 
+/* poll macros */
+#define C_IOREAD (0x1|0x10)
+#define C_IOWRITE (0x4)
+
 /* option macros */
 #define C_OREAD 0x0
 #define C_OWRITE 0x1
