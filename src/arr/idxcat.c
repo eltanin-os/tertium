@@ -7,22 +7,20 @@ c_arr_idxcat(ctype_arr *p, usize pos, void *v, usize m, usize n)
 	usize len;
 	uchar *target;
 
+	if (c_arr_ready(p, m, n) < 0)
+		return -1;
+
 	len = c_arr_bytes(p);
 	if (!(target = c_arr_get(p, pos, n)))
 		return -1;
-	p->n = len;
-	if (C_OFLW_UM(usize, m, n)) {
-		errno = C_EOVERFLOW;
-		return -1;
-	}
-	if ((m *= n) > c_arr_avail(p)) {
-		errno = C_ENOMEM;
-		return -1;
-	}
-	if (!pos || (pos = (pos - 1) * n) < len)
-		c_mem_cpy(target + m, p->n - pos, target);
+	p->n ^= len;
+	len ^= p->n;
+	p->n ^= len;
+
+	if (!pos || (pos = (pos - 1) * n) < c_arr_bytes(p))
+		c_mem_cpy(target + m, c_arr_bytes(p) - pos, target);
 	c_mem_cpy(target, m, v);
-	p->n += m;
+	p->n = (p->n == len) ? p->n + m : len;
 	p->p[p->n] = 0;
 	return 0;
 
