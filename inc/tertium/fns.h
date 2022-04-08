@@ -17,6 +17,7 @@ void *c_arr_get(ctype_arr *, usize, usize);
 ctype_status c_arr_idxcat(ctype_arr *, usize, void *, usize, usize);
 void c_arr_init(ctype_arr *, char *, usize);
 usize c_arr_len(ctype_arr *, usize);
+ctype_status c_arr_ready(ctype_arr *, usize, usize);
 usize c_arr_total(ctype_arr *);
 ctype_status c_arr_trunc(ctype_arr *, usize, usize);
 size c_arr_vfmt(ctype_arr *, char *, va_list);
