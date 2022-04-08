@@ -32,6 +32,7 @@ LIBCSRC=\
 	src/arr/idxcat.c\
 	src/arr/init.c\
 	src/arr/len.c\
+	src/arr/ready.c\
 	src/arr/total.c\
 	src/arr/trunc.c\
 	src/arr/vfmt.c\
