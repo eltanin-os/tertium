@@ -3,15 +3,10 @@
 
 #include "__int__.h"
 
-#define RECLEN(dp) \
-((c_std_offsetof(__fb_dirent, d_name)    + \
- c_str_len((dp)->d_name, C_USHRTMAX) + 1 + \
- (sizeof((dp)->d_ino) - 1)) & ~(sizeof((dp)->d_ino) - 1))
-
 struct dir {
 	ushort a;
 	ushort n;
-	uchar buf[2048];
+	uchar s[2048];
 };
 
 ctype_node *
@@ -36,16 +31,16 @@ __dir_builddir(ctype_dir *p)
 	np = nil;
 	for (;;) {
 		if (dir.n >= dir.a) {
-			if ((r = c_nix_syscall(SYS_getdents, fd,
-			    dir.buf, sizeof(dir.buf))) < 0)
+			if ((r = c_sys_getdents(fd, dir.s, sizeof(dir.s))) < 0)
 				goto err;
 			if (!r)
 				break;
 			dir.a = r;
 			dir.n = 0;
 		}
-		d = (void *)(dir.buf + dir.n);
-		dir.n += RECLEN(d);
+		d = (void *)(dir.s + dir.n);
+		dir.n += d->d_reclen;
+
 		if (!(p->opts & C_FSVDT) && C_ISDOT(d->d_name))
 			continue;
 		if (c_adt_lpush(&np, __dir_newfile(rp, d->d_name, p->opts)) < 0)

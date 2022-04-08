@@ -17,6 +17,8 @@ SYS_fchown ctype_status fchown (ctype_fd, ctype_id, ctype_id)
 SYS_fork ctype_id fork ()
 SYS_fstat ctype_status fstat (ctype_fd, ctype_stat *)
 SYS_geteuid ctype_id geteuid ()
+# usually char, using uchar instead
+SYS_getdents usize getdents (int, uchar *, usize)
 SYS_getgid ctype_id getgid ()
 SYS_getpid ctype_id getpid ()
 SYS_getuid ctype_id getuid ()
