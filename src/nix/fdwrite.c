@@ -8,7 +8,7 @@ c_nix_fdwrite(ctype_fd fd, void *p, usize n)
 
 	do {
 		r = c_sys_write(fd, p, n);
-	} while ((r < 0) && errno == C_EINTR);
+	} while ((r < 0) && errno == C_ERR_EINTR);
 
 	return r;
 }

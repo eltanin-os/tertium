@@ -1,8 +1,6 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
-
 static void init(ctype_hst *);
 static void update(ctype_hst *, char *, usize);
 static void end(ctype_hst *, char *);

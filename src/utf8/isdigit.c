@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 static ctype_rune rangetab[] = {
 	0x00030, 0x0003A,
@@ -69,7 +69,7 @@ static ctype_rune rangetab[] = {
 int
 c_utf8_isdigit(ctype_rune r)
 {
-	if (__UTF8_RANGESEARCH(&r, rangetab))
+	if (UTF8_RANGESEARCH(&r, rangetab))
 		return 1;
 	return 0;
 }

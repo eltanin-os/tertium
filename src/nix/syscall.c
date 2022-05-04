@@ -16,5 +16,5 @@ c_nix_syscall_(vlong num, ...)
 	for (i = 0; i < 8; ++i)
 		args[i] = va_arg(ap, uintptr *);
 	va_end(ap);
-	return __asm_syscall(num, ARGS(args));
+	return _tertium_syscall(num, ARGS(args));
 }

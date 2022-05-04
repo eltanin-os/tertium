@@ -8,7 +8,7 @@ c_nix_fdchdir(ctype_fd fd)
 
 	do {
 		r = c_sys_fchdir(fd);
-	} while ((r < 0) && errno == C_EINTR);
+	} while ((r < 0) && errno == C_ERR_EINTR);
 
 	return r;
 }

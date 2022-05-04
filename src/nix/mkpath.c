@@ -8,7 +8,7 @@ makedir(char *s, uint mode)
 
 	sverr = errno;
 	if (c_nix_mkdir(s, mode) < 0) {
-		if (errno != C_EEXIST)
+		if (errno != C_ERR_EEXIST)
 			return -1;
 		errno = sverr;
 	}
@@ -20,16 +20,16 @@ c_nix_mkpath(char *dir, uint dmode, uint mode)
 {
 	ctype_stat st;
 	usize len;
-	char buf[C_PATHMAX];
+	char buf[C_LIM_PATHMAX];
 	char *s;
 
 	if (c_nix_stat(&st, dir) < 0) {
-		if (errno == C_ENOTDIR)
+		if (errno == C_ERR_ENOTDIR)
 			return -1;
 	} else {
-		if (C_ISDIR(st.mode))
+		if (C_NIX_ISDIR(st.mode))
 			return 0;
-		errno = C_ENOTDIR;
+		errno = C_ERR_ENOTDIR;
 		return -1;
 	}
 

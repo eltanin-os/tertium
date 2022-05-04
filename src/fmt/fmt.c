@@ -1,30 +1,33 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 static int
 cmp(void *a, void *b)
 {
-	return (*(char *)a - ((struct fmtverb *)b)->c);
+	return *(uchar *)a - ((struct fmtverb *)b)->c;
 }
 
 static ctype_status
 fmtfmt(ctype_fmt *f, uchar *s)
 {
 	struct fmtverb *p;
+	ctype_arr *ap;
+	uchar *sp;
 
+	ap = &_tertium_fmt_fmts;
 	f->r = *s;
-	if ((p = c_std_bsearch(s, c_arr_data(&__fmt_Fmts),
-	    c_arr_len(&__fmt_Fmts, sizeof(*p)), sizeof(*p), &cmp))) {
-		for (; !(p->f);) ;
+	if ((p = c_std_bsearch(s, c_arr_data(ap),
+	    c_arr_len(ap, sizeof(*p)), sizeof(*p), &cmp))) {
 		return (p->f)(f);
 	}
-	if ((p = c_std_bsearch(s, __fmt_VFmts, VFMTLEN, sizeof(*p), &cmp))) {
+	sp = (void *)(uintptr)_tertium_fmt_vfmts;
+	if ((p = c_std_bsearch(s, sp, VFMTLEN, sizeof(*p), &cmp))) {
 		if (!c_fmt_install(p->c, p->f))
 			return (p->f)(f);
 	}
-	errno = C_EINVAL;
+	errno = C_ERR_EINVAL;
 	return -1;
 }
 
@@ -46,11 +49,11 @@ fmtflag(ctype_fmt *f, uchar *s)
 
 		switch (f->r) {
 		case '.':
-			f->flags = C_FMTWIDTH | C_FMTPREC;
+			f->flags = C_FMT_OWIDTH | C_FMT_OPREC;
 			continue;
 		case '0':
-			if (!(f->flags & C_FMTWIDTH)) {
-				f->flags |= C_FMTZERO;
+			if (!(f->flags & C_FMT_OWIDTH)) {
+				f->flags |= C_FMT_OZERO;
 				continue;
 			}
 			/* FALLTHROUGH */
@@ -72,23 +75,23 @@ fmtflag(ctype_fmt *f, uchar *s)
 			--s;
 			--nfmt;
 numflag:
-			if (f->flags & C_FMTWIDTH) {
-				f->flags |= C_FMTPREC;
+			if (f->flags & C_FMT_OWIDTH) {
+				f->flags |= C_FMT_OPREC;
 				f->prec = i;
 			} else {
-				f->flags |= C_FMTWIDTH;
+				f->flags |= C_FMT_OWIDTH;
 				f->width = i;
 			}
 			continue;
 		case '*':
 			if ((i = va_arg(f->args, int)) < 0) {
-				if (f->flags & C_FMTPREC) {
-					f->flags &= ~C_FMTPREC;
+				if (f->flags & C_FMT_OPREC) {
+					f->flags &= ~C_FMT_OPREC;
 					f->prec = 0;
 					continue;
 				}
 				i = -i;
-				f->flags |= C_FMTLEFT;
+				f->flags |= C_FMT_OLEFT;
 			}
 			goto numflag;
 		}
@@ -117,7 +120,7 @@ c_fmt_fmt(ctype_fmt *p, char *fmt)
 				break;
 			++n;
 		}
-		__fmt_trycat(p, (char *)s, n);
+		_tertium_fmt_trycat(p, (char *)s, n);
 		s += n;
 		if (ch == '%') {
 			if ((n = fmtflag(p, s)) < 0)

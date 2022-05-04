@@ -1,0 +1,7 @@
+typedef unsigned short ushort;
+typedef unsigned char uchar;
+typedef unsigned long ulong;
+typedef unsigned int uint;
+typedef long long vlong;
+typedef unsigned long long uvlong;
+typedef __builtin_va_list va_list;

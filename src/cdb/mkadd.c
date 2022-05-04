@@ -4,7 +4,7 @@
 ctype_status
 c_cdb_mkadd(ctype_cdbmk *p, char *k, usize klen, char *s, usize dlen)
 {
-	char buf[C_H32GEN_DIGEST];
+	char buf[C_HSH_H32DIG];
 
 	if (c_cdb_mkaddbegin(p, klen, dlen) < 0 ||
 	    c_ioq_nput(&p->ioq, k, klen) < 0 ||

@@ -9,7 +9,7 @@ c_nix_readlink(char *buf, usize n, char *s)
 	if ((r = c_sys_readlink(s, buf, n)) < 0)
 		return -1;
 	if ((usize)r == n) {
-		errno = C_ENAMETOOLONG;
+		errno = C_ERR_ENAMETOOLONG;
 		return -1;
 	}
 	buf[r] = 0;

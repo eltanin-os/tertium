@@ -8,7 +8,7 @@ c_nix_fdread(ctype_fd fd, void *p, usize n)
 
 	do {
 		r = c_sys_read(fd, p, n);
-	} while ((r < 0) && errno == C_EINTR);
+	} while ((r < 0) && errno == C_ERR_EINTR);
 
 	return r;
 }

@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 void *
 c_std_realloc(void *p, usize m, usize n)
 {
-	return __allocator(p, m, n);
+	return _tertium_allocator(p, m, n);
 }

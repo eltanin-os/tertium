@@ -5,7 +5,7 @@ size
 c_nix_fdcat(ctype_fd dest, ctype_fd src)
 {
 	size in, out;
-	char buf[C_BIOSIZ];
+	char buf[C_IOQ_BSIZ];
 
 	out = 0;
 	while ((in = c_nix_fdread(src, buf, sizeof(buf))) > 0) {
@@ -13,5 +13,9 @@ c_nix_fdcat(ctype_fd dest, ctype_fd src)
 			return -2;
 		out += in;
 	}
-	return in ? -1 : out;
+
+	if (in < 0)
+		return -1;
+
+	return out;
 }

@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-u32int
+u32
 c_uint_32unpack(char *s)
 {
-	u32int r;
+	u32 r;
 
 	r = (uchar)s[3];
 	r <<= 8;

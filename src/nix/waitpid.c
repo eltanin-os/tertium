@@ -8,7 +8,7 @@ c_nix_waitpid(ctype_id pid, int *status, uint opts)
 
 	do {
 		id = c_sys_waitpid(pid, status, opts);
-	} while ((id == (ctype_id)-1) && errno == C_EINTR);
+	} while ((id == (ctype_id)-1) && errno == C_ERR_EINTR);
 
 	return id;
 }

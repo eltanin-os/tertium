@@ -9,11 +9,10 @@ c_dyn_ready(ctype_arr *p, usize m, usize n)
 	usize a;
 	void *tmp;
 
-	if (C_OFLW_UM(usize, m, n)) {
-		errno = C_EOVERFLOW;
+	if (C_STD_OVERFLOWM(usize, m, n)) {
+		errno = C_ERR_EOVERFLOW;
 		return -1;
 	}
-
 	m = (m * n) + n;
 	if (p->a) {
 		if (m > c_arr_avail(p)) {

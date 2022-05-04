@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 ctype_dent *
 c_dir_read(ctype_dir *p)
@@ -12,35 +12,35 @@ c_dir_read(ctype_dir *p)
 
 	cur = p->cur;
 	ep = cur->p;
-	if (!cur || (p->opts & C_FSSTP))
+	if (!cur || (p->opts & C_DIR_FSSTP))
 		return nil;
 
 	instr = ep->instr;
 	ep->instr = 0;
-	if (instr == C_FSAGN) {
-		ep->info = __dir_info(p, ep);
+	if (instr == C_DIR_FSAGN) {
+		ep->info = _tertium_dir_info(p, ep);
 		return ep;
 	}
 
-	if (ep->info == C_FSD) {
-		if (instr == C_FSSKP ||
-		    ((p->opts & C_FSXDV) && p->dev != ep->dev)) {
-			ep->info = C_FSDP;
+	if (ep->info == C_DIR_FSD) {
+		if (instr == C_DIR_FSSKP ||
+		    ((p->opts & C_DIR_FSXDV) && p->dev != ep->dev)) {
+			ep->info = C_DIR_FSDP;
 			return ep;
 		}
 		if (p->child) {
 			;
-		} else if ((p->child = __dir_builddir(p)) == (void *)-1) {
+		} else if ((p->child = _tertium_dir_builddir(p)) == BFAIL) {
 			ep->err = errno;
-			ep->info = C_FSDNR;
-			if (errno == C_ENOMEM) {
-				p->opts |= C_FSSTP;
-				ep->info = C_FSERR;
+			ep->info = C_DIR_FSDNR;
+			if (errno == C_ERR_ENOMEM) {
+				p->opts |= C_DIR_FSSTP;
+				ep->info = C_DIR_FSERR;
 			}
 			p->child = nil;
 			return ep;
 		} else if (!p->child) {
-			ep->info = C_FSDP;
+			ep->info = C_DIR_FSDP;
 			return ep;
 		}
 		cur = p->child;
@@ -64,7 +64,7 @@ c_dir_read(ctype_dir *p)
 
 		p->cur = cur;
 		ep = cur->p;
-		ep->info = C_FSDP;
+		ep->info = C_DIR_FSDP;
 		return ep;
 	}
 	return nil;

@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 ctype_dent *
 c_dir_children(ctype_dir *p)
@@ -11,9 +11,8 @@ c_dir_children(ctype_dir *p)
 
 	if (!(cur = p->ccur)) {
 		ep = p->cur->p;
-		if (ep->info != C_FSD)
-			return nil;
-		p->child = p->ccur = __dir_builddir(p);
+		if (ep->info != C_DIR_FSD) return nil;
+		p->child = p->ccur = _tertium_dir_builddir(p);
 		return p->ccur->p;
 	}
 

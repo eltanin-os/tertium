@@ -13,7 +13,7 @@ HDR=\
 
 # LIB SOURCE
 ASMSRC=\
-	sys/$(OSNAME)/$(OBJTYPE).s
+	sys/$(OSNAME)/$(OBJTYPE)/syscall.s
 
 LIBCSRC=\
 	src/adt/lfree.c\
@@ -103,6 +103,10 @@ LIBCSRC=\
 	src/hsh/octets.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
+	src/hsh/rol32.c\
+	src/hsh/rol64.c\
+	src/hsh/ror32.c\
+	src/hsh/ror64.c\
 	src/hsh/sha1.c\
 	src/hsh/sha256.c\
 	src/hsh/sha512.c\
@@ -292,6 +296,7 @@ LIBCSRC=\
 	src/utf8/utfnlen.c\
 	src/utf8/utfrrune.c\
 	src/utf8/utfrune.c\
+	src/sys/brk.c\
 	src/sys/chdir.c\
 	src/sys/chmod.c\
 	src/sys/chown.c\
@@ -329,6 +334,7 @@ LIBCSRC=\
 	src/sys/readlink.c\
 	src/sys/rename.c\
 	src/sys/rmdir.c\
+	src/sys/sbrk.c\
 	src/sys/sethostname.c\
 	src/sys/stat.c\
 	src/sys/symlink.c\
@@ -362,19 +368,36 @@ $(OBJ): $(HDR) config.mk
 	$(CC) $(CPPFLAGS) $(INC) -o $@ -c $<
 
 # HEADERS RULES
-inc/tertium/cpu.h: config.mk sys/$(OSNAME)/common.h.in sys/$(OSNAME)/$(OBJTYPE).h.in  sys/$(OSNAME)/common.sys.in sys/$(OSNAME)/$(OBJTYPE).sys.in
-	@cat sys/$(OSNAME)/common.h.in                  1>  $@
-	@echo                                           1>> $@
-	@cat sys/$(OSNAME)/$(OBJTYPE).h.in              1>> $@
-	@echo                                           1>> $@
-	@mk/headgen.sh <sys/$(OSNAME)/common.sys.in     1>> $@
-	@mk/headgen.sh <sys/$(OSNAME)/$(OBJTYPE).sys.in 1>> $@
+_GENERIC= sys/$(OSNAME)/generic
+_ARCH= sys/$(OSNAME)/$(OBJTYPE)
+_FILES= ctypes.h.in macros.h.in prototypes.h.in syscalls.in types.h.in
+_AFILES= $(addprefix $(_GENERIC)/,$(_FILES)) $(addprefix $(_ARCH)/,$(_FILES))
 
-src/sys/dummy: sys/$(OSNAME)/common.sys.in sys/$(OSNAME)/$(OBJTYPE).sys.in
+inc/tertium/cpu.h: config.mk $(_AFILES)
+	@cat $(_GENERIC)/macros.h.in 1> $@
+	@echo 1>> $@
+	@cat $(_ARCH)/macros.h.in 1>> $@
+	@echo 1>> $@
+	@cat $(_GENERIC)/ctypes.h.in 1>> $@
+	@echo 1>> $@
+	@cat $(_ARCH)/ctypes.h.in 1>> $@
+	@echo 1>> $@
+	@cat $(_GENERIC)/types.h.in 1>> $@
+	@echo 1>> $@
+	@cat $(_ARCH)/types.h.in 1>> $@
+	@echo 1>> $@
+	@cat $(_GENERIC)/prototypes.h.in 1>> $@
+	@echo 1>> $@
+	@cat $(_ARCH)/prototypes.h.in 1>> $@
+	@echo 1>> $@
+	@mk/headgen.sh <$(_GENERIC)/syscalls.in 1>> $@
+	@mk/headgen.sh <$(_ARCH)/syscalls.in 1>> $@
+
+src/sys/dummy: $(_GENERIC)/syscalls.in $(_ARCH)/syscalls.in
 	@rm -Rf src/sys
 	@mkdir src/sys
-	mk/sysgen.sh < sys/$(OSNAME)/common.sys.in
-	mk/sysgen.sh < sys/$(OSNAME)/$(OBJTYPE).sys.in
+	@mk/sysgen.sh < $(_GENERIC)/syscalls.in
+	@mk/sysgen.sh < $(_ARCH)/syscalls.in
 	@echo '# DUMMY FILE' > src/sys/dummy
 
 # LIBRARIES RULES

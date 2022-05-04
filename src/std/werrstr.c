@@ -6,7 +6,7 @@ c_std_werrstr(char *fmt, ...)
 {
 	ctype_arr arr;
 	va_list ap;
-	char buf[C_ERRSIZ];
+	char buf[C_IOQ_ERRSIZ];
 
 	c_arr_init(&arr, buf, sizeof(buf));
 	va_start(ap, fmt);

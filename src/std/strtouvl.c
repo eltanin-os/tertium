@@ -18,12 +18,12 @@ c_std_strtouvl(char *p, int b, uvlong l, uvlong h, char **e, int *r)
 	if ((uint)b > 36 || b == 1) {
 		if (r)
 			*r = -1;
-		errno = C_EINVAL;
+		errno = C_ERR_EINVAL;
 		return 0;
 	}
 
 	s = (uchar *)p;
-	for (; c_chr_isspace(*s); ++s) ;
+	for (; (*s == ' ' || (uint)*s - '\t' < 5); ++s) ;
 
 	n = 0;
 	if (*s == '-') {
@@ -69,12 +69,12 @@ c_std_strtouvl(char *p, int b, uvlong l, uvlong h, char **e, int *r)
 	if (*e[0]) {
 		if (r)
 			*r = -1;
-		errno = (*e == p) ? C_ECANCELED : C_ENOTSUP;
+		errno = (*e == p) ? C_ERR_ECANCELED : C_ERR_ENOTSUP;
 	}
 	if (a || (!n && l > v)) {
 		if (r)
 			*r = -1;
-		errno = C_ERANGE;
+		errno = C_ERR_ERANGE;
 	}
 	return n ? -v : v;
 }

@@ -1,9 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
-
-static u64int sbox[] = {
+static u64 sbox[] = {
 	0x18186018c07830d8ULL, 0x23238c2305af4626ULL,
 	0xc6c63fc67ef991b8ULL, 0xe8e887e8136fcdfbULL,
 	0x878726874ca113cbULL, 0xb8b8dab8a9626d11ULL,
@@ -134,7 +132,7 @@ static u64int sbox[] = {
 	0xf8f8c7f8933fed6bULL, 0x8686228644a411c2ULL,
 };
 
-static u64int cont[] = {
+static u64 cont[] = {
 	0x1823c6e887b8014fULL,
 	0x36a6d2f5796f9152ULL,
 	0x60bc9b8ea30c7b35ULL,
@@ -149,13 +147,13 @@ static u64int cont[] = {
 };
 
 #define SB0(a) sbox[(a)]
-#define SB1(a) __hsh_ror64(sbox[(a)], 8)
-#define SB2(a) __hsh_ror64(sbox[(a)], 16)
-#define SB3(a) __hsh_ror64(sbox[(a)], 24)
-#define SB4(a) __hsh_ror64(sbox[(a)], 32)
-#define SB5(a) __hsh_ror64(sbox[(a)], 40)
-#define SB6(a) __hsh_ror64(sbox[(a)], 48)
-#define SB7(a) __hsh_ror64(sbox[(a)], 56)
+#define SB1(a) c_hsh_ror64(sbox[(a)], 8)
+#define SB2(a) c_hsh_ror64(sbox[(a)], 16)
+#define SB3(a) c_hsh_ror64(sbox[(a)], 24)
+#define SB4(a) c_hsh_ror64(sbox[(a)], 32)
+#define SB5(a) c_hsh_ror64(sbox[(a)], 40)
+#define SB6(a) c_hsh_ror64(sbox[(a)], 48)
+#define SB7(a) c_hsh_ror64(sbox[(a)], 56)
 
 #define GB(a,i,j) ((a[(i) & 7] >> ((j) << 3)) & 255)
 
@@ -192,7 +190,7 @@ init(ctype_hst *p)
 static void
 compress(ctype_hst *p, char *data)
 {
-	u64int k[2][8], t[3][8];
+	u64 k[2][8], t[3][8];
 	int i, j;
 
 	for (i = 0; i < 8; ++i) {

@@ -11,8 +11,8 @@ c_exc_spawn1(char *prog, char **argv, char **envp, ctype_fd *fd, int to)
 
 	if (c_nix_pipe(pipe) < 0)
 		return 0;
-	if (c_nix_fdset(pipe[0], C_OCEXEC) < 0 ||
-	    c_nix_pipe2(sync, C_OCEXEC) < 0) {
+	if (c_nix_fdset(pipe[0], C_NIX_OCEXEC) < 0 ||
+	    c_nix_pipe2(sync, C_NIX_OCEXEC) < 0) {
 		c_nix_fdclose(pipe[0]);
 		c_nix_fdclose(pipe[1]);
 		return 0;

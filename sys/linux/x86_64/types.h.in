@@ -1,0 +1,39 @@
+typedef uvlong ctype_fsid; /* dev, ino, nlink */
+typedef int ctype_id; /* gid, pid, uid */
+typedef vlong ctype_fssize; /* file size, block size, block count */
+
+/* internal types */
+typedef struct {
+	long d_ino;
+	vlong d_off;
+	u16 d_reclen;
+	uchar d_type;
+	char d_name[256];
+} _tertium_type_dirent;
+
+/* sys types */
+typedef struct ctype_time ctype_time;
+typedef struct ctype_stat ctype_stat;
+
+struct ctype_time {
+	vlong sec;
+	ulong nsec;
+};
+
+struct ctype_stat {
+	ulong dev;
+	ulong ino;
+	ulong nlink;
+	u32 mode;
+	u32 uid;
+	u32 gid;
+	u32 __pad0;
+	ulong rdev;
+	ulong size;
+	ulong blksize;
+	ulong blocks;
+	ctype_time atim;
+	ctype_time mtim;
+	ctype_time ctim;
+	long __unused[3];
+};

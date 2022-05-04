@@ -1,0 +1,1 @@
+long _tertium_syscall(long, ...);

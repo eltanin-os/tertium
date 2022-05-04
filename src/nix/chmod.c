@@ -8,7 +8,7 @@ c_nix_chmod(char *s, uint mode)
 
 	do {
 		r = c_sys_chmod(s, mode);
-	} while ((r < 0) && errno == C_EINTR);
+	} while ((r < 0) && errno == C_ERR_EINTR);
 
 	return r;
 }

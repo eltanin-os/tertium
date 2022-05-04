@@ -14,5 +14,6 @@ c_fmt_vprint(ctype_fmt *p, char *fmt, va_list ap)
 
 	c_fmt_init(&f, nil, p->mb, put);
 	va_copy(f.args, ap);
-	return c_fmt_fmt(&f, fmt);
+	if (c_fmt_fmt(&f, fmt) < 0) return -1;
+	return 0;
 }

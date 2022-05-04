@@ -39,7 +39,7 @@ void c_cdb_free(ctype_cdb *);
 ctype_status c_cdb_init(ctype_cdb *, ctype_fd);
 ctype_status c_cdb_mkadd(ctype_cdbmk *, char *, usize, char *, usize);
 ctype_status c_cdb_mkaddbegin(ctype_cdbmk *, usize, usize);
-ctype_status c_cdb_mkaddend(ctype_cdbmk *, usize, usize, u64int);
+ctype_status c_cdb_mkaddend(ctype_cdbmk *, usize, usize, u64);
 ctype_status c_cdb_mkfinish(ctype_cdbmk *);
 ctype_status c_cdb_mkstart(ctype_cdbmk *, ctype_fd);
 ctype_status c_cdb_read(ctype_cdb *, char *, usize, ctype_fssize);
@@ -83,7 +83,7 @@ ctype_id c_exc_spawn1(char *, char **, char **, ctype_fd *, int);
 /* fmt routines */
 void c_fmt_init(ctype_fmt *, void *, ctype_arr *, ctype_fmtopfn);
 size c_fmt_fmt(ctype_fmt *, char *);
-ctype_status c_fmt_install(int, ctype_fmtfn);
+ctype_status c_fmt_install(ctype_rune, ctype_fmtfn);
 ctype_status c_fmt_nput(ctype_fmt *, char *, usize);
 ctype_status c_fmt_print(ctype_fmt *, char *, ...);
 ctype_status c_fmt_put(ctype_fmt *, char *);
@@ -97,6 +97,10 @@ char *c_gen_dirname(char *);
 usize c_hsh_octets(ctype_hst *p);
 ctype_status c_hsh_putfd(ctype_hst *, ctype_hmd *, ctype_fd, usize);
 ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
+u32 c_hsh_rol32(u32, int);
+u64 c_hsh_rol64(u64, int);
+u32 c_hsh_ror32(u32, int);
+u64 c_hsh_ror64(u64, int);
 void c_hsh_str(ctype_hmd *, char *, usize, char *);
 void c_hsh_update(void (*)(ctype_hst *, char *), int, ctype_hst *, char *, usize);
 
@@ -183,7 +187,7 @@ ctype_id c_nix_waitpid(ctype_id, int *, uint);
 char *c_rand_genseed(char *, usize);
 char *c_rand_data(char *, usize);
 char *c_rand_name(char *, usize);
-u32int c_rand_u32int(u32int);
+u32 c_rand_u32int(u32);
 
 /* std routines */
 void *c_std_alloc(usize, usize);
@@ -236,7 +240,7 @@ int c_tai_less(ctype_tai *, ctype_tai *);
 void c_tai_pack(char *, ctype_tai *);
 void c_tai_now(ctype_tai *);
 void c_tai_sub(ctype_tai *, ctype_tai *, ctype_tai *);
-void c_tai_u64(ctype_tai *, u64int);
+void c_tai_u64(ctype_tai *, u64);
 void c_tai_unpack(char *, ctype_tai *);
 
 /* taia routines */
@@ -250,22 +254,22 @@ void c_taia_now(ctype_taia *);
 void c_taia_pack(char *, ctype_taia *);
 void c_taia_sub(ctype_taia *, ctype_taia *, ctype_taia *);
 void c_taia_tai(ctype_taia *, ctype_tai *);
-void c_taia_u64(ctype_taia *, u64int);
+void c_taia_u64(ctype_taia *, u64);
 void c_taia_unpack(char *, ctype_taia *);
 
 /* uint routines */
-char *c_uint_16bigpack(char *, u16int);
-u16int c_uint_16bigunpack(char *);
-char *c_uint_16pack(char *, u16int);
-u16int c_uint_16unpack(char *);
-char *c_uint_32bigpack(char *, u32int);
-u32int c_uint_32bigunpack(char *);
-char *c_uint_32pack(char *, u32int);
-u32int c_uint_32unpack(char *);
-char *c_uint_64bigpack(char *, u64int);
-u64int c_uint_64bigunpack(char *);
-char *c_uint_64pack(char *, u64int);
-u64int c_uint_64unpack(char *);
+char *c_uint_16bigpack(char *, u16);
+u16 c_uint_16bigunpack(char *);
+char *c_uint_16pack(char *, u16);
+u16 c_uint_16unpack(char *);
+char *c_uint_32bigpack(char *, u32);
+u32 c_uint_32bigunpack(char *);
+char *c_uint_32pack(char *, u32);
+u32 c_uint_32unpack(char *);
+char *c_uint_64bigpack(char *, u64);
+u64 c_uint_64bigunpack(char *);
+char *c_uint_64pack(char *, u64);
+u64 c_uint_64unpack(char *);
 
 /* utf8 routines */
 int c_utf8_charntorune(ctype_rune *, char *, usize);

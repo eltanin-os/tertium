@@ -8,7 +8,7 @@ c_utf8_utfrune(char *s, ctype_rune r)
 	int n;
 
 	if (r < 0x80)
-		return c_str_chr(s, C_USIZEMAX, r);
+		return c_str_chr(s, -1, r);
 
 	while (*s) {
 		n = c_utf8_chartorune(&rune, s);

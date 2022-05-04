@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define BLK(x) C_MIN(C_BIOSIZ, (x))
+#define BLK(x) C_STD_MIN(C_IOQ_BSIZ, (x))
 
 ctype_status
 c_ioq_nput(ctype_ioq *p, char *s, usize n)

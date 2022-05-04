@@ -12,7 +12,7 @@ c_exc_setenv(char *s, char *v)
 	if (!s || !*s)
 		return 0;
 
-	if ((p = c_str_chr(s, C_USIZEMAX, '=')))
+	if ((p = c_str_chr(s, -1, '=')))
 		*p = 0;
 
 	c_mem_set(&e, sizeof(e), 0);

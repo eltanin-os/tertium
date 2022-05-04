@@ -11,7 +11,7 @@ c_nix_fdcopy(ctype_fd to, ctype_fd from)
 
 	do {
 		r = c_sys_dup2(from, to);
-	} while ((r < 0) && errno == C_EINTR);
+	} while ((r < 0) && errno == C_ERR_EINTR);
 
 	return r;
 }

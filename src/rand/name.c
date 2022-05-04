@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 static uchar tab[] = \
-    "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+"-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
 
 char *
 c_rand_name(char *s, usize n)

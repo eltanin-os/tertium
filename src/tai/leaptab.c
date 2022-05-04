@@ -1,9 +1,9 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
-static u64int tab[] = {
+static u64 tab[] = {
 	4611686018506184714ULL,
 	4611686018522082315ULL,
 	4611686018553618316ULL,
@@ -33,5 +33,5 @@ static u64int tab[] = {
 	4611686019910616740ULL,
 };
 
-u64int *__tai_leaptab = tab;
-int __tai_leaptabsize = C_NELEM(tab);
+u64 *_tertium_tai_leaptab = tab;
+int _tertium_tai_leaptabsize = C_STD_NELEM(tab);

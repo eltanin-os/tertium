@@ -89,7 +89,7 @@ c_std_sort(void *v, usize m, usize n, ctype_cmpfn f)
 {
 	struct sort srt;
 
-	if (C_OFLW_UM(usize, n, m))
+	if (C_STD_OVERFLOWM(usize, n, m))
 		return;
 
 	srt = (struct sort){v, n, f};

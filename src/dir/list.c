@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 ctype_dent *
 c_dir_list(ctype_dir *p)
@@ -11,7 +11,7 @@ c_dir_list(ctype_dir *p)
 
 	if (!(cur = p->ccur)) {
 		p->ccur = p->cur;
-		if ((ep = p->ccur->p)->info == C_FSINT) {
+		if ((ep = p->ccur->p)->info == C_DIR_FSINT) {
 			p->ccur = p->ccur->next;
 			ep = p->ccur->p;
 		}

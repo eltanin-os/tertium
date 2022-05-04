@@ -1,7 +1,8 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define STANDARD_BITS (C_ISUID | C_ISGID | C_IRWXU | C_IRWXG | C_IRWXO)
+#define STANDARD_BITS \
+(C_NIX_ISUID|C_NIX_ISGID|C_NIX_IRWXU|C_NIX_IRWXG|C_NIX_IRWXO)
 
 /* TODO: Review this */
 uint
@@ -13,7 +14,7 @@ c_nix_strtomode(char *s, uint mode, uint mask)
 
 	m = c_std_strtouvl(s, 8, 0, 07777, &end, nil);
 	if (!*end)
-		return (m & C_ALLPERMS);
+		return (m & C_NIX_ALLPERMS);
 next:
 	who = 0;
 	for (; *s; ++s) {
@@ -22,13 +23,13 @@ next:
 			who |= STANDARD_BITS;
 			continue;
 		case 'g':
-			who |= C_ISGID | C_IRWXG;
+			who |= C_NIX_ISGID | C_NIX_IRWXG;
 			continue;
 		case 'o':
-			who |= C_IRWXO;
+			who |= C_NIX_IRWXO;
 			continue;
 		case 'u':
-			who |= C_ISUID | C_IRWXU;
+			who |= C_NIX_ISUID | C_NIX_IRWXU;
 			continue;
 		}
 		break;
@@ -36,7 +37,7 @@ next:
 	if (who) {
 		clr = who;
 	} else {
-		clr = C_ALLPERMS;
+		clr = C_NIX_ALLPERMS;
 		who = ~mask;
 	}
 
@@ -47,7 +48,7 @@ next:
 		op = *s++;
 		break;
 	default:
-		errno = C_EINVAL;
+		errno = C_ERR_EINVAL;
 		return -1;
 	}
 
@@ -66,34 +67,35 @@ copy:
 	default:
 		goto perm;
 	}
-	if (mode & (C_IROTH << m))
-		perm |= C_IRUSR | C_IRGRP | C_IROTH;
-	if (mode & (C_IWOTH << m))
-		perm |= C_IWUSR | C_IWGRP | C_IWOTH;
-	if (mode & (C_IXOTH << m))
-		perm |= C_IXUSR | C_IXGRP | C_IXOTH;
+	if (mode & (C_NIX_IROTH << m))
+		perm |= C_NIX_IRUSR | C_NIX_IRGRP | C_NIX_IROTH;
+	if (mode & (C_NIX_IWOTH << m))
+		perm |= C_NIX_IWUSR | C_NIX_IWGRP | C_NIX_IWOTH;
+	if (mode & (C_NIX_IXOTH << m))
+		perm |= C_NIX_IXUSR | C_NIX_IXGRP | C_NIX_IXOTH;
 	++s;
 	goto copy;
 perm:
 	switch (*s) {
 	case 'X':
-		if (C_ISDIR(mode) || mode & (C_IXUSR | C_IXGRP | C_IXOTH))
-			perm |= C_IXUSR | C_IXGRP | C_IXOTH;
+		if (C_NIX_ISDIR(mode) ||
+		    mode & (C_NIX_IXUSR | C_NIX_IXGRP | C_NIX_IXOTH))
+			perm |= C_NIX_IXUSR | C_NIX_IXGRP | C_NIX_IXOTH;
 		break;
 	case 'r':
-		perm |= C_IRUSR | C_IRGRP | C_IROTH;
+		perm |= C_NIX_IRUSR | C_NIX_IRGRP | C_NIX_IROTH;
 		break;
 	case 's':
-		perm |= C_ISUID | C_ISGID;
+		perm |= C_NIX_ISUID | C_NIX_ISGID;
 		break;
 	case 't':
-		perm |= C_ISVTX;
+		perm |= C_NIX_ISVTX;
 		break;
 	case 'w':
-		perm |= C_IWUSR | C_IWGRP | C_IWOTH;
+		perm |= C_NIX_IWUSR | C_NIX_IWGRP | C_NIX_IWOTH;
 		break;
 	case 'x':
-		perm |= C_IXUSR | C_IXGRP | C_IXOTH;
+		perm |= C_NIX_IXUSR | C_NIX_IXGRP | C_NIX_IXOTH;
 		break;
 	default:
 		goto apply;

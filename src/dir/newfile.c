@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 ctype_node *
-__dir_newfile(char *path, char *name, uint opts)
+_tertium_dir_newfile(char *path, char *name, uint opts)
 {
 	ctype_node *p;
 	ctype_dent *ep;
@@ -12,8 +12,8 @@ __dir_newfile(char *path, char *name, uint opts)
 	ushort nlen;
 	uchar *sp;
 
-	nlen = c_str_len(name, C_USIZEMAX);
-	plen = c_str_len(path, C_USIZEMAX);
+	nlen = c_str_len(name, C_LIM_USIZEMAX);
+	plen = c_str_len(path, C_LIM_USIZEMAX);
 	if (!plen) {
 		for (; nlen > 1 && name[nlen - 1] == '/'; --nlen) ;
 		if (nlen > 1) {
@@ -30,9 +30,8 @@ __dir_newfile(char *path, char *name, uint opts)
 	}
 
 	len = sizeof(*p) + sizeof(*ep) + plen + nlen + 2;
-	if (!(opts & C_FSNOI))
+	if (!(opts & C_DIR_FSNOI))
 		len += sizeof(ctype_stat) + 16;
-
 	if (!(sp = c_std_alloc(len, sizeof(uchar))))
 		return nil;
 
@@ -46,7 +45,7 @@ __dir_newfile(char *path, char *name, uint opts)
 	ep->path = (void *)sp;
 	sp += plen + nlen + 2;
 
-	if (!(opts & C_FSNOI))
+	if (!(opts & C_DIR_FSNOI))
 		ep->stp = (void *)((uintptr)(sp + 16) & ~16);
 
 	if (plen) {

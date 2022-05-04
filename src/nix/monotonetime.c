@@ -5,8 +5,7 @@ void
 c_nix_monotonetime(ctype_time *t)
 {
 	int sverr;
-
 	sverr = errno;
-	c_sys_clockgettime(C_CLOCK_MONOTONIC, t);
+	c_sys_clockgettime(C_NIX_CLOCKMONO, t);
 	errno = sverr;
 }

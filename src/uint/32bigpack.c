@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 char *
-c_uint_32bigpack(char *s, u32int u)
+c_uint_32bigpack(char *s, u32 u)
 {
 	s[3] = u & 255;
 	u >>= 8;

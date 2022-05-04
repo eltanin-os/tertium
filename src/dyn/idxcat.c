@@ -17,8 +17,9 @@ c_dyn_idxcat(ctype_arr *p, usize pos, void *v, usize m, usize n)
 	len ^= p->n;
 	p->n ^= len;
 
-	if (!pos || (pos = (pos - 1) * n) < c_arr_bytes(p))
-		c_mem_cpy(target + m, c_arr_bytes(p) - pos, target);
+	m *= n;
+	if (pos) pos = (pos - 1) * n;
+	c_mem_cpy(target + m, c_arr_bytes(p) - pos, target);
 	c_mem_cpy(target, m, v);
 	p->n = (p->n == len) ? p->n + m : len;
 	p->p[p->n] = 0;

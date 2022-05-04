@@ -1,17 +1,15 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
-
 #define Ch(a,b,c) ((c ^ (a & (b ^ c))))
 #define Maj(a,b,c) ((a & b) | (c & (a | b)))
-#define R(a, b) (((a)&0xFFFFFFFFFFFFFFFFULL)>>((u64int)b))
+#define R(a, b) (((a)&0xFFFFFFFFFFFFFFFFULL)>>((u64)b))
 #define G0(x) (ROR(x, 1)  ^ ROR(x, 8)  ^ R(x, 7))
 #define G1(x) (ROR(x, 19) ^ ROR(x, 61) ^ R(x, 6))
 #define S0(x) (ROR(x, 28) ^ ROR(x, 34) ^ ROR(x, 39))
 #define S1(x) (ROR(x, 14) ^ ROR(x, 18) ^ ROR(x, 41))
 
-#define ROR(a, b) __hsh_ror64((a), (b))
+#define ROR(a, b) c_hsh_ror64((a), (b))
 #define REV(a,b,c,d,e,f,g,h) { h=g; g=f; f=e; e=d+t0; d=c; c=b; b=a; a=t0+t1; }
 
 static void init(ctype_hst *);
@@ -26,7 +24,7 @@ static ctype_hmd md = {
 
 ctype_hmd *c_hsh_sha512 = &md;
 
-static u64int K[] = {
+static u64 K[] = {
 	0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL,
 	0xb5c0fbcfec4d3b2fULL, 0xe9b5dba58189dbbcULL,
 	0x3956c25bf348b538ULL, 0x59f111f1b605d019ULL,
@@ -87,8 +85,8 @@ init(ctype_hst *p)
 static void
 compress(ctype_hst *p, char *data)
 {
-	u64int w[80], st[8];
-	u64int t0, t1;
+	u64 w[80], st[8];
+	u64 t0, t1;
 	int i;
 
 	for (i = 0; i < 16; ++i)

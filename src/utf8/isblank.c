@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 static ctype_rune tab[] = {
 	0x0009,
@@ -17,7 +17,7 @@ static ctype_rune tab[] = {
 int
 c_utf8_isblank(ctype_rune r)
 {
-	if (__UTF8_SEARCH(&r, tab))
+	if (UTF8_SEARCH(&r, tab))
 		return 1;
 	if (r >= 0x20 && r <= 0x2B)
 		return 1;

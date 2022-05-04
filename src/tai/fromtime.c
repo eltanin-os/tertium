@@ -4,5 +4,5 @@
 void
 c_tai_fromtime(ctype_tai *t, ctype_time *tm)
 {
-	t->x = 4611686018427387914ULL + (u64int)tm->sec;
+	t->x = 4611686018427387914ULL + (u64)tm->sec;
 }

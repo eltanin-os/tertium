@@ -1,8 +1,6 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
-
 typedef void (*hfunc)(ctype_hst *, char *);
 
 void
@@ -17,7 +15,7 @@ c_hsh_update(hfunc f, int b, ctype_hst *p, char *data, usize n)
 			data += b;
 			n -= b;
 		} else {
-			len = C_MIN(n, b - p->curlen);
+			len = C_STD_MIN(n, b - p->curlen);
 			c_mem_cpy(p->buf + p->curlen, len, data);
 			p->curlen += len;
 			data += len;

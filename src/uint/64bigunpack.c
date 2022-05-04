@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-u64int
+u64
 c_uint_64bigunpack(char *s)
 {
-	u64int r;
+	u64 r;
 
 	r = (uchar)s[0];
 	r <<= 8;

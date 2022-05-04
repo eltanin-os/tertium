@@ -4,7 +4,7 @@
 void
 c_tai_pack(char *s, ctype_tai *t)
 {
-	u64int x;
+	u64 x;
 
 	x = t->x;
 	s[7] = x & 255;

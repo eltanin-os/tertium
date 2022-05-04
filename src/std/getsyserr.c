@@ -1,11 +1,11 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-char *(*__syserr)(void);
-static char errbuf[C_ERRSIZ];
+char *(*_tertium_syserr)(void);
+static char errbuf[C_IOQ_ERRSIZ];
 
 char *
 c_std_getsyserr(void)
 {
-	return __syserr ? __syserr() : errbuf;
+	return _tertium_syserr ? _tertium_syserr() : errbuf;
 }

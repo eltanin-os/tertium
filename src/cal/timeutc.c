@@ -5,7 +5,7 @@ void
 c_cal_timeutc(ctype_caltime *p, ctype_tai *t)
 {
 	ctype_tai t2;
-	u64int u;
+	u64 u;
 	long s;
 	int leap;
 

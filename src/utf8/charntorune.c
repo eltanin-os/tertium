@@ -1,14 +1,14 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
+#include "internal.h"
+
 static uchar tab[] = {
 	0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 0, 0,
 };
-
-extern uchar *__utf8_mtab;
 
 int
 c_utf8_charntorune(ctype_rune *p, char *s, usize len)
@@ -23,12 +23,12 @@ c_utf8_charntorune(ctype_rune *p, char *s, usize len)
 		return 1;
 	}
 
-	if (!(n = C_MIN(len, tab[c & 0x3F]))) {
+	if (!(n = C_STD_MIN(len, tab[c & 0x3F]))) {
 		n = 1;
 		goto bad;
 	}
 
-	r = c & __utf8_mtab[n - 1];
+	r = c & _tertium_utf8_mtab[n - 1];
 	for (i = 1; i < n; ++i) {
 		if (((uchar)s[i] ^ 0x80) & 0xC0) {
 			n = i;
@@ -42,7 +42,7 @@ c_utf8_charntorune(ctype_rune *p, char *s, usize len)
 
 	goto done;
 bad:
-	r = C_RUNEERROR;
+	r = C_UTF8_RUNEERROR;
 done:
 	*p = r;
 	return n;

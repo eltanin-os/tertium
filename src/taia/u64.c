@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_taia_u64(ctype_taia *t, u64int u)
+c_taia_u64(ctype_taia *t, u64 u)
 {
 	t->sec.x = u;
 	t->nano = 0;

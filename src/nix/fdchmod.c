@@ -8,7 +8,7 @@ c_nix_fdchmod(ctype_fd fd, uint mode)
 
 	do {
 		r = c_sys_fchmod(fd, mode);
-	} while ((r < 0) && errno == C_EINTR);
+	} while ((r < 0) && errno == C_ERR_EINTR);
 
 	return r;
 }

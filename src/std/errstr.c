@@ -8,11 +8,11 @@ c_std_errstr(char *s, usize n)
 	char *p;
 
 	p = c_std_getsyserr();
-	n = C_MIN(n, C_ERRSIZ);
+	n = C_STD_MIN(n, C_IOQ_ERRSIZ);
 	for (i = 0; i < n; ++i) {
 		s[i] ^= p[i];
 		p[i] ^= s[i];
 		s[i] ^= p[i];
 	}
-	errno = C_ECSTM;
+	errno = C_ERR_ECSTM;
 }

@@ -9,12 +9,13 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
-#define EMSG(a) c_nix_fdwrite(2, (a), sizeof((a)))
+#define MSG(a) c_nix_fdwrite(2, (a), sizeof((a)))
 
-#define MMAP(a) \
-c_nix_mmap(0, (a), C_PROT_READ|C_PROT_WRITE, C_MAP_ANON|C_MAP_PRIVATE, -1, 0)
+#define M1 (C_NIX_PROTREAD|C_NIX_PROTWRITE)
+#define M2 (C_NIX_MAPANON|C_NIX_MAPPRIV)
+#define MMAP(a) c_nix_mmap(0, (a), M1, M2, -1, 0)
 
 #define MNOTMINE ((struct pginfo *)0)
 #define MFREE    ((struct pginfo *)1)
@@ -29,6 +30,10 @@ c_nix_mmap(0, (a), C_PROT_READ|C_PROT_WRITE, C_MAP_ANON|C_MAP_PRIVATE, -1, 0)
 
 #define pageround(a) (((a)+mpagemask)&(~mpagemask))
 #define ptr2idx(a)   (((usize)(uintptr)(a)>>mpageshift)-morigo)
+
+/* !!! */
+#define brk(a) (c_sys_brk((a)))
+#define sbrk(a) (c_sys_sbrk((a)))
 
 struct pginfo {
 	struct pginfo *next;
@@ -56,42 +61,19 @@ char *alloc0 = (char *)(uintptr)&zeroblock;
 
 static struct pginfo **pagedir;
 static struct pgfree freelist;
-static struct pgfree *px;	/* freelist cache */
-static usize lastidx;		/* last relevant index in the page dir */
-static usize mcache = 16;	/* freepages to cache */
-static usize minfo;		/* slots in the page dir */
-static usize morigo;		/* offset from pagenumber to index into the page dir */
+static struct pgfree *px; /* freelist cache */
+static usize lastidx; /* last relevant index in the page dir */
+static usize mcache = 16; /* freepages to cache */
+static usize minfo; /* slots in the page dir */
+static usize morigo; /* offset from pagenumber to index into the page dir */
 static usize mpagemask;
 static usize mpageshift;
 static usize mpagesize;
-static int mstt;		/* malloc started */
-static void *cbrk;		/* current break */
-static void *mbrk;		/* last break */
+static int mstt; /* malloc started */
+static void *mbrk; /* last break */
 
 static void *imalloc(usize);
 static void ifree(void *);
-
-static int
-_brk(void *p)
-{
-	cbrk = (void *)(uintptr)c_nix_syscall(SYS_brk, p);
-	return ((cbrk == (void *)-1) ? -1 : 0);
-}
-
-static void *
-segbrk(uintptr p)
-{
-	void *o;
-
-	if (!cbrk && _brk(0) < 0)
-		return (void *)-1;
-	if (!p)
-		return cbrk;
-	o = cbrk;
-	if (_brk((char *)o + p) < 0)
-		return (void *)-1;
-	return o;
-}
 
 static void
 freepages(void *p, usize idx, struct pginfo *info)
@@ -154,17 +136,17 @@ freepages(void *p, usize idx, struct pginfo *info)
 			pf = px;
 			px = nil;
 		} else {
-			EMSG("freelist is destroyed\n");
+			MSG("freelist is destroyed\n");
 			c_nix_abort();
 		}
 	}
 	if (!pf->next &&
 	    pf->size > mcache &&
 	    pf->end == mbrk &&
-	    mbrk == segbrk(0)) {
+	    mbrk == sbrk(0)) {
 		pf->end = (uchar *)pf->page + mcache;
 		pf->size = mcache;
-		_brk(pf->end);
+		brk(pf->end);
 		mbrk = pf->end;
 		idx = ptr2idx(pf->end);
 		for (i = idx; i <= lastidx; ++i)
@@ -239,12 +221,12 @@ extendpgdir(usize idx)
 
 	if ((((~(1UL << ((sizeof(usize) * 8) - 1)) / sizeof(*pagedir)) + 1)
 	    + (mpagesize / sizeof(*pagedir))) < idx) {
-		errno = C_ENOMEM;
+		errno = C_ERR_ENOMEM;
 		return 0;
 	}
 
 	nl = pageround(idx * sizeof(*pagedir)) + mpagesize;
-	if ((p = MMAP(nl)) == C_MAP_FAILED)
+	if ((p = MMAP(nl)) == C_NIX_MAPFAIL)
 		return 0;
 
 	ol = minfo * sizeof(*pagedir);
@@ -265,15 +247,15 @@ mappages(usize pages)
 
 	bytes = pages << mpageshift;
 	if (bytes < 0 || bytes < (intptr)pages) {
-		errno = C_ENOMEM;
+		errno = C_ERR_ENOMEM;
 		return nil;
 	}
 
-	if ((r = segbrk(bytes)) == (void *)-1)
+	if ((r = sbrk(bytes)) == (void *)-1)
 		return nil;
 	if ((rr = (void *)pageround((usize)(uintptr)r)) > r) {
-		if (segbrk((uchar *)rr - (uchar *)r) == (void *)-1 && _brk(r)) {
-			EMSG("brk(2) failed [internal error]\n");
+		if (sbrk((uchar *)rr - (uchar *)r) == (void *)-1 && brk(r)) {
+			MSG("brk(2) failed [internal error]\n");
 			c_nix_abort();
 		}
 	}
@@ -283,8 +265,8 @@ mappages(usize pages)
 	mbrk = t;
 	if ((lastidx + 1) >= minfo && !extendpgdir(lastidx)) {
 		lastidx = ptr2idx((mbrk = r)) - 1;
-		if (_brk(mbrk)) {
-			EMSG("brk(2) failed [internal error]\n");
+		if (brk(mbrk)) {
+			MSG("brk(2) failed [internal error]\n");
 			c_nix_abort();
 		}
 		return nil;
@@ -300,7 +282,7 @@ allocpages(usize n)
 	void *p, *df;
 
 	if ((idx = pageround(n)) < n) {
-		errno = C_ENOMEM;
+		errno = C_ERR_ENOMEM;
 		return nil;
 	}
 
@@ -469,8 +451,7 @@ irealloc(void *p, usize n)
 		return nil;
 	}
 	if ((np = imalloc(n))) {
-		if (n && o)
-			c_mem_cpy(np, C_MIN(n, o), p);
+		if (n && o) c_mem_cpy(np, C_STD_MIN(n, o), p);
 		ifree(p);
 	}
 	return np;
@@ -479,16 +460,16 @@ irealloc(void *p, usize n)
 static void
 minit(void)
 {
-	mpagesize = C_PAGESIZE;
+	mpagesize = C_LIM_PAGESIZE; /* !!! */
 	for (mpageshift = 0; (1UL << mpageshift) != mpagesize; ++mpageshift) ;
 	mpagemask = mpagesize - 1;
-	if ((pagedir = MMAP(mpagesize)) == C_MAP_FAILED) {
-		EMSG("mmap(2) failed, check limits\n");
+	if ((pagedir = MMAP(mpagesize)) == C_NIX_MAPFAIL) {
+		MSG("mmap(2) failed, check limits\n");
 		c_nix_abort();
 	}
 	minfo = mpagesize / sizeof(*pagedir);
 	mcache <<= mpageshift;
-	morigo = pageround((usize)(uintptr)segbrk(0)) >> mpageshift;
+	morigo = pageround((usize)(uintptr)sbrk(0)) >> mpageshift;
 	morigo -= mpageshift;
 	px = imalloc(sizeof(*px));
 }
@@ -498,8 +479,8 @@ pubrealloc(void *p, usize m, usize n)
 {
 	void *r;
 
-	if (C_OFLW_UM(usize, m, n)) {
-		errno = C_EOVERFLOW;
+	if (C_STD_OVERFLOWM(usize, m, n)) {
+		errno = C_ERR_EOVERFLOW;
 		return nil;
 	}
 
@@ -523,11 +504,11 @@ pubrealloc(void *p, usize m, usize n)
 	} else {
 		m *= n;
 		if (!(r = p ? irealloc(p, m) : imalloc(m)))
-			errno = C_ENOMEM;
+			errno = C_ERR_ENOMEM;
 	}
 
 	return r;
 invalid:
-	errno = C_EINVAL;
+	errno = C_ERR_EINVAL;
 	return r;
 }

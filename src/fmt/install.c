@@ -1,31 +1,35 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 static int
 cmp(void *a, void *b)
 {
-	return (*(char *)a - ((struct fmtverb *)b)->c);
+	return *(uchar *)a - ((struct fmtverb *)b)->c;
 }
 
 ctype_status
-c_fmt_install(int c, ctype_fmtfn f)
+c_fmt_install(ctype_rune c, ctype_fmtfn f)
 {
-	struct fmtverb *l, *p;
-	struct fmtverb nf;
+	struct fmtverb *p;
+	struct fmtverb nent;
+	ctype_arr *ap;
 	usize n;
+	uchar *s;
 
-	nf = (struct fmtverb){ c, f };
-	if (!(n = c_arr_bytes(&__fmt_Fmts)))
-		return c_dyn_cat(&__fmt_Fmts, &nf, 1, sizeof(nf));
-	if ((l = c_arr_data(&__fmt_Fmts))->c > c)
-		return c_dyn_idxcat(&__fmt_Fmts, 0, &nf, 1, sizeof(nf));
-	n /= sizeof(*p);
-	p = c_std_nbsearch(&c, l, n, sizeof(*l), &cmp);
+	ap = &_tertium_fmt_fmts;
+	if (c_dyn_ready(ap, 1, sizeof(nent)))
+		return -1;
+
+	n = c_arr_len(ap, sizeof(*p));
+	s = c_arr_data(ap);
+	p = c_std_nbsearch(&c, s, n, sizeof(*p), &cmp);
 	if (p->c == c) {
 		p->f = f;
 		return 0;
 	}
-	return c_dyn_idxcat(&__fmt_Fmts, (p + 1) - l, &nf, 1, sizeof(nf));
+	nent = (struct fmtverb){ c, f };
+	n = (((uchar *)p - s) / sizeof(*p)) + !!n;
+	return c_dyn_idxcat(ap, n, &nent, 1, sizeof(nent));
 }

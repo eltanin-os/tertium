@@ -1,10 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-u16int
+u16
 c_uint_16bigunpack(char *s)
 {
-	u16int r;
+	u16 r;
 
 	r = (uchar)s[0];
 	r <<= 8;

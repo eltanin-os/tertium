@@ -2,13 +2,13 @@
 #include <tertium/std.h>
 
 static ctype_status
-match(ctype_cdb *p, char *k, usize n, u32int off)
+match(ctype_cdb *p, char *k, usize n, u32 off)
 {
 	usize len;
 	char buf[1024];
 
 	while (n) {
-		len = C_MIN(n, sizeof(buf));
+		len = C_STD_MIN(n, sizeof(buf));
 		if (c_cdb_read(p, buf, len, off) < 0)
 			return -1;
 		if (c_mem_cmp(buf, len, k))
@@ -23,8 +23,8 @@ match(ctype_cdb *p, char *k, usize n, u32int off)
 ctype_status
 c_cdb_findnext(ctype_cdb *p, char *k, usize n)
 {
-	u32int h;
-	u32int off;
+	u32 h;
+	u32 off;
 	char buf[8];
 
 	if (!p->loop) {

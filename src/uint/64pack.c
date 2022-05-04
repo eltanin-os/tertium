@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 char *
-c_uint_64pack(char *s, u64int u)
+c_uint_64pack(char *s, u64 u)
 {
 	s[0] = u & 255;
 	u >>= 8;

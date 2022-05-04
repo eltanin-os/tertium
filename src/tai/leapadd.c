@@ -1,19 +1,19 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 void
 c_tai_leapadd(ctype_tai *p, int h)
 {
-	u64int u;
+	u64 u;
 	int i;
 
 	u = p->x;
-	for (i = 0; i < __tai_leaptabsize; ++i) {
-		if (u < __tai_leaptab[i])
+	for (i = 0; i < _tertium_tai_leaptabsize; ++i) {
+		if (u < _tertium_tai_leaptab[i])
 			break;
-		if (!h || (u > __tai_leaptab[i]))
+		if (!h || (u > _tertium_tai_leaptab[i]))
 			++u;
 	}
 	p->x = u;

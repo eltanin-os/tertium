@@ -6,4 +6,4 @@ static uchar tab[] = {
 	0x0F, 0x07, 0x03,
 };
 
-uchar *__utf8_mtab = tab;
+uchar *_tertium_utf8_mtab = tab;

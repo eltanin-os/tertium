@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 static ctype_rune rangetab[] = {
 	0x0115F, 0x01161,
@@ -32,9 +32,9 @@ c_utf8_isalpha(ctype_rune r)
 {
 	if (c_utf8_isupper(r) || c_utf8_islower(r) || c_utf8_istitle(r))
 		return 1;
-	if (__UTF8_RANGESEARCH(&r, rangetab))
+	if (UTF8_RANGESEARCH(&r, rangetab))
 		return 1;
-	if (__UTF8_SEARCH(&r, tab))
+	if (UTF8_SEARCH(&r, tab))
 		return 1;
 	return 0;
 }

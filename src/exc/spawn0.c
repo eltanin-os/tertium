@@ -8,7 +8,7 @@ c_exc_spawn0(char *prog, char **argv, char **envp)
 	ctype_error sverr;
 	ctype_id id;
 
-	if (c_nix_pipe2(sync, C_OCEXEC) < 0)
+	if (c_nix_pipe2(sync, C_NIX_OCEXEC) < 0)
 		return 0;
 	if ((id = c_nix_fork()) < 0) {
 		c_nix_fdclose(sync[0]);

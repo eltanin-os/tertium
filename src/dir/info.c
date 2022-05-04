@@ -1,45 +1,53 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
-#define FOLLOW(a, b) ((a) & C_FSLOG) || ((a) & C_FSCOM && !(b))
-#define PACK(a, b) ((a) << 32 | (b))
+#define FOLLOW(a, b) ((a) & C_DIR_FSLOG) || ((a) & C_DIR_FSCOM && !(b))
+#define PAIR(a, b) ((((a) + (b)) * ((a) + (b) + 1) >> 1) + (b))
+
+struct hp {
+	ctype_id h;
+	ctype_id p;
+};
 
 static int
 cmp(void *a, void *b)
 {
-	return (*(uvlong *)a - *(uvlong *)b);
+	uvlong x, y;
+	x = *(uvlong *)a;
+	y = *(uvlong *)b;
+	return ((x > y) - (x < y));
 }
 
 static int
-hist(ctype_arr *hp, ulong dev, ulong ino)
+hist(ctype_arr *hp, ctype_id dev, ctype_id ino)
 {
-	uvlong k;
-	uvlong *l, *p;
+	uvlong *p;
 	usize n;
+	uvlong k;
+	uchar *s;
 
-	if (!(n = c_arr_len(hp, sizeof(k))))
-		return c_dyn_cat(hp, &k, 1, sizeof(k)) < 0 ? -1 : 1;
-	l = c_arr_data(hp);
-	k = PACK(dev, ino);
-	if (*l > k) {
-		c_dyn_idxcat(hp, 0, &k, 1, sizeof(k));
-		return 1;
-	} else if (*(p = c_std_nbsearch(&k, l, n, sizeof(l), &cmp)) != k) {
-		c_dyn_idxcat(hp, (p + 1) - l, &k, 1, sizeof(k));
-		return 1;
+	if (c_dyn_ready(hp, 1, sizeof(*p)) < 0)
+		return -1;
+
+	n = c_arr_len(hp, sizeof(*p));
+	s = c_arr_data(hp);
+	k = PAIR(dev, ino); /* !!! */
+	if (*(p = c_std_nbsearch(&k, s, n, sizeof(*p), &cmp)) != k) {
+		n = (((uchar *)p - s) / sizeof(*p)) + !!n;
+		c_dyn_idxcat(hp, n, &k, 1, sizeof(k));
 	}
 	return 0;
 }
 
 static int
-dohist(ctype_dir *p, ctype_stat *stp, ushort c1, ushort c2)
+dohist(ctype_dir *p, ctype_stat *stp, short c1, short c2)
 {
 	switch (hist(&p->hist, stp->dev, stp->ino)) {
 	case -1:
-		p->opts |= C_FSSTP;
-		return C_FSERR;
+		p->opts |= C_DIR_FSSTP;
+		return C_DIR_FSERR;
 	case 0:
 		return c1;
 	default:
@@ -48,40 +56,40 @@ dohist(ctype_dir *p, ctype_stat *stp, ushort c1, ushort c2)
 }
 
 int
-__dir_info(ctype_dir *p, ctype_dent *ep)
+_tertium_dir_info(ctype_dir *p, ctype_dent *ep)
 {
 	ctype_stat *stp;
 	ctype_stat st;
 	ctype_error sverr;
 
-	stp = (p->opts & C_FSNOI) ? &st : ep->stp;
+	stp = (p->opts & C_DIR_FSNOI) ? &st : ep->stp;
 	if (FOLLOW(p->opts, ep->depth)) {
 		if (c_nix_stat(stp, ep->path) < 0) {
 			sverr = errno;
 			if (!c_nix_lstat(stp, ep->path))
-				return C_FSSLN;
+				return C_DIR_FSSLN;
 			ep->err = sverr;
-			return C_FSNS;
+			return C_DIR_FSNS;
 		}
 	} else if (c_nix_lstat(stp, ep->path) < 0) {
 		ep->err = errno;
-		return C_FSNS;
+		return C_DIR_FSNS;
 	}
 
-	switch (stp->mode & C_IFMT) {
-	case C_IFDIR:
+	switch (stp->mode & C_NIX_IFMT) {
+	case C_NIX_IFDIR:
 		ep->dev = stp->dev;
-		if (C_ISDOT(ep->name))
-			return C_FSDOT;
+		if (C_STD_ISDOT(ep->name))
+			return C_DIR_FSDOT;
 		if (FOLLOW(p->opts, ep->depth))
-			return dohist(p, stp, C_FSDC, C_FSD);
-		return C_FSD;
-	case C_IFLNK:
-		return C_FSSL;
-	case C_IFREG:
-		if ((p->opts & C_FSFHT) && stp->nlink > 1)
-			dohist(p, stp, C_FSFC, C_FSF);
-		return C_FSF;
+			return dohist(p, stp, C_DIR_FSDC, C_DIR_FSD);
+		return C_DIR_FSD;
+	case C_NIX_IFLNK:
+		return C_DIR_FSSL;
+	case C_NIX_IFREG:
+		if ((p->opts & C_DIR_FSFHT) && stp->nlink > 1)
+			dohist(p, stp, C_DIR_FSFC, C_DIR_FSF);
+		return C_DIR_FSF;
 	}
-	return C_FSDEF;
+	return C_DIR_FSDEF;
 }

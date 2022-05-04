@@ -1,7 +1,10 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+struct hp {
+	u32 h;
+	u32 p;
+};
 
 ctype_status
 c_cdb_mkfinish(ctype_cdbmk *p)
@@ -9,13 +12,13 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 	struct hp *hp;
 	struct hp *split;
 	struct hp *hash;
-	u32int count[256];
-	u32int start[256];
-	u32int k, len, u, where;
+	u32 count[256];
+	u32 start[256];
+	u32 k, len, u, where;
 	usize i, j;
 	usize n, msiz;
 	char buf[8];
-	char final[2048];
+	char end[2048];
 
 	c_mem_set(count, sizeof(count), 0);
 	hp = c_arr_data(&p->hplist);
@@ -27,8 +30,10 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 	for (i = 0; i < 256; ++i)
 		if ((u = count[i] << 1) > msiz)
 			msiz = u;
-	if ((msiz += n) > ((u32int)-1) / sizeof(struct hp))
-		return (errno = C_ENOMEM, -1);
+	if ((msiz += n) > (u32)-1 / sizeof(struct hp)) {
+		errno = C_ERR_ENOMEM;
+		return -1;
+	}
 
 	if (!(split = c_std_alloc(msiz, sizeof(struct hp))))
 		return -1;
@@ -43,8 +48,8 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 	for (i = 0; i < 256; ++i) {
 		k = count[i];
 		len = k << 1;
-		c_uint_32pack(final + (i << 3), p->off);
-		c_uint_32pack(final + (i << 3) + 4, len);
+		c_uint_32pack(end + (i << 3), p->off);
+		c_uint_32pack(end + (i << 3) + 4, len);
 		c_mem_set(hp, len * sizeof(*hp), 0);
 		hash = split + start[i];
 		for (j = 0; j < k; ++j) {
@@ -59,17 +64,16 @@ c_cdb_mkfinish(ctype_cdbmk *p)
 			c_uint_32pack(buf + 4, hp[j].p);
 			if (c_ioq_nput(&p->ioq, buf, 8) < 0)
 				goto fail;
-			if (C_OFLW_UA(u32int, p->off, 8)) {
-				errno = C_ENOMEM;
+			if (C_STD_OVERFLOWA(u32, p->off, 8)) {
+				errno = C_ERR_ENOMEM;
 				goto fail;
 			}
 			p->off += 8;
 		}
 	}
-	if (c_ioq_flush(&p->ioq) < 0 ||
-	    c_nix_seek(p->fd, 0, C_SEEKSET) < 0 ||
-	    c_nix_allrw(&c_nix_fdwrite, p->fd, final, sizeof(final)) < 0)
-		goto fail;
+	if (c_ioq_flush(&p->ioq) < 0) goto fail;
+	if (c_nix_seek(p->fd, 0, C_NIX_SEEKSET) < 0) goto fail;
+	if (c_nix_allrw(&c_nix_fdwrite, p->fd, end, sizeof(end)) < 0) goto fail;
 	c_std_free(split);
 	return 0;
 fail:

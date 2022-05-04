@@ -1,8 +1,6 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
-
 #define F(a,b,c) (c ^ (a & (b ^ c)))
 #define G(a,b,c) (b ^ (c & (b ^ a)))
 #define H(a,b,c) (a^b^c)
@@ -17,7 +15,7 @@
 #define II(a,b,c,d,M,s,t) \
 { a = (a + I(b,c,d) + M + t); a = ROL(a, s) + b; }
 
-#define ROL(a, b) __hsh_rol32((a), (b))
+#define ROL(a, b) c_hsh_rol32((a), (b))
 #define REV(a,b,c,d,t) { t=d; d=c; c=b; b=a; a=t; }
 
 static uchar wtab[64] = {
@@ -34,7 +32,7 @@ static uchar rtab[64] = {
 	6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21
 };
 
-static u32int ktab[64] = {
+static u32 ktab[64] = {
 	0xD76AA478UL, 0xE8C7B756UL, 0x242070DBUL,
 	0xC1BDCEEEUL, 0xF57C0FAFUL, 0x4787C62AUL,
 	0xA8304613UL, 0xFD469501UL, 0x698098D8UL,
@@ -85,8 +83,8 @@ init(ctype_hst *p)
 static void
 compress(ctype_hst *p, char *data)
 {
-	u32int st[4], w[16];
-	u32int i, t;
+	u32 st[4], w[16];
+	u32 i, t;
 
 	for (i = 0; i < 16; ++i)
 		w[i] = c_uint_32unpack(data + (i << 2));

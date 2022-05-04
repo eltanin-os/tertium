@@ -8,13 +8,13 @@ rangecmp(ctype_rune k, ctype_rune *p)
 }
 
 int
-__utf8_rangecmp(void *va, void *vb)
+_tertium_utf8_rangecmp(void *va, void *vb)
 {
 	return rangecmp(*(ctype_rune *)va, vb);
 }
 
 int
-__utf8_cmp(void *va, void *vb)
+_tertium_utf8_cmp(void *va, void *vb)
 {
 	return *(ctype_rune *)va - *(ctype_rune *)vb;
 }

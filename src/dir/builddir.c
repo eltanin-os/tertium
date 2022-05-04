@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "__int__.h"
+#include "internal.h"
 
 struct dir {
 	ushort a;
@@ -10,19 +10,19 @@ struct dir {
 };
 
 ctype_node *
-__dir_builddir(ctype_dir *p)
+_tertium_dir_builddir(ctype_dir *p)
 {
-	__fb_dirent *d;
+	_tertium_type_dirent *d;
 	ctype_dent *cur, *ep;
 	ctype_node *np;
 	struct dir dir;
 	ctype_fd fd;
 	int r;
-	char rp[C_PATHMAX];
+	char rp[C_LIM_PATHMAX];
 
 	cur = p->cur->p;
-	if ((fd = c_nix_fdopen2(cur->path, C_OREAD | C_OCEXEC)) < 0)
-		return (void *)-1;
+	if ((fd = c_nix_fdopen2(cur->path, C_NIX_OREAD | C_NIX_OCEXEC)) < 0)
+		return BFAIL;
 
 	c_mem_cpy(rp, cur->len, cur->path);
 	rp[cur->len] = 0;
@@ -41,13 +41,14 @@ __dir_builddir(ctype_dir *p)
 		d = (void *)(dir.s + dir.n);
 		dir.n += d->d_reclen;
 
-		if (!(p->opts & C_FSVDT) && C_ISDOT(d->d_name))
+		if (!(p->opts & C_DIR_FSVDT) && C_STD_ISDOT(d->d_name))
 			continue;
-		if (c_adt_lpush(&np, __dir_newfile(rp, d->d_name, p->opts)) < 0)
+		if (c_adt_lpush(&np,
+		    _tertium_dir_newfile(rp, d->d_name, p->opts)) < 0)
 			goto err;
 
 		ep = np->p;
-		ep->info = __dir_info(p, ep);
+		ep->info = _tertium_dir_info(p, ep);
 		ep->parent = cur;
 		ep->depth = cur->depth + 1;
 		ep->__p = p->cur;
@@ -64,5 +65,5 @@ err:
 	while (np)
 		c_adt_lfree(c_adt_lpop(&np));
 
-	return (void *)-1;
+	return BFAIL;
 }

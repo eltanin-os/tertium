@@ -10,7 +10,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	ctype_error sverr;
 	usize off;
 	char *path, *s;
-	char buf[C_PATHMAX];
+	char buf[C_LIM_PATHMAX];
 
 	c_mem_set(&e, sizeof(e), 0);
 	if (c_dyn_cat(&e, __exc_env.p, __exc_env.n, sizeof(uchar)) < 0)
@@ -24,7 +24,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	if (e.n)
 		c_mem_set(e.p + e.n, sizeof(void *), 0);
 
-	if ((path = c_str_chr(prog, C_USIZEMAX, '/')))
+	if ((path = c_str_chr(prog, -1, '/')))
 		return c_sys_execve(prog, argv, (char **)c_arr_data(&e));
 
 	if (!(path = c_std_getenv("PATH")))
@@ -35,14 +35,15 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	c_arr_init(&f, buf, sizeof(buf));
 	while (s) {
 		c_arr_trunc(&f, 0, sizeof(uchar));
-		off = (s = c_str_chr(path, C_USIZEMAX, ':')) ? s - path : -1;
+		off = (s = c_str_chr(path, -1, ':')) ? s - path : -1;
 		if (c_arr_fmt(&f, "%.*s/%s", off, path, prog) < 0)
 			return -1;
 		c_sys_execve(c_arr_data(&f), argv, (char **)c_arr_data(&e));
-		if (errno != C_ENOENT) {
+		if (errno != C_ERR_ENOENT) {
 			sverr = errno;
-			if (!(errno == C_EACCES || errno == C_EPERM ||
-			    errno == C_EISDIR))
+			if (!(errno == C_ERR_EACCES ||
+			    errno == C_ERR_EPERM ||
+			    errno == C_ERR_EISDIR))
 				break;
 		}
 		path += off + 1;

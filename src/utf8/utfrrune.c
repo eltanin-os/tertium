@@ -9,7 +9,7 @@ c_utf8_utfrrune(char *s, ctype_rune r)
 	char *p;
 
 	if (r < 0x80)
-		return c_str_rchr(s, C_USIZEMAX, r);
+		return c_str_rchr(s, -1, r);
 
 	p = nil;
 	while (*s) {

@@ -1,6 +1,6 @@
-.global __asm_syscall
-.type __asm_syscall,@function
-__asm_syscall:
+.global _tertium_syscall
+.type _tertium_syscall,@function
+_tertium_syscall:
 	movq %rdi,%rax
 	movq %rsi,%rdi
 	movq %rdx,%rsi
