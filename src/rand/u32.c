@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 u32
-c_rand_u32int(u32 n)
+c_rand_u32(u32 n)
 {
 	u32 min, x;
 

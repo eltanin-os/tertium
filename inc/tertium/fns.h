@@ -94,7 +94,8 @@ char *c_gen_basename(char *);
 char *c_gen_dirname(char *);
 
 /* hsh routines */
-usize c_hsh_octets(ctype_hst *p);
+void c_hsh_initk(ctype_hst *, void *, usize);
+usize c_hsh_octets(ctype_hst *);
 ctype_status c_hsh_putfd(ctype_hst *, ctype_hmd *, ctype_fd, usize);
 ctype_status c_hsh_putfile(ctype_hst *, ctype_hmd *, char *);
 u32 c_hsh_rol32(u32, int);
@@ -184,10 +185,14 @@ ctype_status c_nix_unlink(char *);
 ctype_id c_nix_waitpid(ctype_id, int *, uint);
 
 /* rand routines */
-char *c_rand_genseed(char *, usize);
+void c_rand_genseed(ctype_rst *p);
 char *c_rand_data(char *, usize);
+char *c_rand_datainc(ctype_rst *, char *, usize);
 char *c_rand_name(char *, usize);
-u32 c_rand_u32int(u32);
+char *c_rand_nameinc(ctype_rst *, char *, usize);
+void c_rand_setseed(ctype_rst *, u64);
+u32 c_rand_u32(u32);
+u32 c_rand_u32inc(ctype_rst *, u32);
 
 /* std routines */
 void *c_std_alloc(usize, usize);

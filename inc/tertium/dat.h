@@ -1,3 +1,7 @@
+/*
+ * MACROS
+ */
+
 /* arr macros */
 #define c_arr_INIT(a) { sizeof((a)), 0, (a) }
 
@@ -62,6 +66,7 @@ enum {
 /* hsh macros */
 enum {
 	C_HSH_H32DIG = 4,
+	C_HSH_SIPHASHDIG = 8,
 	C_HSH_MD5DIG = 16,
 	C_HSH_SHA1DIG = 20,
 	C_HSH_SHA256DIG = 32,
@@ -130,6 +135,10 @@ enum {
 #define C_UTF8_RUNEERROR 0xFFFD
 #define C_UTF8_RUNEMAX 0x10FFFF
 #define C_UTF8_MAX 6
+
+/*
+ *  TYPES
+ */
 
 /* arr types */
 typedef struct ctype_arr ctype_arr;
@@ -269,6 +278,13 @@ struct ctype_cdbmk {
 	char buf[C_IOQ_BSIZ];
 };
 
+/* rand types */
+typedef struct ctype_rst ctype_rst;
+
+struct ctype_rst {
+	u64 state;
+};
+
 /* std types */
 typedef struct ctype_arg ctype_arg;
 
@@ -301,12 +317,14 @@ extern ctype_arr *arrzero;
 /* hsh variables */
 extern ctype_hmd *c_hsh_crc32b;
 extern ctype_hmd *c_hsh_crc32p;
-extern ctype_hmd *c_hsh_edf;
 extern ctype_hmd *c_hsh_fletcher32;
+extern ctype_hmd *c_hsh_halfsiphash;
 extern ctype_hmd *c_hsh_md5;
+extern ctype_hmd *c_hsh_murmur32;
 extern ctype_hmd *c_hsh_sha1;
 extern ctype_hmd *c_hsh_sha256;
 extern ctype_hmd *c_hsh_sha512;
+extern ctype_hmd *c_hsh_siphash;
 extern ctype_hmd *c_hsh_whirlpool;
 
 /* ioq variables */

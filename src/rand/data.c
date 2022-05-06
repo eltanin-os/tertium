@@ -1,44 +1,37 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-struct rand {
-	u64 state;
-	u64 inc;
-};
+#define RFLAGS (_TERTIUM_SYS_GRNDNONBLOCK|_TERTIUM_SYS_GRNDRANDOM)
 
-static int haveseed;
-
-static u32
-rng(struct rand *p)
+static void
+pseudoentropy(char *s, usize n)
 {
-	u64 os;
-	u32 xs, rot;
+	ctype_hst hs;
+	ctype_tai now;
+	usize i;
+	char seed[16];
 
-	os = p->state;
-	p->state = os * 6364136223846793005ULL + (p->inc | 1);
-	xs = ((os >> 18) ^ os) >> 27;
-	rot = os >> 59;
-	return (xs >> rot) | (xs << ((-rot) & 31));
+	/* seed */
+	c_tai_now(&now);
+	c_tai_pack(seed, &now);
+	c_uint_32bigpack(seed+8, c_sys_getpid());
+	c_uint_32bigpack(seed+12, (uintptr)s);
+	/* hash */
+	c_hsh_initk(&hs, seed, sizeof(seed));
+	c_hsh_siphash->init(&hs);
+	for (i = 0; i < n; i += 8) {
+		c_hsh_siphash->update(&hs, s, n);
+		c_hsh_siphash->end(&hs, seed);
+		c_mem_cpy(s+i, C_STD_MIN(8, n - i), seed);
+	}
 }
 
 char *
 c_rand_data(char *s, usize n)
 {
-	static struct rand rst;
-	u64 seed[2];
-	u32 x;
-	u8 r;
-
-	if (!haveseed) {
-		c_rand_genseed((void *)seed, sizeof(seed));
-		rst.state = seed[0];
-		rst.inc = seed[1];
-		++haveseed;
-	}
-	while (n) {
-		n -= r = C_STD_MIN(n, 4);
-		x = rng(&rst);
-		c_mem_cpy(s + n, r, &x);
-	}
+	size r;
+	r = c_sys_getrandom(s, n, RFLAGS);
+	if (r < 0) r = 0;
+	if ((usize)r < n) pseudoentropy(s, n);
 	return s;
 }

@@ -97,9 +97,11 @@ LIBCSRC=\
 	src/gen/dirname.c\
 	src/hsh/crc32b.c\
 	src/hsh/crc32p.c\
-	src/hsh/edf.c\
 	src/hsh/fletcher32.c\
+	src/hsh/halfsiphash.c\
+	src/hsh/initk.c\
 	src/hsh/md5.c\
+	src/hsh/murmur32.c\
 	src/hsh/octets.c\
 	src/hsh/putfd.c\
 	src/hsh/putfile.c\
@@ -110,6 +112,7 @@ LIBCSRC=\
 	src/hsh/sha1.c\
 	src/hsh/sha256.c\
 	src/hsh/sha512.c\
+	src/hsh/siphash.c\
 	src/hsh/str.c\
 	src/hsh/update.c\
 	src/hsh/whirlpool.c\
@@ -190,9 +193,13 @@ LIBCSRC=\
 	src/nix/unlink.c\
 	src/nix/waitpid.c\
 	src/rand/data.c\
+	src/rand/datainc.c\
 	src/rand/genseed.c\
 	src/rand/name.c\
-	src/rand/u32int.c\
+	src/rand/nameinc.c\
+	src/rand/setseed.c\
+	src/rand/u32.c\
+	src/rand/u32inc.c\
 	src/std/alloc.c\
 	src/std/argmain.c\
 	src/std/argv0.c\
@@ -316,6 +323,7 @@ LIBCSRC=\
 	src/sys/geteuid.c\
 	src/sys/getgid.c\
 	src/sys/getpid.c\
+	src/sys/getrandom.c\
 	src/sys/getuid.c\
 	src/sys/lchown.c\
 	src/sys/link.c\

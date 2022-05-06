@@ -28,7 +28,7 @@ c_cdb_findnext(ctype_cdb *p, char *k, usize n)
 	char buf[8];
 
 	if (!p->loop) {
-		c_hsh_str(c_hsh_edf, k, n, buf);
+		c_hsh_str(c_hsh_murmur32, k, n, buf);
 		h = c_uint_32unpack(buf);
 		if (c_cdb_read(p, buf, sizeof(buf), (h << 3) & 2047) < 0)
 			return -1;
