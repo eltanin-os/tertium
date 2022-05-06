@@ -1,4 +1,8 @@
 /* adt routines */
+ctype_status c_adt_kvadd(ctype_kvtree *, char *, void *);
+ctype_status c_adt_kvdel(ctype_kvtree *, char *);
+void c_adt_kvfree(ctype_kvtree *);
+void *c_adt_kvget(ctype_kvtree *, char *);
 void c_adt_lfree(ctype_node *);
 ctype_node *c_adt_lnew(void *, usize);
 ctype_node *c_adt_lpop(ctype_node **);

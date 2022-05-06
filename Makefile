@@ -16,6 +16,10 @@ ASMSRC=\
 	sys/$(OSNAME)/$(OBJTYPE)/syscall.s
 
 LIBCSRC=\
+	src/adt/kvadd.c\
+	src/adt/kvdel.c\
+	src/adt/kvfree.c\
+	src/adt/kvget.c\
 	src/adt/lfree.c\
 	src/adt/lnew.c\
 	src/adt/lpop.c\
