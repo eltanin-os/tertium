@@ -4,6 +4,8 @@
 ctype_status
 c_fmt_put(ctype_fmt *p, char *s)
 {
-	if (!s) return 0;
-	return c_fmt_nput(p, s, c_str_len(s, -1));
+	usize len;
+	len = 0;
+	if (s) len = c_str_len(s, -1);
+	return c_fmt_nput(p, s, len);
 }
