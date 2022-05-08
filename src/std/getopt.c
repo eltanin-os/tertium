@@ -30,7 +30,7 @@ c_std_getopt(ctype_arg *p, int argc, char **argv, char *opts)
 			p->arg = s + p->pos;
 			p->pos = 0;
 		} else if (p->idx >= argc) {
-			return ':';
+			return (p->opt = ':');
 		} else {
 			p->arg = argv[p->idx];
 		}
