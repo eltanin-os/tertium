@@ -19,6 +19,7 @@ ctype_hmd *c_hsh_murmur32 = &md;
 static void
 init(ctype_hst *p)
 {
+	p->curlen = 0;
 	p->len = 0;
 	p->st.x32[0] = 0xDEAFB0FAU;
 }
@@ -27,7 +28,6 @@ static void
 compress(ctype_hst *p, char *data)
 {
 	u32 k;
-
 	/* key */
 	k = c_uint_32unpack(data);
 	k *= C1;
