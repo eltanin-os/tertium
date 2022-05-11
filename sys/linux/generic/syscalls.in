@@ -54,7 +54,8 @@ _TERTIUM_SYS_write size write (ctype_fd, void *, usize)
 # CUSTOM
 #
 DUMMY char* getcwd (char* s, usize n) {
-	return (c_nix_syscall(_TERTIUM_SYS_getcwd, s, n) < 0) ? nil : s;
+	if (c_nix_syscall(_TERTIUM_SYS_getcwd, s, n) < 0) return nil;
+	return s;
 }
 
 DUMMY int fcntl (ctype_fd fd, int cmd, ...) {

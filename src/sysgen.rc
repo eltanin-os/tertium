@@ -1,0 +1,51 @@
+#!/bin/rc
+# XXX: SUCKS
+
+# $1: file
+# $2: implicit? (named args and given block)
+# $*: line
+fn genfile {
+	# get variables
+	file=$1; imp=$2
+	shift 2
+	code=$1; rtype=$2; name=$3
+	shift 3
+	if ($imp) {
+		args=`{echo $* | sed -e 's;^(;;' -e 's;)$;;' | awk -F',' '{ count=0; out=""; for (i=1; i<=NF; i++) { count++; if (substr($i, length($i), 1) != "*") { $i=$i" " }; out=out$i"a"count"," } print substr(out, 1, length(out)-1) }'}
+		if (~ $#args 0) args='void'
+	}; if not {
+		args=`{echo $* | sed -e 's;^(;;' -e 's;)$;;' -e 's;* \([A-Za-z]\); *\1;g'}
+	}
+	# create file
+	{
+	# plan9-rc heredoc is brain dead
+	echo '#include <tertium/cpu.h>'
+	echo '#include <tertium/std.h>'
+	echo
+	echo $rtype
+	echo 'c_sys_'$name'('$"args')'
+	echo '{'
+	if ($imp) {
+		printf '\t'; if (! ~ 'void' $"rtype) printf 'return '
+		if (~ 'void' $"args) {
+			echo 'c_nix_syscall('$code');'
+		}; if not {
+			echo $args | awk -F',' '{ count=0; out=""; for (i=1; i<=NF; i++) { count++; out=out"a"count"," } print "c_nix_syscall('$code', "substr(out, 1, length(out)-1)");" }'
+		}
+	}; if not {
+		awk '/.*'$name'.*{/{p=1; next} /^}$/{p=0} p' <$file
+	}
+	echo '}' } > $OUT/$name.c
+}
+
+# $1: input file
+# $2: output directory
+IN=$1; OUT=$2
+# MAIN
+_ifs=$ifs
+ifs=''; ifs=`{echo} # linefeed
+l1=`{awk '/^[A-Za-z_].*\(.*\)$/ {print}' <$IN}
+l2=`{awk '/^[A-Za-z_].*\(.*\) / {print substr($0, 1, length($0)-2)}' <$IN}
+ifs=$_ifs
+for (i in $l1) genfile $1 true  `{echo $i}
+for (i in $l2) genfile $1 false `{echo $i}

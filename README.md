@@ -1,9 +1,7 @@
 # Tertium
+Tertium is a general-purpose library for C that aims to provide a simple and secure environment that produces more reliable software.
 
-Tertium is a general-purpose library for C that aims to provide a simple
-and secure environment that produces more reliable software.
-
-### Modules
+## Modules
 * adt: abstract data types
 * arr: generic static array
 * cal: calendar dates
@@ -26,11 +24,9 @@ and secure environment that produces more reliable software.
 * taia: atto-second precision tai time
 * uint: portable unsigned integer storage
 
-### Credits
-Part of the API and code is inspired/copied from the public domain
-libraries written by Daniel J. Bernstein
+## Credits
+Part of the API and code is inspired/copied from the public domain libraries written by Daniel J. Bernstein.
 https://cr.yp.to/
 
-The hsh cryptographic routines use code from the public domain
-library tomcrypt
+The hsh cryptographic routines uses code from the public domain library tomcrypt.
 https://www.libtom.net/LibTomCrypt/
