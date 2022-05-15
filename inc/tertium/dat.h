@@ -218,7 +218,6 @@ typedef ctype_status (*ctype_fmtopfn)(ctype_fmt *, char *, usize);
 typedef ctype_status (*ctype_fmtfn)(ctype_fmt *);
 
 struct ctype_fmt {
-	ctype_arr *mb;
 	va_list args;
 	ctype_fmtopfn func;
 	usize nfmt;

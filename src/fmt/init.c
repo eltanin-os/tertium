@@ -2,9 +2,8 @@
 #include <tertium/std.h>
 
 void
-c_fmt_init(ctype_fmt *p, void *farg, ctype_arr *mb, ctype_fmtopfn func)
+c_fmt_init(ctype_fmt *p, void *farg, ctype_fmtopfn func)
 {
-	p->mb = mb;
 	p->func = func;
 	p->farg = farg;
 	p->nfmt = 0;

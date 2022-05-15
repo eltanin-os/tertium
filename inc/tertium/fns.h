@@ -85,7 +85,7 @@ ctype_id c_exc_spawn0(char *, char **, char **);
 ctype_id c_exc_spawn1(char *, char **, char **, ctype_fd *, int);
 
 /* fmt routines */
-void c_fmt_init(ctype_fmt *, void *, ctype_arr *, ctype_fmtopfn);
+void c_fmt_init(ctype_fmt *, void *, ctype_fmtopfn);
 size c_fmt_fmt(ctype_fmt *, char *);
 ctype_status c_fmt_install(ctype_rune, ctype_fmtfn);
 ctype_status c_fmt_nput(ctype_fmt *, char *, usize);
