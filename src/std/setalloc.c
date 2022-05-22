@@ -3,7 +3,7 @@
 
 #include "internal.h"
 
-ctype_allocfn __allocator = pubrealloc;
+ctype_allocfn _tertium_allocator = pubrealloc;
 
 void
 c_std_setalloc(ctype_allocfn f)
