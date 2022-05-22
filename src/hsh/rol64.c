@@ -4,5 +4,8 @@
 u64
 c_hsh_rol64(u64 n, int k)
 {
-	return ((n << k) | (n >> (64 - k)));
+	uint mask;
+	mask = C_LIM_CHARBIT * sizeof(n) - 1;
+	k &= mask;
+	return ((n << k) | (n >> (-k & mask)));
 }
