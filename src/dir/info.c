@@ -23,20 +23,18 @@ cmp(void *a, void *b)
 static int
 hist(ctype_arr *hp, ctype_id dev, ctype_id ino)
 {
+	uvlong k;
 	uvlong *p;
 	usize n;
-	uvlong k;
 	uchar *s;
-
-	if (c_dyn_ready(hp, 1, sizeof(*p)) < 0)
-		return -1;
-
+	if (c_dyn_ready(hp, 1, sizeof(*p)) < 0) return -1;
 	n = c_arr_len(hp, sizeof(*p));
 	s = c_arr_data(hp);
 	k = PAIR(dev, ino); /* !!! */
 	if (*(p = c_std_nbsearch(&k, s, n, sizeof(*p), &cmp)) != k) {
 		n = (((uchar *)p - s) / sizeof(*p)) + !!n;
-		c_dyn_idxcat(hp, n, &k, 1, sizeof(k));
+		if (c_dyn_idxcat(hp, n, &k, 1, sizeof(k)) < 0) return -1;
+		return 1;
 	}
 	return 0;
 }
