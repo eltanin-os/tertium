@@ -14,14 +14,12 @@ c_std_vtoptr_(char *s, ...)
 	va_end(ap);
 
 	c_mem_set(&arr, sizeof(arr), 0);
-	if (c_dyn_ready(&arr, n + 1, sizeof(char *)) < 0)
-		return nil;
-
+	if (c_dyn_ready(&arr, n + 1, sizeof(char *)) < 0) return nil;
 	av = c_arr_data(&arr);
+
 	av[0] = s;
 	va_start(ap, s);
-	for (i = 1; i <= n; ++i)
-		av[i] = va_arg(ap, char *);
+	for (i = 1; i <= n; ++i) av[i] = va_arg(ap, char *);
 	va_end(ap);
 	return av;
 }

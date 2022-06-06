@@ -22,6 +22,7 @@ ctype_status c_arr_idxcat(ctype_arr *, usize, void *, usize, usize);
 void c_arr_init(ctype_arr *, char *, usize);
 usize c_arr_len(ctype_arr *, usize);
 ctype_status c_arr_ready(ctype_arr *, usize, usize);
+ctype_status c_arr_tofrom(ctype_arr *, ctype_arr *);
 usize c_arr_total(ctype_arr *);
 ctype_status c_arr_trunc(ctype_arr *, usize, usize);
 size c_arr_vfmt(ctype_arr *, char *, va_list);
@@ -64,6 +65,7 @@ void c_dyn_free(ctype_arr *);
 ctype_status c_dyn_idxcat(ctype_arr *, usize, void *, usize, usize);
 ctype_status c_dyn_ready(ctype_arr *, usize, usize);
 void c_dyn_shrink(ctype_arr *);
+ctype_status c_dyn_tofrom(ctype_arr *, ctype_arr *);
 size c_dyn_vfmt(ctype_arr *, char *, va_list);
 
 /* err routines */
@@ -83,6 +85,8 @@ ctype_status c_exc_runenv(char *, char **, char **);
 ctype_status c_exc_setenv(char *, char *);
 ctype_id c_exc_spawn0(char *, char **, char **);
 ctype_id c_exc_spawn1(char *, char **, char **, ctype_fd *, int);
+void *c_exc_varglist(char *, va_list);
+ctype_status c_exc_wait(ctype_id, ctype_status *);
 
 /* fmt routines */
 void c_fmt_init(ctype_fmt *, void *, ctype_fmtopfn);
@@ -186,7 +190,7 @@ vlong c_nix_syscall_(vlong num, ...);
 uint c_nix_umask(uint);
 ctype_status c_nix_uname(ctype_utsname *);
 ctype_status c_nix_unlink(char *);
-ctype_id c_nix_waitpid(ctype_id, int *, uint);
+ctype_id c_nix_waitpid(ctype_id, ctype_status *, uint);
 
 /* rand routines */
 void c_rand_genseed(ctype_rst *p);
@@ -204,7 +208,6 @@ void *c_std_bsearch(void *, void *, usize, usize, ctype_cmpfn);
 void *c_std_calloc(usize, usize);
 void c_std_errstr(char *, usize);
 void c_std_exit(int);
-usize c_std_fmtnil(char *, ...);
 void *c_std_free_(void *);
 char *c_std_getenv(char *);
 int c_std_getopt(ctype_arg *, int, char **, char *);
@@ -231,6 +234,8 @@ int c_str_cmp(char *, usize, char *);
 char *c_str_cpy(char *, usize, char *);
 usize c_str_cspn(char *, usize, char *);
 char *c_str_dup(char *, usize);
+size c_str_fmt(char **, char *, ...);
+usize c_str_fmtcnt(char *, ...);
 usize c_str_len(char *, usize);
 char *c_str_ltrim(char *, usize, char *);
 char *c_str_rchr(char *, usize, int);
@@ -238,6 +243,8 @@ char *c_str_rtrim(char *, usize, char *);
 usize c_str_spn(char *, usize, char *);
 char *c_str_str(char *, usize, char *);
 char *c_str_trim(char *, usize, char *);
+size c_str_vfmt(char **, char *, va_list);
+usize c_str_vfmtcnt(char *, va_list);
 
 /* tai routines */
 void c_tai_add(ctype_tai *, ctype_tai *, ctype_tai *);

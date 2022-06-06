@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 #define ROPTS (C_NIX_OREAD|C_NIX_OEXCL)
-#define DEFOPTS (C_NIX_OCREATE|C_NIX_OEXCL|C_NIX_ORDWR)
+#define DEFOPTS (C_NIX_OCREATE|C_NIX_OEXCL|C_NIX_ORDWR|C_NIX_OAPPEND)
 
 ctype_fd
 c_nix_mktemp(char *s, usize n, uint opts)

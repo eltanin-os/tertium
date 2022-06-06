@@ -11,15 +11,10 @@ put(ctype_fmt *p, char *s, usize n)
 }
 
 usize
-c_std_fmtnil(char *fmt, ...)
+c_str_vfmtcnt(char *fmt, va_list ap)
 {
 	ctype_fmt f;
-	va_list ap;
-	usize n;
-	va_start(ap, fmt);
 	c_fmt_init(&f, nil, put);
 	va_copy(f.args, ap);
-	n = c_fmt_fmt(&f, fmt);
-	va_end(ap);
-	return n;
+	return c_fmt_fmt(&f, fmt);
 }

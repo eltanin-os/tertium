@@ -271,6 +271,10 @@
 #define C_NIX_DEFFILEMODE 0666
 
 /* sys macros */
+#define _TERTIUM_SYS_WIFEXITED(a) (!_TERTIUM_SYS_WTERMSIG(a))
+#define _TERTIUM_SYS_WEXITSTATUS(a) (((a) & 0xff00) >> 8)
+#define _TERTIUM_SYS_WISIGNALED(a) (((a) & 0xffff) - 1U < 0xffu)
+#define _TERTIUM_SYS_WTERMSIG(a) ((a) & 0x7f)
 #define _TERTIUM_SYS_GRNDNONBLOCK 1
 #define _TERTIUM_SYS_GRNDRANDOM 2
 

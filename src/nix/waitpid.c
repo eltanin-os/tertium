@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 ctype_id
-c_nix_waitpid(ctype_id pid, int *status, uint opts)
+c_nix_waitpid(ctype_id pid, ctype_status *status, uint opts)
 {
 	ctype_id id;
 

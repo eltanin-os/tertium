@@ -1,7 +1,11 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-extern ctype_arr __exc_env;
+#define NEXTCOLON(a, b) \
+{ if (!((a) = c_str_chr((b), -1, ':'))) (a) = c_str_chr((b), -1, '\0'); }
+#define DEFPATH "/bin:/usr/bin:."
+
+extern ctype_arr _tertium_exc_env;
 
 ctype_status
 c_exc_runenv(char *prog, char **argv, char **envp)
@@ -13,31 +17,29 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	char buf[C_LIM_PATHMAX];
 
 	c_mem_set(&e, sizeof(e), 0);
-	if (c_dyn_cat(&e, __exc_env.p, __exc_env.n, sizeof(uchar)) < 0)
-		return -1;
+	for (; envp && *envp; ++envp)
+		if (c_dyn_cat(&e, &*envp, 1, sizeof(*envp)) < 0) return -1;
 
-	if (envp)
-		for (; *envp; ++envp)
-			if (c_dyn_cat(&e, &*envp, 1, sizeof(*envp)) < 0)
-				return -1;
+	if (c_dyn_tofrom(&e, &_tertium_exc_env) < 0) return -1;
 
-	if (e.n)
-		c_mem_set(e.p + e.n, sizeof(void *), 0);
+	s = nil;
+	if (c_dyn_cat(&e, &s, 1, sizeof(void *)) < 0) return -1;
 
 	if ((path = c_str_chr(prog, -1, '/')))
 		return c_sys_execve(prog, argv, (char **)c_arr_data(&e));
 
-	if (!(path = c_std_getenv("PATH")))
-		path = "/bin:/usr/bin:.";
+	if (!(path = c_std_getenv("PATH"))) path = DEFPATH;
 
 	sverr = 0;
-	s = path;
 	c_arr_init(&f, buf, sizeof(buf));
-	while (s) {
+	while (path) {
+		NEXTCOLON(s, path);
+		off = s - path;
 		c_arr_trunc(&f, 0, sizeof(uchar));
-		off = (s = c_str_chr(path, -1, ':')) ? s - path : -1;
-		if (c_arr_fmt(&f, "%.*s/%s", off, path, prog) < 0)
-			return -1;
+		if (c_arr_fmt(&f, "%.*s/%s", off, path, prog) < 0) {
+			if (errno == C_ERR_ENOMEM) errno = C_ERR_ENAMETOOLONG;
+			break;
+		}
 		c_sys_execve(c_arr_data(&f), argv, (char **)c_arr_data(&e));
 		if (errno != C_ERR_ENOENT) {
 			sverr = errno;
@@ -48,10 +50,7 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 		}
 		path += off + 1;
 	}
-
-	if (sverr)
-		errno = sverr;
-
+	if (sverr) errno = sverr;
 	c_dyn_free(&e);
 	return -1;
 }
