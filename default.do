@@ -3,7 +3,6 @@ if (~ $1 *.[1chs] || ~ $1 *.in || ~ $1 *.rc) exit
 MAINDIR=$PWD
 . $MAINDIR/config.rc
 HDR=$MAINDIR'/inc/tertium/'^(cpu.h dat.h fns.h std.h)
-CFILES=`{find src -type f -name '*.c'}
 MANPAGES=man/*
 switch ($1) {
 case all
@@ -20,9 +19,9 @@ case install
 	install -cm 644 lib/libtertium.a $"DESTDIR$"LIBDIR
 case install-man
 	redo-ifchange $MANPAGES
-	install -dm 755 $"DESTDIR/$"MANDIR/man1
-	install -cm 644 $MANPAGES $"DESTDIR/$"MANDIR/man1
+	install -dm 755 $"DESTDIR/$"MANDIR/man3
+	install -cm 644 $MANPAGES $"DESTDIR/$"MANDIR/man3
 case *
-	echo no rule for ''$1'' >[1=2]
+	echo no rule for ''''$1'''' >[1=2]
 	exit 1
 }
