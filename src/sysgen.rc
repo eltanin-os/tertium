@@ -30,10 +30,10 @@ fn genfile {
 		if (~ 'void' $"args) {
 			echo 'c_nix_syscall('$code');'
 		}; if not {
-			echo $args | awk -F',' '{ count=0; out=""; for (i=1; i<=NF; i++) { count++; out=out"a"count"," } print "c_nix_syscall('$code', "substr(out, 1, length(out)-1)");" }'
+			echo $args | awk -F',' '{ count=0; out=""; for (i=1; i<=NF; i++) { count++; out=out" a"count"," } print "c_nix_syscall('$code',"substr(out, 1, length(out)-1)");" }'
 		}
 	}; if not {
-		awk '/.*'$name'.*{/{p=1; next} /^}$/{p=0} p' <$file
+		awk '/.* '$name' .*{/{p=1; next} /^}$/{p=0} p' <$file
 	}
 	echo '}' } > $OUT/$name.c
 }
