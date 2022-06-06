@@ -15,6 +15,8 @@ c_adt_kvdel(ctype_kvtree *t, char *k)
 	void **wherep, **whereq;
 
 	if (!(s = t->root)) return -1;
+	direction = 0;
+	whereq = nil;
 	wherep = &t->root;
 	u = (void *)k;
 	len = c_str_len(k, -1);
