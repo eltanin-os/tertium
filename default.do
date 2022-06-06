@@ -12,12 +12,14 @@ case clean
 	rm -f inc/tertium/cpu.h lib/libtertium.a src/sysfile
 	rm -Rf src/sys
 case install
+	redo-ifalways
 	redo-ifchange all
 	install -dm 755 $"DESTDIR$"INCDIR/tertium
 	install -dm 755 $"DESTDIR$"LIBDIR
 	install -cm 644 $HDR $"DESTDIR$"INCDIR/tertium
 	install -cm 644 lib/libtertium.a $"DESTDIR$"LIBDIR
 case install-man
+	redo-ifalways
 	redo-ifchange $MANPAGES
 	install -dm 755 $"DESTDIR/$"MANDIR/man3
 	install -cm 644 $MANPAGES $"DESTDIR/$"MANDIR/man3
