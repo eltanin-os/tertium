@@ -55,7 +55,7 @@ c_adt_kvadd(ctype_kvtree *t, char *k, void *v)
 	}
 	if ((newotherbits = p->k[newbyte])) goto newkey;
 	p->v = v;
-	return 0;
+	return 1;
 newkey:
 	/* create node */
 	newotherbits = diffbit(newotherbits);
