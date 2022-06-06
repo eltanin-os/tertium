@@ -204,6 +204,7 @@ u32 c_rand_u32inc(ctype_rst *, u32);
 
 /* std routines */
 void *c_std_alloc(usize, usize);
+ctype_status c_std_atexit(void (*)(void));
 void *c_std_bsearch(void *, void *, usize, usize, ctype_cmpfn);
 void *c_std_calloc(usize, usize);
 void c_std_errstr(char *, usize);
