@@ -8,8 +8,7 @@ switch ($1) {
 case all
 	redo-ifchange lib/libtertium.a
 case clean
-	find src sys -type f -name '*.o' -exec rm -f '{}' +
-	rm -f inc/tertium/cpu.h lib/libtertium.a src/sysfile
+	rm -f `{redo-targets}
 	rm -Rf src/sys
 case install
 	redo-ifalways
