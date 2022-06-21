@@ -1,8 +1,9 @@
 /* adt routines */
 ctype_status c_adt_kvadd(ctype_kvtree *, char *, void *);
 ctype_status c_adt_kvdel(ctype_kvtree *, char *);
-void c_adt_kvfree(ctype_kvtree *);
+void c_adt_kvfree(ctype_kvtree *, void (*)(void *));
 void *c_adt_kvget(ctype_kvtree *, char *);
+void c_adt_kvtraverse(ctype_kvtree *, void (*)(char *, void *));
 void c_adt_lfree(ctype_node *);
 ctype_node *c_adt_lnew(void *, usize);
 ctype_node *c_adt_lpop(ctype_node **);
@@ -170,6 +171,7 @@ ctype_status c_nix_lchown(char *, ctype_id, ctype_id);
 ctype_status c_nix_link(char *, char *);
 ctype_status c_nix_lstat(ctype_stat *, char *);
 ctype_status c_nix_mkdir(char *, uint);
+ctype_status c_nix_mklntemp(char *, usize, char *);
 ctype_status c_nix_mkpath(char *, uint, uint);
 ctype_fd c_nix_mktemp(char *, usize);
 ctype_fd c_nix_mktemp3(char *, usize, uint);
