@@ -1,7 +1,12 @@
 #!/bin/rc -e
 if (~ $1 *.[1chs] || ~ $1 *.in || ~ $1 *.rc) exit
 MAINDIR=$PWD
-. $MAINDIR/config.rc
+if (test -e config.rc) {
+	redo-ifchange config.rc
+	. $MAINDIR/config.rc ||;
+}; if not {
+	redo-ifcreate config.rc
+}
 HDR=$MAINDIR'/inc/tertium/'^(cpu.h dat.h fns.h std.h)
 MANPAGES=man/*
 switch ($1) {
