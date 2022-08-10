@@ -1,3 +1,9 @@
-#!/bin/rc -e
-redo-ifchange $HDR $2
+#!/bin/execlineb -S3
+multisubstitute {
+	importas -D "cc" CC CC
+	importas -isu HDR HDR
+	importas -sD "-O0 -g -std=c99 -Wall -Wextra -pedantic" CFLAGS CFLAGS
+	importas -sD "" CPPFLAGS CPPFLAGS
+}
+foreground { redo-ifchange $HDR $2 }
 $CC $CFLAGS $CPPFLAGS -I../../inc -o $3 -c $2

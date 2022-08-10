@@ -1,16 +1,15 @@
-#!/bin/rc -e
+#!/bin/execlineb -S3
+multisubstitute {
+importas -i OSNAME OSNAME
+importas -i OBJTYPE OBJTYPE
+}
 # HDR order is important don't mess with it
-HDR=(macros.h.in ctypes.h.in types.h.in prototypes.h.in)
-DEPS=($HDR syscalls.in)
-ARCH=$MAINDIR/sys/$"OSNAME/$"OBJTYPE
-GEN=$MAINDIR/sys/$"OSNAME/generic
-redo-ifchange $GEN/$DEPS $ARCH/$DEPS
-for (i in $HDR) {
-	cat $GEN/$i $ARCH/$i
-	echo
+multisubstitute {
+define -s HDR "macros.h.in ctypes.h.in types.h.in prototypes.h.in"
+define -s DEPS "macros.h.in ctypes.h.in types.h.in prototypes.h.in syscalls.in"
+define ARCH "../../sys/${OSNAME}/${OBJTYPE}"
+define GEN  "../../sys/${OSNAME}/generic"
 }
-fn prototypes {
-	awk '/^[A-z].*\(.*\)/ { out=$2" c_sys_"$3$4 ; for (i=5; i<=NF;i++) { out=out" "$i }; print out";" }' < $1 | sed -e 's;\([A-z]*\)\* ;\1 *;g' -e 's; {\;$;\;;' -e 's;();(void);' -e 's;\([^,]\) [A-z]*\([,)]\);\1\2;g'
-}
-prototypes $GEN/syscalls.in
-prototypes $ARCH/syscalls.in
+foreground { redo-ifchange cpu.h.awk ${GEN}/${DEPS} ${ARCH}/${DEPS} }
+foreground { forx -E header { $HDR } cat ${GEN}/${header} ${ARCH}/${header} }
+pipeline { cat ${GEN}/syscalls.in ${ARCH}/syscalls.in } awk -f cpu.h.awk
