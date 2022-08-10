@@ -16,8 +16,9 @@ traverse(void *t, void (*freeobj)(void *))
 		c_std_free(q);
 	} else {
 		p = (void *)s;
-		if (freeobj) freeobj(p->k);
-		c_std_free(p->v);
+		if (freeobj) freeobj(p->v);
+		c_std_free(p->k);
+		c_std_free(p);
 	}
 }
 
