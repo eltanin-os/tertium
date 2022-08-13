@@ -1,29 +1,28 @@
 #!/bin/execlineb -S3
 backtick HOSTOS { pipeline -w { tr "[A-Z]" "[a-z]" } uname -s }
 backtick HOSTARCH { uname -m }
-importas -i PWD PWD
 multisubstitute {
 	importas -iu HOSTOS HOSTOS
 	importas -iu HOSTARCH HOSTARCH
 	importas -D "/usr/local" DESTDIR DESTDIR
 	importas -D "/include" INCDIR INCDIR
 	importas -D "/lib" LIBDIR LIBDIR
-	elglob MANPAGES "${PWD}/man/*"
-	elglob HDR "${PWD}/inc/tertium/*.h"
+	importas -D "/share/man" MANDIR MANDIR
+	define HDR "inc/tertium/cpu.h inc/tertium/dat.h inc/tertium/fns.h inc/tertium/std.h"
+	elglob MANPAGES "man/*"
 }
 backtick OSNAME { importas -D "${HOSTOS}" OSNAME OSNAME echo $OSNAME }
 backtick OBJTYPE { importas -D "${HOSTARCH}" OBJTYPE OBJTYPE echo $OBJTYPE }
-backtick HDR { echo "${PWD}/inc/tertium/cpu.h" $HDR }
+backtick HDR { echo $HDR }
 ifelse { test "${1}" = "all" } {
 	redo-ifchange lib/libtertium.a
 }
 ifelse { test "${1}" = "clean" } {
 	backtick targets { redo-targets }
-	importas -su targets targets
-	foreground { rm -Rf $targets }
+	importas -isu targets targets
+	rm -Rf $targets
 }
 ifelse { test "${1}" = "install" } {
-	foreground { redo-always }
 	foreground { redo-ifchange all }
 	foreground { install -dm 755 "${DESTDIR}${INCDIR}/tertium" }
 	foreground { install -dm 755 "${DESTDIR}${LIBDIR}" }
