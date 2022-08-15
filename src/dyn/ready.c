@@ -27,5 +27,6 @@ c_dyn_ready(ctype_arr *p, usize m, usize n)
 		if (!(p->p = c_std_alloc((p->a = m * GFACT), sizeof(uchar))))
 			return -1;
 	}
+	c_mem_set(p->p + p->n, n, 0);
 	return 0;
 }
