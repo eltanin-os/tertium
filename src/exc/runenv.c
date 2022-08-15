@@ -7,6 +7,57 @@
 
 extern ctype_arr _tertium_exc_env;
 
+static ctype_status
+copyto(ctype_arr *dest, char **envp)
+{
+	char **args;
+	usize len;
+
+	len = 0;
+	for (args = envp; *args; ++args) ++len;
+	if (c_dyn_ready(dest, len, sizeof(char *)) < 0) return -1;
+	(void)c_arr_get(dest, len - 1, sizeof(char **));
+
+	args = c_arr_data(dest);
+	while (*envp) *args++ = *envp++;
+	return 0;
+}
+
+static ctype_status
+merge(ctype_arr *dest, ctype_arr *s)
+{
+	usize len, pos;
+	char **args, **sp;
+	void *tmp;
+
+	len = c_arr_len(s, sizeof(char *));
+	if (!len) return 0;
+	c_dyn_ready(dest, len, sizeof(char *));
+
+	sp = c_arr_data(s);
+	for (; *sp; ++sp) {
+		len = c_str_cspn(*sp, -1, "=");
+		for (args = c_arr_data(dest); *args; ++args) {
+			if (c_str_cspn(*args, -1, "=") - len) continue;
+			if (c_mem_cmp(*args, len, *sp)) continue;
+			if ((*sp)[len] == '=') {
+				*args = *sp;
+				goto next;
+			} else {
+				pos = c_arr_len(dest, sizeof(char *)) - 1;
+				tmp = c_arr_get(dest, pos, sizeof(char *));
+				*args = *(char **)tmp;
+				c_arr_trunc(dest, pos, sizeof(char *));
+				goto next;
+			}
+		}
+		c_arr_cat(dest, &*sp, 1, sizeof(char *));
+next:
+		;
+	}
+	return 0;
+}
+
 ctype_status
 c_exc_runenv(char *prog, char **argv, char **envp)
 {
@@ -17,13 +68,8 @@ c_exc_runenv(char *prog, char **argv, char **envp)
 	char buf[C_LIM_PATHMAX];
 
 	c_mem_set(&e, sizeof(e), 0);
-	for (; envp && *envp; ++envp)
-		if (c_dyn_cat(&e, &*envp, 1, sizeof(*envp)) < 0) return -1;
-
-	if (c_dyn_tofrom(&e, &_tertium_exc_env) < 0) return -1;
-
-	s = nil;
-	if (c_dyn_cat(&e, &s, 1, sizeof(void *)) < 0) return -1;
+	if (copyto(&e, envp) < 0) return -1;
+	if (merge(&e, &_tertium_exc_env) < 0) return -1;
 
 	if ((path = c_str_chr(prog, -1, '/')))
 		return c_sys_execve(prog, argv, (char **)c_arr_data(&e));
