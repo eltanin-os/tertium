@@ -11,7 +11,7 @@ c_exc_wait(ctype_id id, ctype_status *status)
 		*status = _TERTIUM_SYS_WEXITSTATUS(child);
 		return 1;
 	}
-	if (_TERTIUM_SYS_WISIGNALED(child)) {
+	if (_TERTIUM_SYS_WIFSIGNALED(child)) {
 		*status = _TERTIUM_SYS_WTERMSIG(child);
 		return 2;
 	}
