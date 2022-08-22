@@ -10,4 +10,5 @@ multisubstitute {
 foreground { redo-ifchange sys.awk $GEN $ARCH }
 foreground { mkdir $3 }
 cd $3
-pipeline { cat ../${GEN} ../${ARCH} } awk -f ../sys.awk
+foreground { pipeline { cat ../${GEN} ../${ARCH} } awk -f ../sys.awk }
+rm -Rf sys
