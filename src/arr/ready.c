@@ -8,7 +8,7 @@ c_arr_ready(ctype_arr *p, usize m, usize n)
 		errno = C_ERR_EOVERFLOW;
 		return -1;
 	}
-	if ((m *= n) > c_arr_avail(p)) {
+	if ((m = (m * n) + n) > c_arr_avail(p)) {
 		errno = C_ERR_ENOMEM;
 		return -1;
 	}
