@@ -8,7 +8,7 @@ multisubstitute {
 	importas -D "/include" INCDIR INCDIR
 	importas -D "/lib" LIBDIR LIBDIR
 	importas -D "/share/man" MANDIR MANDIR
-	define HDR "inc/tertium/cpu.h inc/tertium/dat.h inc/tertium/fns.h inc/tertium/std.h"
+	define -s HDR "inc/tertium/cpu.h inc/tertium/dat.h inc/tertium/fns.h inc/tertium/std.h"
 	elglob MANPAGES "man/*"
 }
 backtick OSNAME { importas -D "${HOSTOS}" OSNAME OSNAME echo $OSNAME }
