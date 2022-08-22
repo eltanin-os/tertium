@@ -1,6 +1,6 @@
 #!/bin/execlineb -S3
 multisubstitute {
-	importas -D "cc" CC CC
+	importas -sD "cc" CC CC
 	importas -isu HDR HDR
 	importas -sD "-O0 -g -std=c99 -Wall -Wextra -pedantic" CFLAGS CFLAGS
 	importas -sD "" CPPFLAGS CPPFLAGS
