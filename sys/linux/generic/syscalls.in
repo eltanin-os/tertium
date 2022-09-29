@@ -46,6 +46,7 @@ _TERTIUM_SYS_symlink ctype_status symlink (char*, char*)
 _TERTIUM_SYS_umask uint umask (uint)
 _TERTIUM_SYS_uname ctype_status uname (ctype_utsname*)
 _TERTIUM_SYS_unlink ctype_status unlink (char*)
+_TERTIUM_SYS_utimensat ctype_status utimensat (ctype_fd, char*, ctype_time*, uint)
 _TERTIUM_SYS_waitpid ctype_id waitpid (ctype_id, int*, uint)
 _TERTIUM_SYS_write size write (ctype_fd, void*, usize)
 
@@ -73,6 +74,10 @@ DUMMY int fcntl (ctype_fd fd, int cmd, ...) {
 	default:
 		return c_nix_syscall(_TERTIUM_SYS_fcntl, fd, cmd, arg);
 	}
+}
+
+DUMMY ctype_status futimens (ctype_fd fd, ctype_time *t) {
+	return c_nix_syscall(_TERTIUM_SYS_utimensat, fd, 0, t, 0);
 }
 
 DUMMY void* mmap (void* addr, usize n, int prot, uint flags, ctype_fd fd, ctype_fssize off) {

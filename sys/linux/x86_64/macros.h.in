@@ -66,5 +66,6 @@
 #define _TERTIUM_SYS_getdents 217
 #define _TERTIUM_SYS_clock_gettime 228
 #define _TERTIUM_SYS_linkat 265
+#define _TERTIUM_SYS_utimensat 280
 #define _TERTIUM_SYS_pipe2 293
 #define _TERTIUM_SYS_getrandom 318
