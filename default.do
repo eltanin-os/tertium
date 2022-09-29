@@ -14,15 +14,19 @@ multisubstitute {
 backtick OSNAME { importas -D "${HOSTOS}" OSNAME OSNAME echo $OSNAME }
 backtick OBJTYPE { importas -D "${HOSTARCH}" OBJTYPE OBJTYPE echo $OBJTYPE }
 backtick HDR { echo $HDR }
-ifelse { test "${1}" = "all" } {
+case -- $1 {
+".*\.[1ch]" {
+	exit 0
+}
+"all" {
 	redo-ifchange lib/libtertium.a
 }
-ifelse { test "${1}" = "clean" } {
+"clean" {
 	backtick targets { redo-targets }
 	importas -isu targets targets
 	rm -Rf $targets
 }
-ifelse { test "${1}" = "install" } {
+"install" {
 	foreground { redo-ifchange all }
 	foreground { install -dm 755 "${DESTDIR}${INCDIR}/tertium" }
 	foreground { install -dm 755 "${DESTDIR}${LIBDIR}" }
@@ -31,4 +35,9 @@ ifelse { test "${1}" = "install" } {
 	foreground { install -cm 644 $HDR "${DESTDIR}${INCDIR}/tertium" }
 	install -cm 644 lib/libtertium.a "${DESTDIR}${LIBDIR}"
 }
-exit 0
+}
+foreground {
+	fdmove 1 2
+	echo no rule for $1
+}
+exit 1
