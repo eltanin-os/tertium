@@ -120,7 +120,7 @@ c_nix_fscopy(char *dest, int pflag, char *src, ctype_stat *stp)
 	}
 	r = c_nix_rename(dest, s);
 done:
-	if (fd < 0) c_nix_fdclose(fd);
+	if (fd != -1) c_nix_fdclose(fd);
 	c_std_free(tmp);
 	c_dyn_free(&arr);
 	return r;
