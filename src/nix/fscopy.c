@@ -43,6 +43,7 @@ c_nix_fscopy(char *dest, int pflag, char *src, ctype_stat *stp)
 	if ((c_nix_stat(&st, dest) < 0)) {
 		if (errno != C_ERR_ENOENT) return -1;
 		r = errno;
+		c_mem_set(&st, sizeof(st), 0);
 	}
 
 	tmp = nil;
@@ -62,11 +63,8 @@ c_nix_fscopy(char *dest, int pflag, char *src, ctype_stat *stp)
 		if (r < 0) goto done;
 		s = c_arr_data(&arr);
 		dest = tmp;
-	} else if (r != C_ERR_ENOENT) {
-		errno = C_ERR_EEXIST;
-		return -1;
 	} else {
-		if ((st.dev == stp->dev) && (st.ino == stp->ino)) {
+		if (!r && ((st.dev == stp->dev) && (st.ino == stp->ino))) {
 			c_std_werrstr("same file");
 			return -1;
 		}
