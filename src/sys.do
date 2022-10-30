@@ -7,8 +7,8 @@ multisubstitute {
 	define ARCH "../sys/${OSNAME}/${OBJTYPE}/syscalls.in"
 	define GEN  "../sys/${OSNAME}/generic/syscalls.in"
 }
-foreground { redo-ifchange sys.awk $GEN $ARCH }
-foreground { mkdir $3 }
+if { redo-ifchange sys.awk $GEN $ARCH }
+if { mkdir $3 }
 cd $3
-foreground { pipeline { cat ../${GEN} ../${ARCH} } awk -f ../sys.awk }
+if { pipeline { cat ../${GEN} ../${ARCH} } awk -f ../sys.awk }
 rm -Rf sys

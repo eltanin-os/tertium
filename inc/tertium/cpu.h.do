@@ -10,6 +10,7 @@ define -s DEPS "macros.h.in ctypes.h.in types.h.in prototypes.h.in syscalls.in"
 define ARCH "../../sys/${OSNAME}/${OBJTYPE}"
 define GEN  "../../sys/${OSNAME}/generic"
 }
-foreground { redo-ifchange cpu.h.awk ${GEN}/${DEPS} ${ARCH}/${DEPS} }
-foreground { forx -E header { $HDR } cat ${GEN}/${header} ${ARCH}/${header} }
+if { redo-ifchange cpu.h.awk ${GEN}/${DEPS} ${ARCH}/${DEPS} }
+redirfd -w 1 $3
+if { forx -E header { $HDR } cat ${GEN}/${header} ${ARCH}/${header} }
 pipeline { cat ${GEN}/syscalls.in ${ARCH}/syscalls.in } awk -f cpu.h.awk

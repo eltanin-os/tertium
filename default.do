@@ -27,12 +27,12 @@ case -- $1 {
 	rm -Rf $targets
 }
 "install" {
-	foreground { redo-ifchange all }
-	foreground { install -dm 755 "${DESTDIR}${INCDIR}/tertium" }
-	foreground { install -dm 755 "${DESTDIR}${LIBDIR}" }
-	foreground { install -dm 755 "${DESTDIR}${MANDIR}/man3" }
-	foreground { install -cm 644 $MANPAGES "${DESTDIR}/${MANDIR}/man3" }
-	foreground { install -cm 644 $HDR "${DESTDIR}${INCDIR}/tertium" }
+	if { redo-ifchange all }
+	if { install -dm 755 "${DESTDIR}${INCDIR}/tertium" }
+	if { install -dm 755 "${DESTDIR}${LIBDIR}" }
+	if { install -dm 755 "${DESTDIR}${MANDIR}/man3" }
+	if { install -cm 644 $MANPAGES "${DESTDIR}/${MANDIR}/man3" }
+	if { install -cm 644 $HDR "${DESTDIR}${INCDIR}/tertium" }
 	install -cm 644 lib/libtertium.a "${DESTDIR}${LIBDIR}"
 }
 }
