@@ -104,8 +104,9 @@ enum {
 #define C_STD_MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define C_STD_NELEM(a)  (sizeof((a))/sizeof((a)[0]))
 
-#define C_STD_ISDOT(a)  ((a)[0]=='.' && ((a)[1]==0 || ((a)[1]=='.' && (a)[2]==0)))
 #define C_STD_ISDASH(a) ((a)[0]=='-' && (a)[1]=='\0')
+#define C_STD_ISDOT(a) \
+((a)[0]=='.' && ((a)[1]==0 || (((a)[1]=='.' || (a)[1]=='/') && (a)[2]==0)))
 
 #define C_STD_OVERFLOWM(a, b, c) ((b) && (c) > (((a)-1)/(b)))
 #define C_STD_OVERFLOWA(a, b, c) ((c) > (((a)-1)-(b)))

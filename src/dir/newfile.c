@@ -8,13 +8,13 @@ _tertium_dir_newfile(char *path, char *name, uint opts)
 {
 	ctype_node *p;
 	ctype_dent *ep;
-	usize len, plen;
-	ushort nlen;
+	usize len, nlen, plen;
+	int dir;
 	uchar *sp;
 
 	nlen = c_str_len(name, C_LIM_USIZEMAX);
-	plen = c_str_len(path, C_LIM_USIZEMAX);
-	if (!plen) {
+	if (!(plen = c_str_len(path, C_LIM_USIZEMAX))) {
+		dir = name[nlen - 1] == '/';
 		for (; nlen > 1 && name[nlen - 1] == '/'; --nlen) ;
 		if (nlen > 1) {
 			path = name;
@@ -25,6 +25,10 @@ _tertium_dir_newfile(char *path, char *name, uint opts)
 				++name;
 				plen = name - path;
 				nlen -= plen;
+			}
+			if (dir) {
+				name[nlen++] = '/';
+				name[nlen] = 0;
 			}
 		}
 	}
@@ -50,10 +54,7 @@ _tertium_dir_newfile(char *path, char *name, uint opts)
 
 	if (plen) {
 		c_mem_cpy(ep->path, plen, path);
-		if (ep->path[plen - 1] != '/') {
-			ep->path[plen] = '/';
-			++plen;
-		}
+		if (ep->path[plen - 1] != '/') ep->path[plen++] = '/';
 	}
 	ep->name = ep->path + plen;
 	c_mem_cpy(ep->name, nlen, name);
