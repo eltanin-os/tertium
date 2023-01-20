@@ -1,7 +1,13 @@
 #!/bin/execlineb -S3
+backtick HOSTOS { pipeline -w { tr "[A-Z]" "[a-z]" } uname -s }
+backtick HOSTARCH { uname -m }
 multisubstitute {
-	importas -i OSNAME OSNAME
-	importas -i OBJTYPE OBJTYPE
+	importas -i HOSTOS HOSTOS
+	importas -i HOSTARCH HOSTARCH
+}
+multisubstitute {
+	importas -D "${HOSTOS}" OSNAME OSNAME
+	importas -D "${HOSTARCH}" OBJTYPE OBJTYPE
 }
 multisubstitute {
 	define ARCH "../sys/${OSNAME}/${OBJTYPE}/syscalls.in"
