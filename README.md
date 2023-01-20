@@ -1,6 +1,8 @@
 # Tertium
 Tertium is a general-purpose library for C that aims to provide a simple and secure environment that produces more reliable software.
 
+[How to build](https://eltaninos.org/?docs/build)
+
 ## Modules
 * adt: abstract data types
 * arr: generic static array
