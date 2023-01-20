@@ -16,7 +16,7 @@ BEGIN {
 	out=$2" c_sys_"$3
 	$1=$2=$3=""
 	sub(/^[ \t]+/, "")
-	sub(/ {$/, "")
+	sub(/ \{$/, "")
 	gsub(/ [A-Za-z]+,/, ",")
 	gsub(/ [A-Za-z]+)/, ")")
 	print out""$0";"
