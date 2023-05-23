@@ -65,6 +65,8 @@ enum {
 
 /* hsh macros */
 enum {
+	C_HSH_BLAKE2B256DIG = 32,
+	C_HSH_BLAKE2B512DIG = 64,
 	C_HSH_H32DIG = 4,
 	C_HSH_SIPHASHDIG = 8,
 	C_HSH_MD5DIG = 16,
@@ -320,6 +322,8 @@ struct ctype_taia {
 extern ctype_arr *arrzero;
 
 /* hsh variables */
+extern ctype_hmd *c_hsh_blake2b256;
+extern ctype_hmd *c_hsh_blake2b512;
 extern ctype_hmd *c_hsh_crc32b;
 extern ctype_hmd *c_hsh_crc32p;
 extern ctype_hmd *c_hsh_fletcher32;
