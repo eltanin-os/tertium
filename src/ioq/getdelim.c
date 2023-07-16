@@ -4,15 +4,18 @@
 ctype_status
 c_ioq_getdelim(ctype_ioq *p, ctype_arr *b, char *delim)
 {
-	size r;
-	char *s, *nl, *tmp;
-
-	nl = nil;
-	while (!nl) {
-		if ((r = c_ioq_feed(p)) <= 0) return r;
+	size n, r;
+	int found;
+	char *d, *s, *tmp;
+	found = 0;
+	while (!found) {
+		if ((r = n = c_ioq_feed(p)) <= 0) return n;
 		s = c_ioq_peek(p);
 		for (tmp = delim; *tmp; ++tmp) {
-			if ((nl = c_mem_chr(s, r, *tmp))) r = (nl - s) + 1;
+			if ((d = c_mem_chr(s, n, *tmp))) {
+				found = 1;
+				r = (d - s) + 1;
+			}
 		}
 		if (c_dyn_cat(b, s, r, sizeof(uchar)) < 0) return -1;
 		c_ioq_seek(p, r);
