@@ -379,6 +379,8 @@ MANPAGES=\
 
 LIBTERTIUMOBJ = $(LIBTERTIUMSRC:.c=.o)
 
+.PHONY: all install clean
+
 all: $(LIBTERTIUM)
 
 .c.o:
