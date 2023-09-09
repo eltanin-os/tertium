@@ -3,7 +3,7 @@ ctype_status c_adt_kvadd(ctype_kvtree *, char *, void *);
 ctype_status c_adt_kvdel(ctype_kvtree *, char *);
 void c_adt_kvfree(ctype_kvtree *, void (*)(void *));
 void *c_adt_kvget(ctype_kvtree *, char *);
-void c_adt_kvtraverse(ctype_kvtree *, void (*)(char *, void *));
+ctype_status c_adt_kvtraverse(ctype_kvtree *, ctype_status (*)(char *, void *));
 void c_adt_lfree(ctype_node *);
 ctype_node *c_adt_lnew(void *, usize);
 ctype_node *c_adt_lpop(ctype_node **);
@@ -70,10 +70,10 @@ ctype_status c_dyn_tofrom(ctype_arr *, ctype_arr *);
 size c_dyn_vfmt(ctype_arr *, char *, va_list);
 
 /* err routines */
-void c_err_die(int, char *, ...);
-void c_err_diex(int, char *, ...);
-void c_err_vdie(int, char *, va_list);
-void c_err_vdiex(int, char *, va_list);
+void c_err_die(ctype_status, char *, ...);
+void c_err_diex(ctype_status, char *, ...);
+void c_err_vdie(ctype_status, char *, va_list);
+void c_err_vdiex(ctype_status, char *, va_list);
 int c_err_vwarn(char *, va_list);
 int c_err_vwarnx(char *, va_list);
 int c_err_warn(char *, ...);
@@ -115,7 +115,6 @@ void c_hsh_str(ctype_hmd *, char *, usize, char *);
 void c_hsh_update(void (*)(ctype_hst *, char *), int, ctype_hst *, char *, usize);
 
 /* ioq routines */
-ctype_ioq *c_ioq_alloc(ctype_fd, usize, ctype_iofn);
 size c_ioq_feed(ctype_ioq *);
 ctype_fd c_ioq_fileno(ctype_ioq *);
 ctype_status c_ioq_flush(ctype_ioq *);
@@ -134,10 +133,10 @@ size c_ioq_tofrom(ctype_ioq *, ctype_ioq *, usize);
 size c_ioq_vfmt(ctype_ioq *, char *, va_list);
 
 /* mem routines */
-void *c_mem_ccpy(void *, usize, void *, int);
+void *c_mem_ccpy(void *, void *, usize, int);
 void *c_mem_chr(void *, usize, int);
 int c_mem_cmp(void *, usize, void *);
-void *c_mem_cpy(void *, usize, void *);
+void *c_mem_cpy(void *, void *, usize);
 int c_mem_equal(void *, usize, void *);
 void *c_mem_mem(void *, usize, void *, usize);
 void *c_mem_rchr(void *, usize, int);
@@ -264,7 +263,7 @@ void c_tai_pack(char *, ctype_tai *);
 void c_tai_now(ctype_tai *);
 void c_tai_sub(ctype_tai *, ctype_tai *, ctype_tai *);
 void c_tai_u64(ctype_tai *, u64);
-void c_tai_unpack(char *, ctype_tai *);
+void c_tai_unpack(ctype_tai *, char *);
 
 /* taia routines */
 void c_taia_add(ctype_taia *, ctype_taia *, ctype_taia *);
@@ -278,7 +277,7 @@ void c_taia_pack(char *, ctype_taia *);
 void c_taia_sub(ctype_taia *, ctype_taia *, ctype_taia *);
 void c_taia_tai(ctype_taia *, ctype_tai *);
 void c_taia_u64(ctype_taia *, u64);
-void c_taia_unpack(char *, ctype_taia *);
+void c_taia_unpack(ctype_taia *, char *);
 
 /* uint routines */
 char *c_uint_16bigpack(char *, u16);
@@ -314,7 +313,7 @@ int c_utf8_isupper(ctype_rune);
 int c_utf8_isxdigit(ctype_rune);
 int c_utf8_runelen(ctype_rune);
 usize c_utf8_runenlen(ctype_rune *, usize);
-int c_utf8_runetochar(char *, ctype_rune *);
+int c_utf8_runetochar(char *, ctype_rune);
 usize c_utf8_utflen(char *);
 usize c_utf8_utfnlen(char *, usize);
 char *c_utf8_utfrrune(char *, ctype_rune);

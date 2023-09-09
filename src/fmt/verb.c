@@ -43,7 +43,7 @@ Vchar(ctype_fmt *p)
 	ctype_rune r;
 	char buf[8];
 	r = va_arg(p->args, ctype_rune);
-	c_mem_cpy(buf, sizeof(r), &r);
+	c_mem_cpy(buf, &r, sizeof(r));
 	return c_fmt_nput(p, buf, c_utf8_chartorune(&r, buf));
 }
 

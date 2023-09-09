@@ -22,7 +22,7 @@ c_exc_varglist(char *prog, va_list ap)
 
 	s = c_std_alloc(len + ((n + 1) * sizeof(void *)) + 1, sizeof(uchar));
 	if (!s) return nil;
-	c_mem_cpy(s, len, prog);
+	c_mem_cpy(s, prog, len);
 	av = (void *)(s + len);
 
 	i = 1;

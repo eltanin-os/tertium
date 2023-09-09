@@ -4,6 +4,5 @@
 char *
 c_str_cpy(char *dest, usize n, char *src)
 {
-	for (; n && (*dest = *src); --n, ++dest, ++src) ;
-	return dest;
+	return c_mem_cpy(dest, src, c_str_len(src, n));
 }

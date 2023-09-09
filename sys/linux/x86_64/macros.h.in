@@ -61,6 +61,7 @@
 #define _TERTIUM_SYS_getuid 102
 #define _TERTIUM_SYS_getgid 104
 #define _TERTIUM_SYS_geteuid 107
+#define _TERTIUM_SYS_getppid 110
 #define _TERTIUM_SYS_mknod 133
 #define _TERTIUM_SYS_sethostname 170
 #define _TERTIUM_SYS_getdents 217

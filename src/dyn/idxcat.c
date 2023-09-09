@@ -14,12 +14,12 @@ c_dyn_idxcat(ctype_arr *p, usize pos, void *v, usize m, usize n)
 	if (pos) pos = (pos - 1) * n;
 	m *= n;
 	if (len > (pos + n)) {
-		c_mem_cpy(target + m, len - pos, target);
+		c_mem_cpy(target + m, target, len - pos);
 		p->n += m;
 	} else {
 		p->n += m - n;
 	}
-	c_mem_cpy(target, m, v);
+	c_mem_cpy(target, v, m);
 	p->p[p->n] = 0;
 	return 0;
 }

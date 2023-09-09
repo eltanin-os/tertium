@@ -9,7 +9,7 @@ c_cdb_read(ctype_cdb *p, char *s, usize n, ctype_fssize off)
 			errno = C_ERR_EPROTO;
 			return -1;
 		}
-		c_mem_cpy(s, n, p->map + off);
+		c_mem_cpy(s, p->map + off, n);
 		return 0;
 	}
 	if (c_nix_seek(p->fd, off, C_NIX_SEEKSET) < 0) return -1;

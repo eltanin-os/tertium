@@ -3,25 +3,26 @@
 
 #include "kv.h"
 
-static void
-traverse(void *t, void (*func)(char *, void *))
+static ctype_status
+traverse(void *t, ctype_status (*func)(char *, void *))
 {
 	struct kv *p;
 	struct cbnode *q;
 	uchar *s;
 	if ((uintptr)(s = (void *)t) & 1) {
 		q = (void *)(s - 1);
-		traverse(q->child[0], func);
-		traverse(q->child[1], func);
+		if (traverse(q->child[0], func) == -1) return -1;
+		return traverse(q->child[1], func);
 	} else {
 		p = (void *)s;
-		func(p->k, p->v);
+		return func(p->k, p->v);
 	}
+	return 0;
 }
 
-void
-c_adt_kvtraverse(ctype_kvtree *t, void (*func)(char *, void *))
+ctype_status
+c_adt_kvtraverse(ctype_kvtree *t, ctype_status (*func)(char *, void *))
 {
-	if (!t->root) return;
-	traverse(t->root, func);
+	if (!t->root) return 0;
+	return traverse(t->root, func);
 }

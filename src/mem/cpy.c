@@ -2,22 +2,20 @@
 #include <tertium/std.h>
 
 void *
-c_mem_cpy(void *d, usize n, void *s)
+c_mem_cpy(void *d, void *s, usize n)
 {
-	uchar *s1, *s2;
+	uchar *a, *b;
 
-	s1 = d;
-	s2 = s;
-	if (s == d)
-		return d;
+	if (s == d) return d;
+	a = d;
+	b = s;
+
 	if (s > d) {
-		for (; n; --n)
-			*s1++ = *s2++;
+		for (; n; --n) *a++ = *b++;
 	} else {
-		s1 += n - 1;
-		s2 += n - 1;
-		for (; n; --n)
-			*s1-- = *s2--;
+		a += n - 1;
+		b += n - 1;
+		for (; n; --n) *a-- = *b--;
 	}
 	return d;
 }

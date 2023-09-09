@@ -24,7 +24,7 @@ _tertium_dir_builddir(ctype_dir *p)
 	if ((fd = c_nix_fdopen2(cur->path, C_NIX_OREAD | C_NIX_OCEXEC)) < 0)
 		return BFAIL;
 
-	c_mem_cpy(rp, cur->len, cur->path);
+	c_mem_cpy(rp, cur->path, cur->len);
 	rp[cur->len] = 0;
 
 	c_mem_set(&dir, sizeof(dir), 0);

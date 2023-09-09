@@ -8,12 +8,9 @@ c_arr_trunc(ctype_arr *p, usize m, usize n)
 		errno = C_ERR_EOVERFLOW;
 		return -1;
 	}
-	if ((m *= n) > c_arr_bytes(p))
-		return 0;
 
+	if (c_arr_bytes(p) <= (m *= n)) return 0;
 	p->n = m;
-	if (p->p)
-		p->p[p->n] = 0;
-
+	if (p->p) p->p[p->n] = 0;
 	return 0;
 }

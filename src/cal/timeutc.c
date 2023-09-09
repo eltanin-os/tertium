@@ -9,7 +9,7 @@ c_cal_timeutc(ctype_caltime *p, ctype_tai *t)
 	long s;
 	int leap;
 
-	c_mem_cpy(&t2, sizeof(t2), t);
+	c_mem_cpy(&t2, t, sizeof(t));
 	leap = c_tai_leapsub(&t2);
 	u = t2.x + 58486;
 	s = u % 86400ULL;

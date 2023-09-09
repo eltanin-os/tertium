@@ -17,9 +17,6 @@ static ctype_rune tab[] = {
 int
 c_utf8_isblank(ctype_rune r)
 {
-	if (UTF8_SEARCH(&r, tab))
-		return 1;
-	if (r >= 0x20 && r <= 0x2B)
-		return 1;
+	if (UTF8_SEARCH(&r, tab)) return 1;
 	return 0;
 }

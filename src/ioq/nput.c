@@ -18,7 +18,7 @@ c_ioq_nput(ctype_ioq *p, char *s, usize n)
 			s += r;
 		}
 	}
-	c_mem_cpy(p->arr.p + p->arr.n, n, s);
+	c_mem_cpy(p->arr.p + p->arr.n, s, n);
 	p->arr.n += n;
 	return 0;
 }

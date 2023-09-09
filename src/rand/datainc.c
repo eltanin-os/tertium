@@ -21,7 +21,7 @@ c_rand_datainc(ctype_rst *p, char *s, usize n)
 	while (n) {
 		n -= r = C_STD_MIN(n, sizeof(u32));
 		x = rng(p);
-		c_mem_cpy(s + n, r, &x);
+		c_mem_cpy(s + n, &x, r);
 	}
 	return s;
 }

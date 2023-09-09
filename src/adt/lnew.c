@@ -11,6 +11,6 @@ c_adt_lnew(void *v, usize n)
 	p->next = p;
 	p->prev = nil;
 	p->p = (void *)((uchar *)p + sizeof(*p));
-	c_mem_cpy(p->p, n, v);
+	c_mem_cpy(p->p, v, n);
 	return p;
 }

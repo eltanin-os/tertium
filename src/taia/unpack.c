@@ -2,12 +2,13 @@
 #include <tertium/std.h>
 
 void
-c_taia_unpack(char *s, ctype_taia *t)
+c_taia_unpack(ctype_taia *t, char *s)
 {
 	ulong x;
 
-	c_tai_unpack(s, &t->sec);
+	c_tai_unpack(&t->sec, s);
 	s += 8;
+
 	x = (unsigned char)s[4];
 	x <<= 8;
 	x += (unsigned char)s[5];
@@ -16,6 +17,7 @@ c_taia_unpack(char *s, ctype_taia *t)
 	x <<= 8;
 	x += (unsigned char)s[7];
 	t->atto = x;
+
 	x = (unsigned char)s[0];
 	x <<= 8;
 	x += (unsigned char)s[1];

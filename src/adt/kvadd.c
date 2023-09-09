@@ -23,7 +23,7 @@ createkv(uchar *k, usize n, void *v)
 		c_std_free(p);
 		return nil;
 	}
-	c_mem_cpy(p->k, n, k);
+	c_mem_cpy(p->k, k, n);
 	p->v = v;
 	return p;
 }

@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#define STRCPY(a, b) c_mem_cpy((a), sizeof((b)), (b))
+#define STRCPY(a, b) c_mem_cpy((a), (b), sizeof((b)))
 
 char *
 c_gen_dirname(char *s)

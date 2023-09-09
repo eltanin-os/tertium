@@ -15,7 +15,7 @@ c_ioq_get(ctype_ioq *p, char *b, usize n)
 			break;
 
 		min = C_STD_MIN((usize)r, len);
-		c_mem_cpy(b, min, p->arr.p + p->arr.a);
+		c_mem_cpy(b, p->arr.p + p->arr.a, min);
 		p->arr.n -= min;
 		p->arr.a += min;
 		len -= min;

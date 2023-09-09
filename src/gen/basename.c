@@ -8,7 +8,7 @@ c_gen_basename(char *s)
 	char *p;
 
 	if (!s) return nil;
-	if (!*s) c_mem_cpy(s, sizeof("."), ".");
+	if (!*s) return ".";
 
 	n = c_str_len(s, -1);
 	if (!--n) return s;

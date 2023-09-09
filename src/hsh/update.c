@@ -16,7 +16,7 @@ c_hsh_update(hfunc f, int b, ctype_hst *p, char *data, usize n)
 			n -= b;
 		} else {
 			len = C_STD_MIN(n, b - p->curlen);
-			c_mem_cpy(p->buf + p->curlen, len, data);
+			c_mem_cpy(p->buf + p->curlen, data, len);
 			p->curlen += len;
 			data += len;
 			n -= len;

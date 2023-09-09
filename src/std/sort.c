@@ -31,21 +31,21 @@ mrg(struct sort *p, uchar *buf, usize l, usize m, usize r)
 	usize i, j, k;
 
 	n1 = m - l; n2 = r - m;
-	c_mem_cpy(buf, n1 * p->n, p->p + l * p->n);
+	c_mem_cpy(buf, p->p + l * p->n, n1 * p->n);
 	i = j = 0; k = l;
 	while (i < n1 && j < n2) {
 		if (p->f(buf + i * p->n, p->p + (m + j) * p->n) <= 0) {
-			c_mem_cpy(p->p + k * p->n, p->n, buf + i * p->n);
+			c_mem_cpy(p->p + k * p->n, buf + i * p->n, p->n);
 			++i;
 		} else {
-			c_mem_cpy(p->p + k * p->n, p->n, p->p + (m + j) * p->n);
+			c_mem_cpy(p->p + k * p->n, p->p + (m + j) * p->n, p->n);
 			++j;
 		}
 		++k;
 	}
-	c_mem_cpy(p->p + k * p->n, (n1 - i) * p->n, buf + i * p->n);
+	c_mem_cpy(p->p + k * p->n, buf + i * p->n, (n1 - i) * p->n);
 	k += (n1 - i);
-	c_mem_cpy(p->p + k * p->n, (n2 - j) * p->n, p->p + (m + j) * p->n);
+	c_mem_cpy(p->p + k * p->n, p->p + (m + j) * p->n, (n2 - j) * p->n);
 }
 
 /* sort routines */

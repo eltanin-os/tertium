@@ -2,10 +2,9 @@
 #include <tertium/std.h>
 
 void
-c_tai_unpack(char *s, ctype_tai *t)
+c_tai_unpack(ctype_tai *t, char *s)
 {
 	u64 x;
-
 	x = t->x;
 	x <<= 8;
 	x += (uchar)s[1];

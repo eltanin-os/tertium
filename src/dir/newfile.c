@@ -53,11 +53,11 @@ _tertium_dir_newfile(char *path, char *name, uint opts)
 		ep->stp = (void *)((uintptr)(sp + 16) & ~16);
 
 	if (plen) {
-		c_mem_cpy(ep->path, plen, path);
+		c_mem_cpy(ep->path, path, plen);
 		if (ep->path[plen - 1] != '/') ep->path[plen++] = '/';
 	}
 	ep->name = ep->path + plen;
-	c_mem_cpy(ep->name, nlen, name);
+	c_mem_cpy(ep->name, name, nlen);
 	ep->name[nlen] = 0;
 	ep->len = plen + nlen;
 	ep->nlen = nlen;

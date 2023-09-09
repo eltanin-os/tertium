@@ -230,7 +230,7 @@ extendpgdir(usize idx)
 		return 0;
 
 	ol = minfo * sizeof(*pagedir);
-	c_mem_cpy(p, ol, pagedir);
+	c_mem_cpy(p, pagedir, ol);
 
 	minfo = nl / sizeof(*pagedir);
 	o = pagedir;
@@ -451,7 +451,7 @@ irealloc(void *p, usize n)
 		return nil;
 	}
 	if ((np = imalloc(n))) {
-		if (n && o) c_mem_cpy(np, C_STD_MIN(n, o), p);
+		if (n && o) c_mem_cpy(np, p, C_STD_MIN(n, o));
 		ifree(p);
 	}
 	return np;
