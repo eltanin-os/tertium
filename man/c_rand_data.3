@@ -1,0 +1,29 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_RAND_DATA 3
+.Os
+.Sh NAME
+.Nm c_rand_data
+.Nd random data generator
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_rand_data "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_rand_data
+function fills the region
+.Fa s
+of
+.Fa n
+bytes with random data.
+.Sh RETURN VALUES
+The
+.Fn c_rand_data
+function returns a pointer to
+.Fa s .
+.Sh SEE ALSO
+.Xr c_rand_name 3 ,
+.Xr c_rand_u32 3

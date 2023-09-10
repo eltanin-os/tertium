@@ -1,4 +1,4 @@
-.Dd $Mdocdate: January 01 2020 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_MEM_CMP 3
 .Os
 .Sh NAME
@@ -28,11 +28,23 @@ if the first
 .Fa n
 bytes of
 .Fa v1
-is found, respectively, to less than, to match, or to be greater than
-the first
+is found, respectively, to less than, to match,
+or to be greater than the first
 .Fa n
 bytes of
 .Fa v2 .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+int ret = c_mem_cmp("--help", sizeof("--help"), *argv);
+if (ret > 0) {
+	c_ioq_put(ioq1, "differing byte is higher\en");
+} else if (ret < 0) {
+	c_ioq_put(ioq1, "differing byte is smaller\en");
+} else {
+	c_ioq_put(ioq1, "both strings are equal\en");
+}
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_mem_equal 3
 .Sh CAVEATS

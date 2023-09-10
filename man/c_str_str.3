@@ -1,0 +1,38 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_STR 3
+.Os
+.Sh NAME
+.Nm c_str_str
+.Nd locate a substring in a string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_str_str "char *h" "usize n" "char *s"
+.Sh DESCRIPTION
+The
+.Fn c_str_str
+function locates the first occurence of the substring
+.Fa s
+in the string
+.Fa h ,
+ignoring the case of the characters.
+It searches at most
+.Fa n
+bytes.
+.Sh RETURN VALUES
+The
+.Fn c_str_str
+function returns a pointer to the located substring or nil
+if not found.
+.Sh SEE ALSO
+.Xr c_mem_chr 3 ,
+.Xr c_mem_rchr 3 ,
+.Xr c_mem_mem 3 ,
+.Xr c_str_casechr 3 ,
+.Xr c_str_caserchr 3 ,
+.Xr c_str_casestr 3 ,
+.Xr c_str_chr 3 ,
+.Xr c_str_rchr 3

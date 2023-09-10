@@ -1,0 +1,46 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_EXC_SPAWN0 3
+.Os
+.Sh NAME
+.Nm c_exc_spawn0
+.Nd spawn process
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_id
+.Fn c_exc_spawn0 "char *prog" "char **argv" "char **envp"
+.Sh DESCRIPTION
+The
+.Fn c_exc_spawn0
+function spawns a child process running the program
+.Fa prog
+with argument list
+.Fa argv
+and environment list
+.Fa envp .
+If
+.Fa prog
+contains a slash, indicating a fullpath, it is executed directly;
+otherwise it searches the directories in the
+.Ev PATH
+environment variable to locate the program.
+If this variable is not specified, the default path is set to
+.Dq /bin:/usr/bin:. .
+.Pp
+The given environment is merged with
+the variables previously set by the function
+.Xr c_exc_setenv 3 .
+.Sh RETURN VALUES
+The
+.Fn c_exc_spawn0
+function returns the process ID of the spawned process if successful;
+otherwise \-1 is returned and
+.Va errno
+is set to indicate the error.
+.Sh SEE ALSO
+.Xr c_exc_run 3 ,
+.Xr c_exc_runenv 3 ,
+.Xr c_exc_spawn1 3 ,
+.Xr c_exc_wait 3

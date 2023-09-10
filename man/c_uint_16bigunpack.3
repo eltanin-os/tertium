@@ -1,0 +1,31 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UINT_16BIGUNPACK 3
+.Os
+.Sh NAME
+.Nm c_uint_16bigunpack
+.Nd read big-endian 16-bit integer
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft u16
+.Fn c_uint_16bigunpack "char *s"
+.Sh DESCRIPTION
+The
+.Fn c_uint_16bigunpack
+function portably reads a 16-bit unsigned integer as stored on a big-endian
+architecture from
+.Fa s .
+.Sh RETURN VALUES
+The
+.Fn c_uint_16bigunpack
+function returns the read unsigned integer.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char buf[sizeof(u16)];
+/* fill buf with number */
+u16 x = c_uint_16bigunpack(buf);
+.Ed
+.Sh SEE ALSO
+.Xr c_uint_16unpack 3

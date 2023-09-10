@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_ARR_INIT 3
 .Os
 .Sh NAME
 .Nm c_arr_init
-.Nd initialize an array
+.Nd initialize array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -21,3 +21,9 @@ to the buffer
 of
 .Fa n Ns \-1
 bytes in size.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_arr arr;
+char buf[64];
+c_arr_init(&arr, buf, sizeof(buf));
+.Ed

@@ -1,0 +1,49 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_FIND 3
+.Os
+.Sh NAME
+.Nm c_cdb_find
+.Nd search constant database key
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_cdb_find "ctype_cdb *p" "char *k" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_cdb_find
+function searches for the first key
+.Fa k ,
+of
+.Fa n
+bytes in size, into the constant database
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_cdb_find
+function returns 1 for a found key or 0 for a non-existent one, if successful;
+otherwise -1 is returned and
+.Va errno
+is set to indicating the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char key[] = "key1";
+if (c_cdb_find(&c, key, sizeof(key)) > 0) {
+	char *buf = c_std_alloc(c_cdb_datalen(&c), sizeof(uchar));
+	if (!buf) goto nomem;
+	c_cdb_read(&c, buf, c_cdb_datalen(&c), c_cdb_datapos(&c));
+	c_ioq_nput(ioq1, buf, c_cdb_datalen(&c));
+	c_ioq_flush(ioq1);
+}
+.Ed
+.Sh ERRORS
+The
+.Fn c_cdb_find
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_cdb_read 3 .
+.Sh SEE ALSO
+.Xr c_cdb_findnext 3

@@ -1,0 +1,35 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_RAND_DATAINC 3
+.Os
+.Sh NAME
+.Nm c_rand_datainc
+.Nd deterministic pseudo-random data generator
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_rand_datainc "ctype_rst *p" "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_rand_datainc
+function fills the region
+.Fa s
+of
+.Fa n
+bytes with pseudo-random data determined from the state
+.Fa p .
+.Pp
+For the first run, a starting seed should be set with the functions
+.Xr c_rand_genseed 3
+or
+.Xr c_rand_setseed 3 .
+.Sh RETURN VALUES
+The
+.Fn c_rand_data
+function returns a pointer to
+.Fa s .
+.Sh SEE ALSO
+.Xr c_rand_nameinc 3 ,
+.Xr c_rand_u32inc 3

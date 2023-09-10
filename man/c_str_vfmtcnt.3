@@ -1,0 +1,45 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_VFMTCNT 3
+.Os
+.Sh NAME
+.Nm c_str_vfmtcnt
+.Nd calculate formatted string size
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft usize
+.Fn c_str_vfmtcnt "char *fmt" "va_list ap"
+.Sh DESCRIPTION
+The
+.Fn c_str_vfmtcnt
+function calculates the size of the formatted string that would be created
+as according to the format
+.Fa fmt .
+.Pp
+The formatting is performed by the function
+.Xr c_fmt_fmt 3 .
+.Sh RETURN VALUES
+The
+.Fn c_str_vfmtcnt
+function returns the size of the string that would be created
+given the supplied format and arguments.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+void *
+buffmt(char *fmt, ...)
+{
+	va_list ap;
+	usize n;
+	va_start(ap, fmt);
+	n = c_str_vfmtcnt(fmt, ap);
+	va_end(ap);
+	return c_std_alloc(n, sizeof(uchar));
+}
+.Ed
+.Sh SEE ALSO
+.Xr c_fmt_fmt 3 ,
+.Xr c_str_fmt 3 ,
+.Xr c_str_fmtcnt 3 ,
+.Xr c_str_vfmt 3

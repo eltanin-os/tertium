@@ -1,0 +1,55 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_FINDNEXT 3
+.Os
+.Sh NAME
+.Nm c_cdb_findnext
+.Nd search constant database key
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_cdb_findnext "ctype_cdb *p" "char *k" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_cdb_findnext
+function searches for the next key
+.Fa k ,
+of
+.Fa n
+bytes in size, into the constant database
+.Fa p .
+The search starts from the last found key. For the first search, the
+position must be initialized with the function
+.Xr c_cdb_findstart 3 .
+.Sh RETURN VALUES
+The
+.Fn c_cdb_findnext
+function returns 1 for a found key or 0 for a non-existent one, if successful;
+otherwise -1 is returned and
+.Va errno
+is set to indicating the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_arr arr = { 0 };
+char key[] = "key1";
+c_cdb_findstart(&c);
+while (c_cdb_findnext(&c, key, sizeof(key)) > 0) {
+	if (c_dyn_ready(&arr, c_cdb_datalen(&c), sizeof(uchar)) < 0) goto nomem;
+	char *buf = c_arr_data(&arr);
+	c_cdb_read(&c, buf, c_cdb_datalen(&c), c_cdb_datapos(&c));
+	c_ioq_nput(ioq1, buf, c_cdb_datalen(&c));
+	c_ioq_flush(ioq1);
+}
+c_dyn_free(&arr);
+.Ed
+.Sh ERRORS
+The
+.Fn c_cdb_findnext
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_cdb_read 3 .
+.Sh SEE ALSO
+.Xr c_cdb_find 3

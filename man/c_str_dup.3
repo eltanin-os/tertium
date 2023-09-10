@@ -1,0 +1,41 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_DUP 3
+.Os
+.Sh NAME
+.Nm c_str_dup
+.Nd save a copy of a string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_str_dup "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_str_dup
+function allocates sufficient memory for a copy of the string
+.Fa s ,
+then copies it to the allocated memory.
+.Sh RETURN VALUES
+The
+.Fn c_str_dup
+function returns a pointer to the copied string if sucessful;
+otherwise nil is returned and
+.Va errno
+is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char *p = c_str_dup("foobar");
+if (!p) goto err;
+.Ed
+.Sh ERRORS
+The
+.Fn c_str_dup
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_std_malloc 3 .
+.Sh SEE ALSO
+.Xr c_std_cpy 3 ,
+.Xr c_std_malloc 3

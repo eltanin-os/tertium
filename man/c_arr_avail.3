@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_ARR_AVAIL 3
 .Os
 .Sh NAME
 .Nm c_arr_avail
-.Nd calculate available memory in an array
+.Nd calculate available memory in array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -20,6 +20,12 @@ function calculates the available memory in the array
 The
 .Fn c_arr_avail
 function returns the number of uninitialized bytes in the given array.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+usize n = c_arr_len(&arr, sizeof(int));
+c_ioq_fmt(ioq1, "Available Memory: %llu\en", n);
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_arr_bytes 3 ,
 .Xr c_arr_len 3 ,

@@ -1,0 +1,29 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_GEN_DIRNAME 3
+.Os
+.Sh NAME
+.Nm c_gen_dirname
+.Nd extract the directory portion of a pathname
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_gen_dirname "char *s"
+.Sh DESCRIPTION
+The
+.Fn c_gen_dirname
+function searches for the parent directory of the pathname
+.Fa s .
+.Sh RETURN VALUES
+The
+.Fn c_gen_dirname
+function returns a pointer to the parent directory of the given pathname.
+If the pathname is a nil pointer, the string empty, or contains no slashes
+.Pq Sq /
+a pointer to the string
+.Dq \&.
+is returned.
+.Sh SEE ALSO
+.Xr c_gen_basename 3

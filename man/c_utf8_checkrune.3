@@ -1,0 +1,22 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_CHECKRUNE 3
+.Os
+.Sh NAME
+.Nm c_utf8_checkrune
+.Nd check rune validity
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_utf8_checkrune "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_checkrune
+function checks the validity of the Unicode code point
+.Fa r .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_checkrune
+function returns the value 0 if the given rune is valid, and \-1 otherwise.

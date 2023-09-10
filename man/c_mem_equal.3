@@ -1,9 +1,9 @@
-.Dd $Mdocdate: January 01 2020 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_MEM_EQUAL 3
 .Os
 .Sh NAME
 .Nm c_mem_equal
-.Nd compare bytes in memory, in constant time
+.Nd compare memory areas for equality in constant time
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -20,6 +20,7 @@ bytes of the memory areas
 .Fa v1
 and
 .Fa v2 .
+It does the comparison in constant time to avoid timing side-channel attacks.
 .Sh RETURN VALUES
 The
 .Fn c_mem_equal
@@ -30,5 +31,14 @@ bytes of the memory areas
 and
 .Fa v2 ,
 respectively, are equal or different.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+if (c_mem_equal(buf1, sizeof(buf1), buf2)) {
+	c_ioq_put(ioq1, "The bufs differ\en");
+} else {
+	c_ioq_put(ioq1, "The bufs are equal\en");
+}
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_mem_cmp 3

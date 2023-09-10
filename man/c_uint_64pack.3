@@ -1,0 +1,32 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UINT_64PACK 3
+.Os
+.Sh NAME
+.Nm c_uint_64pack
+.Nd store unsigned little-endian 64-bit integer
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_uint_64pack "char *s" "u64 u"
+.Sh DESCRIPTION
+The
+.Fn c_uint_64pack
+function portably stores the 64-bit integer
+.Fa u
+to
+.Fa s
+in little-endian byte order.
+.Sh RETURN VALUES
+The
+.Fn c_uint_64pack
+function returns a pointer to the given buffer.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char buf[sizeof(u64)];
+c_uint_64pack(buf, 31);
+.Ed
+.Sh SEE ALSO
+.Xr c_uint_64bigpack 3

@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_ARR_DATA 3
 .Os
 .Sh NAME
 .Nm c_arr_data
-.Nd returns pointer to an array internal buffer
+.Nd retrieve buffer from array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -14,11 +14,17 @@
 .Sh DESCRIPTION
 The
 .Fn c_arr_data
-function returns a pointer to the internal buffer of array
+function returns a pointer to the internal buffer from the array
 .Fa p .
 .Sh RETURN VALUES
 The
 .Fn c_arr_data
-function returns a pointer to the internal buffer of the given array.
+function returns a pointer to the internal buffer from the given array.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+void *p = c_arr_data(&arr);
+c_ioq_fmt(ioq1, "Buffer Address: %p", p);
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_arr_get 3

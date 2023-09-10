@@ -1,0 +1,29 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISUPPER 3
+.Os
+.Sh NAME
+.Nm c_utf8_isupper
+.Nd upper-case rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_isupper "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_isupper
+function tests whether the rune
+.Fa r
+represents a upper-case letter.
+.Pp
+Upper-case letter are those in the Unicode category Uppercase Letter
+.Pq Lu .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_isupper
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_islower 3 ,
+.Xr c_utf8_istitle 3

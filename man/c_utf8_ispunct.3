@@ -1,0 +1,51 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISPUNCT 3
+.Os
+.Sh NAME
+.Nm c_utf8_ispunct
+.Nd punctuation rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_ispunct "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_ispunct
+function tests whether the rune
+.Fa r
+represents a punctuation character.
+.Pp
+Punctuation characters are those not in the Unicode categories Control
+.Pq Cc ,
+Format
+.Pq Cf ,
+Private Use
+.Pq Co ,
+Lowercase Letter
+.Pq Ll ,
+Modifier Letter
+.Pq Lm ,
+Other Letter
+.Pq Lo ,
+Titlecase Letter
+.Pq Lt ,
+Uppercase Letter
+.Pq Lu ,
+Decimal Number
+.Pq Nd ,
+Line Separator
+.Pq Zl ,
+Paragraph Separator
+.Pq Zp ,
+and Space Separator
+.Pq Zs .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_ispunct
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_isgraph 3 ,
+.Xr c_utf8_isalnum 3

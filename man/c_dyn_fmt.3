@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_DYN_FMT 3
 .Os
 .Sh NAME
 .Nm c_dyn_fmt
-.Nd concatenate formatted strings in a dynamic array
+.Nd concatenate formatted strings to array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -16,22 +16,30 @@ The
 .Fn c_dyn_fmt
 function appends a formatted string, as described in the format
 .Fa fmt ,
-in the array
+to the array
 .Fa p .
 If not enough bytes are allocated,
 .Fn c_dyn_fmt
 allocates more bytes.
+.Pp
+The formatting is performed by the function
+.Xr c_fmt_fmt 3 .
 .Sh RETURN VALUES
-On success, the
+The
 .Fn c_dyn_fmt
-function returns the number of copied bytes;
-Otherwise, \-1 is returned and
+function returns the number of copied bytes if successful;
+otherwise \-1 is returned and
 .Va errno
 is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char *s = "Hello, World!";
+c_dyn_fmt(&arr, "%s\en", s);
+.Ed
 .Sh ERRORS
 .Bl -tag -width Er
-.It Bq Er C_ENOMEM
-Not enough space.
+.It Bq Er C_ERR_NOMEM
+Not enough memory.
 .El
 .Sh SEE ALSO
 .Xr c_dyn_vfmt 3 ,

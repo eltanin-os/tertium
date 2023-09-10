@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_DYN_READY 3
 .Os
 .Sh NAME
 .Nm c_dyn_ready
-.Nd provide space in a dynamic array
+.Nd ensure space in dynamic array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -17,7 +17,7 @@ The
 function ensures that the array
 .Fa p
 has available memory to hold at least
-.Fa m
+.Fa m Ns \+1
 objects, each
 .Fa n
 bytes in size. If not enough bytes are allocated,
@@ -25,12 +25,18 @@ bytes in size. If not enough bytes are allocated,
 allocates more bytes.
 .Sh RETURN VALUES
 .Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+int num[10];
+if (c_dyn_ready(&arr, 10, sizeof(int)) < 0) goto err;
+c_arr_cat(&arr, &num, C_STD_NELEM(num), sizeof(num[0]));
+.Ed
 .Sh ERRORS
-.Bl -tag -width Er
-.It Bq Er C_ENOMEM
-Not enough space.
-.It Bq Er C_EOVERFLOW
-Value too large to be stored in data type.
-.El
+The
+.Fn c_dyn_ready
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_std_alloc 3 .
 .Sh SEE ALSO
 .Xr c_dyn_alloc 3

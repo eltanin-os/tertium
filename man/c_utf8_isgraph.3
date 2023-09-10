@@ -1,0 +1,46 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISGRAPH 3
+.Os
+.Sh NAME
+.Nm c_utf8_isgraph
+.Nd graphical rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_isgraph "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_isgraph
+function tests whether the rune
+.Fa r
+represents a printable character except space.
+.Pp
+Printable characters are those not in the Unicode categories Control
+.Pq Cc ,
+Format
+.Pq Cf ,
+Private Use
+.Pq Co ,
+Line Separator
+.Pq Zl ,
+and Paragraph Separator
+.Pq Zp .
+.Pp
+Space characters are those in the Unicode categories Space Separator
+.Pq Zs ,
+Line Separator
+.Pq Zl ,
+and Paragraph Separator
+.Pq Zp .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_isgraph
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_isblank 3 ,
+.Xr c_utf8_iscntrl 3 ,
+.Xr c_utf8_isprint 3 ,
+.Xr c_utf8_isspace 3

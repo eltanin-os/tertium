@@ -1,0 +1,36 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_DIR_SET 3
+.Os
+.Sh NAME
+.Nm c_dir_set
+.Nd set directory entry instruction
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_dir_set "ctype_dir *p" "ctype_dent *ep" "int instr"
+.Sh DESCRIPTION
+The
+.Fn c_dir_set
+function sets the instruction
+.Fa instr
+for further processing for the entry
+.Fa ep .
+.Pp
+The
+.Fa instr
+must be set to one of the following values:
+.Bl -tag -width XXXXXXXXXXX
+.It Dv C_DIR_FSAGN
+Re-visit the entry.
+.It Dv C_DIR_FSFLW
+Follow this entry.
+.It Dv C_DIR_FSSKP
+Skip this entry descendants.
+.El
+.Sh RETURN VALUES
+The
+.Fn c_dir_set
+function returns the value 0.

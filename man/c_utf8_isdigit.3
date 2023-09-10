@@ -1,0 +1,30 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISDIGIT 3
+.Os
+.Sh NAME
+.Nm c_utf8_isdigit
+.Nd digit rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_isdigit "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_isdigit
+function tests whether the rune
+.Fa r
+represents a numeric character.
+.Pp
+Numeric characters are those in the Unicode category Number
+and Decimal Digit
+.Pq Nd .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_isdigit
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_isalnum 3 ,
+.Xr c_utf8_isxdigit 3

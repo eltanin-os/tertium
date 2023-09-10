@@ -1,0 +1,47 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_READ 3
+.Os
+.Sh NAME
+.Nm c_cdb_read
+.Nd read constant database
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_cdb_read "ctype_cdb *p" "char *s" "usize n" "ctype_fssize off"
+.Sh DESCRIPTION
+The
+.Fn c_cdb_read
+function reads
+.Fa n
+bytes starting at position
+.Fa off
+from the constant database
+.Fa p
+to the buffer
+.Fa s .
+.Sh RETURN VALUES
+.Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+/* search key */
+c_cdb_read(&c, buf, c_cdb_datalen(&c), c_cdb_datapos(&c));
+c_ioq_nput(ioq1, buf, c_cdb_datalen(&c));
+c_ioq_flush(ioq1);
+.Ed
+.Sh ERRORS
+In addition to the errors documented for the library functions
+.Xr c_nix_seek 3
+and
+.Xr c_nix_allrw 3 ,
+the
+.Fn c_cdb_read
+function may fail if:
+.Bl -tag -width Er
+.It Bq Er C_ERR_EPROTO
+The function execution would cause corruption as the arguments are not valid.
+.El
+.Sh SEE ALSO
+.Xr c_cdb_datapos 3

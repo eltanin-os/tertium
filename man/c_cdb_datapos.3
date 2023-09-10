@@ -1,0 +1,37 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_DATAPOS 3
+.Os
+.Sh NAME
+.Nm c_cdb_datapos
+.Nd retrieve data position
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft usize
+.Fn c_cdb_datapos "ctype_cdb *p"
+.Sh DESCRIPTION
+The
+.Fn c_cdb_datapos
+function retrieves the position of the data associated
+with the last key accessed by
+.Xr c_cdb_find 3
+or
+.Xr c_cdb_findnext 3 .
+.Sh RETURN VALUES
+The
+.Fn c_cdb_datapos
+function returns the position of the data associated with the
+last accessed key.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char key[] = "key1";
+c_cdb_find(&c, "key1", sizeof(key));
+c_ioq_fmt(ioq1, "%s data position: %d\en", key, c_cdb_datapos(&c));
+.Ed
+.Sh SEE ALSO
+.Xr c_cdb_datalen 3 ,
+.Xr c_cdb_find 3 ,
+.Xr c_cdb_findnext 3 ,
+.Xr c_cdb_read 3

@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_ARR_TOTAL 3
 .Os
 .Sh NAME
 .Nm c_arr_total
-.Nd get the buffer size of an array
+.Nd retrieve the buffer size from array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -20,6 +20,12 @@ function returns the internal buffer size, in bytes, from the array
 The
 .Fn c_arr_total
 function returns the number of allocated bytes in the given array.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+usize n = c_arr_total(&arr);
+c_ioq_fmt(ioq1, "Total Memory: %llu\en", n);
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_arr_avail 3 ,
 .Xr c_arr_bytes 3 ,

@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_ARR_BYTES 3
 .Os
 .Sh NAME
 .Nm c_arr_bytes
-.Nd calculate used memory in an array
+.Nd calculate used memory in array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -20,6 +20,12 @@ function calculates the used memory in the array
 The
 .Fn c_arr_bytes
 function returns the number of initialized bytes in the given array.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+usize n = c_arr_len(&arr, sizeof(int));
+c_ioq_fmt(ioq1, "Used Memory: %llu\en", n);
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_arr_avail 3 ,
 .Xr c_arr_len 3 ,

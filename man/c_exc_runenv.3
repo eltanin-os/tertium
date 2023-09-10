@@ -1,0 +1,54 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_EXC_RUNENV 3
+.Os
+.Sh NAME
+.Nm c_exc_runenv
+.Nd run program
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_exc_runenv "char *prog" "char **argv" "char **envp"
+.Sh DESCRIPTION
+The
+.Fn c_exc_run
+function runs the program
+.Fa prog
+with argument list
+.Fa argv
+and environment list
+.Fa envp .
+If
+.Fa prog
+contains a slash, indicating a fullpath, it is executed directly;
+otherwise it searches the directories in the
+.Ev PATH
+environment variable to locate the program.
+If this variable is not specified, the default path is set to
+.Dq /bin:/usr/bin:. .
+.Pp
+The given environment is merged with
+the variables previously set by the function
+.Xr c_exc_setenv 3 .
+.Sh RETURN VALUES
+The
+.Fn c_exc_runenv
+function returns \-1 and set the external variable
+.Va errno
+to indicate the error.
+.Sh ERRORS
+The
+.Fn c_exc_runenv
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library functions
+.Xr c_std_alloc 3
+and
+.Xr c_sys_execve 3 .
+.Sh SEE ALSO
+.Xr c_exc_run 3 ,
+.Xr c_exc_setenv 3 .
+.Xr c_exc_spawn0 3 ,
+.Xr c_exc_spawn1 3

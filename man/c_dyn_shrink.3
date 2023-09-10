@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_DYN_SHRINK
 .Os
 .Sh NAME
 .Nm c_dyn_shrink
-.Nd shrink a dynamic array
+.Nd shrink dynamic array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -14,6 +14,10 @@
 .Sh DESCRIPTION
 The
 .Fn c_dyn_shrink
-function shrinks the internal buffer of array
+function resizes the internal buffer of the dynamic array
 .Fa p
-to the number of initialized bytes.
+to match the number of initialized bytes, thus releasing any
+surplus allocated memory.
+.Pp
+It should be called after you are done adding objects to the dynamic array,
+since the growth heuristics may have over-allocated space.

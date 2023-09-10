@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_DYN_FREE 3
 .Os
 .Sh NAME
 .Nm c_dyn_free
-.Nd free a dynamic array
+.Nd free dynamic array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -14,15 +14,14 @@
 .Sh DESCRIPTION
 The
 .Fn c_dyn_free
-function deallocates the internal buffer of array
+function releases the memory assigned to the dynamic array
 .Fa p .
-If already freed,
+If the array has already been freed,
 .Fa c_dyn_free
 has no effects.
 .Sh SEE ALSO
 .Xr c_arr_trunc 3
 .Sh CAVEATS
-Is not recommended to free dynamic arrays if
-they are going to be reused soon, as it has a cost
-and causes memory fragmentation; instead, truncate
+Is not recommended to free dynamic arrays if they are to be reused soon,
+since it has a cost and may result in memory fragmentation; instead, truncate
 the array to zero.

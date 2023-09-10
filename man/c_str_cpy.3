@@ -1,0 +1,38 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_CPY 3
+.Os
+.Sh NAME
+.Nm c_str_cpy
+.Nd copy strings
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_str_cpy "char *dest" "usize n" "char *src"
+.Sh DESCRIPTION
+The
+.Fn c_str_cpy
+function copies not more than
+.Fa n
+characters from the string
+.Fa src
+to
+.Fa dest .
+The memory areas may overlap.
+.Sh RETURN VALUES
+The
+.Fn c_str_cpy
+function returns
+.Fa dest .
+.Sh EXAMPLES
+.Dl c_str_cpy(buf, sizeof(buf) - 1, input);
+.Sh SEE ALSO
+.Xr c_arr_cat 3 ,
+.Xr c_arr_fmt 3 ,
+.Xr c_dyn_cat 3 ,
+.Xr c_dyn_fmt 3
+.Sh CAVEATS
+If not for minor operations prefer to use "arr" or "dyn" modules for creation
+and manipulation of strings, it's safer and the purpose cleaner.

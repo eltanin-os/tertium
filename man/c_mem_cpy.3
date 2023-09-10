@@ -1,4 +1,4 @@
-.Dd $Mdocdate: January 01 2020 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_MEM_CPY 3
 .Os
 .Sh NAME
@@ -26,5 +26,12 @@ The
 .Fn c_mem_cpy
 function returns a pointer to
 .Fa d .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char buf[16];
+c_mem_cpy(buf, sizeof(buf), "Hello, World\en\e0");
+c_ioq_put(ioq1, buf);
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_mem_ccpy 3

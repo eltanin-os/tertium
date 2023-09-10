@@ -1,0 +1,40 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_INIT 3
+.Os
+.Sh NAME
+.Nm c_cdb_init
+.Nd initialize constant database
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_cdb_init "ctype_cdb *p" "ctype_fd fd"
+.Sh DESCRIPTION
+The
+.Fn
+function initializes the constant database
+.Fa p
+with the
+.Pq readable \+ seekable
+file descriptor
+.Fa fd .
+.Sh RETURN VALUES
+.Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_fd fd = c_nix_fdopen2("file.cdb", C_NIX_OREAD);
+if (fd < 0) goto err;
+ctype_cdb c;
+c_cdb_init(&p, fd);
+.Ed
+.Sh ERRORS
+The
+.Fn c_cdb_init
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_nix_fdstat 3 .
+.Sh SEE ALSO
+.Xr c_cdb_init 3

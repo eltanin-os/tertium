@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
-.Dt C_DYN_VFMT 3
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ARR_VFMT 3
 .Os
 .Sh NAME
 .Nm c_dyn_vfmt
-.Nd concatenate formatted strings in a dynamic array
+.Nd concatenate formatted strings in dynamic array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -16,22 +16,44 @@ The
 .Fn c_dyn_vfmt
 function appends a formatted string, as described in the format
 .Fa fmt ,
-in the array
+to the array
 .Fa p .
 If not enough bytes are allocated,
 .Fn c_dyn_vfmt
 allocates more bytes.
+.Pp
+The formatting is performed by the function
+.Xr c_fmt_fmt 3 .
 .Sh RETURN VALUES
-On success, the
+The
 .Fn c_dyn_vfmt
-function returns the number of copied bytes;
-Otherwise, the value \-1 is returned and
+function returns the number of copied bytes if successful;
+otherwise the value \-1 is returned and
 .Va errno
 is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char *
+strfmt(char *fmt, ...)
+{
+	ctype_arr arr;
+	va_list ap;
+	size n;
+
+	c_mem_set(&arr, sizeof(arr), 0);
+
+	va_start(ap, fmt);
+	n = c_dyn_vfmt(p, fmt, ap);
+	va_end(ap);
+
+	if (n < 0) return nil;
+	return buf;
+}
+.Ed
 .Sh ERRORS
 .Bl -tag -width Er
-.It Bq Er ENOMEM
-Not enough space.
+.It Bq Er C_ERR_NOMEM
+Not enough memory.
 .El
 .Sh SEE ALSO
 .Xr c_dyn_fmt 3 ,

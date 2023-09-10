@@ -1,0 +1,27 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CAL_DATEFROMMJD 3
+.Os
+.Sh NAME
+.Nm c_cal_datefrommjd
+.Nd convert modified Julian day to calendar date
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_cal_datefrommjd "ctype_caldate *p" "long day"
+.Sh DESCRIPTION
+The
+.Fn c_cal_datefrommjd
+function converts the modified Julian
+.Fa day
+to the calendar date
+.Fa p .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_caldate cd;
+c_cal_datefrommjd(&cd, 55555);
+.Ed
+.Sh SEE ALSO
+.Xr c_cal_datemjd 3

@@ -1,0 +1,24 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_DIR_CLOSE 3
+.Os
+.Sh NAME
+.Nm c_dir_close
+.Nd close file hierarchy stream
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_dir_close "ctype_dir *p"
+.Sh DESCRIPTION
+The
+.Fn c_dir_close
+function closes a file hierarchy stream
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_dir_close
+function returns the value 0.
+.Sh SEE ALSO
+.Xr c_dir_open 3

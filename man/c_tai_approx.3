@@ -1,0 +1,22 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAI_APPROX 3
+.Os
+.Sh NAME
+.Nm c_tai_approx
+.Nd calculate double-precision approximation
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft double
+.Fn c_tai_approx "ctype_tai *t"
+.Sh DESCRIPTION
+The
+.Fn c_tai_approx
+function calculates a double-precision approximation from the TAI64 label
+.Fa t .
+.Sh RETURN VALUES
+The
+.Fn c_tai_approx
+function returns a double-precision timestamp approximation.

@@ -1,0 +1,26 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_DIR_CHILDREN 3
+.Os
+.Sh NAME
+.Nm c_dir_children
+.Nd get subdirectory content
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_dent *
+.Fn c_dir_children "ctype_dir *p"
+.Sh DESCRIPTION
+The
+.Fn c_dir_children
+function iterates through the child entries from the current directory in
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_dir_children
+function returns a pointer to the next entry, or nil when
+there are no more entries.
+.Sh SEE ALSO
+.Xr c_dir_list 3 ,
+.Xr c_dir_read 3

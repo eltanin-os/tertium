@@ -1,0 +1,26 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_FULLRUNE 3
+.Os check string
+.Sh NAME
+.Nm c_utf8_fullrune
+.Nd check rune availability
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_fullrune "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_fullrune
+function checks if the string
+.Fa s
+of length
+.Fa n
+contains a complete Unicode code point.
+.Sh RETURN VALUES
+The
+.Fn c_utf8_fullrune
+function returns the value 1 if the given string contains a complete rune,
+and 0 otherwise.

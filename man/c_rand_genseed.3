@@ -1,0 +1,21 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_RAND_GENSEED 3
+.Os
+.Sh NAME
+.Nm c_rand_genseed
+.Nd set state structure seed
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_rand_genseed "ctype_rst *p"
+.Sh DESCRIPTION
+The
+.Fn c_rand_genseed
+function sets the seed from the state structure
+.Fa p
+to a random seed.
+.Sh SEE ALSO
+.Xr c_rand_setseed 3

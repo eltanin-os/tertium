@@ -1,0 +1,26 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_DIR_LIST 3
+.Os
+.Sh NAME
+.Nm c_dir_list
+.Nd iterate current directory entries
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_dent *
+.Fn c_dir_list "ctype_dir *p"
+.Sh DESCRIPTION
+The
+.Fn c_dir_list
+function iterates through the current directory entries in
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_dir_list
+function returns a pointer to the next entry, or nil when
+there are no more entries.
+.Sh SEE ALSO
+.Xr c_dir_children 3 ,
+.Xr c_dir_read 3

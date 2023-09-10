@@ -1,0 +1,27 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ADT_KVDEL 3
+.Os
+.Sh NAME
+.Nm c_adt_kvdel
+.Nd delete a key from a key-value tree
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_adt_kvdel "ctype_kvtree *t" "char *k"
+.Sh DESCRIPTION
+The
+.Fn c_adt_kvdel
+function deletes the key
+.Fa k
+from the key-value tree
+.Fa t .
+.Sh RETURN VALUES
+The
+.Fn
+function returns 0 if successful; otherwise \-1 is returned, indicating that
+the key does not exist.
+.Sh SEE ALSO
+.Xr c_adt_kvfree 3

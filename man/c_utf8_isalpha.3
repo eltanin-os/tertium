@@ -1,0 +1,39 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISALPHA 3
+.Os
+.Sh NAME
+.Nm c_utf8_isalpha
+.Nd alphabetic rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_isalpha "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_isalpha
+function tests whether the rune
+.Fa r
+represents an alphanumeric character.
+.Pp
+Alphabetic characters are those in the Unicode categories Letter,
+Lowercase Letter
+.Pq Ll ,
+Modifier Letter
+.Pq Lm ,
+Other Letter
+.Pq Lo ,
+Titlecase Letter
+.Pq Lt ,
+and Uppercase Letter
+.Pq Lu .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_isalpha
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_islower 3 ,
+.Xr c_utf8_istitle 3 ,
+.Xr c_utf8_isupper 3

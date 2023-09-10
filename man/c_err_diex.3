@@ -1,0 +1,44 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ERR_DIEX 3
+.Os
+.Sh NAME
+.Nm c_err_diex
+.Nd formatted error message
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_err_diex "ctype_status eval" "char *fmt" "..."
+.Sh DESCRIPTION
+The
+.Fn c_err_diex
+function writes the last component of the progname followed by a colon
+.Pq Sq \&:
+character and a space, and a formatted error message
+as according to the format
+.Fa fmt
+on the standard error output.
+.Pp
+The
+.Fn c_err_diex
+function do not return, but exit with the value of the argument
+.Fa eval .
+.Pp
+The formatting is performed by the function
+.Xr c_fmt_fmt 3 .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+if (argc < 0)
+	c_err_diex(1, "no arguments given");
+.Ed
+.Sh SEE ALSO
+.Xr c_err_die 3 ,
+.Xr c_err_vdie 3 ,
+.Xr c_err_vdiex 3 ,
+.Xr c_err_vwarn 3 ,
+.Xr c_err_vwarnx 3 ,
+.Xr c_err_warn 3 ,
+.Xr c_err_warnx 3 ,
+.Xr c_fmt_fmt 3

@@ -1,0 +1,45 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_RCHR 3
+.Os
+.Sh NAME
+.Nm c_str_rchr
+.Nd locate character in a string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_str_rchr "char *v" "usize n" "int c"
+.Sh DESCRIPTION
+The
+.Fn
+function searches for the last occurence of the character
+.Fa c
+in the string
+.Fa v .
+It searches at most
+.Fa n
+bytes.
+.Sh RETURN VALUES
+The
+.Fn c_str_rchr
+function returns a pointer to the located character or nil
+if not found.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char *p;
+
+char path[C_LIM_PATHMAX];
+/* copy path to str */
+p = c_str_rchr(str, sizeof(str), '.');
+
+char *s = "Hello, World!";
+p = c_str_rchr(str, -1, ",");
+.Ed
+.Sh SEE ALSO
+.Xr c_mem_chr 3 ,
+.Xr c_mem_rchr 3 ,
+.Xr c_str_casechr 3 ,
+.Xr c_str_caserchr 3 ,
+.Xr c_str_chr 3

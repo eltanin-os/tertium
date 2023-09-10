@@ -1,0 +1,36 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISCNTRL 3
+.Os
+.Sh NAME
+.Nm c_utf8_iscntrl
+.Nd control rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_iscntrl "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_iscntrl
+function tests whether the rune
+.Fa r
+represents a control character.
+.Pp
+Control characters are those in the Unicode categories Control
+.Pq Cc ,
+Format
+.Pq Cf ,
+Line Separator
+.Pq Zl ,
+and Paragraph Separator
+.Pq Zp .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_iscntrl
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_isblank 3 ,
+.Xr c_utf8_isgraph 3 ,
+.Xr c_utf8_isprint 3

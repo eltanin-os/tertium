@@ -1,0 +1,31 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISXDIGIT 3
+.Os
+.Sh NAME
+.Nm c_utf8_isxdigit
+.Nd hexadecimal-digit rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_isdigit "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_isdigit
+function tests whether the rune
+.Fa r
+represents a hexadecimal digit character.
+.Pp
+Hexadecimal digits are those in the Unicode category Number and
+Decimal Digit
+.Pq Nd ,
+along with the letters A-F and a-f.
+.Sh RETURN VALUES
+The
+.Fn c_utf8_isxdigit
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_isalnum 3 ,
+.Xr c_utf8_isdigit 3

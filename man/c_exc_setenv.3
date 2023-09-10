@@ -1,0 +1,32 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_EXC_SETENV 3
+.Os
+.Sh NAME
+.Nm c_exc_setenv
+.Nd set environment
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_exc_setenv "char *s" "char *v"
+.Sh DESCRIPTION
+The
+.Fn c_exc_setenv
+function sets the environment variable
+.Fa s
+to the value
+.Fa v .
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_dyn_ready
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_std_alloc 3 .
+.Sh SEE ALSO
+.Xr c_exc_run 3 ,
+.Xr c_exc_runenv 3

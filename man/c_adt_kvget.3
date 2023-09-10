@@ -1,0 +1,38 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ADT_KVGET 3
+.Os
+.Sh NAME
+.Nm c_adt_kvget
+.Nd retrieve a value from a key-value tree
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void *
+.Fn c_adt_kvget "ctype_kvtree *t" "char *k"
+.Sh DESCRIPTION
+The
+.Fn c_adt_kvget
+function searches for the key
+.Fa k
+in the key-value tree
+.Fa t
+to retrieve the value associated with it.
+.Sh RETURN VALUES
+The
+.Fn c_adt_kvget
+function returns a pointer to the key associated value if found;
+otherwise a nil pointer is returned.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char *s = c_adt_kvget(&t, "key1");
+if (s) {
+	c_ioq_fmt(ioq1, "Key1 = %s\en", s);
+} else {
+	c_ioq_put(ioq1, "Key1 not found\en");
+}
+c_ioq_flush(ioq1);
+.Ed
+.Sh SEE ALSO
+.Xr c_adt_kvadd 3

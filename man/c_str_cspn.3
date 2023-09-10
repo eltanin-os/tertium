@@ -1,0 +1,38 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_CSPN 3
+.Os
+.Sh NAME
+.Nm c_str_cspn
+.Nd span a string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft usize
+.Fn c_str_cspn "char *v" "usize n" "char *reject"
+.Sh DESCRIPTION
+The
+.Fn c_str_cspn
+function calculates the length of the initial
+.Fa n
+bytes from the string
+.Fa v
+which consists entirely of characters not in
+.Fa reject .
+.Sh RETURN VALUES
+The
+.Fn c_str_cspn
+function returns the number of characters spanned.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char s[] = "abcdef.012345.ghijkl";
+char *reject = ".";
+usize span = c_str_cspn(s, sizeof(s), reject);
+.Ed
+.Sh SEE ALSO
+.Xr c_mem_chr 3 ,
+.Xr c_mem_rchr 3 ,
+.Xr c_str_chr 3 ,
+.Xr c_str_rchr 3 ,
+.Xr c_str_spn 3

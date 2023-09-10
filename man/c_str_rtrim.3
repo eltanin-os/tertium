@@ -1,0 +1,33 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_RTRIM 3
+.Os
+.Sh NAME
+.Nm c_str_ltrim
+.Nd right trim a string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_str_rtrim "char *str" "usize n" "char *t"
+.Sh DESCRIPTION
+The
+.Fn c_str_ltrim
+function replaces any of the characters in the string
+.Fa t
+found at the end of the string
+.Fa str
+with a nul-character
+.Pq Sq \e0 .
+It goes no further than
+.Fa n
+bytes .
+.Sh RETURN VALUES
+The
+.Fn c_str_rtrim
+function returns a pointer to the string
+.Fa str .
+.Sh SEE ALSO
+.Xr c_str_ltrim 3 ,
+.Xr c_str_trim 3

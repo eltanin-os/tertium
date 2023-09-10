@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_DYN_ALLOC 3
 .Os
 .Sh NAME
 .Nm c_dyn_alloc
-.Nd get data of a dynamic array
+.Nd retrieve an object from dynamic array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -16,31 +16,35 @@ The
 .Fn c_dyn_alloc
 function returns a pointer to the object, of
 .Fa n
-bytes in size, in position
+bytes in size, at position
 .Fa m
-of the array
-.Fa p .
-.Fn c_dyn_alloc
-ensures that at least
+in the array
+.Fa p ,
+ensuring that at least
 .Fa m Ns \+1
 objects are initialized.
 If not enough bytes are allocated,
 .Fn c_dyn_alloc
 allocates more bytes.
 .Sh RETURN VALUES
-On success, the
+The
 .Fn c_dyn_alloc
-function returns a pointer to the requested object;
-Otherwise, nil is returned and
+function returns a pointer to the requested object if successful;
+otherwise nil is returned and
 .Va errno
 is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+int *p = c_dyn_alloc(&arr, 1, sizeof(*p));
+*p = 10;
+.Ed
 .Sh ERRORS
-.Bl -tag -width Er
-.It Bq Er C_ENOMEM
-Not enough space.
-.It Bq Er C_EOVERFLOW
-Value too large to be stored in data type.
-.El
+The
+.Fn c_dyn_alloc
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_dyn_ready 3 .
 .Sh SEE ALSO
 .Xr c_arr_data 3 ,
 .Xr c_dyn_ready 3

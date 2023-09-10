@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_ARR_CAT 3
 .Os
 .Sh NAME
 .Nm c_arr_cat
-.Nd concatenate objects in an array
+.Nd concatenate objects to array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -24,10 +24,15 @@ to the array
 .Fa p .
 .Sh RETURN VALUES
 .Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+int num[3] = { 6, 6, 6 };
+if (c_arr_cat(&arr, &xyz, C_STD_NELEM(num), sizeof(num[0])) < 0) goto fail;
+.Ed
 .Sh ERRORS
-.Bl -tag -width Er
-.It Bq Er C_ENOMEM
-Not enough space.
-.It Bq Er C_EOVERFLOW
-Value too large to be stored in data type.
-.El
+The
+.Fn c_arr_cat
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_arr_ready 3 .

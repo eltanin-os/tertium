@@ -1,0 +1,32 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_CHARNTORUNE
+.Os
+.Sh NAME
+.Nm c_utf8_charntorune
+.Nd encode character to rune
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_charntorune "ctype_rune *p" "char *s" "usize len"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_charntorune
+function converts the first UTF-8 encoded character in the string
+.Fa s ,
+looking up to
+.Fa len
+bytes, to the rune
+.Fa r .
+If the input is not exactly in UTF format,
+.Fn c_utf8_charntorune
+converts to rune C_UTF8_RUNEERROR.
+.Sh RETURN VALUES
+The
+.Fn c_utf8_charntorune
+function returns the length of the converted rune.
+.Sh SEE ALSO
+.Xr c_utf8_chartorune 3 ,
+.Xr c_utf8_runetochar 3

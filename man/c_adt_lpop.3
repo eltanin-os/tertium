@@ -1,0 +1,30 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt c_adt_lpop 3
+.Os
+.Sh NAME
+.Nm c_adt_lpop
+.Nd pop node from list
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_node *
+.Fn c_adt_lpop "ctype_node **sp"
+.Sh DESCRIPTION
+The
+.Fn c_adt_lpop
+function removes the last node from the linked list
+.Fa sp .
+It adjusts the list so that the new last node becomes the tail.
+.Sh RETURN VALUES
+The
+.Fn c_adt_lpop
+function returns a pointer to the removed node, or nil if the list is empty.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+c_adt_lfree(c_adt_lpop(&tail));
+.Ed
+.Sh SEE ALSO
+.Xr c_adt_lfree 3 ,
+.Xr c_adt_ltpop 3

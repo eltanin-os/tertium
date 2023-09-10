@@ -1,0 +1,31 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_FINDSTART 3
+.Os
+.Sh NAME
+.Nm c_cdb_findstart
+.Nd start search position
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_cdb_findstart "ctype_cdb *p"
+.Sh DESCRIPTION
+The
+.Fn
+function prepares the constant database
+.Fa p
+to search for the first record under a new key.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_status
+c_cdb_find(ctype_cdb *p, char *k, usize n)
+{
+	c_cdb_findstart(p);
+	return c_cdb_findnext(p, k, n);
+}
+.Ed
+.Sh SEE ALSO
+.Xr c_cdb_find 3 ,
+.Xr c_cdb_findnext 3

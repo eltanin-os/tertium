@@ -1,0 +1,31 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISBLANK 3
+.Os
+.Sh NAME
+.Nm c_utf8_isblank
+.Nd blank rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_isblank "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_isblank
+function tests whether the rune
+.Fa r
+represents a blank character.
+.Pp
+Blank characters are those in the Unicode category Paragraph Separator
+.Pq Zs ,
+along with horizontal tabulation
+.Pq Sq \et .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_isblank
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_iscntrl 3 ,
+.Xr c_utf8_isgraph 3

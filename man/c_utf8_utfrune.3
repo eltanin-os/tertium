@@ -1,0 +1,26 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_UTFRUNE 3
+.Os
+.Sh NAME
+.Nm c_utf8_utfrune
+.Nd
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_utf8_utfrune "char *s" "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_utfrune
+function searches for the first occurence of the rune
+.Fa r
+in the string
+.Fa s .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_utfrune
+function returns a pointer to the located rune or nil if not found.
+.Sh SEE ALSO
+.Xr c_utf8_utfrrune 3

@@ -1,0 +1,32 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UINT_32PACK 3
+.Os
+.Sh NAME
+.Nm c_uint_32pack
+.Nd store unsigned little-endian 32-bit integer
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_uint_32pack "char *s" "u32 u"
+.Sh DESCRIPTION
+The
+.Fn c_uint_32pack
+function portably stores the 32-bit integer
+.Fa u
+to
+.Fa s
+in little-endian byte order.
+.Sh RETURN VALUES
+The
+.Fn c_uint_32pack
+function returns a pointer to the given buffer.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char buf[sizeof(u32)];
+c_uint_32pack(buf, 31);
+.Ed
+.Sh SEE ALSO
+.Xr c_uint_32bigpack 3

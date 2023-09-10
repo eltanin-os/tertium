@@ -1,0 +1,53 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_DYN_IDXCAT 3
+.Os
+.Sh NAME
+.Nm c_dyn_idxcat
+.Nd concatenate objects to dynamic array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_dyn_idxcat "ctype_arr *p" "usize pos" "void *v" "usize m" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_dyn_idxcat
+function appends
+.Fa m
+objects, each
+.Fa n
+bytes in size, from the memory area
+.Fa v
+to the array
+.Fa p
+at position
+.Fa pos .
+If not enough bytes are allocated,
+.Fn c_dyn_idxcat
+allocates more bytes.
+If
+.Fa pos
+is already occupied,
+.Fn c_dyn_idxcat
+will shift existing objects foward to make room.
+.Sh RETURN VALUES
+.Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+/* buffer = [ 1, 2, 3, 4, 6, 7 ] */
+int num = 5;
+c_dyn_idxcat(&arr, 4, &num, 1, sizeof(num));
+/* buffer = [ 1, 2, 3 , 4, 5, 6, 7 ]
+.Ed
+.Sh ERRORS
+The
+.Fn c_dyn_idxcat
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_dyn_ready 3 .
+.Sh SEE ALSO
+.Xr c_dyn_cat 3 ,
+.Xr c_dyn_get 3

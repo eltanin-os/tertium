@@ -1,0 +1,26 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_RAND_U32 3
+.Os
+.Sh NAME
+.Nm c_rand_u32
+.Nd random number generator
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft u32
+.Fn c_rand_u32 "u32 n"
+.Sh DESCRIPTION
+The
+.Fn c_rand_u32
+function generates a random number,
+uniformly distributed but less than
+.Fa n .
+.Sh RETURN VALUES
+The
+.Fn c_rand_u32
+function returns the generated number.
+.Sh SEE ALSO
+.Xr c_rand_data 3 ,
+.Xr c_rand_name 3

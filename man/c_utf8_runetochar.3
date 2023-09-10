@@ -1,0 +1,27 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_RUNETOCHAR 3
+.Os
+.Sh NAME
+.Nm c_utf8_runetochar
+.Nd convert rune to utf8
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_runetochar "char *s" "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_runetochar
+function converts the rune
+.Fa r
+to the string
+.Fa s .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_runetochar
+function retruns the length of the converted rune.
+.Sh SEE ALSO
+.Xr c_utf8_charntorune 3 ,
+.Xr c_utf8_chartorune 3

@@ -1,0 +1,32 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CAL_DATEMJD 3
+.Os
+.Sh NAME
+.Nm c_cal_datemjd
+.Nd calculate the modified Julian day
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft long
+.Fn c_cal_datemjd "ctype_caldate *p"
+.Sh DESCRIPTION
+The
+.Fn
+function calculates the modified Julian day number corresponding to the date
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn
+function returns the modified Julian day number for the given date.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_caldate cd;
+cd.year = 2012
+cd.month = 12
+cd.day = 12
+long mjd = c_cal_datemjd(&cd);
+.Ed
+.Sh SEE ALSO
+.Xr c_cal_frommjd 3

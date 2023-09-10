@@ -1,4 +1,4 @@
-.Dd $Mdocdate: January 01 2020 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_MEM_CHR 3
 .Os
 .Sh NAME
@@ -26,5 +26,11 @@ The
 .Fn c_mem_chr
 function returns a pointer to the byte located,
 or nil if the byte is not found.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char path[] = "/tmp/file.ext";
+char *s = c_mem_chr(path, sizeof(path), '.');
+*s = '\e0';
+.Ed
 .Sh SEE ALSO
 .Xr c_mem_rchr 3

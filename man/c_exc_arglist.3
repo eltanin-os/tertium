@@ -1,0 +1,45 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_EXC_ARGLIST 3
+.Os
+.Sh NAME
+.Nm c_exc_arglist
+.Nd build argument list
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void *
+.Fn c_exc_arglist_ "char *prog" "..."
+.Sh DESCRIPTION
+The
+.Fn c_exc_arglist
+function builds an argument list from the argument
+.Fa prog
+and subsequent arguments.
+If
+.Fa prog
+contains spaces
+.Pq Sq \ \& ,
+the string will be split in multiple arguments.
+.Sh RETURN VALUES
+The
+.Fn c_exc_arglist
+function returns the built list if successful; otherwise nil is returned
+and the global variable
+.Va errno
+is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char **args = c_exc_arglist("ls -a", ".");
+/* args = { "ls", "-a", ".", nil } */
+.Ed
+.Sh ERRORS
+The
+.Fn c_exc_arglist
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_std_alloc 3 .
+.Sh SEE ALSO
+.Xr c_exc_varglist 3

@@ -1,0 +1,36 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ADT_LTPUSH 3
+.Os
+.Sh NAME
+.Nm c_adt_ltpush
+.Nd push node into list
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_adt_ltpush "ctype_node **sp" "ctype_node *p"
+.Sh DESCRIPTION
+The
+.Fn c_adt_ltpush
+function pushes the node
+.Fa p
+to the start of the linked list
+.Fa sp .
+It adjust the list so the new node becomes the head.
+.Sh RETURN VALUES
+The
+.Fn c_adt_ltpush
+function returns 0 if success;
+otherwise \-1 is returned.
+.Sh EXAMPLES
+To initialize a list and push a node pointing to dummy pointer:
+.Bd -literal -offset indent
+ctype_node *tail = nil;
+void *data = (uintptr)&c_std_alloc(0, sizeof(uchar));
+c_adt_ltpush(&tail, c_adt_lnew(data, sizeof(data)));
+.Ed
+.Sh SEE ALSO
+.Xr c_adt_lnew 3 ,
+.Xr c_adt_lpush 3

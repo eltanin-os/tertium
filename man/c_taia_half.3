@@ -1,0 +1,20 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAIA_HALF 3
+.Os
+.Sh NAME
+.Nm c_taia_half
+.Nd halve TAI64NA label
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_taia_half "ctype_taia *t" "ctype_taia *u"
+.Sh DESCRIPTION
+The
+.Fn c_taia_half
+function divides the TAI64NA label
+.Fa u
+by 2, rounding down to a multiple of 10^\-18, and stores the result into
+.Fa t .

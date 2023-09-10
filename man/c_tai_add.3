@@ -1,0 +1,24 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAI_ADD 3
+.Os
+.Sh NAME
+.Nm c_tai_add
+.Nd sum TAI64 label
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_tai_add "ctype_tai *t" "ctype_tai *u" "ctype_tai *v"
+.Sh DESCRIPTION
+The
+.Fn c_tai_add
+function calculates the sum from the TAI64 label
+.Fa u
+and
+.Fa v
+storing the result to
+.Fa t .
+.Sh SEE ALSO
+.Xr c_tai_sub 3

@@ -1,0 +1,43 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ADT_KVADD 3
+.Os
+.Sh NAME
+.Nm c_adt_kvadd
+.Nd insert a key into a key-value tree
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_adt_kvadd "ctype_kvtree *t" "char *k" "void *v"
+.Sh DESCRIPTION
+The
+.Fn c_adt_kvadd
+function copies the key
+.Fa k
+string content, inserting it into the key-value tree
+.Fa t
+and setting it as a pointer to the object
+.Fa v .
+.Sh RETURN VALUES
+The
+.Fn c_adt_kvadd
+function returns 0 for new keys or 1 for repeated ones if successful;
+otherwise \-1 is returned and
+.Va errno
+is set to indicate the error.
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er C_ERR_NOMEM
+Not enough memory.
+.El
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_kvtree t = { 0 };
+int number = 0;
+if (c_adt_kvadd(&t, "key1", &number) < 0) goto nomem;
+number = 10;
+.Ed
+.Sh SEE ALSO
+.Xr c_adt_kvget 3

@@ -1,0 +1,32 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UINT_16PACK 3
+.Os
+.Sh NAME
+.Nm c_uint_16pack
+.Nd store unsigned little-endian 16-bit integer
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_uint_16pack "char *s" "u16 u"
+.Sh DESCRIPTION
+The
+.Fn c_uint_16pack
+function portably stores the 16-bit integer
+.Fa u
+to
+.Fa s
+in little-endian byte order.
+.Sh RETURN VALUES
+The
+.Fn c_uint_16pack
+function returns a pointer to the given buffer.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char buf[sizeof(u16)];
+c_uint_16pack(buf, 31);
+.Ed
+.Sh SEE ALSO
+.Xr c_uint_16bigpack 3

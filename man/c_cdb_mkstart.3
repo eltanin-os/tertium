@@ -1,0 +1,40 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_MKSTART 3
+.Os
+.Sh NAME
+.Nm c_cdb_mkstart
+.Nd initialize constant database builder
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_cdb_mkstart "ctype_cdbmk *p" "ctype_fd fd"
+.Sh DESCRIPTION
+The
+.Fn
+function initializes the constant database builder
+.Fa p
+with the file descriptor
+.Fa fd .
+.Sh RETURN VALUES
+.Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_fd fd = c_nix_fdopen2("file.cdb", C_NIX_OWRITE|C_NIX_OTRUNC);
+if (fd < 0) goto err;
+ctype_cdb c;
+c_cdb_mkstart(&c, fd);
+.Ed
+.Sh ERRORS
+The
+.Fn c_cdb_mkstart
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library functions
+.Xr c_ioq_nput 3
+and
+.Xr c_nix_seek 3 .
+.Sh SEE ALSO
+.Xr c_cdb_mkfinish 3

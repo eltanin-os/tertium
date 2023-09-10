@@ -1,0 +1,26 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAIA_FRAC 3
+.Os
+.Sh NAME
+.Nm c_taia_frac
+.Nd calculate double-precision approximation
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft double
+.Fn c_taia_frac "ctype_taia *t"
+.Sh DESCRIPTION
+The
+.Fn c_taia_frac
+function calculates a double-precision approximation to the fraction part
+of the TAI64NA label
+.Fa t .
+.Sh RETURN VALUES
+The
+.Fn c_taia_frac
+function returns a double-precision approximation to the fraction part of
+the given TAI64NA label.
+.Sh SEE ALSO
+.Xr c_taia_approx 3

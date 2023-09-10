@@ -1,0 +1,29 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_ISTITLUE 3
+.Os
+.Sh NAME
+.Nm c_utf8_istitle
+.Nd title-case rune test
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_utf8_islower "ctype_rune r"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_islower
+function tests whether the rune
+.Fa r
+represents a title-case letter.
+.Pp
+Title-case letter are those in the Unicode category Titlecase Letter
+.Pq Lt .
+.Sh RETURN VALUES
+The
+.Fn c_utf8_islower
+function returns non-zero if the rune tests true, and zero otherwise.
+.Sh SEE ALSO
+.Xr c_utf8_islower 3 ,
+.Xr c_utf8_isupper 3

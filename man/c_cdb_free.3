@@ -1,0 +1,29 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_FREE 3
+.Os
+.Sh NAME
+.Nm c_cdb_free
+.Nd free constant database
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_cdb_free "ctype_cdb *p"
+.Sh DESCRIPTION
+The
+.Fn c_cdb_free
+function releases the resources assigned to the constant database
+.Fa p .
+If the constant database has already been freed
+.Fn c_cdb_free
+has no effects.
+It does not close the file descriptor.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+c_cdb_free(&c);
+c_nix_fdclose(fd);
+.Ed
+.Sh SEE ALSO
+.Xr c_cdb_init 3

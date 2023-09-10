@@ -1,0 +1,56 @@
+.Dd $Mdocdate: September 10 2023 $
+.Dt C_DIR_OPEN 3
+.Os
+.Sh NAME
+.Nm c_dir_open
+.Nd open file hierarchy stream
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_dir_open "ctype_dir *p" "char **argv" "uint opts" "ctype_cmpfn f"
+.Sh DESCRIPTION
+The
+.Fn c_dir_open
+function opens the list of files/directories
+.Fa argv
+for traversal. It prepares them according to the options
+.Fa opts
+and uses the comparison function
+.Fa f ,
+if provided, to determine the access order.
+.Pp
+The options are selected by
+.Tn OR Ns 'ing
+the following values:
+.Bl -tag -width XXXXXXXXXXX
+.It Dv C_DIR_FSLOG
+Follow symbolic links immediately.
+.It Dv C_DIR_FSPHY
+Physical walk, do not follow symbolic links.
+.It Dv C_DIR_FSCOM
+Follow command line symbolic links immediately.
+.It Dv C_DIR_FSNOI
+Do not allocate stat structure.
+.It Dv C_DIR_FSVDT
+Return '.' or '..' directories.
+.It Dv C_DIR_FSXDV
+Do not cross mount points.
+.It Dv C_DIR_FSFHT
+Mark already visited directories as cycle instead of directory.
+.El
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_dir_open
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library functions
+.Xr c_nix_fdopen2 3
+and
+.Xr c_std_alloc 3 .
+.Sh SEE ALSO
+.Xr c_dir_close 3

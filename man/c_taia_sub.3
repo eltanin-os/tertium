@@ -1,0 +1,24 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAI_SUB 3
+.Os
+.Sh NAME
+.Nm c_taia_sub
+.Nd subtract TAI64NA label
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_taia_sub "ctype_tai *t" "ctype_tai *u" "ctype_tai *v"
+.Sh DESCRIPTION
+The
+.Fn c_taia_sub
+function calculates the difference from the TAI64NA label
+.Fa u
+and
+.Fa v
+storing the result to
+.Fa t .
+.Sh SEE ALSO
+.Xr c_taia_add 3

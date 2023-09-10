@@ -1,4 +1,4 @@
-.Dd $Mdocdate: January 01 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_MEM_SET 3
 .Os
 .Sh NAME
@@ -27,3 +27,8 @@ The
 .Fn c_mem_set
 function returns a pointer to the memory area
 .Fa v .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char buf[32];
+c_mem_set(buf, sizeof(buf), 0);
+.Ed

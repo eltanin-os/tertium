@@ -1,0 +1,50 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CDB_MKADD 3
+.Os
+.Sh NAME
+.Nm c_cdb_mkadd
+.Nd add entry to constant database
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_cdb_mkadd "ctype_cdbmk *p" "char *k" "usize klen" "char *s" "usize dlen"
+.Sh DESCRIPTION
+The
+.Fn
+function adds the key
+.Fa k
+of
+.Fa klen
+bytes in size, associating the value
+.Fa s
+of
+.Fa dlen
+bytes in size, to the constant database
+.Fa p .
+The structure must already have been initialized by the function
+.Xr c_cdb_mkstart 3 .
+The changes are retained in memory until the execution of the function
+.Xr c_cdb_mkfinish 3 .
+.Sh RETURN VALUES
+.Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char key[] = "key1";
+char data[] = "data";
+if (c_cdb_mkadd(&c, key, sizeof(key), data, sizeof(data)) < 0) goto err;
+.Ed
+.Sh ERRORS
+The
+.Fn c_cdb_mkadd
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library functions
+.Xr c_dyn_cat 3
+and
+.Xr c_ioq_nput 3 .
+.Sh SEE ALSO
+.Xr c_cdb_mkstart 3 ,
+.Xr c_cdb_mkfinish 3

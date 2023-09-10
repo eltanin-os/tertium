@@ -1,0 +1,25 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAI_LESS 3
+.Os
+.Sh NAME
+.Nm c_tai_less
+.Nd compare TAI64 label
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_tai_less "ctype_tai *t" "ctype_tai *u"
+.Sh DESCRIPTION
+The
+.Fn c_tai_less
+function compares two TAI64 labels
+.Fa t
+and
+.Fa u .
+.Sh RETURN VALUES
+The
+.Fn c_tai_less
+function returns the value 1 if the first TAI64 label is
+less than the second; otherwise 0 is returned.

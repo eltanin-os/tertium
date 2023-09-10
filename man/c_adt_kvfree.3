@@ -1,0 +1,24 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ADT_KVFREE 3
+.Os
+.Sh NAME
+.Nm c_adt_kvfree
+.Nd
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_adt_kvfree "ctype_kvtree *t" "void (*freeobj)(void *)"
+.Sh DESCRIPTION
+The
+.Fn c_adt_kvfree
+function traverses the key-value tree
+.Fa t
+calling, if given, the function
+.Fa freeobj
+with the key associated value as argument before freeing the key.
+.Sh SEE ALSO
+.Xr c_adt_kvdel 3 ,
+.Xr c_adt_kvtraverse 3

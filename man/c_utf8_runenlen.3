@@ -1,0 +1,27 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_UTF8_RUNENLEN 3
+.Os
+.Sh NAME
+.Nm c_utf8_runenlen
+.Nd calculate conversion length
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft usize
+.Fn c_utf8_runenlen "ctype_rune *p" "usize len"
+.Sh DESCRIPTION
+The
+.Fn c_utf8_runenlen
+function calculates the number of bytes required to convert the rune string
+.Fa r ,
+of length
+.Fa len
+into UTF.
+.Sh RETURN VALUES
+The
+.Fn c_utf8_runenlen
+function returns the length required to convert the given string rune.
+.Sh SEE ALSO
+.Xr c_utf8_runelen 3

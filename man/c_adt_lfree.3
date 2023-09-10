@@ -1,0 +1,24 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ADT_LFREE 3
+.Os
+.Sh NAME
+.Nm c_adt_lfree
+.Nd free a list
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_adt_lfree "ctype_node *np"
+.Sh DESCRIPTION
+The
+.Fn c_adt_lfree
+function free all the resources assigned to the node
+.Fa np .
+.Sh EXAMPLES
+To free an entire list:
+.Bd -literal -offset ident
+ctype_node *p;
+while ((p = c_adt_lpop(&list))) c_adt_lfree(p);
+.Ed

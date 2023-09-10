@@ -1,0 +1,22 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAI_UNPACK 3
+.Os
+.Sh NAME
+.Nm c_taia_unpack
+.Nd convert from external TAI64 format
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_tai_unpack "ctype_tai *t" "char *s"
+.Sh DESCRIPTION
+The
+.Fn
+function converts the external TAI64 format in
+.Fa s
+to TAI64 label
+.Fa t .
+.Sh SEE ALSO
+.Xr c_tai_pack 3

@@ -1,0 +1,55 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ADT_KVTRAVERSE 3
+.Os
+.Sh NAME
+.Nm c_adt_kvtraverse
+.Nd walk through a key-value tree
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_adt_kvtraverse "ctype_kvtree *t" "ctype_status (*func)(char *, void *))"
+.Sh DESCRIPTION
+The
+.Fn c_adt_kvtraverse
+function will walk through the key-value tree calling the function
+.Fa func
+for each member, passing the key as first argument and its associated
+value as second argument.
+.Pp
+If the function
+.Fa func
+returns \-1 the walk stops.
+.Sh RETURN VALUES
+The
+.Fn c_adt_kvtraverse
+function returns 0 if successful; otherwise \-1 is returned, indicating that
+the walk was incomplete.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+#include <tertium/cpu.h>
+#include <tertium/std.h>
+
+ctype_status
+print(char *k, void *v)
+{
+	char *p = v;
+	c_ioq_fmt(ioq1, "%s = %s", k, p);
+	return 0;
+}
+
+ctype_status
+main(void)
+{
+	ctype_kvtree t;
+	c_mem_set(&t, sizeof(t), 0);
+	c_adt_kvadd(&t, "key1", "hello");
+	c_adt_kvadd(&t, "key2", "world");
+	c_ioq_flush(ioq1);
+	return 0;
+}
+.Ed
+.Sh SEE ALSO
+.Xr c_adt_kvget 3

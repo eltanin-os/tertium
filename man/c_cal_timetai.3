@@ -1,0 +1,28 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_CAL_TIMETAI 3
+.Os
+.Sh NAME
+.Nm c_cal_timetai
+.Nd convert calendar to tai
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_cal_timetai "ctype_tai *t" "ctype_caltime *p"
+.Sh DESCRIPTION
+The
+.Fn
+function converts the calendar
+.Fa p
+to the tai timestamp
+.Fa t .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_caltime cd = { .year = 2012, .month = 12, .day = 12 };
+ctype_tai t;
+c_cal_timetai(&t, &cd);
+.Ed
+.Sh SEE ALSO
+.Xr c_cal_timeutc 3

@@ -1,4 +1,4 @@
-.Dd $Mdocdate: January 01 2020 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_MEM_MEM 3
 .Os
 .Sh NAME
@@ -27,5 +27,17 @@ The
 .Fn c_mem_mem
 function returns a pointer to the substring located,
 or nil if the substring is not found.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char haystack[] = "Hello, World!";
+char needle[] = "World";
+char *s = c_mem_mem(haystack, sizeof(haystack), needle, sizeof(needle));
+if (s) {
+	c_ioq_fmt(ioq1, "Needle found at offset %llu\en", s - haystack);
+} else {
+	c_ioq_fmt(ioq1, "Needle not found\en");
+}
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_mem_chr 3

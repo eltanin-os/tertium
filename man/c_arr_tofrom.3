@@ -1,0 +1,31 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_ARR_TOFROM 3
+.Os
+.Sh NAME
+.Nm c_arr_tofrom
+.Nd append array to array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_arr_tofrom "ctype_arr *dest" "ctype_arr *s"
+.Sh DESCRIPTION
+The
+.Fn c_arr_tofrom
+function appends the content from the array
+.Fa s
+to the array
+.Fa dest .
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_arr_tofrom
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_arr_cat 3 .
+.Sh SEE ALSO
+.Xr c_arr_cat 3

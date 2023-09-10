@@ -1,0 +1,18 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAIA_NOW 3
+.Os
+.Sh NAME
+.Nm c_taia_now
+.Nd get current time
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_taia_now "ctype_tai *t"
+.Sh DESCRIPTION
+The
+.Fn c_taia_now
+function stores the current time into the TAI64NA label
+.Fa t .

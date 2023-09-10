@@ -1,0 +1,20 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_TAI_FROMTIME 3
+.Os
+.Sh NAME
+.Nm c_tai_fromtime
+.Nd convert time to TAI64 label
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_tai_fromtime "ctype_tai *t" "ctype_time *tm"
+.Sh DESCRIPTION
+The
+.Fn
+function converts the time
+.Fa tm
+to TAI64 label
+.Fa t .

@@ -1,0 +1,63 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_STR_VFMT 3
+.Os
+.Sh NAME
+.Nm c_str_vfmt
+.Nd create a formatted string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_str_vfmt "char **sp" "char *fmt" "va_list ap"
+.Sh DESCRIPTION
+The
+.Fn
+function creates a string as according to the format
+.Fa fmt
+and the va_list
+.Fa ap
+allocating enough memory for it and setting the pointer
+.Fa sp
+to its region.
+.Pp
+The formatting is performed by the function
+.Xr c_fmt_fmt 3 .
+.Sh RETURN VALUES
+The
+.Fn c_str_fmt
+function returns the size of the created string if successful;
+otherwise \-1 is returned and
+.Va error
+is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char *
+allocfmt(char *fmt, ...)
+{
+	va_list ap;
+	size r;
+	char *p;
+
+	va_start(ap, fmt);
+	r = c_str_vfmt(&p, fmt, ap);
+	va_end(ap, fmt);
+
+	if (r < 0) return nil;
+	return p;
+}
+.Ed
+.Sh ERRORS
+The
+.Fn c_str_vfmt
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_std_alloc 3 .
+.Sh SEE ALSO
+.Xr c_arr_fmt 3 ,
+.Xr c_dyn_fmt 3 ,
+.Xr c_str_fmtcnt 3 ,
+.Xr c_str_fmt 3 ,
+.Xr c_str_vfmtcnt 3

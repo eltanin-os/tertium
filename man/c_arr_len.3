@@ -1,9 +1,9 @@
-.Dd $Mdocdate: December 20 2019 $
+.Dd $Mdocdate: September 07 2023 $
 .Dt C_ARR_LEN 3
 .Os
 .Sh NAME
 .Nm c_arr_len
-.Nd calculate initialized objects in an array
+.Nd calculate initialized objects in array
 .Sh LIBRARY
 .Lb tertium
 .Sh SYNOPSIS
@@ -22,6 +22,12 @@ bytes in size, in the array
 The
 .Fn c_arr_len
 function returns the number of initialized objects in the given array.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+usize n = c_arr_len(&arr, sizeof(int));
+c_ioq_fmt(ioq1, "Initialized Integers: %llu\en", n);
+c_ioq_flush(ioq1);
+.Ed
 .Sh SEE ALSO
 .Xr c_arr_avail 3 ,
 .Xr c_arr_bytes 3

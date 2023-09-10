@@ -1,0 +1,35 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_RAND_NAME 3
+.Os
+.Sh NAME
+.Nm c_rand_name
+.Nd random name generator
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft u32
+.Fn c_rand_name "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_rand_name
+function fills the region
+.Fa s
+of
+.Fa n
+bytes in size with random alphanumeric
+.Pq Dq A-Za-z0-9 ,
+slash
+.Pq Sq \&-
+and underline
+.Pq Sq \&_
+characters.
+.Sh RETURN VALUES
+The
+.Fn c_rand_name
+function returns a pointer to
+.Fa s .
+.Sh SEE ALSO
+.Xr c_rand_data 3 ,
+.Xr c_rand_u32 3

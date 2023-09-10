@@ -1,0 +1,34 @@
+.Dd $Mdocdate: September 07 2023 $
+.Dt C_DYN_TOFROM 3
+.Os
+.Sh NAME
+.Nm c_dyn_tofrom
+.Nd append array to dynamic array
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_dyn_tofrom "ctype_arr *dest" "ctype_arr *s"
+.Sh DESCRIPTION
+The
+.Fn c_dyn_tofrom
+function appends the content from the array
+.Fa s
+to the array
+.Fa dest .
+If not enough bytes are allocated,
+.Fn c_dyn_tofrom
+allocates more bytes.
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_dyn_tofrom
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_dyn_cat 3 .
+.Sh SEE ALSO
+.Xr c_dyn_cat 3
