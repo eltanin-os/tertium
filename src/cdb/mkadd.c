@@ -11,7 +11,7 @@ c_cdb_mkadd(ctype_cdbmk *p, char *k, usize klen, char *s, usize dlen)
 	    c_ioq_nput(&p->ioq, s, dlen) < 0)
 		goto fail;
 
-	c_hsh_str(c_hsh_murmur32, k, klen, buf);
+	c_hsh_str(buf, c_hsh_murmur32, k, klen);
 	if (c_cdb_mkaddend(p, klen, dlen, c_uint_32unpack(buf)) < 0)
 		goto fail;
 	return 0;

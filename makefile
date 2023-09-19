@@ -152,7 +152,6 @@ LIBTERTIUMSRC=\
 	src/hsh/str.c\
 	src/hsh/update.c\
 	src/hsh/whirlpool.c\
-	src/ioq/alloc.c\
 	src/ioq/feed.c\
 	src/ioq/fileno.c\
 	src/ioq/flush.c\
@@ -253,7 +252,6 @@ LIBTERTIUMSRC=\
 	src/std/free.c\
 	src/std/getenv.c\
 	src/std/getopt.c\
-	src/std/getsyserr.c\
 	src/std/nbsearch.c\
 	src/std/noopt.c\
 	src/std/pubrealloc.c\

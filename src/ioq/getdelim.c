@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 ctype_status
-c_ioq_getdelim(ctype_ioq *p, ctype_arr *b, char *delim)
+c_ioq_getdelim(ctype_arr *b, ctype_ioq *p, char *delim)
 {
 	size n, r;
 	int found;
