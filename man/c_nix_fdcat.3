@@ -1,0 +1,42 @@
+.Dd $Mdocdate$
+.Dt C_NIX_FDCAT 3
+.Os
+.Sh NAME
+.Nm c_nix_fdcat
+.Nd one line about what it does
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_nix_fdcat "ctype_fd dest" "ctype_fd src"
+.Sh DESCRIPTION
+The
+.Fn c_nix_fdcat
+function copies data from the file descriptor
+.Fa src
+to the file descriptor
+.Fa dest
+until EOF is reached.
+.Sh RETURN VALUES
+The
+.Fn c_nix_fdcat
+function returns the total number of bytes copied if successful;
+otherwise \-1 is returned if there was a read error
+.Fa src ,
+or \-2 is returned if there was a write error on
+.Fa dest ,
+and
+.Va errno
+is set to indicate the error.
+.Sh ERRORS
+The
+The
+.Fn c_nix_fdcat
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library functions
+.Xr c_nix_fdread 3
+and
+.Xr c_nix_fdwrite 3 .

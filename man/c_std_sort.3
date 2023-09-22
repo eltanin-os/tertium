@@ -1,0 +1,23 @@
+.Dd $Mdocdate$
+.Dt C_STD_SORT 3
+.Os
+.Sh NAME
+.Nm c_std_sort
+.Nd sort array of objects
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_std_sort "void *v" "usize m" "usize n" "ctype_cmpfn f"
+.Sh DESCRIPTION
+The
+.Fn c_std_sort
+function stably sorts an array of
+.Fa m
+objects, each
+.Fa n
+bytes in size,
+in ascending order according to the comparison function
+.Fa f .

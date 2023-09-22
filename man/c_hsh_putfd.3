@@ -1,0 +1,36 @@
+.Dd $Mdocdate$
+.Dt C_HSH_PUTFD 3
+.Os
+.Sh NAME
+.Nm c_hsh_putfd
+.Nd hash file descriptor
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_hsh_putfd "ctype_hst *hs" "ctype_hmd *p" "ctype_fd fd" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_hsh_putfd
+function reads the file descriptor
+.Fa fd
+of
+.Fa n
+bytes in size, then hashes it with the algorithm
+.Fa p
+storing the result in the hash structure
+.Fa hs .
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_hsh_putfd
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_nix_fdread 3 .
+.Sh SEE ALSO
+.Xr c_hsh_putfile 3 ,
+.Xr c_hsh_str 3

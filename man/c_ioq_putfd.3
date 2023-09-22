@@ -1,0 +1,33 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_PUTFD 3
+.Os
+.Sh NAME
+.Nm c_ioq_putfd
+.Nd queue file descriptor
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_ioq_putfd "ctype_ioq *p" "ctype_fd fd" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_putfd
+function reads the file descriptor
+.Fa fd
+of
+.Fa n
+bytes in size, appending the input to the queue
+.Fa p .
+If the number of bytes to append exceeds the available space in the queue,
+.Fn c_ioq_putfd
+flushes the data until it is enough to fit.
+.Sh RETURN VALUES
+.Rv -std
+.Sh SEE ALSO
+.Xr c_ioq_fmt 3 ,
+.Xr c_ioq_nput 3 ,
+.Xr c_ioq_put 3 ,
+.Xr c_ioq_putfile 3 ,
+.Xr c_ioq_vfmt 3

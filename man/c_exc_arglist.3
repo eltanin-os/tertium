@@ -9,6 +9,7 @@
 .Sh SYNOPSIS
 .In tertium/cpu.h
 .In tertium/std.h
+.Fd #define c_exc_arglist(...) c_exc_arglist_(__VA_ARGS__, nil)
 .Ft void *
 .Fn c_exc_arglist_ "char *prog" "..."
 .Sh DESCRIPTION

@@ -1,0 +1,22 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_FLUSH 3
+.Os
+.Sh NAME
+.Nm c_ioq_flush
+.Nd flush queue
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_ioq_flush "ctype_ioq *p"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_flush
+function flushes the output queue
+.Fa p .
+.Sh RETURN VALUES
+.Rv -std
+.Sh SEE ALSO
+.Xr c_ioq_feed 3

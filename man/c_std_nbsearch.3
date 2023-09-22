@@ -1,0 +1,34 @@
+.Dd $Mdocdate$
+.Dt C_STD_NBSEARCH 3
+.Os
+.Sh NAME
+.Nm c_std_nbsearch
+.Nd binary search of a sorted table
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void *
+.Fn c_std_nbsearch "void *k" "void *buf" "usize m" "usize n" "ctype_cmpfn f"
+.Sh DESCRIPTION
+The
+.Fn c_std_nbsearch
+function searches for the object
+.Fa k
+in the memory region
+.Fa buf
+which holds a total of
+.Fa m
+objects, each
+.Fa n
+bytes in size.
+in ascending order according to the comparison function
+.Fa f .
+.Sh RETURN VALUES
+The
+.Fn c_std_nbsearch
+function returns a pointer to the matching object, or the nearest object
+to what it would be if an exact match is not found.
+.Sh SEE ALSO
+.Xr c_std_bsearch 3

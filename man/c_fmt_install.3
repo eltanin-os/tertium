@@ -1,0 +1,62 @@
+.Dd $Mdocdate$
+.Dt C_FMT_INSTALL 3
+.Os
+.Sh NAME
+.Nm c_fmt_install
+.Nd install custom verb
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_fmt_install "ctype_rune c" "ctype_fmtfn f"
+.Sh DESCRIPTION
+The
+.Fn c_fmt_install
+function installs the rune
+.Fa c
+as a format specifier, associating it with the function
+.Fa f .
+If the specifier already exists, the function associated with it is replaced
+by the given function.
+.Sh RETURN VALUES
+.Rv -std
+.Sh EXAMPLES
+.Bd -literal -offset indent
+struct user {
+	char *name;
+	int index;
+};
+
+ctype_status
+print_user(ctype_fmt *f)
+{
+	struct user *u = va_arg(p->args, struct user *);
+	return c_fmt_print(f, "[%d] %s", u->index, u->name);
+}
+
+ctype_status
+main(int argc, char **argv)
+{
+	struct user u = { "Bob", 666 };
+	c_fmt_install('U', &print_user);
+	/* now any "fmt" function will heritage this verb "U" */
+	c_ioq_fmt(ioq1, "user: %U\en", &u);
+	c_ioq_flush(ioq1);
+	return 0;
+}
+.Ed
+.Sh ERRORS
+The
+.Fn c_fmt_install
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_dyn_ready 3 .
+.Sh SEE ALSO
+.Xr c_fmt_fmt 3 ,
+.Xr c_fmt_init 3 ,
+.Xr c_fmt_nput 3 ,
+.Xr c_fmt_print 3 ,
+.Xr c_fmt_put 3

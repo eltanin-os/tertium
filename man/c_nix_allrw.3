@@ -1,0 +1,31 @@
+.Dd $Mdocdate$
+.Dt C_NIX_ALLRW 3
+.Os
+.Sh NAME
+.Nm c_nix_allrw
+.Nd perform full rw operation
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_nix_allrw "ctype_iofn op" "ctype_fd fd" "void *p" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_nix_allrw
+function copies
+.Fa n
+bytes from/to the file descriptor
+.Fa fd
+to/from the buffer
+.Fa p
+using the function
+.Fa op .
+.Sh RETURN VALUES
+The
+.Fn c_nix_allrw
+function returns the total number of bytes copied if successful;
+otherwise \-1 is returned and
+.Va errno
+is set to indicate the error.

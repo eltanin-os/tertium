@@ -1,0 +1,24 @@
+.Dd $Mdocdate$
+.Dt C_STD_FREE 3
+.Os
+.Sh NAME
+.Nm c_std_free
+.Nd free memory region
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Fd #define c_std_free(a) a = c_std_free_((a))
+.Ft void *
+.Fn c_std_free_ "void *p"
+.Sh DESCRIPTION
+The
+.Fn c_std_free
+function free the memory region
+.Fa p .
+.Sh SEE ALSO
+.Xr c_std_alloc 3 ,
+.Xr c_std_calloc 3 ,
+.Xr c_std_realloc 3 ,
+.Xr c_std_setalloc 3

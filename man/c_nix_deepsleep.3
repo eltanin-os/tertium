@@ -1,0 +1,21 @@
+.Dd $Mdocdate$
+.Dt C_NIX_DEEPSLEEP 3
+.Os
+.Sh NAME
+.Nm c_nix_deepsleep
+.Nd sleep
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_nix_deepsleep "ctype_taia *deadline" "ctype_taia *stamp"
+.Sh DESCRIPTION
+The
+.Fn c_nix_deepsleep
+function sleeps until the absolute time represented by the TAI64NA label
+.Fa deadline .
+The TAI64NA label
+.Fa stamp
+must contain the current time and is updated after waking up.

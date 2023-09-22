@@ -1,0 +1,49 @@
+.Dd $Mdocdate$
+.Dt C_STD_SETALLOC 3
+.Os
+.Sh NAME
+.Nm c_std_setalloc
+.Nd set memory allocator
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_std_setalloc "ctype_allocfn f"
+.Sh DESCRIPTION
+The
+.Fn c_std_setalloc
+function sets the global memory allocator to
+.Fa f .
+The allocator must identify non-owned regions and return a unique pointer
+for zero alloc.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+#include <tertium/cpu.h>
+#include <tertium/std.h>
+#include <stdlib.h>
+
+/* example of the interface */
+void *
+alloc(void *p, usize m, usize n)
+{
+	m *= n;
+	if (!p) return malloc(m);
+	if (!m) {
+		free(p);
+		return nil;
+	}
+	return realloc(p, m);
+}
+
+ctype_status
+main(void)
+{
+	c_std_setalloc(&alloc);
+}
+.Ed
+.Sh SEE ALSO
+.Xr c_std_alloc 3 ,
+.Xr c_std_calloc 3 ,
+.Xr c_std_realloc 3

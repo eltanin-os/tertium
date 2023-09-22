@@ -1,0 +1,23 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_SEEK 3
+.Os
+.Sh NAME
+.Nm c_ioq_seek
+.Nd seek queue
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_ioq_seek "ctype_ioq *p" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_seek
+function advances the read/write position in the I/O queue
+.Fa p
+by
+.Fa n
+bytes.
+.Sh SEE ALSO
+.Xr c_ioq_peek 3

@@ -1,0 +1,31 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_GETLN 3
+.Os
+.Sh NAME
+.Nm c_ioq_getln
+.Nd get queue delimited data
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_ioq_getln "ctype_arr *b" "ctype_ioq *p"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_getln
+function reads from the input queue
+.Fa p
+until it encounters a line feed character
+.Pq Sq \en ,
+storing the input in the dynamic array
+.Fa b .
+It will block if the queue is empty or smaller than needed,
+waiting for more data to arrive via
+.Xr c_ioq_feed 3
+.Sh RETURN VALUES
+.Rv -std
+.Sh SEE ALSO
+.Xr c_ioq_feed 3 ,
+.Xr c_ioq_get 3 ,
+.Xr c_ioq_getln 3

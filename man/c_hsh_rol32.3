@@ -1,0 +1,29 @@
+.Dd $Mdocdate$
+.Dt C_HSH_ROL32 3
+.Os
+.Sh NAME
+.Nm c_hsh_rol32
+.Nd rotate left 32-bit unsigned integer
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft u32
+.Fn c_hsh_rol32 "u32 n" "int k"
+.Sh DESCRIPTION
+The
+.Fn c_hsh_rol32
+function rotates the unsigned 32-bit integer
+.Fa n
+left by
+.Fa k
+bits.
+.Sh RETURN VALUES
+The
+.Fn c_hsh_rol32
+function returns the rotated value.
+.Sh SEE ALSO
+.Xr c_hsh_rol64 3 ,
+.Xr c_hsh_ror32 3 ,
+.Xr c_hsh_ror64 3

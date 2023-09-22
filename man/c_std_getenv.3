@@ -1,0 +1,25 @@
+.Dd $Mdocdate$
+.Dt C_STD_GETENV 3
+.Os
+.Sh NAME
+.Nm c_std_getenv
+.Nd retrieve environment variable
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_std_getenv "char *s"
+.Sh DESCRIPTION
+The
+.Fn c_std_getenv
+function retrieves the current value of the environment variable
+.Fa s .
+.Sh RETURN VALUES
+The
+.Fn c_std_getenv
+function returns a pointer to the requested value,
+or nil if it could not be found.
+.Sh SEE ALSO
+.Xr c_exc_setenv 3

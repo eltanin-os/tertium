@@ -1,0 +1,27 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_INIT 3
+.Os
+.Sh NAME
+.Nm c_ioq_init
+.Nd initialize queue
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_ioq_init "ctype_ioq *p" "ctype_fd fd" "char *buf" "usize n" "ctype_iofn f"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_init
+function initializes the I/O queue
+.Fa p ,
+it sets the internal buffer to
+.Fa buf
+of
+.Fa n
+bytes in size ,
+sets the I/O operation function to
+.Fa f ,
+and sets the file descriptor to
+.Fa fd .

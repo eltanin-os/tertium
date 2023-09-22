@@ -1,0 +1,38 @@
+.Dd $Mdocdate$
+.Dt C_NIX_IOPAUSE 3
+.Os
+.Sh NAME
+.Nm c_nix_iopause
+.Nd IO multiplexing
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_nix_iopause "ctype_iopause *p" "uint n" "ctype_taia *deadline" "ctype_taia *stamp"
+.Sh DESCRIPTION
+The
+.Fn c_nix_iopause
+function pauses execution until IO events occur on the file descriptors specified in
+.Fa p ,
+or until the absolute time specified by
+.Fa deadline
+has passed.
+Up to
+.Fa n
+file descriptors may be specified in
+.Fa p .
+.Pp
+You must put a current timestamp into
+.Fa stamp
+before calling iopause.
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_nix_iopause
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_sys_poll 3 .

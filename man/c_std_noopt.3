@@ -1,0 +1,45 @@
+.Dd $Mdocdate$
+.Dt C_STD_NOOPT 3
+.Os
+.Sh NAME
+.Nm c_std_noopt
+.Nd no options
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_std_noopt "ctype_arg *p" "int argc" "char **argv"
+.Sh DESCRIPTION
+The
+.Fn c_std_noopt
+function walks through the argument list
+.Fa argv
+of length
+.Fa argc ,
+checking if it contains options, which are arguments starting with a dash
+.Pq Sq \&-
+followed by a character.
+.Pp
+The interpretation of options in the argument list may be cancelled by
+the option
+.Ql --
+.Pq double dash .
+.Sh RETURN VALUES
+The
+.Fn c_std_noopt
+function returns the option character if found;
+otherwise it returns a nil character
+.Pq Sq \\e0 .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+/* cli-command not meant to receive options */
+if (c_std_noopt(argmain, argc, argv)) {
+	c_err_die(1, "unknown option -%c", argmain->opt);
+}
+argc -= argmain->idx;
+argv += argmain->idx;
+.Ed
+.Sh SEE ALSO
+.Xr c_std_getopt 3

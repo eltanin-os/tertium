@@ -1,0 +1,30 @@
+.Dd $Mdocdate$
+.Dt C_FMT_INIT 3
+.Os
+.Sh NAME
+.Nm c_fmt_init
+.Nd initialize formatter
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_fmt_init "ctype_fmt *p" "void *farg" "ctype_fmtopfn func"
+.Sh DESCRIPTION
+The
+.Fn c_fmt_init
+function initializes the formatter
+.Fa p
+storing the data
+.Fa farg
+and setting the function
+.Fa func
+as output function.
+.Sh SEE ALSO
+.Xr c_fmt_fmt 3 ,
+.Xr c_fmt_install 3 ,
+.Xr c_fmt_nput 3 ,
+.Xr c_fmt_print 3 ,
+.Xr c_fmt_put 3 ,
+.Xr c_fmt_vprint 3

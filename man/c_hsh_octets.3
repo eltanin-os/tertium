@@ -1,0 +1,24 @@
+.Dd $Mdocdate$
+.Dt C_HSH_OCTETS 3
+.Os
+.Sh NAME
+.Nm c_hsh_octets
+.Nd calculate octets
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft usize
+.Fn c_hsh_octets "ctype_hst *p"
+.Sh DESCRIPTION
+The
+.Fn c_hsh_octets
+function calculates the number of octets in the hash structure
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_hsh_octets
+function returns the number of octets from the given structure.
+.Sh SEE ALSO
+.Xr

@@ -1,0 +1,35 @@
+.Dd $Mdocdate$
+.Dt C_STD_WERRSTR 3
+.Os
+.Sh NAME
+.Nm c_std_werrstr
+.Nd formatted error string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_std_werrstr "char *fmt" "..."
+.Sh DESCRIPTION
+The
+.Fn c_std_werrstr
+function creates a string as according to the format
+.Fa fmt
+and passes it to the function
+.Xr c_std_errstr 3 .
+.Pp
+The formatting is performed by the function
+.Xr c_fmt_fmt 3 .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+if (network(interface) < 0) {
+	/* similar to `errno = error code` using a string instead */
+	c_err_werrstr("network connection (%s) failed", interface);
+	c_err_die(1, nil);
+}
+.Ed
+.Sh SEE ALSO
+.Xr c_fmt_fmt 3 ,
+.Xr c_std_errstr 3 ,
+.Xr c_std_sterror 3

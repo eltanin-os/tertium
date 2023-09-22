@@ -1,0 +1,79 @@
+.Dd $Mdocdate$
+.Dt C_NIX_STRTOMODE 3
+.Os
+.Sh NAME
+.Nm c_nix_strtomode
+.Nd convert string mode to numeric mode
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft uint
+.Fn c_nix_strtomode "char *s" "uint mode" "uint mask"
+.Sh DESCRIPTION
+The
+.Fn c_nix_strtomode
+function converts the string representation of file mode
+.Fa s
+to numeric form.
+.Pp
+It takes the current numeric file mode
+.Fa mode
+and a mask
+.Fa mask
+specifying which bits can be set.
+.Pp
+The string
+.Fa s
+contains clauses specifying who permissions apply to and what permissions to set.
+.Pp
+Clauses are separated by commas. Each clause starts with a who character:
+.Bl -tag -width Ds -offset indent
+.It a
+Apply permissions to user, group and other.
+.It g
+Apply permissions to group.
+.It o
+Apply permissions to other.
+.It u
+Apply permissions to user.
+.El
+.Pp
+Then each clause contains permission characters:
+.Bl -tag -width Ds -offset indent
+.It X
+Execute permission if file is directory or already has execute permission.
+.It r
+Read permission.
+.It s
+Setuid and setgid permissions.
+.It t
+Sticky permission.
+.It w
+Write permission.
+.It x
+Execute permission.
+.El
+.Pp
+Each clause can have a leading +, - or = specifying how to modify permissions:
+.Bl -tag -width Ds -offset indent
+.It +
+Add specified permissions.
+.It -
+Remove specified permissions.
+.It =
+Set exact permissions.
+.El
+.Sh RETURN VALUES
+The
+.Fn c_nix_strtomode
+function returns the numeric mode if successful;
+otherwise \-1 is returned and
+.Va errno
+is set to indicate the error.
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er C_ERR_EINVAL
+Invalid mode string passed.
+.El

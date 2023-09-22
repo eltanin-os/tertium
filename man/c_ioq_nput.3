@@ -1,0 +1,34 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_NPUT 3
+.Os
+.Sh NAME
+.Nm c_ioq_nput
+.Nd queue string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_ioq_nput "ctype_ioq *p" "char s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_nput
+function appends the string
+.Fa s
+of
+.Fa n
+bytes in size to the output queue
+.Fa p .
+If the number of bytes to append exceeds the available space in the queue,
+.Fn c_ioq_nput
+flushes the data until it is enough to fit.
+.Sh RETURN VALUES
+.Rv -std
+.Sh SEE ALSO
+.Xr c_ioq_flush 3 ,
+.Xr c_ioq_fmt 3 ,
+.Xr c_ioq_put 3 ,
+.Xr c_ioq_putfd 3 ,
+.Xr c_ioq_putfile 3 ,
+.Xr c_ioq_vfmt 3

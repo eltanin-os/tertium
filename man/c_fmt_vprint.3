@@ -1,0 +1,28 @@
+.Dd $Mdocdate$
+.Dt C_FMT_VPRINT 3
+.Os
+.Sh NAME
+.Nm c_fmt_print
+.Nd print formatted string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_fmt_print "ctype_fmt *p" "char *fmt" "va_list args"
+.Sh DESCRIPTION
+The
+.Fn c_fmt_print
+function writes a string according to the format
+.Fa fmt
+using the output function assigned to the formatter
+.Fa p .
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+.Sh SEE ALSO
+.Xr c_fmt_fmt 3 ,
+.Xr c_fmt_nput 3 ,
+.Xr c_fmt_print 3 ,
+.Xr c_fmt_put 3

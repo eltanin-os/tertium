@@ -1,0 +1,32 @@
+.Dd $Mdocdate$
+.Dt C_STD_ATEXIT 3
+.Os
+.Sh NAME
+.Nm c_std_atexit
+.Nd register function to be called on exit
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_std_atexit "void (*func)(void)"
+.Sh DESCRIPTION
+The
+.Fn c_std_atexit
+function registers the function
+.Fa func
+to be called at program exit, via
+.Xr c_std_exit 3 .
+Function so registered are called in LIFO
+.Pq Last \&In First Out
+order.
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er C_ERR_NOMEM
+Not enough memory.
+.El
+.Sh SEE ALSO
+.Xr c_std_exit 3

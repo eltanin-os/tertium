@@ -1,0 +1,31 @@
+.Dd $Mdocdate$
+.Dt C_NIX_RMPATH 3
+.Os
+.Sh NAME
+.Nm c_nix_rmpath
+.Nd one line about what it does
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_nix_rmpath "char *s"
+.Sh DESCRIPTION
+The
+.Fn c_nix_rmpath
+function removes the directory path
+.Fa dir ,
+removing from the last component to the first empty directories.
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_nix_rmtemp
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_nix_rmdir 3 .
+.Sh SEE ALSO
+.Xr c_nix_rmdir 3 ,
+.Xr c_nix_mkpath 3

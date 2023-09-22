@@ -1,0 +1,37 @@
+.Dd $Mdocdate$
+.Dt C_STD_EXIT 3
+.Os
+.Sh NAME
+.Nm c_std_exit
+.Nd exit program
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_std_exit "ctype_status status"
+.Sh DESCRIPTION
+The
+.Fn c_std_exit
+function terminates a process.
+.Pp
+Before termination it performs the following functions in the order listed:
+.Bl -enum -offset indent
+.It
+Call functions registered with the
+.Xr c_std_atexit 3
+function.
+.It
+Flush all open output streams.
+.El
+.Pp
+Following this,
+.Fn c_std_exit
+calls
+.Xr c_sys_exit 2
+passing the
+.Fa status
+as exit code.
+.Sh SEE ALSO
+.Xr c_std_atexit 3

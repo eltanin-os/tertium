@@ -1,0 +1,24 @@
+.Dd $Mdocdate$
+.Dt C_STD_ERRSTR 3
+.Os
+.Sh NAME
+.Nm c_std_errstr
+.Nd error string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void
+.Fn c_std_errstr "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_std_errstr
+function swaps the buffer content of
+.Fa s
+of
+.Fa n
+bytes in size, with a error buffer.
+.Sh SEE ALSO
+.Xr c_std_sterror 3 ,
+.Xr c_std_werrstr 3

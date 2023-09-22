@@ -1,0 +1,31 @@
+.Dd $Mdocdate$
+.Dt C_STD_STRERROR 3
+.Os
+.Sh NAME
+.Nm c_std_strerror
+.Nd get error message string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_std_strerror "int e" "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_std_strerror
+function maps the error number
+.Fa e
+to an error message string, the result is stored in the buffer
+.Fa s
+of
+.Fa n
+bytes in size.
+If the buffer is smaller than the error message it is truncated to fit it.
+.Sh RETURN VALUES
+The
+.Fn c_std_strerror
+function returns a pointer to the given buffer.
+.Sh SEE ALSO
+.Xr c_std_errstr 3 ,
+.Xr c_std_werrstr 3

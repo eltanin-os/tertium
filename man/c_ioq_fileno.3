@@ -1,0 +1,22 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_FILENO 3
+.Os
+.Sh NAME
+.Nm c_ioq_fileno
+.Nd retrieve queue file descriptor
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_fd
+.Fn c_ioq_fileno "ctype_ioq *p"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_fileno
+function retrieves the file descriptor associated with the queue
+.Fa p .
+.Sh RETURN VALUES
+The
+.Fn c_ioq_fileno
+function returns the retrieved file descriptor.

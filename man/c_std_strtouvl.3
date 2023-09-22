@@ -1,0 +1,71 @@
+.Dd $Mdocdate$
+.Dt C_STD_STRTOUVL
+.Os
+.Sh NAME
+.Nm c_std_strtouvl
+.Nd convert string to unsigned number
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft uvlong
+.Fn c_std_strtouvl "char *p" "int b" "uvlong l" "uvlong h" "char **e" "ctype_status *r"
+.Sh DESCRIPTION
+The
+.Fn c_std_strtouvl
+function converts the string
+.Fa p
+to a
+.Vt uvlong
+integer value according to the
+.Fa base ,
+which must be between 2 and 36 inclusive.
+Any leading whitespace is ignored.
+.Pp
+If
+.Ar base
+is 0, the base is determined from the string:
+base 8 for leading "0", base 16 for "0x", otherwise base 10.
+.Pp
+The function stops reading the string at the first character it cannot convert.
+If
+.Fa e
+is not null, a pointer to this character is stored in
+.Pf * Fa e .
+.Pp
+If
+.Fa r
+is not null, it stores the conversion result changing its value to \-1
+in case of failure.
+.Pp
+The converted value is constrained to the range
+.Bq Fa l Ns , Fa h .
+.Sh RETURN VALUES
+The
+.Fn c_std_strtouvl
+function
+.Sh EXAMPLES
+.Bd -literal -offset indent
+ctype_status status = 0;
+char *str = "1024"
+char *end;
+uvlong num;
+num = c_std_strtouvl(str, 0, 0, -1, &end, &status);
+if (status < 0) {
+	c_err_die(1, "failed to convert string '%s' at '%s'", str, end);
+}
+.Ed
+.Sh ERRORS
+.Bl -tag -width Er
+.It Bq Er C_ERR_EINVAL
+Invalid base
+.It Bq Er C_ERR_ERANGE
+Result overflowed limits
+.It Bq Er C_ERR_ECANCELED
+Input string was empty
+.It Bq Er C_ERR_ENOTSUP
+Invalid character in string
+.El
+.Sh SEE ALSO
+.Xr c_std_strtovl 3

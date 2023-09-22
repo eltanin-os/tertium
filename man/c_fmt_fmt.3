@@ -1,0 +1,110 @@
+.Dd $Mdocdate$
+.Dt C_FMT_FMT 3
+.Os
+.Sh NAME
+.Nm c_fmt_fmt
+.Nd format string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_fmt_fmt "ctype_fmt *p" "char *fmt"
+.Sh DESCRIPTION
+The
+.Fn c_fmt_fmt
+function scans the format string
+.Fa fmt
+and copies characters into the output buffer until it encounters a
+percent sign
+.Pq Sq % ,
+then it parses any flags, field width, precision, and converts the next
+character as a format specifier, calling the appropriate formatting
+function previously installed with
+.Xr c_fmt_install 3 .
+.Pp
+The following format flags are supported:
+.Bl -tag -width Ds -compact -offset indent
+.It Cm 0
+Pad with zeroes instead of spaces.
+.It Cm *
+Take next argument as field width or precision.
+.El
+.Pp
+Field width and precisions may be specified as integers.
+.Pp
+If no function was installed for the given format specifier it installs the
+default ones.
+.Pp
+The following format specifiers are supported as default:
+.Bl -tag -width Ds -compact -offset indent
+.It Cm #
+Add number base as prefix.
+.It Cm %
+Percentage.
+.It Cm +
+Add sign to number.
+.It Cm ,
+Set number as float.
+.It Cm -
+Left padding.
+.It Cm X
+Hexadecimal number.
+.It Cm b
+Binary number.
+.It Cm c
+Character.
+.It Cm d
+Decimal number.
+.It Cm h
+Set number to short or char.
+.It Cm l
+Set number to long or long long.
+.It Cm o
+Octal number.
+.It Cm p
+Pointer address in hexadecimal.
+.It Cm r
+Error message from given error code.
+.It Cm s
+String.
+.It Cm u
+Set number as unsigned.
+.It Cm x
+Hexadecimal number
+.Pq lower-case .
+.It Cm z
+Set number to uintptr.
+.El
+.Sh RETURN VALUES
+The
+.Fn c_fmt_fmt
+function returns the number of bytes formatted if successful;
+otherwise \-1 is returned and
+.Va errno
+is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+static ctype_status
+put(ctype_fmt *p, char *s, usize n)
+{
+	return c_nix_fdwrite(*p->farg, s, n);
+}
+
+size
+writefmt(ctype_fd fd, char *fmt, ...)
+{
+	ctype_fmt f;
+	ctype_size r;
+	c_fmt_init(&f, &fd, put);
+	va_start(f.args, fmt);
+	r = c_fmt_fmt(&f, fmt);
+	va_end(f.args);
+	return r;
+}
+.Ed
+.Sh SEE ALSO
+.Xr c_fmt_init 3 ,
+.Xr c_fmt_install 3 ,
+.Xr c_fmt_print 3

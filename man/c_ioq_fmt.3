@@ -1,0 +1,34 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_FMT 3
+.Os
+.Sh NAME
+.Nm c_ioq_fmt
+.Nd queue formatted string
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_ioq_fmt "ctype_ioq *p" "char *fmt" "..."
+.Sh DESCRIPTION
+The
+.Fn c_ioq_fmt
+function appends a formatted string, as described in the format
+.Fa fmt ,
+to the output queue
+.Fa p .
+If the number of bytes to append exceeds the available space in the queue,
+.Fn c_ioq_fmt
+flushes the data until it is enough to fit.
+.Sh RETURN VALUES
+The
+.Fn c_ioq_fmt
+function returns the size of the formatted string if successful;
+otherwise \-1 is returned.
+.Sh SEE ALSO
+.Xr c_ioq_nput 3 ,
+.Xr c_ioq_put 3 ,
+.Xr c_ioq_putfd 3 ,
+.Xr c_ioq_putfile 3 ,
+.Xr c_ioq_vfmt 3

@@ -1,0 +1,51 @@
+.Dd $Mdocdate$
+.Dt C_NIX_FSCOPY 3
+.Os
+.Sh NAME
+.Nm c_nix_fscopy
+.Nd copy file system object with metadata
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft ctype_status
+.Fn c_nix_fscopy "char *dest" "int pflag" "char *src" "ctype_stat *stp"
+.Sh DESCRIPTION
+The
+.Fn c_nix_fscopy
+function atomically copies a file system object specified from
+.Fa src
+to the path
+.Fa dest ,
+using the metadata
+.Fa stp
+as reference.
+.Pp
+If
+.Fa pflag
+is non-zero, file access and modification times from
+.Fa stp
+are preserved.
+.Sh RETURN VALUES
+.Rv -std
+.Sh ERRORS
+The
+.Fn c_nix_fdcat
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library functions
+.Xr c_nix_chown 3 ,
+.Xr c_nix_fdchown 3 ,
+.Xr c_nix_fdread 3 ,
+.Xr c_nix_fdwrite 3 ,
+.Xr c_nix_lchown 3 ,
+.Xr c_nix_readlink 3 ,
+.Xr c_nix_rename 3 ,
+.Xr c_nix_stat 3 ,
+.Xr c_nix_symlink 3 ,
+.Xr c_std_alloc 3 ,
+.Xr c_sys_mknod 2 ,
+.Xr c_sys_futimens 2 ,
+and
+.Xr c_sys_utimensat 2 .

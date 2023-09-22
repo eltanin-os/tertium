@@ -1,0 +1,22 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_PEEK 3
+.Os
+.Sh NAME
+.Nm c_ioq_peek
+.Nd peek queue
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft void *
+.Fn c_ioq_peek "ctype_ioq *p"
+.Sh RETURN VALUES
+The
+.Fn c_ioq_peek
+function returns a pointer to first byte of data from the given queue.
+.Sh SEE ALSO
+.Xr c_ioq_get 3 ,
+.Xr c_ioq_getdelim 3 ,
+.Xr c_ioq_getln 3 ,
+.Xr c_ioq_seek 3

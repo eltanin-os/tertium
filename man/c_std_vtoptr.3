@@ -1,0 +1,39 @@
+.Dd $Mdocdate$
+.Dt PROGNAME section
+.Os
+.Sh NAME
+.Nm c_std_vtoptr
+.Nd create array of pointers
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Fd #define c_std_vtoptr(...) c_std_vtoptr_(__VA_ARGS__, nil)
+.Ft void *
+.Fn c_std_vtoptr_ "char *s" "..."
+.Sh DESCRIPTION
+The
+.Fn c_std_vtoptr
+function converts the variable argument list
+.Fa s
+to an array of pointers.
+.Sh RETURN VALUES
+The
+.Fn c_std_vtoptr
+function returns a pointer to the allocated array if successful;
+otherwise nil is returned and
+.Va errno
+is set to indicate the error.
+.Sh EXAMPLES
+.Bd -literal -offset indent
+char **args = c_std_vtoptr("ls", "-l", "/tmp");
+/* args = { "ls", "-l", "/tmp" } */
+.Ed
+.Sh ERRORS
+The
+.Fn c_std_vtoptr
+function may fail and set the external variable
+.Va errno
+for any of the errors specified for the library function
+.Xr c_std_alloc 3 .

@@ -1,0 +1,67 @@
+.Dd $Mdocdate$
+.Dt C_STD_GETOPT 3
+.Os
+.Sh NAME
+.Nm c_std_getopt
+.Nd one line about what it does
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft int
+.Fn c_std_getopt "ctype_arg *p" "int argc" "char **argv" "char *opts"
+.Sh DESCRIPTION
+The
+.Fn c_std_getopt
+function incrementally parses a command line argument list
+.Fa argv
+of length
+.Fa argc ,
+according to the known arguments
+.Fa opts.
+.Pp
+The option string
+.Fa opts
+may contain individual characters, and characters followed by a colon.
+A character followed by a single colon indicates that an argument is
+to follow the option on the command line.
+.Pp
+The interpretation of options in the argument list may be cancelled by
+the option
+.Ql --
+.Pq double dash .
+.Sh RETURN VALUES
+The
+.Fn c_std_getopt
+function returns the next known option character. If it encounters a
+unknown character, it returns
+.Sq \&? .
+If the option requires a not-found argument, it returns
+.Sq \&: .
+If the list is exhausted, it returns
+.Sq \e0 .
+.Sh EXAMPLES
+.Bd -literal -offset indent
+int opt;
+while ((opt = c_std_getopt(argmain, argc, argv, "f:v"))) {
+	switch (opt) {
+	case 'f':
+		file = argmain->arg;
+		break;
+	case 'v':
+		verbose = 1;
+		break;
+	case ':':
+		c_err_warnx(1, "missing argument for option -%c", argmain->opt);
+		break;
+	case '?':
+		c_err_warnx(1, "unknown option -%c", argmain->opt);
+		break;
+	}
+}
+argc -= argmain->idx;
+argv -= argmain->idx;
+.Ed
+.Sh SEE ALSO
+.Xr c_std_noopt 3

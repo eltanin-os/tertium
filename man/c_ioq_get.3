@@ -1,0 +1,34 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_GET 3
+.Os
+.Sh NAME
+.Nm c_ioq_get
+.Nd get queue data
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_ioq_get "char *b" "usize n" "ctype_ioq *p"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_get
+function copies upto
+.Fa n
+bytes of data from the input queue
+.Fa p
+to the buffer
+.Fa b .
+It will block if the queue is empty or smaller than needed,
+waiting for more data to arrive via
+.Xr c_ioq_feed 3 .
+.Sh RETURN VALUES
+The
+.Fn c_ioq_get
+function returns the amount of bytes copied if successful;
+otherwise \-1 is returned.
+.Sh SEE ALSO
+.Xr c_ioq_feed 3 ,
+.Xr c_ioq_getdelim 3 ,
+.Xr c_ioq_getln 3

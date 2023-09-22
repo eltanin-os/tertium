@@ -1,0 +1,45 @@
+.Dd $Mdocdate$
+.Dt C_IOQ_TOFROM
+.Os
+.Sh NAME
+.Nm c_ioq_tofrom
+.Nd copy input queue to output queue
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft size
+.Fn c_ioq_tofrom "ctype_ioq *dest" "ctype_ioq *src" "usize n"
+.Sh DESCRIPTION
+The
+.Fn c_ioq_tofrom
+function copies up to
+.Fa n
+bytes of data from the input queue
+.Fa src
+to the output queue
+.Fa dest .
+It will block if the input queue is empty or smaller than needed,
+waiting for more data to arrive via
+.Xr c_ioq_feed 3 .
+If the number of bytes to append exceeds the available space
+in the output queue,
+.Fn c_ioq_tofrom
+flushes the data until it is enough to fit.
+.Sh RETURN VALUES
+The
+.Fn c_ioq_tofrom
+function returns the amount of bytes copied if successful;
+otherwise \-1 is returned.
+.Sh SEE ALSO
+.Xr c_ioq_feed 3 ,
+.Xr c_ioq_flush 3 ,
+.Xr c_ioq_fmt 3 ,
+.Xr c_ioq_get 3 ,
+.Xr c_ioq_getdelim 3 ,
+.Xr c_ioq_getln 3 ,
+.Xr c_ioq_nput 3 ,
+.Xr c_ioq_put 3 ,
+.Xr c_ioq_putfd 3 ,
+.Xr c_ioq_putfile 3
