@@ -6,7 +6,7 @@
 static void
 traverse(void *t, void (*freeobj)(void *))
 {
-	struct kv *p;
+	ctype_kvent *p;
 	struct cbnode *q;
 	uchar *s;
 	if ((uintptr)(s = t) & 1) {

@@ -29,7 +29,7 @@ c_nix_mkpath(char *dir, uint dmode, uint mode)
 		return -1;
 	}
 
-	len = c_str_cpy(buf, sizeof(buf), dir) - buf;
+	len = c_str_len(c_str_cpy(buf, sizeof(buf), dir), sizeof(buf));
 	s = buf;
 	if (*s == '/') ++s;
 

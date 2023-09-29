@@ -171,8 +171,14 @@ struct ctype_caltime {
 };
 
 /* adt types */
+typedef struct ctype_kvent ctype_kvent;
 typedef struct ctype_kvtree ctype_kvtree;
 typedef struct ctype_node ctype_node;
+
+struct ctype_kvent {
+	char *k;
+	void *v;
+};
 
 struct ctype_kvtree {
 	void *root;

@@ -1,8 +1,3 @@
-struct kv {
-	char *k;
-	void *v;
-};
-
 struct cbnode {
 	void *child[2];
 	u32 byte;

@@ -6,7 +6,7 @@
 void *
 c_adt_kvget(ctype_kvtree *t, char *k)
 {
-	struct kv *p;
+	ctype_kvent *p;
 	usize len;
 	if (!t->root) return nil;
 	len = c_str_len(k, -1);
