@@ -4,7 +4,7 @@
 static void *
 copy(void *v, usize n, int c)
 {
-	uchar *s;
+	volatile uchar *s;
 	s = v;
 	for (; n; --n) *s++ = c;
 	return v;
