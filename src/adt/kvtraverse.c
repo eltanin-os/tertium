@@ -7,7 +7,7 @@ static ctype_status
 traverse(void *t, ctype_status (*func)(char *, void *))
 {
 	ctype_kvent *p;
-	struct cbnode *q;
+	struct node *q;
 	uchar *s;
 	if ((uintptr)(s = (void *)t) & 1) {
 		q = (void *)(s - 1);

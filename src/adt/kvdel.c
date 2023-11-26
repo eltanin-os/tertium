@@ -6,7 +6,7 @@
 ctype_status
 c_adt_kvdel(ctype_kvtree *t, char *k)
 {
-	struct cbnode *q;
+	struct node *q;
 	ctype_kvent *p;
 	usize len;
 	int direction;

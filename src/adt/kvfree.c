@@ -3,22 +3,29 @@
 
 #include "kv.h"
 
+/* XXX */
+static void
+alignfree(void *p)
+{
+	c_std_free_(((void **)p)[-1]);
+}
+
 static void
 traverse(void *t, void (*freeobj)(void *))
 {
 	ctype_kvent *p;
-	struct cbnode *q;
+	struct node *q;
 	uchar *s;
 	if ((uintptr)(s = t) & 1) {
 		q = (void *)(s - 1);
 		traverse(q->child[0], freeobj);
 		traverse(q->child[1], freeobj);
-		c_std_free(q);
+		alignfree(q);
 	} else {
 		p = (void *)s;
 		if (freeobj) freeobj(p->v);
 		c_std_free(p->k);
-		c_std_free(p);
+		alignfree(p);
 	}
 }
 

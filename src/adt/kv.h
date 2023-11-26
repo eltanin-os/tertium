@@ -1,4 +1,4 @@
-struct cbnode {
+struct node {
 	void *child[2];
 	u32 byte;
 	u8 otherbits;
@@ -7,7 +7,7 @@ struct cbnode {
 static inline void *
 walk(uchar *p, uchar *s, usize n)
 {
-	struct cbnode *q;
+	struct node *q;
 	int direction;
 	uchar c;
 	while ((uintptr)p & 1) {
