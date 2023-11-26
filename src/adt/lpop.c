@@ -13,5 +13,7 @@ c_adt_lpop(ctype_node **sp)
 	if ((*sp = o->prev))
 		(*sp)->next = o->next;
 
+	o->prev = nil;
+	o->next = o;
 	return o;
 }
