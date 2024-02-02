@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "internal.h"
+#include "private.h"
 
 #define FOLLOW(a, b) ((a) & C_DIR_FSLOG) || ((a) & C_DIR_FSCOM && !(b))
 #define PAIR(a, b) ((((a) + (b)) * ((a) + (b) + 1) >> 1) + (b))
@@ -27,7 +27,9 @@ hist(ctype_arr *hp, ctype_id dev, ctype_id ino)
 	uvlong *p;
 	usize n;
 	uchar *s;
+
 	if (c_dyn_ready(hp, 1, sizeof(*p)) < 0) return -1;
+
 	n = c_arr_len(hp, sizeof(*p));
 	s = c_arr_data(hp);
 	k = PAIR(dev, ino); /* !!! */
@@ -64,8 +66,7 @@ _tertium_dir_info(ctype_dir *p, ctype_dent *ep)
 	if (FOLLOW(p->opts, ep->depth)) {
 		if (c_nix_stat(stp, ep->path) < 0) {
 			sverr = errno;
-			if (!c_nix_lstat(stp, ep->path))
-				return C_DIR_FSSLN;
+			if (!c_nix_lstat(stp, ep->path)) return C_DIR_FSSLN;
 			ep->err = sverr;
 			return C_DIR_FSNS;
 		}
@@ -77,16 +78,19 @@ _tertium_dir_info(ctype_dir *p, ctype_dent *ep)
 	switch (stp->mode & C_NIX_IFMT) {
 	case C_NIX_IFDIR:
 		ep->dev = stp->dev;
-		if (C_STD_ISDOT(ep->name))
+		if (C_STD_ISDOT(ep->name)) {
 			return C_DIR_FSDOT;
-		if (FOLLOW(p->opts, ep->depth))
+		}
+		if (FOLLOW(p->opts, ep->depth)) {
 			return dohist(p, stp, C_DIR_FSDC, C_DIR_FSD);
+		}
 		return C_DIR_FSD;
 	case C_NIX_IFLNK:
 		return C_DIR_FSSL;
 	case C_NIX_IFREG:
-		if ((p->opts & C_DIR_FSFHT) && stp->nlink > 1)
+		if ((p->opts & C_DIR_FSFHT) && stp->nlink > 1) {
 			dohist(p, stp, C_DIR_FSFC, C_DIR_FSF);
+		}
 		return C_DIR_FSF;
 	}
 	return C_DIR_FSDEF;

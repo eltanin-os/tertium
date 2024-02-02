@@ -17,11 +17,12 @@ enum {
 	C_DIR_FSPHY = 1 << 1,
 	C_DIR_FSCOM = 1 << 2,
 	C_DIR_FSNOI = 1 << 3,
-	C_DIR_FSVDT = 1 << 4,
-	C_DIR_FSXDV = 1 << 5,
-	C_DIR_FSDRL = 1 << 6,
-	C_DIR_FSFHT = 1 << 7,
-	C_DIR_FSSTP = 1 << 8,
+	C_DIR_FSNON = 1 << 4,
+	C_DIR_FSVDT = 1 << 5,
+	C_DIR_FSXDV = 1 << 6,
+	C_DIR_FSDRL = 1 << 7,
+	C_DIR_FSFHT = 1 << 8,
+	C_DIR_FSSTP = 1 << 9,
 
 	/* types */
 	C_DIR_FSD = 1,
@@ -116,8 +117,8 @@ enum {
 #define C_STD_HOWMANY(a, b) (((a)+((b)-1))/(b))
 
 /* str macros */
-#define C_STR_SCMP(a, b) c_mem_cmp((a), sizeof((a)), (b))
-#define C_STR_CMP(a, b) c_mem_cmp((a), sizeof((a)) - 1, (b))
+#define C_STR_SCMP(a, b) c_str_cmp((b), sizeof((a)), (a))
+#define C_STR_CMP(a, b) c_str_cmp((b), sizeof((a)) - 1, (a))
 
 /* nix macros */
 enum {

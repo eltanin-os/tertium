@@ -1,65 +1,66 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "internal.h"
+#include "private.h"
 
 ctype_node *
-_tertium_dir_newfile(char *path, char *name, uint opts)
+_tertium_dir_newfile(char *dir, char *name, uint opts)
 {
+	ctype_arr arr;
 	ctype_node *p;
 	ctype_dent *ep;
-	usize len, nlen, plen;
-	int dir;
-	uchar *sp;
+	usize n, nlen;
+	uchar *pool;
 
-	nlen = c_str_len(name, C_LIM_USIZEMAX);
-	if (!(plen = c_str_len(path, C_LIM_USIZEMAX))) {
-		dir = name[nlen - 1] == '/';
-		for (; nlen > 1 && name[nlen - 1] == '/'; --nlen) ;
-		if (nlen > 1) {
-			path = name;
-			if (!(name = c_mem_rchr(path, nlen, '/'))) {
-				name = path;
-				plen = 0;
-			} else {
-				++name;
-				plen = name - path;
-				nlen -= plen;
-			}
-			if (dir) {
-				name[nlen++] = '/';
-				name[nlen] = 0;
-			}
-		}
-	}
+	/* allocate a pool and set pointers */
+	nlen = c_str_len(dir, -1) + c_str_len(name, -1) + 2;
+	n = sizeof(*p) + sizeof(*ep) + nlen;
+	if (!(opts & C_DIR_FSNOI)) n += sizeof(ctype_stat) + 16; /* mem align */
+	if (!(pool = c_std_alloc(n, sizeof(uchar)))) return nil;
 
-	len = sizeof(*p) + sizeof(*ep) + plen + nlen + 2;
-	if (!(opts & C_DIR_FSNOI))
-		len += sizeof(ctype_stat) + 16;
-	if (!(sp = c_std_alloc(len, sizeof(uchar))))
-		return nil;
-
-	p = (void *)sp;
+	p = (void *)pool;
+	pool += sizeof(*p);
 	p->prev = nil;
 	p->next = p;
-	sp += sizeof(*p);
-	ep = p->p = (void *)sp;
-	sp += sizeof(*ep);
+
+	ep = p->p = (void *)pool;
+	pool += sizeof(*ep);
 	c_mem_set(ep, sizeof(*ep), 0);
-	ep->path = (void *)sp;
-	sp += plen + nlen + 2;
 
-	if (!(opts & C_DIR_FSNOI))
-		ep->stp = (void *)((uintptr)(sp + 16) & ~16);
+	ep->path = (void *)pool;
+	pool += nlen;
 
-	if (plen) {
-		c_mem_cpy(ep->path, path, plen);
-		if (ep->path[plen - 1] != '/') ep->path[plen++] = '/';
+	if (!(opts & C_DIR_FSNOI)) {
+		ep->stp = (void *)((uintptr)(pool + 16) & ~16);
 	}
-	ep->name = ep->path + plen;
-	c_mem_cpy(ep->name, name, nlen);
-	ep->name[nlen] = 0;
-	ep->len = plen + nlen;
+
+	c_arr_init(&arr, ep->path, nlen);
+	c_arr_fmt(&arr, "%s%s%s", dir, dir[0] ? "/" : "", name);
+	n = c_arr_bytes(&arr);
+
+	/* normalize path (ensure reproducibility) and recalculate lengths */
+	if (!(opts & C_DIR_FSNON)) {
+		n = c_str_len(c_nix_normalizepath(ep->path, n), n);
+	} else {
+		nlen = ep->path[n - 1] == '/';
+		n = c_str_len(c_str_rtrim(ep->path, n, "/"), n);
+		if (nlen) ep->path[n++ - 1] = '/';
+	}
+	if (n > 1) {
+		nlen = ep->path[n - 1] == '/';
+		if ((name = c_mem_rchr(ep->path, n - nlen, '/'))) {
+			++name;
+			nlen = n - (name - ep->path);
+		} else {
+			nlen = n;
+		}
+	} else {
+		nlen = n;
+	}
+
+	/* start dir entry */
+	ep->name = ep->path + (n - nlen);
+	ep->len = n;
 	ep->nlen = nlen;
 	return p;
 }

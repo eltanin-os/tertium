@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "internal.h"
+#include "private.h"
 
 ctype_dent *
 c_dir_list(ctype_dir *p)

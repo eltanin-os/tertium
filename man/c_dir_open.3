@@ -1,4 +1,4 @@
-.Dd $Mdocdate: September 10 2023 $
+.Dd $Mdocdate: January 27 2024 $
 .Dt C_DIR_OPEN 3
 .Os
 .Sh NAME
@@ -34,6 +34,8 @@ Physical walk, do not follow symbolic links.
 Follow command line symbolic links immediately.
 .It Dv C_DIR_FSNOI
 Do not allocate stat structure.
+.It Dv C_DIR_FSNON
+Do not normalize paths.
 .It Dv C_DIR_FSVDT
 Return '.' or '..' directories.
 .It Dv C_DIR_FSXDV
