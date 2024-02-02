@@ -7,7 +7,6 @@ void
 c_hsh_update(hfunc f, int b, ctype_hst *p, char *data, usize n)
 {
 	usize len;
-
 	while (n) {
 		if (!p->curlen && n >= (uint)b) {
 			f(p, data);
@@ -15,13 +14,13 @@ c_hsh_update(hfunc f, int b, ctype_hst *p, char *data, usize n)
 			data += b;
 			n -= b;
 		} else {
-			len = C_STD_MIN(n, b - p->curlen);
+			len = C_STD_MIN(b - p->curlen, n);
 			c_mem_cpy(p->buf + p->curlen, data, len);
 			p->curlen += len;
 			data += len;
 			n -= len;
 			if (p->curlen == (uint)b) {
-				f(p, data);
+				f(p, p->buf);
 				p->len += b << 3;
 				p->curlen = 0;
 			}
