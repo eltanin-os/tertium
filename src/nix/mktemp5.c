@@ -18,7 +18,7 @@ c_nix_mktemp5(char *s, usize n, uint opts, uint fdopts, uint fdmode)
 		return -1;
 	}
 
-	for (len = 0; *p == 'X'; --p, ++len) ;
+	for (len = 0; n && *p == 'X'; --n, --p, ++len) ;
 	++p, ++len;
 
 	for (;;) {
