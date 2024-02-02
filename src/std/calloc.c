@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "internal.h"
+#include "private.h"
 
 void *
 c_std_calloc(usize m, usize n)

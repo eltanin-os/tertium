@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "internal.h"
+#include "private.h"
 
 int
 c_tai_leapsub(ctype_tai *p)

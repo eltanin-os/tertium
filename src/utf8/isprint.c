@@ -1,7 +1,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "internal.h"
+#include "private.h"
 
 static ctype_rune rangetab[] = {
 	0x00E000, 0x00F8FF,

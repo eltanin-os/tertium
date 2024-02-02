@@ -9,7 +9,7 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-#include "internal.h"
+#include "private.h"
 
 #define MSG(a) c_nix_fdwrite(2, (a), sizeof((a)))
 
