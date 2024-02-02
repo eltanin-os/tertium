@@ -180,6 +180,7 @@ ctype_fd c_nix_mktemp5(char *, usize, uint, uint, uint);
 void *c_nix_mmap(void *, usize, int, uint, ctype_fd, ctype_fssize);
 void c_nix_monotonetime(ctype_time *);
 void c_nix_munmap(void *, usize);
+char *c_nix_normalizepath(char *, usize);
 ctype_status c_nix_pipe(ctype_fd *);
 ctype_status c_nix_pipe2(ctype_fd *, uint);
 size c_nix_fdread(ctype_fd, void *, usize);

@@ -1,0 +1,37 @@
+.Dd $Mdocdate: January 20 2024 $
+.Dt C_NIX_NORMALIZEPATH 3
+.Os
+.Sh NAME
+.Nm c_nix_normalizepath
+.Nd reproducible paths
+.Sh LIBRARY
+.Lb tertium
+.Sh SYNOPSIS
+.In tertium/cpu.h
+.In tertium/std.h
+.Ft char *
+.Fn c_nix_normalizepath "char *s" "usize n"
+.Sh DESCRIPTION
+The
+.Nm
+function transforms the string
+.Fa s
+removing redundancies so a same path will always output to a
+same clean path.
+It transforms at most
+.Fa n
+bytes.
+.Sh RETURN VALUES
+The
+.Nm
+function returns a pointer to the normalized string.
+.Sh EXAMPLES
+.Bd -literal
+char s[] = "/bin//../bin/ls"; /* it's a buffer not a string */
+c_ioq_fmt(ioq1, "path: %s\n", c_nix_normalizepath(s, sizeof(s)));
+c_ioq_flush(ioq1);
+/* results in: "/bin/ls" */
+.Ed
+.Sh CAVEATS
+It does not try to resolve the path nor sanitize it, only treating
+it at a string level.
