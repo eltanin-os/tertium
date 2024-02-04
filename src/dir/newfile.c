@@ -44,7 +44,7 @@ _tertium_dir_newfile(char *dir, char *name, uint opts)
 	} else {
 		nlen = ep->path[n - 1] == '/';
 		n = c_str_len(c_str_rtrim(ep->path, n, "/"), n);
-		if (nlen) ep->path[n++ - 1] = '/';
+		if (nlen) ep->path[n++] = '/';
 	}
 	if (n > 1) {
 		nlen = ep->path[n - 1] == '/';
