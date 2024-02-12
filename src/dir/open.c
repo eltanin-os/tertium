@@ -9,7 +9,6 @@ c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 	ctype_dent *ep;
 	ctype_node *np, *dummy;
 	ctype_stat st;
-	char *path;
 
 	if (!(dummy = _tertium_dir_newfile("", ".", C_DIR_FSNOI))) return -1;
 	ep = dummy->p;

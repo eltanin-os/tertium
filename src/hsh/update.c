@@ -20,7 +20,7 @@ c_hsh_update(hfunc f, int b, ctype_hst *p, char *data, usize n)
 			data += len;
 			n -= len;
 			if (p->curlen == (uint)b) {
-				f(p, p->buf);
+				f(p, (char *)p->buf);
 				p->len += b << 3;
 				p->curlen = 0;
 			}

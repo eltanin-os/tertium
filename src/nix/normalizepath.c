@@ -5,7 +5,7 @@ char *
 c_nix_normalizepath(char *s, usize n)
 {
 	usize diff, off;
-	int dir, found;
+	int found;
 	char *prev;
 	char *tmp;
 

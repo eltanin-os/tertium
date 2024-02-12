@@ -9,7 +9,6 @@ pseudoentropy(char *s, usize off, usize n)
 	ctype_hst hs;
 	ctype_rst r;
 	ctype_taia now;
-	usize i;
 	char seed[32];
 
 	/* seed */
