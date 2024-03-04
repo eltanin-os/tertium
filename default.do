@@ -1,19 +1,11 @@
 #!/bin/execlineb -S3
-multisubstitute {
-	importas -D "" DESTDIR DESTDIR
-	importas -D "/usr/local" PREFIX PREFIX
-	importas -D "/include" INCDIR INCDIR
-	importas -D "/lib" LIBDIR LIBDIR
-	importas -D "/share/man" MANDIR MANDIR
-	define -s HDR "inc/tertium/cpu.h inc/tertium/dat.h inc/tertium/fns.h inc/tertium/std.h"
-	elglob MANPAGES "man/*"
-}
-backtick HDR { echo $HDR }
+define -s HDR "inc/tertium/cpu.h inc/tertium/dat.h inc/tertium/fns.h inc/tertium/std.h"
 case -- $1 {
 	".*\.[1ch]" {
 		exit 0
 	}
 	"all" {
+		backtick HDR { echo $HDR }
 		redo-ifchange lib/libtertium.a
 	}
 	"clean" {
@@ -23,12 +15,24 @@ case -- $1 {
 	}
 	"install" {
 		if { redo-ifchange all }
-		if { install -dm 755 "${DESTDIR}${PREFIX}${INCDIR}/tertium" }
-		if { install -dm 755 "${DESTDIR}${PREFIX}${LIBDIR}" }
+		multisubstitute {
+			importas -D "" DESTDIR DESTDIR
+			importas -D "/usr/local" PREFIX PREFIX
+		}
+		if {
+			importas -D "/include" INCDIR INCDIR
+			if { install -dm 755 "${DESTDIR}${PREFIX}${INCDIR}/tertium" }
+			install -cm 644 $HDR "${DESTDIR}${PREFIX}${INCDIR}/tertium"
+		}
+		if {
+			importas -D "/lib" LIBDIR LIBDIR
+			if { install -dm 755 "${DESTDIR}${PREFIX}${LIBDIR}" }
+			install -cm 644 lib/libtertium.a "${DESTDIR}${PREFIX}${LIBDIR}"
+		}
+		importas -D "/share/man" MANDIR MANDIR
 		if { install -dm 755 "${DESTDIR}${PREFIX}${MANDIR}/man3" }
-		if { install -cm 644 $MANPAGES "${DESTDIR}${PREFIX}/${MANDIR}/man3" }
-		if { install -cm 644 $HDR "${DESTDIR}${PREFIX}${INCDIR}/tertium" }
-		install -cm 644 lib/libtertium.a "${DESTDIR}${PREFIX}${LIBDIR}"
+		elglob MANPAGES "man/*"
+		install -cm 644 $MANPAGES "${DESTDIR}${PREFIX}/${MANDIR}/man3"
 	}
 }
 foreground {
