@@ -16,8 +16,7 @@ c_std_strtouvl(char *p, int b, uvlong l, uvlong h, char **e, int *r)
 	uchar *s;
 
 	if ((uint)b > 36 || b == 1) {
-		if (r)
-			*r = -1;
+		if (r) *r = -1;
 		errno = C_ERR_EINVAL;
 		return 0;
 	}
@@ -53,28 +52,32 @@ c_std_strtouvl(char *p, int b, uvlong l, uvlong h, char **e, int *r)
 	m = o % b;
 	a = v = 0;
 	for (; *s; ++s) {
-		if ((c = debase(*s)) < 0)
-			break;
-		if (c >= b)
-			break;
-		if ((a = rangeflow(v, o, c, m)))
-			break;
+		/* invalid */
+		if ((c = debase(*s)) < 0) break;
+		/* wrong base */
+		if (c >= b) break;
+		/* too large */
+		if ((a = rangeflow(v, o, c, m))) break;
 		v = (v * b) + c;
 	}
 
-	if (!e)
-		e = &le;
-
+	if (!e) e = &le;
 	*e = (char *)s;
 	if (*e[0]) {
-		if (r)
-			*r = -1;
+		if (r) *r = -1;
 		errno = (*e == p) ? C_ERR_ECANCELED : C_ERR_ENOTSUP;
 	}
-	if (a || (!n && l > v)) {
-		if (r)
-			*r = -1;
+
+	if (n) v = -v;
+
+	if (a) {
+		v = h;
+		if (r) *r = -1;
+		errno = C_ERR_ERANGE;
+	} else if (!n && l > v) {
+		v = l;
+		if (r) *r = -1;
 		errno = C_ERR_ERANGE;
 	}
-	return n ? -v : v;
+	return v;
 }

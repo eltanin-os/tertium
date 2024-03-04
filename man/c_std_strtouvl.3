@@ -1,4 +1,4 @@
-.Dd $Mdocdate$
+.Dd $Mdocdate: March 04 2024 $
 .Dt C_STD_STRTOUVL
 .Os
 .Sh NAME
@@ -44,7 +44,12 @@ The converted value is constrained to the range
 .Sh RETURN VALUES
 The
 .Fn c_std_strtouvl
-function
+function returns the result of the conversion. If overflow or underflow occurs,
+it returns the given max
+.Pq Ar h
+or min
+.Pq Ar l
+val.
 .Sh EXAMPLES
 .Bd -literal -offset indent
 ctype_status status = 0;
