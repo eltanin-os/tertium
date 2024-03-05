@@ -29,7 +29,7 @@ c_nix_normalizepath(char *s, usize n)
 				if (!C_STR_CMP("../", prev + (*prev == '/'))) {
 					continue;
 				}
-				diff = 3;
+				diff = 3 + (prev == s);
 				c_str_cpy(prev, n, tmp + diff);
 			}
 			found = 1;
