@@ -1,3 +1,4 @@
+# call `make src/sys` first
 .SUFFIXES:
 .SUFFIXES: .o .c .s
 
@@ -131,6 +132,7 @@ LIBTERTIUMSRC=\
 	src/fmt/vprint.c\
 	src/gen/basename.c\
 	src/gen/dirname.c\
+	src/hsh/blake2b.c\
 	src/hsh/crc32b.c\
 	src/hsh/crc32p.c\
 	src/hsh/fletcher32.c\
@@ -216,6 +218,7 @@ LIBTERTIUMSRC=\
 	src/nix/mmap.c\
 	src/nix/monotonetime.c\
 	src/nix/munmap.c\
+	src/nix/normalizepath.c\
 	src/nix/pipe.c\
 	src/nix/pipe2.c\
 	src/nix/read.c\
@@ -348,32 +351,233 @@ LIBTERTIUMSRC=\
 	src/utf8/utfrune.c
 
 MANPAGES=\
-	man/c_mem_cmp.3\
-	man/c_dyn_free.3\
-	man/c_arr_cat.3\
-	man/c_arr_total.3\
-	man/c_dyn_cat.3\
-	man/c_mem_chr.3\
-	man/c_mem_set.3\
-	man/c_arr_vfmt.3\
-	man/c_arr_fmt.3\
+	man/c_adt_kvadd.3\
+	man/c_adt_kvdel.3\
+	man/c_adt_kvfree.3\
+	man/c_adt_kvget.3\
+	man/c_adt_kvtraverse.3\
+	man/c_adt_lfree.3\
+	man/c_adt_lnew.3\
+	man/c_adt_lpop.3\
+	man/c_adt_lpush.3\
+	man/c_adt_lsort.3\
+	man/c_adt_ltpop.3\
+	man/c_adt_ltpush.3\
 	man/c_arr_avail.3\
+	man/c_arr_bytes.3\
+	man/c_arr_cat.3\
+	man/c_arr_data.3\
+	man/c_arr_fmt.3\
+	man/c_arr_get.3\
+	man/c_arr_idxcat.3\
 	man/c_arr_init.3\
-	man/c_mem_cpy.3\
-	man/c_mem_mem.3\
-	man/c_mem_rchr.3\
+	man/c_arr_len.3\
+	man/c_arr_ready.3\
+	man/c_arr_tofrom.3\
+	man/c_arr_total.3\
+	man/c_arr_trunc.3\
+	man/c_arr_vfmt.3\
+	man/c_cal_datefrommjd.3\
+	man/c_cal_datemjd.3\
+	man/c_cal_timetai.3\
+	man/c_cal_timeutc.3\
+	man/c_cdb_datalen.3\
+	man/c_cdb_datapos.3\
+	man/c_cdb_find.3\
+	man/c_cdb_findnext.3\
+	man/c_cdb_findstart.3\
+	man/c_cdb_free.3\
+	man/c_cdb_init.3\
+	man/c_cdb_mkadd.3\
+	man/c_cdb_mkfinish.3\
+	man/c_cdb_mkstart.3\
+	man/c_cdb_read.3\
+	man/c_dir_children.3\
+	man/c_dir_close.3\
+	man/c_dir_list.3\
+	man/c_dir_open.3\
+	man/c_dir_read.3\
+	man/c_dir_set.3\
+	man/c_dyn_alloc.3\
+	man/c_dyn_cat.3\
+	man/c_dyn_fmt.3\
+	man/c_dyn_free.3\
+	man/c_dyn_idxcat.3\
 	man/c_dyn_ready.3\
 	man/c_dyn_shrink.3\
-	man/c_mem_equal.3\
-	man/c_arr_trunc.3\
-	man/c_dyn_alloc.3\
-	man/c_dyn_fmt.3\
-	man/c_arr_len.3\
+	man/c_dyn_tofrom.3\
 	man/c_dyn_vfmt.3\
+	man/c_err_die.3\
+	man/c_err_diex.3\
+	man/c_err_vdie.3\
+	man/c_err_vdiex.3\
+	man/c_err_vwarn.3\
+	man/c_err_vwarnx.3\
+	man/c_err_warn.3\
+	man/c_err_warnx.3\
+	man/c_exc_arglist.3\
+	man/c_exc_run.3\
+	man/c_exc_runenv.3\
+	man/c_exc_setenv.3\
+	man/c_exc_spawn0.3\
+	man/c_exc_spawn1.3\
+	man/c_exc_wait.3\
+	man/c_fmt_fmt.3\
+	man/c_fmt_init.3\
+	man/c_fmt_install.3\
+	man/c_fmt_nput.3\
+	man/c_fmt_print.3\
+	man/c_fmt_put.3\
+	man/c_fmt_vprint.3\
+	man/c_gen_basename.3\
+	man/c_gen_dirname.3\
+	man/c_hsh_initk.3\
+	man/c_hsh_octets.3\
+	man/c_hsh_putfd.3\
+	man/c_hsh_putfile.3\
+	man/c_hsh_rol32.3\
+	man/c_hsh_rol64.3\
+	man/c_hsh_ror32.3\
+	man/c_hsh_ror64.3\
+	man/c_hsh_str.3\
+	man/c_ioq_feed.3\
+	man/c_ioq_fileno.3\
+	man/c_ioq_flush.3\
+	man/c_ioq_fmt.3\
+	man/c_ioq_get.3\
+	man/c_ioq_getdelim.3\
+	man/c_ioq_getln.3\
+	man/c_ioq_init.3\
+	man/c_ioq_nput.3\
+	man/c_ioq_peek.3\
+	man/c_ioq_put.3\
+	man/c_ioq_putfd.3\
+	man/c_ioq_putfile.3\
+	man/c_ioq_seek.3\
+	man/c_ioq_tofrom.3\
+	man/c_ioq_vfmt.3\
 	man/c_mem_ccpy.3\
-	man/c_arr_data.3\
-	man/c_arr_bytes.3\
-	man/c_arr_get.3
+	man/c_mem_chr.3\
+	man/c_mem_cmp.3\
+	man/c_mem_cpy.3\
+	man/c_mem_equal.3\
+	man/c_mem_mem.3\
+	man/c_mem_rchr.3\
+	man/c_mem_set.3\
+	man/c_nix_allrw.3\
+	man/c_nix_deepsleep.3\
+	man/c_nix_fdcat.3\
+	man/c_nix_fscopy.3\
+	man/c_nix_iopause.3\
+	man/c_nix_mklntemp.3\
+	man/c_nix_mkpath.3\
+	man/c_nix_mktemp.3\
+	man/c_nix_normalizepath.3\
+	man/c_nix_rmpath.3\
+	man/c_nix_strtomode.3\
+	man/c_rand_data.3\
+	man/c_rand_datainc.3\
+	man/c_rand_genseed.3\
+	man/c_rand_name.3\
+	man/c_rand_nameinc.3\
+	man/c_rand_setseed.3\
+	man/c_rand_u32.3\
+	man/c_rand_u32inc.3\
+	man/c_std_alloc.3\
+	man/c_std_atexit.3\
+	man/c_std_bsearch.3\
+	man/c_std_calloc.3\
+	man/c_std_errstr.3\
+	man/c_std_exit.3\
+	man/c_std_free.3\
+	man/c_std_getenv.3\
+	man/c_std_getopt.3\
+	man/c_std_nbsearch.3\
+	man/c_std_noopt.3\
+	man/c_std_realloc.3\
+	man/c_std_setalloc.3\
+	man/c_std_sort.3\
+	man/c_std_strerror.3\
+	man/c_std_strtouvl.3\
+	man/c_std_strtovl.3\
+	man/c_std_vtoptr.3\
+	man/c_std_werrstr.3\
+	man/c_str_casechr.3\
+	man/c_str_casecmp.3\
+	man/c_str_caserchr.3\
+	man/c_str_casestr.3\
+	man/c_str_chr.3\
+	man/c_str_cmp.3\
+	man/c_str_cpy.3\
+	man/c_str_cspn.3\
+	man/c_str_dup.3\
+	man/c_str_fmt.3\
+	man/c_str_fmtcnt.3\
+	man/c_str_len.3\
+	man/c_str_ltrim.3\
+	man/c_str_rchr.3\
+	man/c_str_rtrim.3\
+	man/c_str_spn.3\
+	man/c_str_str.3\
+	man/c_str_trim.3\
+	man/c_str_vfmt.3\
+	man/c_str_vfmtcnt.3\
+	man/c_tai_add.3\
+	man/c_tai_approx.3\
+	man/c_tai_fromtime.3\
+	man/c_tai_less.3\
+	man/c_tai_now.3\
+	man/c_tai_pack.3\
+	man/c_tai_sub.3\
+	man/c_tai_u64.3\
+	man/c_tai_unpack.3\
+	man/c_taia_add.3\
+	man/c_taia_approx.3\
+	man/c_taia_frac.3\
+	man/c_taia_fromtime.3\
+	man/c_taia_half.3\
+	man/c_taia_less.3\
+	man/c_taia_now.3\
+	man/c_taia_pack.3\
+	man/c_taia_sub.3\
+	man/c_taia_u64.3\
+	man/c_taia_unpack.3\
+	man/c_uint_16bigpack.3\
+	man/c_uint_16bigunpack.3\
+	man/c_uint_16pack.3\
+	man/c_uint_16unpack.3\
+	man/c_uint_32bigpack.3\
+	man/c_uint_32bigunpack.3\
+	man/c_uint_32pack.3\
+	man/c_uint_32unpack.3\
+	man/c_uint_64bigpack.3\
+	man/c_uint_64bigunpack.3\
+	man/c_uint_64pack.3\
+	man/c_uint_64unpack.3\
+	man/c_utf8_charntorune.3\
+	man/c_utf8_chartorune.3\
+	man/c_utf8_checkrune.3\
+	man/c_utf8_fullrune.3\
+	man/c_utf8_isalnum.3\
+	man/c_utf8_isalpha.3\
+	man/c_utf8_isblank.3\
+	man/c_utf8_iscntrl.3\
+	man/c_utf8_isdigit.3\
+	man/c_utf8_isgraph.3\
+	man/c_utf8_islower.3\
+	man/c_utf8_isprint.3\
+	man/c_utf8_ispunct.3\
+	man/c_utf8_isspace.3\
+	man/c_utf8_istitle.3\
+	man/c_utf8_isupper.3\
+	man/c_utf8_isxdigit.3\
+	man/c_utf8_runelen.3\
+	man/c_utf8_runenlen.3\
+	man/c_utf8_runetochar.3\
+	man/c_utf8_utflen.3\
+	man/c_utf8_utfnlen.3\
+	man/c_utf8_utfrrune.3\
+	man/c_utf8_utfrune.3
 
 LIBTERTIUMOBJ = $(LIBTERTIUMSRC:.c=.o)
 
