@@ -65,7 +65,7 @@ size c_dyn_fmt(ctype_arr *, char *, ...);
 void c_dyn_free(ctype_arr *);
 ctype_status c_dyn_idxcat(ctype_arr *, usize, void *, usize, usize);
 ctype_status c_dyn_ready(ctype_arr *, usize, usize);
-void c_dyn_shrink(ctype_arr *);
+void c_dyn_shrink(ctype_arr *, usize);
 ctype_status c_dyn_tofrom(ctype_arr *, ctype_arr *);
 size c_dyn_vfmt(ctype_arr *, char *, va_list);
 

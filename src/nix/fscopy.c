@@ -55,7 +55,7 @@ c_nix_fscopy(char *dest, int pflag, char *src, ctype_stat *stp)
 		r = c_dyn_fmt(&arr, "%s/%s", dest, c_gen_basename(s));
 		c_std_free(s);
 		if (r < 0) goto done;
-		c_dyn_shrink(&arr);
+		c_dyn_shrink(&arr, sizeof(uchar));
 		tmp = c_arr_data(&arr);
 		/* set the tmp directory */
 		c_mem_set(&arr, sizeof(arr), 0);
