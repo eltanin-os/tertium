@@ -27,6 +27,7 @@ c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 		}
 		ep = np->p;
 		ep->info = _tertium_dir_info(p, ep);
+		if (ep->info == C_DIR_FSDOT) ep->info = C_DIR_FSD;
 		ep->parent = dummy->p;
 		if (p->opts & C_DIR_FSSTP) goto err;
 	}

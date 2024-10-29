@@ -21,7 +21,7 @@ c_dir_read(ctype_dir *p)
 		return ep;
 	}
 
-	if (ep->info == C_DIR_FSD || (!ep->depth && ep->info == C_DIR_FSDOT)) {
+	if (ep->info == C_DIR_FSD) {
 		if (instr == C_DIR_FSSKP ||
 		    ((p->opts & C_DIR_FSXDV) && p->dev != ep->dev)) {
 			ep->info = C_DIR_FSDP;
@@ -53,9 +53,6 @@ c_dir_read(ctype_dir *p)
 	if (cur->prev) {
 		p->cur = cur;
 		ep = cur->p;
-		if (ep->info == C_DIR_FSDOT && !(p->opts & C_DIR_FSVDT)) {
-			return c_dir_read(p);
-		}
 		return ep;
 	}
 
@@ -64,7 +61,6 @@ c_dir_read(ctype_dir *p)
 		while (p->cur) c_adt_lfree(c_adt_lpop(&p->cur));
 		p->cur = cur;
 		ep = cur->p;
-		if (ep->info == C_DIR_FSDOT) return nil;
 		ep->info = C_DIR_FSDP;
 		return ep;
 	}
