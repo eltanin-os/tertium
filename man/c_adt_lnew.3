@@ -1,4 +1,4 @@
-.Dd $Mdocdate: September 07 2023 $
+.Dd $Mdocdate: September 29 2024 $
 .Dt C_ADT_LNEW 3
 .Os
 .Sh NAME
@@ -20,6 +20,11 @@ plus at least
 .Fa n
 bytes to store a copy of the object
 .Fa v .
+If
+.Fa n
+is equal to zero, the function allocates only the structure, and
+.Fa v
+is stored as a direct reference with no copying.
 .Sh RETURN VALUES
 The
 .Fn c_adt_lnew
