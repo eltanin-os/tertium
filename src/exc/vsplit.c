@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void *
-c_exc_varglist(char *prog, va_list ap)
+c_exc_vsplit(char *prog, va_list ap)
 {
 	usize len;
 	int i, n;
