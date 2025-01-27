@@ -1,29 +1,35 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-ctype_status
-c_hsh_putfile(ctype_hst *hs, ctype_hmd *p, char *s)
+struct hash {
+	ctype_hst *st;
+	ctype_hmd *md;
+};
+
+static ctype_status
+event(void *data, char *s, usize n)
 {
-	ctype_stat st;
-	ctype_fd fd;
-	ctype_status r;
+	struct hash *h;
+	h = data;
+	h->md->update(h->st, s, n);
+	return 0;
+}
 
-	if (!c_mem_cmp(s, sizeof("<stdin>") - 1, "<stdin>"))
-		return c_hsh_putfd(hs, p, C_IOQ_FD0, 0);
+ctype_status
+c_hsh_putfd(ctype_hst *h, ctype_hmd *md, ctype_fd fd, usize n)
+{
+	struct hash hash;
+	hash.st = h;
+	hash.md = md;
+	return c_std_putfd(&hash, fd, n, &event);
 
-	if ((fd = c_nix_fdopen2(s, C_NIX_OREAD)) < 0)
-		return -1;
+}
 
-	r = 0;
-	if (c_nix_fdstat(&st, fd) < 0)
-		goto fail;
-	if (c_hsh_putfd(hs, p, fd, st.size) < 0)
-		goto fail;
-
-	goto done;
-fail:
-	r = -1;
-done:
-	c_nix_fdclose(fd);
-	return r;
+ctype_status
+c_hsh_putfile(ctype_hst *h, ctype_hmd *md, char *s)
+{
+	struct hash hash;
+	hash.st = h;
+	hash.md = md;
+	return c_std_putfile(&hash, s, &event);
 }
