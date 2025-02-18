@@ -4,13 +4,15 @@ ctype_status c_adt_kvdel(ctype_kvtree *, char *);
 void c_adt_kvfree(ctype_kvtree *, void (*)(void *));
 void *c_adt_kvget(ctype_kvtree *, char *);
 ctype_status c_adt_kvtraverse(ctype_kvtree *, ctype_status (*)(char *, void *));
-void c_adt_lfree(ctype_node *);
+void c_adt_lfree(ctype_node *, void (*)(void *));
 ctype_node *c_adt_lnew(void *, usize);
 ctype_node *c_adt_lpop(ctype_node **);
 ctype_status c_adt_lpush(ctype_node **, ctype_node *);
+ctype_status c_adt_lrot(ctype_node **);
 void c_adt_lsort(ctype_node **, ctype_cmpfn);
-ctype_status c_adt_ltpush(ctype_node **, ctype_node *);
+ctype_status c_adt_lswap(ctype_node **);
 ctype_node *c_adt_ltpop(ctype_node **);
+ctype_status c_adt_ltpush(ctype_node **, ctype_node *);
 
 /* arr routines */
 usize c_arr_avail(ctype_arr *);
@@ -80,13 +82,13 @@ int c_err_warn(char *, ...);
 int c_err_warnx(char *, ...);
 
 /* exc routines */
-void *c_exc_arglist_(char *, ...);
 ctype_status c_exc_run(char *, char **);
 ctype_status c_exc_runenv(char *, char **, char **);
 ctype_status c_exc_setenv(char *, char *);
 ctype_id c_exc_spawn0(char *, char **, char **);
 ctype_id c_exc_spawn1(char *, char **, char **, ctype_fd *, int);
-void *c_exc_varglist(char *, va_list);
+void *c_exc_split_(char *, ...);
+void *c_exc_vsplit(char *, va_list);
 ctype_status c_exc_wait(ctype_id, ctype_status *);
 
 /* fmt routines */
@@ -148,16 +150,19 @@ ctype_status c_nix_chdir(char *);
 ctype_status c_nix_chmod(char *, uint);
 ctype_status c_nix_chown(char *, ctype_id, ctype_id);
 void c_nix_deepsleep(ctype_taia *, ctype_taia *);
-size c_nix_fdcat(ctype_fd, ctype_fd);
 ctype_status c_nix_fdchdir(ctype_fd);
 ctype_status c_nix_fdchmod(ctype_fd, uint);
 ctype_status c_nix_fdchown(ctype_fd, ctype_id, ctype_id);
 void c_nix_fdclose(ctype_fd);
 ctype_status c_nix_fdcopy(ctype_fd, ctype_fd);
+ctype_status c_nix_fdfmt(ctype_fd, char *, ...);
 ctype_status c_nix_fdmove(ctype_fd, ctype_fd);
 ctype_fd c_nix_fdopen2(char *, uint);
 ctype_fd c_nix_fdopen3(char *, uint, uint);
+ctype_status c_nix_fdputfd(ctype_fd, ctype_fd, usize);
+ctype_status c_nix_fdputfile(ctype_fd, char *);
 ctype_status c_nix_fdset(ctype_fd, uint);
+ctype_status c_nix_fdvfmt(ctype_fd, char *, va_list);
 ctype_status c_nix_fdunset(ctype_fd, uint);
 size c_nix_fdwrite(ctype_fd, void *, usize);
 ctype_id c_nix_fork(void);
@@ -177,6 +182,7 @@ ctype_fd c_nix_mktemp(char *, usize);
 ctype_fd c_nix_mktemp3(char *, usize, uint);
 ctype_fd c_nix_mktemp4(char *, usize, uint, uint);
 ctype_fd c_nix_mktemp5(char *, usize, uint, uint, uint);
+ctype_fd c_nix_mktemp6(char *, usize, uint, uint, uint, char *(*)(char *, usize));
 void *c_nix_mmap(void *, usize, int, uint, ctype_fd, ctype_fssize);
 void c_nix_monotonetime(ctype_time *);
 void c_nix_munmap(void *, usize);
@@ -215,11 +221,14 @@ void *c_std_bsearch(void *, void *, usize, usize, ctype_cmpfn);
 void *c_std_calloc(usize, usize);
 void c_std_errstr(char *, usize);
 void c_std_exit(int);
-void *c_std_free_(void *);
+void c_std_free_(void *);
 char *c_std_getenv(char *);
 int c_std_getopt(ctype_arg *, int, char **, char *);
 void *c_std_nbsearch(void *, void *, usize, usize, ctype_cmpfn);
 int c_std_noopt(ctype_arg *, char *);
+void *c_std_ptrlist_(char *, ...);
+ctype_status c_std_putfd(void *, ctype_fd, usize, ctype_status (*)(void *, char *, usize));
+ctype_status c_std_putfile(void *, char *, ctype_status (*)(void *, char *, usize));
 void *c_std_realloc(void *, usize, usize);
 void c_std_setalloc(ctype_allocfn);
 void c_std_sort(void *, usize, usize, ctype_cmpfn);
@@ -227,7 +236,7 @@ char *c_std_strerror(int, char *, usize);
 uvlong c_std_strtouvl(char *, int, uvlong, uvlong, char **, int *);
 vlong c_std_strtovl(char *, int, vlong, vlong, char **, int *);
 long c_std_sysconf(int);
-void *c_std_vtoptr_(char *, ...);
+void *c_std_vptrlist(char *, va_list);
 void c_std_werrstr(char *, ...);
 
 /* str routines */

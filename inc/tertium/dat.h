@@ -44,7 +44,7 @@ enum {
 #define C_DYN_MINSIZ 64
 
 /* exc macros */
-#define c_exc_arglist(...) c_exc_arglist_(__VA_ARGS__, nil)
+#define c_exc_split(...) c_exc_split_(__VA_ARGS__, nil)
 
 /* fmt macros */
 enum {
@@ -97,11 +97,11 @@ enum {
 #define c_ioq_INIT(a, b, c) { { sizeof((b)), 0, (b) }, (c), (a) }
 
 /* std macros */
-#define c_std_free(a) a = c_std_free_((a))
+#define c_std_free(a) do { c_std_free_((a)); a = nil; } while (0)
 #define c_std_getprogname( ) argv0
 #define c_std_offsetof(a, b) (ulong)(&(((a *)0)->b))
 #define c_std_setprogname(a) argv0 = (a)
-#define c_std_vtoptr(...) c_std_vtoptr_(__VA_ARGS__, nil)
+#define c_std_ptrlist(...) c_std_ptrlist_(__VA_ARGS__, nil)
 
 #define C_STD_MIN(a, b) (((a) > (b)) ? (b) : (a))
 #define C_STD_MAX(a, b) (((a) > (b)) ? (a) : (b))
