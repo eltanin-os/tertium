@@ -58,7 +58,7 @@ c_dir_read(ctype_dir *p)
 
 	cur = ep->__p;
 	if (cur) {
-		while (p->cur) c_adt_lfree(c_adt_lpop(&p->cur));
+		while (p->cur) c_adt_lfree(c_adt_lpop(&p->cur), c_std_free_);
 		p->cur = cur;
 		ep = cur->p;
 		ep->info = C_DIR_FSDP;

@@ -2,8 +2,8 @@
 #include <tertium/std.h>
 
 void
-c_adt_lfree(ctype_node *np)
+c_adt_lfree(ctype_node *np, void (*freeobj)(void *))
 {
-	c_std_free(np->p);
+	freeobj(np->p);
 	c_std_free(np);
 }

@@ -60,6 +60,6 @@ _tertium_dir_builddir(ctype_dir *p)
 	return np ? np->next : nil;
 err:
 	c_nix_fdclose(fd);
-	while (np) c_adt_lfree(c_adt_lpop(&np));
+	while (np) c_adt_lfree(c_adt_lpop(&np), c_std_free_);
 	return BFAIL;
 }

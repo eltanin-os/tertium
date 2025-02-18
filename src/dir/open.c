@@ -37,7 +37,7 @@ c_dir_open(ctype_dir *p, char **argv, uint opts, ctype_cmpfn f)
 	p->cur = np->next;
 	return 0;
 err:
-	if (dummy) c_adt_lfree(dummy);
-	while (np) c_adt_lfree(c_adt_lpop(&np));
+	if (dummy) c_adt_lfree(dummy, c_std_free_);
+	while (np) c_adt_lfree(c_adt_lpop(&np), c_std_free_);
 	return -1;
 }
