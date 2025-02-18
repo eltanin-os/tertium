@@ -2,7 +2,7 @@
 #include <tertium/std.h>
 
 void
-c_taia_tai(ctype_taia *ta, ctype_tai *t)
+c_taia_tai(ctype_taia *taia, ctype_tai *t)
 {
-	*t = ta->sec;
+	*t = taia->sec;
 }

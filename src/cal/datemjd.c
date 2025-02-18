@@ -1,18 +1,17 @@
 #include <tertium/cpu.h>
 #include <tertium/std.h>
 
-static ulong t365[] = { 0, 365, 730, 1095 };
-static ulong t36524[] = { 0, 36524UL, 73048UL, 109572UL };
-static ulong tmon[] = { 0, 31, 61, 92, 122, 153, 184, 214, 245, 275, 306, 337 };
+static uint tmon[] = { 0, 31, 61, 92, 122, 153, 184, 214, 245, 275, 306, 337 };
 
 long
 c_cal_datemjd(ctype_caldate *p)
 {
 	long d, m, y;
 
-	d = (p->day - 678882L) + 146097L * (p->year / 400);
-	m = p->month - 1;
 	y = (p->year % 400);
+	m = p->month - 1;
+	d = (p->day - 678882L) + (p->year / 400) * 146097L;
+
 	if (m >= 2) {
 		m -= 2;
 	} else {
@@ -24,15 +23,19 @@ c_cal_datemjd(ctype_caldate *p)
 		m += 12;
 		--y;
 	}
-	d += tmon[m] + (146097L * (y / 400));
+
+	d += tmon[m] + ((y / 400) * 146097L);
 	if ((y %= 400) < 0) {
 		y += 400;
 		d -= 146097L;
 	}
-	d += t365[y & 3];
+
+	d += (y & 3) * 365;
 	y >>= 2;
-	d += 1461L * (y % 25);
+
+	d += (y % 25) * 1461L;
 	y /= 25;
-	d += t36524[y & 3];
+
+	d += (y & 3) * 36524;
 	return d;
 }
