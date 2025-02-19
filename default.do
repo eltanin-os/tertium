@@ -1,42 +1,89 @@
-#!/bin/execlineb -S3
-define -s HDR "inc/tertium/cpu.h inc/tertium/dat.h inc/tertium/fns.h inc/tertium/std.h"
-case -- $1 {
-	".*\.[1ch]" {
-		exit 0
-	}
-	"all" {
-		backtick HDR { echo $HDR }
-		redo-ifchange lib/libtertium.a
-	}
-	"clean" {
-		backtick targets { redo-targets }
-		importas -isu targets targets
-		rm -Rf $targets
-	}
-	"install" {
-		if { redo-ifchange all }
-		multisubstitute {
-			importas -D "" DESTDIR DESTDIR
-			importas -D "/usr/local" PREFIX PREFIX
-		}
-		if {
-			importas -D "/include" INCDIR INCDIR
-			if { install -dm 755 "${DESTDIR}${PREFIX}${INCDIR}/tertium" }
-			install -cm 644 $HDR "${DESTDIR}${PREFIX}${INCDIR}/tertium"
-		}
-		if {
-			importas -D "/lib" LIBDIR LIBDIR
-			if { install -dm 755 "${DESTDIR}${PREFIX}${LIBDIR}" }
-			install -cm 644 lib/libtertium.a "${DESTDIR}${PREFIX}${LIBDIR}"
-		}
-		importas -D "/share/man" MANDIR MANDIR
-		if { install -dm 755 "${DESTDIR}${PREFIX}${MANDIR}/man3" }
-		elglob MANPAGES "man/*"
-		install -cm 644 $MANPAGES "${DESTDIR}${PREFIX}/${MANDIR}/man3"
+#!/usr/bin/automate -s std-default,std-c
+%HDR-IN{
+	macros.h.in
+	ctypes.h.in
+	types.h.in
+	prototypes.h.in
+}
+%SYSHDR{
+	sys/$:{%host-os}/generic/${%HDR}
+	sys/$:{%host-os}/$:{%host-arch}/${%HDR}
+}
+%SYSCALL-IN{
+	sys/$:{%host-os}/generic/syscalls.in
+	sys/$:{%host-os}/$:{%host-arch}/syscalls.in
+}
+@include{
+	inc/tertium/cpu.h
+	inc/tertium/dat.h
+	inc/tertium/fns.h
+	inc/tertium/std.h
+}
+@library{
+	lib/libtertium.a
+}
+@manpage{
+	transform{
+		module:glob
+		glob:man/*
 	}
 }
-foreground {
-	fdmove 1 2
-	echo no rule for $1
+inc/tertium/cpu.h{
+	output:$3
+	module:rules
+	rules{
+		headers
+		syscalls
+	}
+	headers{
+		module:map
+		map:$:{%HDR-IN}
+		apply{
+			command{
+				cat
+				sys/$:{host-os}/generic/$:{<}
+				sys/$:{host-os}/$:{host-arch}/$:{<}
+			}
+		}
+	}
+	syscalls{
+		command{
+			pipeline { cat $:{SYSCALL-IN} }
+			awk -f inc/tertium/cpu.h.awk
+		}
+	}
+	${%SYSHDR}
+	inc/tertium/cpu.h.awk
 }
-exit 1
+lib/libtertium.a{
+	module:cmd
+	inject{
+		c-files{
+			module:glob
+			glob:src/*/*.c
+		}
+		asm-files{
+			module:glob
+			glob:sys/$:{%host-os}/$:{%host-arch}/*.s
+		}
+	}
+	cmd{
+		${default.a}
+		${c-files}.o
+		${asm-files}.o
+	}
+	src/sys
+}
+src/sys{
+	module:cmd
+	cmd{
+		command{
+			if { mkdir $3 }
+			pipeline { cat $:{%SYSCALL-IN} }
+			cd $3
+			awk -f ../sys.awk
+		}
+		${%SYSCALL-IN}
+	}
+	src/sys.awk
+}
