@@ -2,7 +2,7 @@
 .SUFFIXES:
 .SUFFIXES: .o .c .s
 
-OSNAME ?= $(shell uname -s | tr "[A-Z]" "[a-z")
+OSNAME ?= $(shell uname -s)
 OBJTYPE ?= $(shell uname -m)
 
 DESTDIR ?=
@@ -53,7 +53,9 @@ LIBTERTIUMSRC=\
 	src/adt/lnew.c\
 	src/adt/lpop.c\
 	src/adt/lpush.c\
+	src/adt/lrot.c\
 	src/adt/lsort.c\
+	src/adt/lswap.c\
 	src/adt/ltpop.c\
 	src/adt/ltpush.c\
 	src/arr/avail.c\
@@ -114,13 +116,13 @@ LIBTERTIUMSRC=\
 	src/err/vwarnx.c\
 	src/err/warn.c\
 	src/err/warnx.c\
-	src/exc/arglist.c\
 	src/exc/run.c\
 	src/exc/runenv.c\
 	src/exc/setenv.c\
 	src/exc/spawn0.c\
 	src/exc/spawn1.c\
-	src/exc/varglist.c\
+	src/exc/split.c\
+	src/exc/vsplit.c\
 	src/exc/wait.c\
 	src/fmt/fmt.c\
 	src/fmt/init.c\
@@ -141,7 +143,6 @@ LIBTERTIUMSRC=\
 	src/hsh/md5.c\
 	src/hsh/murmur32.c\
 	src/hsh/octets.c\
-	src/hsh/putfd.c\
 	src/hsh/putfile.c\
 	src/hsh/rol32.c\
 	src/hsh/rol64.c\
@@ -165,7 +166,6 @@ LIBTERTIUMSRC=\
 	src/ioq/nput.c\
 	src/ioq/peek.c\
 	src/ioq/put.c\
-	src/ioq/putfd.c\
 	src/ioq/putfile.c\
 	src/ioq/seek.c\
 	src/ioq/stderr.c\
@@ -186,17 +186,19 @@ LIBTERTIUMSRC=\
 	src/nix/chmod.c\
 	src/nix/chown.c\
 	src/nix/deepsleep.c\
-	src/nix/fdcat.c\
 	src/nix/fdchdir.c\
 	src/nix/fdchmod.c\
 	src/nix/fdchown.c\
 	src/nix/fdclose.c\
 	src/nix/fdcopy.c\
+	src/nix/fdfmt.c\
 	src/nix/fdmove.c\
 	src/nix/fdopen2.c\
 	src/nix/fdopen3.c\
+	src/nix/fdputfile.c\
 	src/nix/fdset.c\
 	src/nix/fdunset.c\
+	src/nix/fdvfmt.c\
 	src/nix/fdwrite.c\
 	src/nix/fork.c\
 	src/nix/fscopy.c\
@@ -215,6 +217,7 @@ LIBTERTIUMSRC=\
 	src/nix/mktemp3.c\
 	src/nix/mktemp4.c\
 	src/nix/mktemp5.c\
+	src/nix/mktemp6.c\
 	src/nix/mmap.c\
 	src/nix/monotonetime.c\
 	src/nix/munmap.c\
@@ -257,7 +260,10 @@ LIBTERTIUMSRC=\
 	src/std/getopt.c\
 	src/std/nbsearch.c\
 	src/std/noopt.c\
+	src/std/ptrlist.c\
 	src/std/pubrealloc.c\
+	src/std/putfd.c\
+	src/std/putfile.c\
 	src/std/realloc.c\
 	src/std/setalloc.c\
 	src/std/sort.c\
@@ -265,7 +271,7 @@ LIBTERTIUMSRC=\
 	src/std/strtouvl.c\
 	src/std/strtovl.c\
 	src/std/sysconf.c\
-	src/std/vtoptr.c\
+	src/std/vptrlist.c\
 	src/std/werrstr.c\
 	src/str/casechr.c\
 	src/str/casecmp.c\
@@ -415,12 +421,12 @@ MANPAGES=\
 	man/c_err_vwarnx.3\
 	man/c_err_warn.3\
 	man/c_err_warnx.3\
-	man/c_exc_arglist.3\
 	man/c_exc_run.3\
 	man/c_exc_runenv.3\
 	man/c_exc_setenv.3\
 	man/c_exc_spawn0.3\
 	man/c_exc_spawn1.3\
+	man/c_exc_split.3\
 	man/c_exc_wait.3\
 	man/c_fmt_fmt.3\
 	man/c_fmt_init.3\
@@ -494,13 +500,13 @@ MANPAGES=\
 	man/c_std_getopt.3\
 	man/c_std_nbsearch.3\
 	man/c_std_noopt.3\
+	man/c_std_ptrlist.3\
 	man/c_std_realloc.3\
 	man/c_std_setalloc.3\
 	man/c_std_sort.3\
 	man/c_std_strerror.3\
 	man/c_std_strtouvl.3\
 	man/c_std_strtovl.3\
-	man/c_std_vtoptr.3\
 	man/c_std_werrstr.3\
 	man/c_str_casechr.3\
 	man/c_str_casecmp.3\
