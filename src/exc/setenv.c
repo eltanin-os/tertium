@@ -10,7 +10,10 @@ c_exc_setenv(char *s, char *v)
 	ctype_status r;
 	char *p;
 
-	if (!(s && *s)) return 0;
+	if (!(s && *s)) {
+		errno = C_ERR_EINVAL;
+		return -1;
+	}
 
 	if ((p = c_str_chr(s, -1, '='))) *p = 0;
 
